@@ -39,7 +39,8 @@ export const TopNavBar = () => {
           aria-label="Site Nav Bar"
           className="flex items-center gap-2 text-sm font-medium"
         >
-          {[
+          {/* Builder and Parser links - hidden on builder page */}
+          {!isBuilderPage && [
             ["/resume-builder", "Builder"],
             ["/resume-parser", "Parser"],
           ].map(([href, text]) => (
@@ -69,7 +70,7 @@ export const TopNavBar = () => {
             >
               <span>Preview</span>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-4 w-4">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m4.125 4.125V19.5m0 0a2.25 2.25 0 013.75 2.25m-3.75-2.25h3.75m0 0a2.25 2.25 0 01-2.25 2.25m2.25 0h-3.75m0 0a2.25 2.25 0 01-2.25-2.25m0 0h3.75" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V13.5" />
               </svg>
             </button>
           )}
