@@ -24,10 +24,10 @@ export const TopNavBar = () => {
     >
       <div className="flex h-10 w-full items-center justify-between">
         <Link href="/">
-          <span className="sr-only">OpenResume</span>
+          <span className="sr-only">NoiceResume</span>
           <Image
             src={logoSrc}
-            alt="OpenResume Logo"
+            alt="NoiceResume Logo"
             className="h-8 w-full"
             priority
           />
@@ -49,16 +49,6 @@ export const TopNavBar = () => {
               {text}
             </Link>
           ))}
-          {/* GitHub button - hidden on mobile */}
-          <div className="ml-1 mt-1 hidden md:block">
-            <iframe
-              src="https://ghbtns.com/github-btn.html?user=xitanggg&repo=open-resume&type=star&count=true"
-              width="100"
-              height="20"
-              className="overflow-hidden border-none"
-              title="GitHub"
-            />
-          </div>
           {/* Scroll to Preview button - only on builder page on mobile */}
           {isBuilderPage && (
             <button

@@ -62,7 +62,7 @@ export const Resume = () => {
           <section
             ref={previewRef}
             onScroll={handleScroll}
-            className="overflow-y-auto p-4 md:h-[calc(100vh-var(--top-nav-bar-height)-var(--resume-control-bar-height))] md:overflow-hidden md:p-[var(--resume-padding)]"
+            className="overflow-y-auto p-4 md:overflow-visible md:p-[var(--resume-padding)]"
           >
             <div className="mx-auto w-fit">
               <ResumeIframeCSR
