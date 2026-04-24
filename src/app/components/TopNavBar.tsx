@@ -6,10 +6,7 @@ import logoSrc from "public/logo.svg";
 import { cx } from "lib/cx";
 
 const scrollToPreview = () => {
-  const previewSection = document.getElementById("resume-preview");
-  if (previewSection) {
-    previewSection.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+  window.scrollTo({ top: document.body.scrollHeight / 2, behavior: "smooth" });
 };
 
 export const TopNavBar = () => {

@@ -7,7 +7,7 @@ import { Resume } from "components/Resume";
 export default function Create() {
   return (
     <Provider store={store}>
-      <main className="relative h-full w-full overflow-hidden bg-gray-50">
+      <main className="relative h-full w-full bg-gray-50">
         {/* Desktop: Side-by-side layout | Mobile: Form stacked above Preview */}
         <div className="flex flex-col md:grid md:grid-cols-6">
           {/* Form Section - narrower on desktop */}
@@ -15,7 +15,7 @@ export default function Create() {
             <ResumeForm />
           </div>
           {/* Preview Section - wider on desktop */}
-          <div className="w-full md:col-span-4 md:h-screen" style={{ maxHeight: "calc(100vh - var(--top-nav-bar-height))" }}>
+          <div className="w-full overflow-y-auto md:col-span-4 md:h-screen" style={{ maxHeight: "calc(100vh - var(--top-nav-bar-height))" }}>
             <Resume />
           </div>
         </div>
