@@ -83,30 +83,22 @@ const ResumeIframe = ({
   return (
     <div
       style={{
-        maxWidth: `${width * scale}px`,
         width: `${width * scale}px`,
       }}
+      className={`bg-white shadow-lg`}
     >
-      {/* There is an outer div and an inner div here. The inner div sets the iframe width and uses transform scale to zoom in/out the resume iframe.
-        While zooming out or scaling down via transform, the element appears smaller but still occupies the same width/height. Therefore, we use the
-        outer div to restrict the max width proportionally */}
-      <div
+      <Frame
         style={{
           width: `${width}px`,
-          transform: `scale(${scale})`,
-          transformOrigin: "top left",
+          minHeight: `${height}px`,
         }}
-        className={`bg-white shadow-lg`}
+        initialContent={iframeInitialContent}
+        scrolling="yes"
+        // key is used to force component to re-mount when document size changes
+        key={isA4 ? "A4" : "LETTER"}
       >
-        <Frame
-          style={{ width: "100%", minHeight: "100%" }}
-          initialContent={iframeInitialContent}
-          // key is used to force component to re-mount when document size changes
-          key={isA4 ? "A4" : "LETTER"}
-        >
-          {children}
-        </Frame>
-      </div>
+        {children}
+      </Frame>
     </div>
   );
 };
