@@ -81,24 +81,28 @@ const ResumeIframe = ({
   const height = isA4 ? A4_HEIGHT_PX : LETTER_HEIGHT_PX;
 
   return (
-    <div
-      style={{
-        width: `${width * scale}px`,
-      }}
-      className={`bg-white shadow-lg`}
-    >
-      <Frame
+    <div className="flex justify-center">
+      <div
         style={{
           width: `${width}px`,
-          minHeight: `${height}px`,
+          transform: `scale(${scale})`,
+          transformOrigin: "top left",
         }}
-        initialContent={iframeInitialContent}
-        scrolling="yes"
-        // key is used to force component to re-mount when document size changes
-        key={isA4 ? "A4" : "LETTER"}
+        className="bg-white shadow-lg"
       >
-        {children}
-      </Frame>
+        <Frame
+          style={{
+            width: `${width}px`,
+            minHeight: `${height}px`,
+          }}
+          initialContent={iframeInitialContent}
+          scrolling="yes"
+          // key is used to force component to re-mount when document size changes
+          key={isA4 ? "A4" : "LETTER"}
+        >
+          {children}
+        </Frame>
+      </div>
     </div>
   );
 };

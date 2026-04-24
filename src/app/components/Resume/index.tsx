@@ -45,7 +45,7 @@ export const Resume = () => {
           onScroll={handleScroll}
           className="flex-1 overflow-y-auto p-4"
         >
-          <div className="mx-auto w-fit">
+          <div className="flex justify-center">
             <ResumeIframeCSR
               documentSize={settings.documentSize}
               scale={scale}
