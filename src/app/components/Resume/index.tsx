@@ -28,21 +28,43 @@ export const Resume = () => {
   useRegisterReactPDFFont();
   useRegisterReactPDFHyphenationCallback(settings.fontFamily);
 
-  // Auto-calculate scale based on window width
+  // Auto-calculate scale based on container width
   useEffect(() => {
+    if (!previewRef.current) return;
+    
     const updateScale = () => {
-      const windowWidth = window.innerWidth;
-      console.log('Window width:', windowWidth);
-      if (windowWidth < 768) {
-        // Mobile: fit to viewport
-        const mobileScale = (windowWidth - 32) / LETTER_WIDTH_PX;
-        console.log('Mobile scale:', mobileScale);
-        setScale(Math.min(mobileScale, 0.5));
+      if (previewRef.current) {
+        const containerWidth = previewRef.current.clientWidth;
+        // Subtract padding (p-2 = 8px on mobile, p-4 = 16px on desktop, doubled for both sides)
+        const style = window.getComputedStyle(previewRef.current);
+        const paddingLeft = parseFloat(style.paddingLeft);
+        const paddingRight = parseFloat(style.paddingRight);
+        const availableWidth = containerWidth - paddingLeft - paddingRight;
+        
+        if (availableWidth > 0) {
+          if (availableWidth < LETTER_WIDTH_PX) {
+            // Scale down to fit
+            setScale(availableWidth / LETTER_WIDTH_PX);
+          } else {
+            // Document is narrower than container, use 1:1 scale
+            setScale(1.0);
+          }
+        }
       }
     };
+    
+    // Initial calculation
     updateScale();
+    
+    // Use ResizeObserver for dynamic updates
+    const resizeObserver = new ResizeObserver(updateScale);
+    resizeObserver.observe(previewRef.current);
+    
     window.addEventListener('resize', updateScale);
-    return () => window.removeEventListener('resize', updateScale);
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateScale);
+    };
   }, []);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
