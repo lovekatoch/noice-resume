@@ -6,7 +6,7 @@ import logoSrc from "public/logo.svg";
 import { cx } from "lib/cx";
 
 const scrollToPreview = () => {
-  window.scrollTo({ top: document.body.scrollHeight / 2, behavior: "smooth" });
+  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 };
 
 export const TopNavBar = () => {
