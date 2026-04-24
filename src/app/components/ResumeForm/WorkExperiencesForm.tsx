@@ -54,7 +54,7 @@ export const WorkExperiencesForm = () => {
             />
             <Input
               label="Job Title"
-              labelClassName="col-span-4"
+              labelClassName="col-span-full"
               name="jobTitle"
               placeholder="Software Engineer"
               value={jobTitle}
@@ -62,7 +62,7 @@ export const WorkExperiencesForm = () => {
             />
             <Input
               label="Date"
-              labelClassName="col-span-2"
+              labelClassName="col-span-full"
               name="date"
               placeholder="Jun 2022 - Present"
               value={date}

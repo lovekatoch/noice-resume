@@ -51,7 +51,7 @@ export const EducationsForm = () => {
           >
             <Input
               label="School"
-              labelClassName="col-span-4"
+              labelClassName="col-span-full"
               name="school"
               placeholder="Cornell University"
               value={school}
@@ -59,7 +59,7 @@ export const EducationsForm = () => {
             />
             <Input
               label="Date"
-              labelClassName="col-span-2"
+              labelClassName="col-span-full"
               name="date"
               placeholder="May 2018"
               value={date}
@@ -67,7 +67,7 @@ export const EducationsForm = () => {
             />
             <Input
               label="Degree & Major"
-              labelClassName="col-span-4"
+              labelClassName="col-span-full"
               name="degree"
               placeholder="Bachelor of Science in Computer Engineering"
               value={degree}
@@ -75,7 +75,7 @@ export const EducationsForm = () => {
             />
             <Input
               label="GPA"
-              labelClassName="col-span-2"
+              labelClassName="col-span-full"
               name="gpa"
               placeholder="3.81"
               value={gpa}
