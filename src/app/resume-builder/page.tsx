@@ -8,14 +8,14 @@ export default function Create() {
   return (
     <Provider store={store}>
       <main className="relative min-h-screen w-full bg-gray-50">
-        {/* Desktop: Side-by-side layout | Mobile: Form stacked above Preview */}
-        <div className="flex flex-col md:grid md:grid-cols-6">
-          {/* Form Section - narrower on desktop */}
-          <div className="w-full overflow-y-auto md:col-span-2 md:h-[calc(100vh-var(--top-nav-bar-height))]">
+        {/* Desktop: Side-by-side layout | Mobile: Form and Preview each 50vh */}
+        <div className="flex flex-col md:grid md:grid-cols-6 h-screen">
+          {/* Form Section - narrower on desktop, 50vh on mobile */}
+          <div className="h-[50vh] md:h-[calc(100vh-var(--top-nav-bar-height))] md:col-span-2 overflow-y-auto">
             <ResumeForm />
           </div>
-          {/* Preview Section - wider on desktop, full height on mobile */}
-          <div className="w-full md:col-span-4 md:h-[calc(100vh-var(--top-nav-bar-height))]">
+          {/* Preview Section - wider on desktop, 50vh on mobile */}
+          <div className="h-[50vh] md:h-[calc(100vh-var(--top-nav-bar-height))] md:col-span-4">
             <Resume />
           </div>
         </div>

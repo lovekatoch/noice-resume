@@ -1,12 +1,12 @@
 "use client";
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { ResumeIframeCSR } from "components/Resume/ResumeIFrame";
 import { ResumePDF } from "components/Resume/ResumePDF";
 import { ResumeControlBarCSR } from "components/Resume/ResumeControlBar";
 import { useAppSelector } from "lib/redux/hooks";
 import { selectResume } from "lib/redux/resumeSlice";
 import { selectSettings } from "lib/redux/settingsSlice";
-import { DEBUG_RESUME_PDF_FLAG } from "lib/constants";
+import { DEBUG_RESUME_PDF_FLAG, LETTER_WIDTH_PX } from "lib/constants";
 import {
   useRegisterReactPDFFont,
   useRegisterReactPDFHyphenationCallback,
@@ -15,6 +15,7 @@ import { NonEnglishFontsCSSLazyLoader } from "components/fonts/NonEnglishFontsCS
 
 export const Resume = () => {
   const [scale, setScale] = useState(0.8);
+  const [containerWidth, setContainerWidth] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
   const resume = useAppSelector(selectResume);
@@ -26,6 +27,23 @@ export const Resume = () => {
 
   useRegisterReactPDFFont();
   useRegisterReactPDFHyphenationCallback(settings.fontFamily);
+
+  // Auto-calculate scale based on window width
+  useEffect(() => {
+    const updateScale = () => {
+      const windowWidth = window.innerWidth;
+      console.log('Window width:', windowWidth);
+      if (windowWidth < 768) {
+        // Mobile: fit to viewport
+        const mobileScale = (windowWidth - 32) / LETTER_WIDTH_PX;
+        console.log('Mobile scale:', mobileScale);
+        setScale(Math.min(mobileScale, 0.5));
+      }
+    };
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop } = e.currentTarget;
@@ -39,11 +57,11 @@ export const Resume = () => {
   return (
     <>
       <NonEnglishFontsCSSLazyLoader />
-      <div id="resume-preview" className="relative flex h-full flex-col overflow-hidden">
+      <div id="resume-preview" className="relative flex w-full flex-col overflow-hidden">
         <section
           ref={previewRef}
           onScroll={handleScroll}
-          className="flex-1 overflow-y-auto p-4"
+          className="flex-1 overflow-y-auto p-2 md:p-4"
         >
           <div className="flex justify-center">
             <ResumeIframeCSR
