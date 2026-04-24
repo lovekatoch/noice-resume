@@ -34,7 +34,7 @@ export const ProfileForm = () => {
         />
         <Input
           label="Email"
-          labelClassName="col-span-4"
+          labelClassName="col-span-full md:col-span-4"
           name="email"
           placeholder="hello@khanacademy.org"
           value={email}
@@ -42,7 +42,7 @@ export const ProfileForm = () => {
         />
         <Input
           label="Phone"
-          labelClassName="col-span-2"
+          labelClassName="col-span-full md:col-span-2"
           name="phone"
           placeholder="(123)456-7890"
           value={phone}
@@ -50,7 +50,7 @@ export const ProfileForm = () => {
         />
         <Input
           label="Website"
-          labelClassName="col-span-4"
+          labelClassName="col-span-full md:col-span-4"
           name="url"
           placeholder="linkedin.com/in/khanacademy"
           value={url}
@@ -58,7 +58,7 @@ export const ProfileForm = () => {
         />
         <Input
           label="Location"
-          labelClassName="col-span-2"
+          labelClassName="col-span-full md:col-span-2"
           name="location"
           placeholder="NYC, NY"
           value={location}

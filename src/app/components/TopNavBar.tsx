@@ -5,9 +5,17 @@ import Image from "next/image";
 import logoSrc from "public/logo.svg";
 import { cx } from "lib/cx";
 
+const scrollToPreview = () => {
+  const previewSection = document.getElementById("resume-preview");
+  if (previewSection) {
+    previewSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+};
+
 export const TopNavBar = () => {
   const pathName = usePathname();
   const isHomePage = pathName === "/";
+  const isBuilderPage = pathName === "/resume-builder";
 
   return (
     <header
@@ -43,7 +51,8 @@ export const TopNavBar = () => {
               {text}
             </Link>
           ))}
-          <div className="ml-1 mt-1">
+          {/* GitHub button - hidden on mobile */}
+          <div className="ml-1 mt-1 hidden md:block">
             <iframe
               src="https://ghbtns.com/github-btn.html?user=xitanggg&repo=open-resume&type=star&count=true"
               width="100"
@@ -52,6 +61,18 @@ export const TopNavBar = () => {
               title="GitHub"
             />
           </div>
+          {/* Scroll to Preview button - only on builder page on mobile */}
+          {isBuilderPage && (
+            <button
+              onClick={scrollToPreview}
+              className="flex items-center gap-1 rounded-md bg-blue-500 px-3 py-1.5 text-white hover:bg-blue-600 md:hidden"
+            >
+              <span>Preview</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-4 w-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m4.125 4.125V19.5m0 0a2.25 2.25 0 013.75 2.25m-3.75-2.25h3.75m0 0a2.25 2.25 0 01-2.25 2.25m2.25 0h-3.75m0 0a2.25 2.25 0 01-2.25-2.25m0 0h3.75" />
+              </svg>
+            </button>
+          )}
         </nav>
       </div>
     </header>
