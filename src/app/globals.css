@@ -1,34 +1,158 @@
 @import url("/fonts/fonts.css");
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
   .btn-primary {
-    @apply bg-primary outline-theme-purple inline-block rounded-full px-6 py-2 font-semibold shadow-sm;
+    @apply bg-[#0075de] text-white inline-block rounded-lg px-6 py-2 font-semibold;
   }
   .text-primary {
-    @apply bg-gradient-to-r from-[color:var(--theme-purple)] to-[color:var(--theme-blue)] bg-clip-text text-transparent !important;
+    @apply text-[#0075de] !important;
   }
   .bg-primary {
-    @apply bg-gradient-to-r from-[color:var(--theme-purple)] to-[color:var(--theme-blue)] text-white;
-  }
-  .outline-theme-purple {
-    @apply hover:opacity-80 hover:outline-[color:var(--theme-purple)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--theme-purple)];
+    @apply bg-[#0075de] text-white;
   }
   .outline-theme-blue {
-    @apply hover:opacity-80 hover:outline-[color:var(--theme-blue)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--theme-blue)];
-  }
-  .within-outline-theme-purple {
-    @apply focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[color:var(--theme-purple)] hover:opacity-80 hover:outline-[color:var(--theme-purple)];
+    @apply hover:opacity-80 hover:outline-[color:var(--notion-blue)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--notion-blue)];
   }
 }
 
 :root {
-  --theme-purple: #5d52d9;
-  --theme-blue: #4fc5eb;
-  /* Keep the below variable names in sync with CSS_VARIABLES in globals-css.ts */
+  /* Notion Color Palette */
+  --notion-black: rgba(0,0,0,0.9);
+  --notion-white: #ffffff;
+  --notion-blue: #0075de;
+  --notion-warm-white: #f7f6f3;
+  --notion-warm-dark: #31302e;
+  --notion-warm-gray-500: #615d59;
+  --notion-warm-gray-300: #a39e98;
+  --notion-border: rgba(0,0,0,0.08);
+  --notion-border-strong: rgba(0,0,0,0.1);
+
+  /* Semantic Colors */
+  --notion-success: #2a9d99;
+  --notion-green: #1aae39;
+  --notion-orange: #dd5b00;
+
+  /* Spacing */
   --top-nav-bar-height: 3.5rem;
   --resume-control-bar-height: 3rem;
   --resume-padding: 1.5rem;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Base typography */
+body {
+  font-family: var(--font-sans);
+  color: var(--notion-black);
+  background-color: var(--notion-warm-white);
+}
+
+/* Serif headings */
+h1, h2, h3 {
+  font-family: var(--font-serif);
+}
+
+/* Notion-style border */
+.notion-border {
+  border: 1px solid var(--notion-border);
+}
+
+/* Notion-style card */
+.notion-card {
+  background: var(--notion-white);
+  border-radius: 8px;
+  border: 1px solid var(--notion-border);
+}
+
+/* Notion-style input */
+.notion-input {
+  height: 40px;
+  border: 1px solid var(--notion-border);
+  border-radius: 8px;
+  padding: 0 var(--spacing-sm);
+  font-family: var(--font-sans);
+  background: var(--notion-white);
+}
+
+.notion-input:focus {
+  outline: none;
+  border-color: var(--notion-blue);
+  box-shadow: 0 0 0 2px rgba(0,117,222,0.2);
+}
+
+/* Notion-style button */
+.notion-btn {
+  height: 40px;
+  padding: 0 var(--spacing-lg);
+  border-radius: 6px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.notion-btn-primary {
+  background: var(--notion-blue);
+  color: var(--notion-white);
+  border: none;
+}
+
+.notion-btn-primary:hover {
+  background: #005bab;
+}
+
+.notion-btn-secondary {
+  background: var(--notion-white);
+  color: var(--notion-black);
+  border: 1px solid var(--notion-border);
+}
+
+.notion-btn-secondary:hover {
+  background: var(--notion-warm-white);
+}
+
+/* Notion-style thin scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--notion-warm-white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--notion-warm-gray-300);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--notion-warm-gray-500);
+}
+
+/* Faster Notion-style transitions */
+.duration-150 {
+  transition-duration: 150ms;
+}
+
+.duration-200 {
+  transition-duration: 150ms;
+}
+
+.duration-300 {
+  transition-duration: 150ms;
 }

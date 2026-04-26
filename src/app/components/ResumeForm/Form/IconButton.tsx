@@ -6,7 +6,38 @@ import {
   ArrowSmallDownIcon,
   TrashIcon,
   ListBulletIcon,
+  ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+
+/**
+ * CollapseIconButton - Notion-style collapse toggle with chevron icon.
+ */
+export const CollapseIconButton = ({
+  expanded,
+  setExpanded,
+}: {
+  expanded: boolean;
+  setExpanded: (expanded: boolean) => void;
+}) => {
+  const tooltipText = expanded ? "Collapse section" : "Expand section";
+
+  return (
+    <IconButton
+      onClick={() => setExpanded(!expanded)}
+      tooltipText={tooltipText}
+      size="small"
+      className="transition-transform duration-300"
+    >
+      <ChevronDownIcon
+        className={`h-5 w-5 text-gray-400 transition-transform duration-300 ${
+          expanded ? "rotate-0" : "-rotate-90"
+        }`}
+        aria-hidden="true"
+      />
+      <span className="sr-only">{tooltipText}</span>
+    </IconButton>
+  );
+};
 
 export const ShowIconButton = ({
   show,

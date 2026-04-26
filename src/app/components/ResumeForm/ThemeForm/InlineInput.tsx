@@ -28,7 +28,7 @@ export const InlineInput = <K extends string>({
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(name, e.target.value)}
-        className="w-[5rem] border-b border-gray-300 text-center font-semibold leading-3 outline-none"
+        className="w-[5rem] border-b border-[var(--notion-border)] text-center font-semibold leading-3 outline-none"
         style={inputStyle}
       />
     </label>

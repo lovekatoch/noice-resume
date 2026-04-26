@@ -17,7 +17,7 @@ export default function ImportResume() {
 
   return (
     <main>
-      <div className="mx-auto mt-14 max-w-3xl rounded-md border border-gray-200 px-10 py-10 text-center shadow-md">
+      <div className="mx-auto mt-14 max-w-3xl rounded-lg border border-[var(--notion-border)] bg-white px-10 py-10 text-center">
         {!hasUsedAppBefore ? (
           <>
             <h1 className="text-lg font-semibold text-gray-900">
@@ -64,9 +64,9 @@ export default function ImportResume() {
 
 const OrDivider = () => (
   <div className="mx-[-2.5rem] flex items-center pb-6 pt-8" aria-hidden="true">
-    <div className="flex-grow border-t border-gray-200" />
+    <div className="flex-grow border-t border-[var(--notion-border)]" />
     <span className="mx-2 mt-[-2px] flex-shrink text-lg text-gray-400">or</span>
-    <div className="flex-grow border-t border-gray-200" />
+    <div className="flex-grow border-t border-[var(--notion-border)]" />
   </div>
 );
 
@@ -83,7 +83,7 @@ const SectionWithHeadingAndCreateButton = ({
       <div className="mt-5">
         <Link
           href="/resume-builder"
-          className="outline-theme-blue rounded-full bg-sky-500 px-6 pb-2 pt-1.5 text-base font-semibold text-white"
+          className="outline-theme-blue rounded-full bg-[var(--notion-blue)] px-6 pb-2 pt-1.5 text-base font-semibold text-white"
         >
           {buttonText}
         </Link>

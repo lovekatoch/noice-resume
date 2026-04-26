@@ -7,6 +7,7 @@ import type { CreateHandleChangeArgsWithDescriptions } from "components/ResumeFo
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import {
   changeWorkExperiences,
+  deleteSectionInFormByIdx,
   selectWorkExperiences,
 } from "lib/redux/resumeSlice";
 import type { ResumeWorkExperience } from "lib/redux/types";
@@ -14,8 +15,6 @@ import type { ResumeWorkExperience } from "lib/redux/types";
 export const WorkExperiencesForm = () => {
   const workExperiences = useAppSelector(selectWorkExperiences);
   const dispatch = useAppDispatch();
-
-  const showDelete = workExperiences.length > 1;
 
   return (
     <Form form="workExperiences" addButtonText="Add Job">
@@ -34,6 +33,19 @@ export const WorkExperiencesForm = () => {
         const showMoveUp = idx !== 0;
         const showMoveDown = idx !== workExperiences.length - 1;
 
+        const handleDelete = () => {
+          if (idx === workExperiences.length - 1) {
+            // Last item: reset all fields to empty
+            dispatch(changeWorkExperiences({ idx, field: "company", value: "" }));
+            dispatch(changeWorkExperiences({ idx, field: "jobTitle", value: "" }));
+            dispatch(changeWorkExperiences({ idx, field: "date", value: "" }));
+            dispatch(changeWorkExperiences({ idx, field: "descriptions", value: [] }));
+          } else {
+            // Not last item: delete the entry
+            dispatch(deleteSectionInFormByIdx({ form: "workExperiences", idx }));
+          }
+        };
+
         return (
           <FormSection
             key={idx}
@@ -41,8 +53,9 @@ export const WorkExperiencesForm = () => {
             idx={idx}
             showMoveUp={showMoveUp}
             showMoveDown={showMoveDown}
-            showDelete={showDelete}
+            showDelete={true}
             deleteButtonTooltipText="Delete job"
+            onDelete={handleDelete}
           >
             <Input
               label="Company"

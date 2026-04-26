@@ -7,15 +7,15 @@ import { Resume } from "components/Resume";
 export default function Create() {
   return (
     <Provider store={store}>
-      <main className="relative h-screen w-full overflow-hidden bg-gray-50">
-        {/* Desktop: Side-by-side layout | Mobile: Form and Preview each 50vh */}
-        <div className="flex flex-col md:grid md:grid-cols-6 h-full">
-          {/* Form Section - narrower on desktop, 50vh on mobile */}
-          <div className="h-[50vh] md:h-full md:col-span-2 overflow-y-auto">
+      <main className="relative flex h-screen w-full max-w-full flex-col bg-[var(--notion-warm-white)]">
+        {/* Mobile: Single scrollable column | Desktop: Side-by-side */}
+        <div className="flex flex-col flex-1 overflow-y-auto md:grid md:grid-cols-12 md:h-full md:overflow-hidden">
+          {/* Form Section - mobile: auto height | desktop: 45% with independent scroll */}
+          <div className="md:col-span-5 md:h-full md:overflow-y-auto">
             <ResumeForm />
           </div>
-          {/* Preview Section - wider on desktop, 50vh on mobile */}
-          <div className="h-[50vh] md:h-full md:col-span-4">
+          {/* Preview Section - mobile: auto height | desktop: 55% */}
+          <div className="md:col-span-7 md:h-full md:overflow-hidden">
             <Resume />
           </div>
         </div>

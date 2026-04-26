@@ -1,5 +1,5 @@
 "use client";
-import { useMemo } from "react";
+import { useMemo, useRef, useEffect, useState } from "react";
 import Frame from "react-frame-component";
 import {
   A4_HEIGHT_PX,
@@ -37,10 +37,14 @@ const getIframeInitialContent = (isA4: boolean) => {
   return `<!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=3, user-scalable=yes">
     ${allFontFamiliesPreloadLinks}
     <style>
       ${allFontFamiliesFontFaces}
-      body { overflow: visible !important; }
+      body {
+        overflow: visible !important;
+        touch-action: pan-x pan-y pinch-zoom;
+      }
     </style>
   </head>
   <body style='overflow: visible; width: ${width}pt; margin: 0; padding: 0; -webkit-text-size-adjust:none;'>
@@ -70,6 +74,27 @@ const ResumeIframe = ({
     [isA4]
   );
 
+  const documentWidth = isA4 ? A4_WIDTH_PX : LETTER_WIDTH_PX;
+  const documentHeight = isA4 ? A4_HEIGHT_PX : LETTER_HEIGHT_PX;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [autoFitScale, setAutoFitScale] = useState(1);
+
+  useEffect(() => {
+    const updateAutoFit = () => {
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        const fitScale = containerWidth / documentWidth;
+        setAutoFitScale(fitScale);
+      }
+    };
+
+    updateAutoFit();
+    window.addEventListener("resize", updateAutoFit);
+    return () => window.removeEventListener("resize", updateAutoFit);
+  }, [documentWidth]);
+
+  const effectiveScale = autoFitScale * scale;
+
   if (enablePDFViewer) {
     return (
       <DynamicPDFViewer className="h-full w-full">
@@ -77,25 +102,38 @@ const ResumeIframe = ({
       </DynamicPDFViewer>
     );
   }
-  const width = isA4 ? A4_WIDTH_PX : LETTER_WIDTH_PX;
-  const height = isA4 ? A4_HEIGHT_PX : LETTER_HEIGHT_PX;
 
   return (
     <div className="flex justify-center w-full">
-      <Frame
+      <div
+        ref={containerRef}
+        className="w-full bg-white border border-[var(--notion-border)]"
         style={{
-          width: `${width * scale}px`,
-          minHeight: `${height * scale}px`,
-          maxWidth: "100%",
+          aspectRatio: `${documentWidth} / ${documentHeight}`,
         }}
-        initialContent={iframeInitialContent}
-        scrolling="yes"
-        className="bg-white shadow-lg"
-        // key is used to force component to re-mount when document size changes
-        key={isA4 ? "A4" : "LETTER"}
       >
-        {children}
-      </Frame>
+        <Frame
+          style={{
+            width: "100%",
+            height: "100%",
+            overflow: "auto",
+          }}
+          initialContent={iframeInitialContent}
+          scrolling="yes"
+          key={isA4 ? "A4" : "LETTER"}
+        >
+          <div
+            style={{
+              transform: `scale(${effectiveScale})`,
+              transformOrigin: "top left",
+              width: `${documentWidth}px`,
+              height: `${documentHeight}px`,
+            }}
+          >
+            {children}
+          </div>
+        </Frame>
+      </div>
     </div>
   );
 };

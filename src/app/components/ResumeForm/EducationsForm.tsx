@@ -6,7 +6,11 @@ import {
 import { BulletListIconButton } from "components/ResumeForm/Form/IconButton";
 import type { CreateHandleChangeArgsWithDescriptions } from "components/ResumeForm/types";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
-import { changeEducations, selectEducations } from "lib/redux/resumeSlice";
+import {
+  changeEducations,
+  deleteSectionInFormByIdx,
+  selectEducations,
+} from "lib/redux/resumeSlice";
 import type { ResumeEducation } from "lib/redux/types";
 import {
   changeShowBulletPoints,
@@ -16,7 +20,6 @@ import {
 export const EducationsForm = () => {
   const educations = useAppSelector(selectEducations);
   const dispatch = useAppDispatch();
-  const showDelete = educations.length > 1;
   const form = "educations";
   const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
 
@@ -39,6 +42,20 @@ export const EducationsForm = () => {
         const showMoveUp = idx !== 0;
         const showMoveDown = idx !== educations.length - 1;
 
+        const handleDelete = () => {
+          if (idx === educations.length - 1) {
+            // Last item: reset all fields to empty
+            dispatch(changeEducations({ idx, field: "school", value: "" }));
+            dispatch(changeEducations({ idx, field: "degree", value: "" }));
+            dispatch(changeEducations({ idx, field: "gpa", value: "" }));
+            dispatch(changeEducations({ idx, field: "date", value: "" }));
+            dispatch(changeEducations({ idx, field: "descriptions", value: [] }));
+          } else {
+            // Not last item: delete the entry
+            dispatch(deleteSectionInFormByIdx({ form: "educations", idx }));
+          }
+        };
+
         return (
           <FormSection
             key={idx}
@@ -46,8 +63,9 @@ export const EducationsForm = () => {
             idx={idx}
             showMoveUp={showMoveUp}
             showMoveDown={showMoveDown}
-            showDelete={showDelete}
+            showDelete={true}
             deleteButtonTooltipText="Delete school"
+            onDelete={handleDelete}
           >
             <Input
               label="School"

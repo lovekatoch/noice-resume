@@ -1,73 +1,99 @@
 "use client";
-import { useEffect } from "react";
-import { useSetDefaultScale } from "components/Resume/hooks";
+import { useEffect, useState } from "react";
 import {
-  MagnifyingGlassIcon,
   ArrowDownTrayIcon,
+  MagnifyingGlassPlusIcon,
+  MagnifyingGlassMinusIcon,
 } from "@heroicons/react/24/outline";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
+import { DownloadConfirmModal } from "./DownloadConfirmModal";
+import { Tooltip } from "components/Tooltip";
 
 const ResumeControlBar = ({
-  scale,
-  setScale,
-  documentSize,
-  document,
+  document: pdfDocument,
   fileName,
+  scale,
+  zoomLevel,
+  onZoomChange,
 }: {
-  scale: number;
-  setScale: (scale: number) => void;
-  documentSize: string;
   document: JSX.Element;
   fileName: string;
+  scale: number;
+  zoomLevel: number;
+  onZoomChange: (percentage: number) => void;
 }) => {
-  const { scaleOnResize, setScaleOnResize } = useSetDefaultScale({
-    setScale,
-    documentSize,
-  });
-
-  const [instance, update] = usePDF({ document });
+  const [instance, update] = usePDF({ document: pdfDocument });
+  const [showModal, setShowModal] = useState(false);
+  const [actualDownload, setActualDownload] = useState(false);
 
   // Hook to update pdf when document changes
   useEffect(() => {
     update();
-  }, [update, document]);
+  }, [update, pdfDocument]);
+
+  // Trigger actual download when modal confirms
+  useEffect(() => {
+    if (actualDownload && instance.url) {
+      const link = globalThis.document.createElement("a");
+      link.href = instance.url;
+      link.download = fileName;
+      link.click();
+      setActualDownload(false);
+    }
+  }, [actualDownload, instance.url, fileName]);
+
+  const handleDownloadClick = () => {
+    setShowModal(true);
+  };
+
+  const handleModalConfirm = () => {
+    setActualDownload(true);
+  };
+
+  const handleZoomSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    onZoomChange(value);
+  };
 
   return (
-    <div className="sticky bottom-0 left-0 right-0 flex h-[var(--resume-control-bar-height)] items-center justify-center px-[var(--resume-padding)] text-gray-600 lg:justify-between">
-      <div className="flex items-center gap-2">
-        <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />
-        <input
-          type="range"
-          min={0.5}
-          max={1.5}
-          step={0.01}
-          value={scale}
-          onChange={(e) => {
-            setScaleOnResize(false);
-            setScale(Number(e.target.value));
-          }}
-        />
-        <div className="w-10">{`${Math.round(scale * 100)}%`}</div>
-        <label className="hidden items-center gap-1 lg:flex">
+    <>
+      <div className="flex h-[var(--resume-control-bar-height)] items-center justify-between px-[var(--resume-padding)] text-gray-600">
+        {/* Zoom Slider */}
+        <div className="flex items-center gap-2">
+          <MagnifyingGlassMinusIcon className="h-4 w-4 text-gray-400" />
           <input
-            type="checkbox"
-            className="mt-0.5 h-4 w-4"
-            checked={scaleOnResize}
-            onChange={() => setScaleOnResize((prev) => !prev)}
+            type="range"
+            min="50"
+            max="150"
+            value={zoomLevel}
+            onChange={handleZoomSliderChange}
+            className="h-1 w-24 cursor-pointer appearance-none rounded-full bg-gray-200 accent-[var(--notion-blue)]"
           />
-          <span className="select-none">Autoscale</span>
-        </label>
+          <MagnifyingGlassPlusIcon className="h-4 w-4 text-gray-400" />
+          <span className="min-w-[3rem] text-sm font-medium text-gray-600">
+            {zoomLevel}%
+          </span>
+        </div>
+
+        {/* Download Button */}
+        <Tooltip text="Download Resume">
+          <button
+            onClick={handleDownloadClick}
+            className="notion-btn notion-btn-secondary !px-3"
+          >
+            <ArrowDownTrayIcon className="h-5 w-5" />
+          </button>
+        </Tooltip>
       </div>
-      <a
-        className="ml-1 flex items-center gap-1 rounded-md border border-gray-300 px-3 py-0.5 hover:bg-gray-100 lg:ml-8"
-        href={instance.url!}
-        download={fileName}
-      >
-        <ArrowDownTrayIcon className="h-4 w-4" />
-        <span className="whitespace-nowrap">Download Resume</span>
-      </a>
-    </div>
+
+      <DownloadConfirmModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleModalConfirm}
+        fileName={fileName}
+      />
+    </>
   );
 };
 
@@ -79,8 +105,4 @@ export const ResumeControlBarCSR = dynamic(
   {
     ssr: false,
   }
-);
-
-export const ResumeControlBarBorder = () => (
-  <div className="absolute bottom-[var(--resume-control-bar-height)] w-full border-t-2 bg-gray-50" />
 );

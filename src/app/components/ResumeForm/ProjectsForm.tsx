@@ -5,13 +5,16 @@ import {
 } from "components/ResumeForm/Form/InputGroup";
 import type { CreateHandleChangeArgsWithDescriptions } from "components/ResumeForm/types";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
-import { selectProjects, changeProjects } from "lib/redux/resumeSlice";
+import {
+  selectProjects,
+  changeProjects,
+  deleteSectionInFormByIdx,
+} from "lib/redux/resumeSlice";
 import type { ResumeProject } from "lib/redux/types";
 
 export const ProjectsForm = () => {
   const projects = useAppSelector(selectProjects);
   const dispatch = useAppDispatch();
-  const showDelete = projects.length > 1;
 
   return (
     <Form form="projects" addButtonText="Add Project">
@@ -27,6 +30,18 @@ export const ProjectsForm = () => {
         const showMoveUp = idx !== 0;
         const showMoveDown = idx !== projects.length - 1;
 
+        const handleDelete = () => {
+          if (idx === projects.length - 1) {
+            // Last item: reset all fields to empty
+            dispatch(changeProjects({ idx, field: "project", value: "" }));
+            dispatch(changeProjects({ idx, field: "date", value: "" }));
+            dispatch(changeProjects({ idx, field: "descriptions", value: [] }));
+          } else {
+            // Not last item: delete the entry
+            dispatch(deleteSectionInFormByIdx({ form: "projects", idx }));
+          }
+        };
+
         return (
           <FormSection
             key={idx}
@@ -34,13 +49,14 @@ export const ProjectsForm = () => {
             idx={idx}
             showMoveUp={showMoveUp}
             showMoveDown={showMoveDown}
-            showDelete={showDelete}
+            showDelete={true}
             deleteButtonTooltipText={"Delete project"}
+            onDelete={handleDelete}
           >
             <Input
               name="project"
               label="Project Name"
-              placeholder="OpenResume"
+              placeholder="My Project"
               value={project}
               onChange={handleProjectChange}
               labelClassName="col-span-full"

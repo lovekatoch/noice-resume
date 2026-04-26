@@ -31,13 +31,13 @@ export const ResumeForm = () => {
   const formsOrder = useAppSelector(selectFormsOrder);
   const [isHover, setIsHover] = useState(false);
 
-  return (
+return (
     <div
-      className="scrollbar-thin scrollbar-track-gray-100 md:h-[calc(100vh-var(--top-nav-bar-height))] md:overflow-y-scroll"
+      className="w-full scrollbar-thin scrollbar-track-gray-100 md:h-[calc(100vh-var(--top-nav-bar-height))] md:overflow-y-scroll"
       onMouseOver={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <section className="flex w-full flex-col gap-6 p-3">
+      <section className="flex w-full flex-col gap-5 p-4">
         <ProfileForm />
         {formsOrder.map((form) => {
           const Component = formTypeToComponent[form];

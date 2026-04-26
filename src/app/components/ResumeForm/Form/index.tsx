@@ -2,7 +2,7 @@ import { ExpanderWithHeightTransition } from "components/ExpanderWithHeightTrans
 import {
   DeleteIconButton,
   MoveIconButton,
-  ShowIconButton,
+  CollapseIconButton,
 } from "components/ResumeForm/Form/IconButton";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import {
@@ -40,7 +40,7 @@ export const BaseForm = ({
   className?: string;
 }) => (
   <section
-    className={`flex flex-col gap-3 rounded-md bg-white p-4 pt-3 shadow transition-opacity duration-200 ${className}`}
+    className={`flex w-full flex-col gap-3 rounded-lg bg-white p-4 pt-3 border border-[var(--notion-border)] transition-opacity duration-150 ${className}`}
   >
     {children}
   </section>
@@ -85,16 +85,19 @@ export const Form = ({
 
   return (
     <BaseForm
-      className={`transition-opacity duration-200 ${
+      className={`relative transition-opacity duration-200 ${
         showForm ? "pb-6" : "pb-2 opacity-60"
       }`}
     >
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex grow items-center gap-2">
+      <div
+        className="flex items-center justify-between gap-4"
+        onClick={() => setShowForm(!showForm)}
+      >
+        <div className="flex grow cursor-pointer items-center gap-2">
           <Icon className="h-6 w-6 text-gray-600" aria-hidden="true" />
           <input
             type="text"
-            className="block w-full border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 hover:shadow-sm focus:border-gray-300 focus:shadow-sm"
+            className="block w-full cursor-pointer border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 focus:border-gray-300"
             value={heading}
             onChange={(e) => setHeading(e.target.value)}
           />
@@ -106,7 +109,7 @@ export const Form = ({
           {!isLastForm && (
             <MoveIconButton type="down" onClick={handleMoveClick} />
           )}
-          <ShowIconButton show={showForm} setShow={setShowForm} />
+          <CollapseIconButton expanded={showForm} setExpanded={setShowForm} />
         </div>
       </div>
       <ExpanderWithHeightTransition expanded={showForm}>
@@ -119,7 +122,7 @@ export const Form = ({
             onClick={() => {
               dispatch(addSectionInForm({ form }));
             }}
-            className="flex items-center rounded-md bg-white py-2 pl-3 pr-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            className="notion-btn notion-btn-secondary mt-2 flex justify-end px-4 py-2"
           >
             <PlusSmallIcon
               className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
@@ -140,6 +143,7 @@ export const FormSection = ({
   showMoveDown,
   showDelete,
   deleteButtonTooltipText,
+  onDelete,
   children,
 }: {
   form: ShowForm;
@@ -148,11 +152,16 @@ export const FormSection = ({
   showMoveDown: boolean;
   showDelete: boolean;
   deleteButtonTooltipText: string;
+  onDelete?: () => void;
   children: React.ReactNode;
 }) => {
   const dispatch = useAppDispatch();
   const handleDeleteClick = () => {
-    dispatch(deleteSectionInFormByIdx({ form, idx }));
+    if (onDelete) {
+      onDelete();
+    } else {
+      dispatch(deleteSectionInFormByIdx({ form, idx }));
+    }
   };
   const handleMoveClick = (direction: "up" | "down") => {
     dispatch(moveSectionInForm({ form, direction, idx }));
@@ -161,9 +170,9 @@ export const FormSection = ({
   return (
     <>
       {idx !== 0 && (
-        <div className="mb-4 mt-6 border-t-2 border-dotted border-gray-200" />
+        <div className="mb-2 mt-4 border-t border-[var(--notion-border)]" />
       )}
-      <div className="relative grid grid-cols-6 gap-3">
+      <div className="relative flex flex-col gap-3">
         {children}
         <div className={`absolute right-0 top-0 flex gap-0.5 `}>
           <div

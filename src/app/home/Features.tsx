@@ -8,29 +8,29 @@ import { Link } from "components/documentation";
 const FEATURES = [
   {
     src: featureFreeSrc,
-    title: "Free Forever",
-    text: "OpenResume is created with the belief that everyone should have free and easy access to a modern professional resume design",
+    title: "Completely Free",
+    text: "No hidden fees, no premium tiers. A professional resume builder that respects your wallet.",
   },
   {
     src: featureUSSrc,
-    title: "U.S. Best Practices",
-    text: "OpenResume has built-in best practices for the U.S. job market and works well with top ATS platforms such as Greenhouse and Lever",
+    title: "ATS Optimized",
+    text: "Built for the U.S. job market. Your resume will pass through Applicant Tracking Systems.",
   },
   {
     src: featurePrivacySrc,
-    title: "Privacy Focus",
-    text: "OpenResume stores data locally in your browser so only you have access to your data and with complete control",
+    title: "Your Data Stays Local",
+    text: "Nothing leaves your browser. Your resume, your privacy, completely under your control.",
   },
   {
     src: featureOpenSourceSrc,
-    title: "Open-Source",
+    title: "Built on OpenResume",
     text: (
       <>
-        OpenResume is an open-source project, and its source code can be viewed
-        by anyone on its{" "}
+        Powered by{" "}
         <Link href="https://github.com/xitanggg/open-resume">
-          GitHub repository
+          OpenResume
         </Link>
+        , an open-source project.
       </>
     ),
   },
@@ -38,21 +38,31 @@ const FEATURES = [
 
 export const Features = () => {
   return (
-    <section className="py-16 lg:py-36">
-      <div className="mx-auto lg:max-w-4xl">
-        <dl className="grid grid-cols-1 justify-items-center gap-y-8 lg:grid-cols-2 lg:gap-x-6 lg:gap-y-16">
+    <section className="bg-[var(--notion-white)] px-6 py-16">
+      <div className="mx-auto max-w-4xl">
+        <h2
+          className="mb-12 text-center font-serif text-2xl font-semibold tracking-tight text-[var(--notion-black)]"
+        >
+          Why NoiceResume?
+        </h2>
+        <dl className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
           {FEATURES.map(({ src, title, text }) => (
-            <div className="px-2" key={title}>
-              <div className="relative w-96 self-center pl-16">
-                <dt className="text-2xl font-bold">
-                  <Image
-                    src={src}
-                    className="absolute left-0 top-1 h-12 w-12"
-                    alt="Feature icon"
-                  />
+            <div
+              key={title}
+              className="notion-card flex items-start gap-4 p-6"
+            >
+              <Image
+                src={src}
+                alt=""
+                className="h-10 w-10 flex-shrink-0"
+              />
+              <div>
+                <dt className="mb-1 font-semibold text-[var(--notion-black)]">
                   {title}
                 </dt>
-                <dd className="mt-2">{text}</dd>
+                <dd className="text-sm text-[var(--notion-warm-gray-500)]">
+                  {text}
+                </dd>
               </div>
             </div>
           ))}

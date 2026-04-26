@@ -55,7 +55,7 @@ export const SkillsForm = () => {
             />
           </div>
         </div>
-        <div className="col-span-full mb-4 mt-6 border-t-2 border-dotted border-gray-200" />
+        <div className="col-span-full mb-4 mt-6 border-t border-[var(--notion-border)]" />
         <InputGroupWrapper
           label="Featured Skills (Optional)"
           className="col-span-full"
