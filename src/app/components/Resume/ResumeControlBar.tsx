@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import {
   ArrowDownTrayIcon,
   MagnifyingGlassPlusIcon,
-  MagnifyingGlassMinusIcon,
 } from "@heroicons/react/24/outline";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
@@ -61,10 +60,10 @@ const ResumeControlBar = ({
       <div className="flex h-[var(--resume-control-bar-height)] items-center justify-between px-[var(--resume-padding)] text-gray-600">
         {/* Zoom Slider */}
         <div className="flex items-center gap-2">
-          <MagnifyingGlassMinusIcon className="h-4 w-4 text-gray-400" />
+          <span className="text-xs text-gray-400">100%</span>
           <input
             type="range"
-            min="50"
+            min="100"
             max="150"
             value={zoomLevel}
             onChange={handleZoomSliderChange}

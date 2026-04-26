@@ -30,7 +30,7 @@ export const Resume = () => {
 
   // Handle zoom slider change
   const handleZoomChange = (percentage: number) => {
-    setZoomLevel(percentage > 0 ? percentage : 100);
+    setZoomLevel(Math.max(100, percentage));
   };
 
   return (
