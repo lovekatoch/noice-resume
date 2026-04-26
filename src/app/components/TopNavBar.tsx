@@ -5,7 +5,7 @@ import { cx } from "lib/cx";
 import { EyeIcon } from "@heroicons/react/24/outline";
 
 const scrollToPreview = () => {
-  const previewSection = document.getElementById("resume-preview-section");
+  const previewSection = document.getElementById("resume-preview");
   if (previewSection) {
     previewSection.scrollIntoView({ behavior: "smooth", block: "start" });
   } else {
@@ -65,10 +65,9 @@ export const TopNavBar = () => {
           {isBuilderPage && (
             <button
               onClick={scrollToPreview}
-              className="notion-btn notion-btn-primary text-sm md:hidden"
+              className="notion-btn notion-btn-primary !px-3 md:hidden"
             >
-              <EyeIcon className="mr-1 h-4 w-4" />
-              Preview
+              <EyeIcon className="h-5 w-5" />
             </button>
           )}
         </nav>
