@@ -183,7 +183,7 @@ export const FormSection = ({
             <MoveIconButton
               type="up"
               size="small"
-              onClick={() => handleMoveClick("up")}
+              onClick={handleMoveClick}
             />
           </div>
           <div
@@ -194,7 +194,7 @@ export const FormSection = ({
             <MoveIconButton
               type="down"
               size="small"
-              onClick={() => handleMoveClick("down")}
+              onClick={handleMoveClick}
             />
           </div>
           <div

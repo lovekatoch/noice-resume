@@ -74,9 +74,14 @@ export const MoveIconButton = ({
   const sizeClassName = size === "medium" ? "h-6 w-6" : "h-4 w-4";
   const Icon = type === "up" ? ArrowSmallUpIcon : ArrowSmallDownIcon;
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onClick(type);
+  };
+
   return (
     <IconButton
-      onClick={() => onClick(type)}
+      onClick={handleClick}
       tooltipText={tooltipText}
       size={size}
     >
