@@ -156,3 +156,76 @@ h1, h2, h3 {
 .duration-300 {
   transition-duration: 150ms;
 }
+
+/* AI Panel Styles */
+.ai-panel-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 5rem;
+}
+
+.ai-panel {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 28rem;
+  background: var(--notion-white);
+  border-radius: 8px;
+  border: 1px solid var(--notion-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.ai-panel-body {
+  min-height: 120px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: var(--notion-warm-dark);
+}
+
+.ai-panel-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  border-top: 1px solid var(--notion-border);
+  padding: 0.75rem 1rem;
+}
+
+/* Streaming Cursor Animation */
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.ai-streaming-cursor::after {
+  content: "|";
+  display: inline-block;
+  animation: blink 1s infinite;
+  color: var(--notion-blue);
+}
+
+/* AI Sparkle Button */
+.ai-sparkle-btn {
+  color: var(--notion-warm-gray-300);
+  transition: color 0.15s ease;
+}
+
+.ai-sparkle-btn:hover {
+  color: var(--notion-blue);
+}
+
+.ai-sparkle-btn:disabled {
+  color: var(--notion-warm-gray-300);
+  cursor: not-allowed;
+  opacity: 0.4;
+}

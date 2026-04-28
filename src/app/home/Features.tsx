@@ -13,7 +13,7 @@ const FEATURES = [
   },
   {
     src: featureUSSrc,
-    title: "ATS Optimized",
+    title: "Built for Global Job Market",
     text: "Built for the U.S. job market. Your resume will pass through Applicant Tracking Systems.",
   },
   {

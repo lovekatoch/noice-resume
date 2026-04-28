@@ -5,6 +5,8 @@ import {
 } from "components/ResumeForm/Form/InputGroup";
 import { FeaturedSkillInput } from "components/ResumeForm/Form/FeaturedSkillInput";
 import { BulletListIconButton } from "components/ResumeForm/Form/IconButton";
+import { AISuggestButton } from "components/AISuggestButton";
+import { AIPanel } from "components/AIPanel";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { selectSkills, changeSkills } from "lib/redux/resumeSlice";
 import {
@@ -12,6 +14,7 @@ import {
   changeShowBulletPoints,
   selectThemeColor,
 } from "lib/redux/settingsSlice";
+import { useState } from "react";
 
 export const SkillsForm = () => {
   const skills = useAppSelector(selectSkills);
@@ -35,6 +38,45 @@ export const SkillsForm = () => {
     dispatch(changeShowBulletPoints({ field: form, value }));
   };
 
+  const [aiPanelOpen, setAiPanelOpen] = useState(false);
+  const [streamingText, setStreamingText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSuggestSkills = (mode: "replace" | "append") => {
+    setAiPanelOpen(true);
+    setIsLoading(true);
+    setTimeout(() => {
+      const sampleSkills = mode === "replace"
+        ? "JavaScript, Python, React, Node.js, SQL, AWS, Docker"
+        : "TypeScript, GraphQL, Kubernetes";
+      setStreamingText(sampleSkills);
+      setIsLoading(false);
+    }, 1500);
+  };
+
+  const handleAccept = (text: string) => {
+    const newSkills = text.split(",").map((s) => s.trim()).filter(Boolean);
+    if (streamingText.includes("JavaScript")) {
+      // This was a replace action
+      dispatch(changeSkills({ field: "descriptions", value: newSkills }));
+    } else {
+      // This was an append action
+      const combined = [...descriptions, ...newSkills];
+      dispatch(changeSkills({ field: "descriptions", value: combined }));
+    }
+    setAiPanelOpen(false);
+    setStreamingText("");
+  };
+
+  const handleRegenerate = () => {
+    setIsLoading(true);
+    setStreamingText("");
+    setTimeout(() => {
+      setStreamingText("Next.js, Tailwind CSS, PostgreSQL, Redis, CI/CD, GitHub Actions");
+      setIsLoading(false);
+    }, 1500);
+  };
+
   return (
     <Form form={form}>
       <div className="col-span-full grid grid-cols-6 gap-3">
@@ -55,6 +97,12 @@ export const SkillsForm = () => {
             />
           </div>
         </div>
+
+        {descriptions.length > 0 && (
+          <div className="col-span-full flex justify-end">
+            <AISuggestButton onSuggest={handleSuggestSkills} />
+          </div>
+        )}
         <div className="col-span-full mb-4 mt-6 border-t border-[var(--notion-border)]" />
         <InputGroupWrapper
           label="Featured Skills (Optional)"
@@ -80,6 +128,14 @@ export const SkillsForm = () => {
           />
         ))}
       </div>
+      <AIPanel
+        isOpen={aiPanelOpen}
+        onClose={() => setAiPanelOpen(false)}
+        onAccept={handleAccept}
+        onRegenerate={handleRegenerate}
+        streamingText={streamingText}
+        isLoading={isLoading}
+      />
     </Form>
   );
 };
