@@ -391,10 +391,8 @@ export async function generateResumeDOCX({
         properties: {
           page: {
             size: {
-              orientation:
-                documentSize === "A4"
-                  ? SectionType.A4
-                  : SectionType.LETTER,
+              width: documentSize === "A4" ? convertInchesToTwip(8.27) : convertInchesToTwip(8.5),
+              height: documentSize === "A4" ? convertInchesToTwip(11.69) : convertInchesToTwip(11),
             },
           },
         },
