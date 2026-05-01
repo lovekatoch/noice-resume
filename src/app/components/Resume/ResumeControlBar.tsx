@@ -48,29 +48,33 @@ const ResumeControlBar = ({
   }, [format]);
 
   useEffect(() => {
-    if (actualDownload) {
-      if (downloadFormat === "docx") {
-        generateResumeDOCX({ resume, settings })
-          .then((blob) => {
-            const url = URL.createObjectURL(blob);
-            const link = globalThis.document.createElement("a");
-            link.href = url;
-            link.download = fileName.replace(/\.pdf$/, ".docx");
-            link.click();
-            URL.revokeObjectURL(url);
+    if (!actualDownload) return;
+
+    if (downloadFormat === "docx") {
+      generateResumeDOCX({ resume, settings })
+        .then((blob) => {
+          if (!blob) {
             setActualDownload(false);
-          })
-          .catch(() => {
-            setActualDownload(false);
-          });
-      } else {
-        if (instance.url) {
+            return;
+          }
+          const url = URL.createObjectURL(blob);
           const link = globalThis.document.createElement("a");
-          link.href = instance.url;
-          link.download = fileName;
+          link.href = url;
+          link.download = fileName.replace(/\.pdf$/, ".docx");
           link.click();
+          URL.revokeObjectURL(url);
           setActualDownload(false);
-        }
+        })
+        .catch(() => {
+          setActualDownload(false);
+        });
+    } else {
+      if (instance.url) {
+        const link = globalThis.document.createElement("a");
+        link.href = instance.url;
+        link.download = fileName;
+        link.click();
+        setActualDownload(false);
       }
     }
   }, [actualDownload, instance.url, fileName, downloadFormat, resume, settings]);
