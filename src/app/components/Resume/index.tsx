@@ -13,8 +13,19 @@ import {
 } from "components/fonts/hooks";
 import { NonEnglishFontsCSSLazyLoader } from "components/fonts/NonEnglishFontsCSSLoader";
 
+export type ExportFormat = "pdf" | "docx";
+
+function formatResumeFileName(name: string, format: "pdf" | "docx"): string {
+  if (!name || name.trim() === "") {
+    return `Resume_${new Date().getFullYear()}.${format}`;
+  }
+  const normalized = name.trim().replace(/\s+/g, "_");
+  return `${normalized}_Resume_${new Date().getFullYear()}.${format}`;
+}
+
 export const Resume = () => {
-  const [zoomLevel, setZoomLevel] = useState(100); // Default 100%
+  const [zoomLevel, setZoomLevel] = useState(100);
+  const [exportFormat, setExportFormat] = useState<ExportFormat>("pdf");
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
   const document = useMemo(
@@ -25,10 +36,8 @@ export const Resume = () => {
   useRegisterReactPDFFont();
   useRegisterReactPDFHyphenationCallback(settings.fontFamily);
 
-  // effectiveScale is always derived from zoomLevel / 100
   const effectiveScale = zoomLevel / 100;
 
-  // Handle zoom slider change
   const handleZoomChange = (percentage: number) => {
     setZoomLevel(Math.max(100, percentage));
   };
@@ -39,10 +48,14 @@ export const Resume = () => {
       <div id="resume-preview" className="relative flex w-full flex-col">
         <ResumeControlBarCSR
           document={document}
-          fileName={resume.profile.name + " - Resume"}
+          fileName={formatResumeFileName(resume.profile.name, exportFormat)}
           scale={effectiveScale}
           zoomLevel={zoomLevel}
           onZoomChange={handleZoomChange}
+          format={exportFormat}
+          resume={resume}
+          settings={settings}
+          onFormatChange={setExportFormat}
         />
         <section className="flex-1 overflow-y-auto p-2 pb-4 scroll-mt-16 md:p-4 md:pb-4">
           <div className="flex justify-center">

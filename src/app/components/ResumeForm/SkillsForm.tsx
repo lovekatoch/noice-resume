@@ -7,6 +7,7 @@ import { FeaturedSkillInput } from "components/ResumeForm/Form/FeaturedSkillInpu
 import { BulletListIconButton } from "components/ResumeForm/Form/IconButton";
 import { AISuggestButton } from "components/AISuggestButton";
 import { AIPanel } from "components/AIPanel";
+import { PremiumGate } from "components/PremiumGate";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { selectSkills, changeSkills } from "lib/redux/resumeSlice";
 import {
@@ -100,7 +101,9 @@ export const SkillsForm = () => {
 
         {descriptions.length > 0 && (
           <div className="col-span-full flex justify-end">
-            <AISuggestButton onSuggest={handleSuggestSkills} />
+            <PremiumGate>
+              <AISuggestButton onSuggest={handleSuggestSkills} />
+            </PremiumGate>
           </div>
         )}
         <div className="col-span-full mb-4 mt-6 border-t border-[var(--notion-border)]" />

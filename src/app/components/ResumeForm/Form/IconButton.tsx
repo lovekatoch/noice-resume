@@ -21,9 +21,14 @@ export const CollapseIconButton = ({
 }) => {
   const tooltipText = expanded ? "Collapse section" : "Expand section";
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setExpanded(!expanded);
+  };
+
   return (
     <IconButton
-      onClick={() => setExpanded(!expanded)}
+      onClick={handleClick}
       tooltipText={tooltipText}
       size="small"
       className="transition-transform duration-300"

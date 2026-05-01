@@ -8,6 +8,17 @@ pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 import type { TextItem as PdfjsTextItem } from "pdfjs-dist/types/src/display/api";
 import type { TextItem, TextItems } from "lib/parse-resume-from-pdf/types";
 
+export class PdfParseError extends Error {
+  constructor(
+    message: string,
+    public partialResult?: TextItems,
+    public recoverable: boolean = false
+  ) {
+    super(message);
+    this.name = "PdfParseError";
+  }
+}
+
 /**
  * Step 1: Read pdf and output textItems by concatenating results from each page.
  *
@@ -22,65 +33,98 @@ import type { TextItem, TextItems } from "lib/parse-resume-from-pdf/types";
  * }
  */
 export const readPdf = async (fileUrl: string): Promise<TextItems> => {
-  const pdfFile = await pdfjs.getDocument(fileUrl).promise;
+  let pdfFile;
+  try {
+    pdfFile = await pdfjs.getDocument(fileUrl).promise;
+  } catch (err) {
+    throw new PdfParseError(
+      "Failed to load PDF document. The file may be corrupted or not a valid PDF.",
+      undefined,
+      false
+    );
+  }
+
+  if (pdfFile.numPages === 0) {
+    throw new PdfParseError(
+      "PDF has no pages",
+      [],
+      false
+    );
+  }
+
   let textItems: TextItems = [];
 
   for (let i = 1; i <= pdfFile.numPages; i++) {
-    // Parse each page into text content
-    const page = await pdfFile.getPage(i);
-    const textContent = await page.getTextContent();
+    let page;
+    try {
+      page = await pdfFile.getPage(i);
+    } catch (err) {
+      throw new PdfParseError(
+        `Failed to read page ${i} of ${pdfFile.numPages}. The page may be corrupted.`,
+        textItems.length > 0 ? textItems : undefined,
+        textItems.length > 0
+      );
+    }
 
-    // Wait for font data to be loaded
-    await page.getOperatorList();
-    const commonObjs = page.commonObjs;
+    let textContent;
+    try {
+      textContent = await page.getTextContent();
+    } catch (err) {
+      throw new PdfParseError(
+        `Failed to extract text from page ${i}. The page content may be corrupted or use an unsupported format.`,
+        textItems.length > 0 ? textItems : undefined,
+        textItems.length > 0
+      );
+    }
 
-    // Convert Pdfjs TextItem type to new TextItem type
-    const pageTextItems = textContent.items.map((item) => {
-      const {
-        str: text,
-        dir, // Remove text direction
-        transform,
-        fontName: pdfFontName,
-        ...otherProps
-      } = item as PdfjsTextItem;
+    try {
+      await page.getOperatorList();
+      const commonObjs = page.commonObjs;
 
-      // Extract x, y position of text item from transform.
-      // As a side note, origin (0, 0) is bottom left.
-      // Reference: https://github.com/mozilla/pdf.js/issues/5643#issuecomment-496648719
-      const x = transform[4];
-      const y = transform[5];
+      const pageTextItems = textContent.items.map((item) => {
+        const {
+          str: text,
+          dir,
+          transform,
+          fontName: pdfFontName,
+          ...otherProps
+        } = item as PdfjsTextItem;
 
-      // Use commonObjs to convert font name to original name (e.g. "GVDLYI+Arial-BoldMT")
-      // since non system font name by default is a loaded name, e.g. "g_d8_f1"
-      // Reference: https://github.com/mozilla/pdf.js/pull/15659
-      const fontObj = commonObjs.get(pdfFontName);
-      const fontName = fontObj.name;
+        const x = transform[4];
+        const y = transform[5];
 
-      // pdfjs reads a "-" as "-­‐" in the resume example. This is to revert it.
-      // Note "-­‐" is "-&#x00AD;‐" with a soft hyphen in between. It is not the same as "--"
-      const newText = text.replace(/-­‐/g, "-");
+        const fontObj = commonObjs.get(pdfFontName);
+        const fontName = fontObj?.name || pdfFontName || "unknown";
 
-      const newItem = {
-        ...otherProps,
-        fontName,
-        text: newText,
-        x,
-        y,
-      };
-      return newItem;
-    });
+        const newText = text.replace(/-­‐/g, "-");
 
-    // Some pdf's text items are not in order. This is most likely a result of creating it
-    // from design softwares, e.g. canvas. The commented out method can sort pageTextItems
-    // by y position to put them back in order. But it is not used since it might be more
-    // helpful to let users know that the pdf is not in order.
-    // pageTextItems.sort((a, b) => Math.round(b.y) - Math.round(a.y));
+        return {
+          ...otherProps,
+          fontName,
+          text: newText,
+          x,
+          y,
+        };
+      });
 
-    // Add text items of each page to total
-    textItems.push(...pageTextItems);
+      textItems.push(...pageTextItems);
+    } catch (err) {
+      throw new PdfParseError(
+        `Failed to process fonts on page ${i}. This may indicate a corrupted or non-standard PDF.`,
+        textItems.length > 0 ? textItems : undefined,
+        textItems.length > 0
+      );
+    }
   }
 
-  // Filter out empty space textItem noise
+  if (textItems.length === 0) {
+    throw new PdfParseError(
+      "PDF loaded successfully but contains no extractable text. The file may contain only images or use an unsupported encoding.",
+      [],
+      false
+    );
+  }
+
   const isEmptySpace = (textItem: TextItem) =>
     !textItem.hasEOL && textItem.text.trim() === "";
   textItems = textItems.filter((textItem) => !isEmptySpace(textItem));

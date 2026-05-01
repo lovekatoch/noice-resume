@@ -15,6 +15,7 @@ import {
   selectIsFirstForm,
   selectIsLastForm,
   selectShowByForm,
+  selectThemeColor,
   ShowForm,
 } from "lib/redux/settingsSlice";
 import {
@@ -79,6 +80,7 @@ export const Form = ({
 
   const isFirstForm = useAppSelector(selectIsFirstForm(form));
   const isLastForm = useAppSelector(selectIsLastForm(form));
+  const themeColor = useAppSelector(selectThemeColor) || "#0075de";
 
   const handleMoveClick = (type: "up" | "down") => {
     dispatch(changeFormOrder({ form, type }));
@@ -139,7 +141,9 @@ export const Form = ({
           {!isLastForm && (
             <MoveIconButton type="down" onClick={handleMoveClick} />
           )}
-          <SparkleIconButton onClick={handleAIOpen} />
+          <span onClick={(e) => e.stopPropagation()}>
+            <SparkleIconButton onClick={handleAIOpen} color={themeColor} />
+          </span>
           <CollapseIconButton expanded={showForm} setExpanded={setShowForm} />
         </div>
       </div>

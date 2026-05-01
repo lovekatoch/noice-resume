@@ -4,11 +4,13 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 interface AISuggestButtonProps {
   onSuggest: (mode: "replace" | "append") => void;
   disabled?: boolean;
+  color?: string;
 }
 
 export const AISuggestButton = ({
   onSuggest,
   disabled = false,
+  color,
 }: AISuggestButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -45,6 +47,7 @@ export const AISuggestButton = ({
           viewBox="0 0 24 24"
           fill="currentColor"
           className="h-4 w-4"
+          style={color ? { color } : undefined}
         >
           <path
             fillRule="evenodd"

@@ -1,6 +1,8 @@
 import "globals.css";
 import { TopNavBar } from "components/TopNavBar";
-import { Analytics } from "@vercel/analytics/react";
+import { PostHogProvider } from "components/PostHogProvider";
+import { PageViewTracker } from "components/PageViewTracker";
+import { ReduxProvider } from "components/ReduxProvider";
 
 export const metadata = {
   title: "NoiceResume - Free Resume Builder",
@@ -19,9 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <TopNavBar />
-        {children}
-        <Analytics />
+        <ReduxProvider>
+          <PostHogProvider>
+            <TopNavBar />
+            {children}
+            <PageViewTracker />
+          </PostHogProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

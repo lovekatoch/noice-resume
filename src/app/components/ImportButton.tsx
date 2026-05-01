@@ -23,7 +23,13 @@ export const ImportButton = () => {
 
     try {
       const fileUrl = URL.createObjectURL(file);
-      const resume = await parseResumeFromPdf(fileUrl);
+      const result = await parseResumeFromPdf(fileUrl);
+
+      if (!result.success) {
+        throw new Error(result.error || "Failed to parse PDF");
+      }
+
+      const { resume } = result;
       const settings = deepClone(initialSettings);
 
       const sections = Object.keys(settings.formToShow) as ShowForm[];
@@ -39,12 +45,13 @@ export const ImportButton = () => {
         settings.formToShow[section] = sectionToFormToShow[section];
       }
 
-      saveStateToLocalStorage({ resume, settings });
+      saveStateToLocalStorage({ resume, settings, user: { isPremium: false, checkoutSessionId: null, customerId: null, checkoutError: null } });
       URL.revokeObjectURL(fileUrl);
       router.push("/resume-builder");
     } catch (err) {
       console.error("Failed to parse PDF:", err);
-      setError("Failed to import PDF. Please try a different file.");
+      const message = err instanceof Error ? err.message : "Failed to import PDF. Please try a different file.";
+      setError(message);
       setIsLoading(false);
     }
   };

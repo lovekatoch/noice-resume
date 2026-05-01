@@ -6,6 +6,7 @@ interface SparkleIconButtonProps {
   className?: string;
   size?: "small" | "medium";
   tooltipText?: string;
+  color?: string;
 }
 
 export const SparkleIconButton = ({
@@ -14,8 +15,10 @@ export const SparkleIconButton = ({
   className = "",
   size = "medium",
   tooltipText = "Enhance with AI",
+  color,
 }: SparkleIconButtonProps) => {
   const sizeClasses = size === "medium" ? "h-5 w-5" : "h-4 w-4";
+  const baseColorClass = color ? "" : "text-[var(--notion-blue)]";
 
   return (
     <Tooltip text={tooltipText}>
@@ -23,7 +26,8 @@ export const SparkleIconButton = ({
         type="button"
         onClick={onClick}
         disabled={disabled}
-        className={`rounded-md p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-[var(--notion-blue)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--notion-blue)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-gray-400 ${className}`}
+        className={`rounded-md p-1 transition-colors hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--notion-blue)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent ${baseColorClass} ${className}`}
+        style={color ? { color } : undefined}
         aria-label={tooltipText}
       >
         <svg

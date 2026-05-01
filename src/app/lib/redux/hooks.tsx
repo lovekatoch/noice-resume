@@ -15,6 +15,11 @@ import {
   setSettings,
   type Settings,
 } from "lib/redux/settingsSlice";
+import {
+  initialUserState,
+  setPremium,
+  type UserState,
+} from "lib/redux/userSlice";
 import { deepMerge } from "lib/deep-merge";
 import type { Resume } from "lib/redux/types";
 
@@ -54,6 +59,15 @@ export const useSetInitialStore = () => {
         state.settings
       ) as Settings;
       dispatch(setSettings(mergedSettingsState));
+    }
+    if (state.user) {
+      const mergedUserState = deepMerge(
+        initialUserState,
+        state.user
+      ) as UserState;
+      if (mergedUserState.isPremium) {
+        dispatch(setPremium(true));
+      }
     }
   }, []);
 };

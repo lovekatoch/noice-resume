@@ -1,16 +1,50 @@
 import { BaseForm } from "components/ResumeForm/Form";
 import { Input, Textarea } from "components/ResumeForm/Form/InputGroup";
+import { SparkleIconButton } from "components/SparkleIconButton";
+import { AIPanel } from "components/AIPanel";
+import { PremiumGate } from "components/PremiumGate";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { changeProfile, selectProfile } from "lib/redux/resumeSlice";
+import { selectThemeColor } from "lib/redux/settingsSlice";
+import { useState } from "react";
 import { ResumeProfile } from "lib/redux/types";
 
 export const ProfileForm = () => {
   const profile = useAppSelector(selectProfile);
   const dispatch = useAppDispatch();
   const { name, email, phone, url, summary, location } = profile;
+  const themeColor = useAppSelector(selectThemeColor) || "#0075de";
 
   const handleProfileChange = (field: keyof ResumeProfile, value: string) => {
     dispatch(changeProfile({ field, value }));
+  };
+
+  const [aiPanelOpen, setAiPanelOpen] = useState(false);
+  const [streamingText, setStreamingText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleAIOpen = () => {
+    setAiPanelOpen(true);
+    setIsLoading(true);
+    setTimeout(() => {
+      setStreamingText("Results-driven professional with a proven track record of delivering measurable outcomes in fast-paced environments.");
+      setIsLoading(false);
+    }, 1500);
+  };
+
+  const handleAccept = (text: string) => {
+    dispatch(changeProfile({ field: "summary", value: text }));
+    setAiPanelOpen(false);
+    setStreamingText("");
+  };
+
+  const handleRegenerate = () => {
+    setIsLoading(true);
+    setStreamingText("");
+    setTimeout(() => {
+      setStreamingText("Innovative problem-solver passionate about leveraging technology to create meaningful impact and drive business growth.");
+      setIsLoading(false);
+    }, 1500);
   };
 
   return (
@@ -24,14 +58,23 @@ export const ProfileForm = () => {
           value={name}
           onChange={handleProfileChange}
         />
-        <Textarea
-          label="Objective"
-          labelClassName="col-span-full"
-          name="summary"
-          placeholder="Entrepreneur and educator obsessed with making education free for anyone"
-          value={summary}
-          onChange={handleProfileChange}
-        />
+        <div className="col-span-full relative">
+          <Textarea
+            label="Objective"
+            labelClassName="col-span-full"
+            name="summary"
+            placeholder="Entrepreneur and educator obsessed with making education free for anyone"
+            value={summary}
+            onChange={handleProfileChange}
+          />
+{summary.length > 0 && (
+              <div className="absolute right-2 top-8">
+                <PremiumGate>
+                  <SparkleIconButton onClick={handleAIOpen} color={themeColor} size="small" />
+                </PremiumGate>
+              </div>
+            )}
+        </div>
         <Input
           label="Email"
           labelClassName="col-span-full"
@@ -65,6 +108,14 @@ export const ProfileForm = () => {
           onChange={handleProfileChange}
         />
       </div>
+      <AIPanel
+        isOpen={aiPanelOpen}
+        onClose={() => setAiPanelOpen(false)}
+        onAccept={handleAccept}
+        onRegenerate={handleRegenerate}
+        streamingText={streamingText}
+        isLoading={isLoading}
+      />
     </BaseForm>
   );
 };
