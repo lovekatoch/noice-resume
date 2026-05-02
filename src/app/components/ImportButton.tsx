@@ -74,6 +74,7 @@ export const ImportButton = () => {
         onClick={handleClick}
         disabled={isLoading}
         className="notion-btn notion-btn-secondary rounded-r-none border-r-0"
+        aria-label={isLoading ? "Importing PDF" : "Import PDF"}
       >
         {isLoading ? (
           <>
@@ -81,6 +82,7 @@ export const ImportButton = () => {
               className="h-4 w-4 animate-spin"
               viewBox="0 0 24 24"
               fill="none"
+              aria-hidden="true"
             >
               <circle
                 className="opacity-25"
@@ -100,7 +102,7 @@ export const ImportButton = () => {
           </>
         ) : (
           <>
-            <ArrowUpTrayIcon className="h-4 w-4" />
+            <ArrowUpTrayIcon className="h-4 w-4" aria-hidden="true" />
             <span className="ml-2">Import pdf</span>
           </>
         )}

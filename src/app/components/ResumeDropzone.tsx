@@ -153,10 +153,10 @@ export const ResumeDropzone = ({
             <button
               type="button"
               className="outline-theme-blue rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
-              title="Remove file"
+              aria-label="Remove file"
               onClick={onRemove}
             >
-              <XMarkIcon className="h-6 w-6" />
+              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
         )}
@@ -188,6 +188,7 @@ export const ResumeDropzone = ({
                   type="button"
                   className="btn-primary"
                   onClick={onImportClick}
+                  aria-label="Import and continue"
                 >
                   Import and Continue <span aria-hidden="true">→</span>
                 </button>

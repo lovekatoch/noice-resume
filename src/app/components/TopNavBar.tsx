@@ -77,8 +77,9 @@ export const TopNavBar = () => {
             <button
               onClick={scrollToPreview}
               className="notion-btn notion-btn-primary !px-3 md:hidden"
+              aria-label="Preview resume"
             >
-              <EyeIcon className="h-5 w-5" />
+              <EyeIcon className="h-5 w-5" aria-hidden="true" />
             </button>
           )}
           {isPremium && (

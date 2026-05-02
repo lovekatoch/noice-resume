@@ -55,8 +55,9 @@ export const DownloadConfirmModal = ({
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+          aria-label="Close modal"
         >
-          <XMarkIcon className="h-5 w-5" />
+          <XMarkIcon className="h-5 w-5" aria-hidden="true" />
         </button>
 
         {!isComplete ? (
