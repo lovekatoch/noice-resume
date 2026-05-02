@@ -17,7 +17,7 @@ export const SparkleIconButton = ({
   tooltipText = "Enhance with AI",
   color,
 }: SparkleIconButtonProps) => {
-  const sizeClasses = size === "medium" ? "h-5 w-5" : "h-4 w-4";
+  const sizeClasses = size === "medium" ? "h-7 w-7" : "h-5 w-5";
   const baseColorClass = color ? "" : "text-[var(--notion-blue)]";
 
   return (
@@ -26,7 +26,7 @@ export const SparkleIconButton = ({
         type="button"
         onClick={onClick}
         disabled={disabled}
-        className={`rounded-md p-1 transition-colors hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--notion-blue)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent ${baseColorClass} ${className}`}
+        className={`rounded-md p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--notion-blue)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent ${baseColorClass} ${className}`}
         style={color ? { color } : undefined}
         aria-label={tooltipText}
       >
