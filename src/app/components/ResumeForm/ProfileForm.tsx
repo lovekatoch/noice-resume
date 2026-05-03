@@ -6,8 +6,8 @@ import { PremiumGate } from "components/PremiumGate";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { changeProfile, selectProfile } from "lib/redux/resumeSlice";
 import { selectThemeColor } from "lib/redux/settingsSlice";
-import { useState } from "react";
 import { ResumeProfile } from "lib/redux/types";
+import { useAIPanel } from "lib/hooks/useAIPanel";
 
 export const ProfileForm = () => {
   const profile = useAppSelector(selectProfile);
@@ -19,33 +19,23 @@ export const ProfileForm = () => {
     dispatch(changeProfile({ field, value }));
   };
 
-  const [aiPanelOpen, setAiPanelOpen] = useState(false);
-  const [streamingText, setStreamingText] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleAIOpen = () => {
-    setAiPanelOpen(true);
-    setIsLoading(true);
-    setTimeout(() => {
-      setStreamingText("Results-driven professional with a proven track record of delivering measurable outcomes in fast-paced environments.");
-      setIsLoading(false);
-    }, 1500);
-  };
-
-  const handleAccept = (text: string) => {
-    dispatch(changeProfile({ field: "summary", value: text }));
-    setAiPanelOpen(false);
-    setStreamingText("");
-  };
-
-  const handleRegenerate = () => {
-    setIsLoading(true);
-    setStreamingText("");
-    setTimeout(() => {
-      setStreamingText("Innovative problem-solver passionate about leveraging technology to create meaningful impact and drive business growth.");
-      setIsLoading(false);
-    }, 1500);
-  };
+  const {
+    aiPanelOpen,
+    streamingText,
+    isLoading,
+    openPanel,
+    closePanel,
+    handleAccept,
+    handleRegenerate,
+  } = useAIPanel({
+    onAccept: (text) => {
+      dispatch(changeProfile({ field: "summary", value: text }));
+    },
+    generateMock: (isRegenerate) =>
+      isRegenerate
+        ? "Innovative problem-solver passionate about leveraging technology to create meaningful impact and drive business growth."
+        : "Results-driven professional with a proven track record of delivering measurable outcomes in fast-paced environments.",
+  });
 
   return (
     <BaseForm>
@@ -70,7 +60,7 @@ export const ProfileForm = () => {
 {summary.length > 0 && (
               <div className="absolute right-2 top-8">
                 <PremiumGate>
-                  <SparkleIconButton onClick={handleAIOpen} color={themeColor} size="small" />
+                  <SparkleIconButton onClick={() => openPanel()} color={themeColor} size="small" />
                 </PremiumGate>
               </div>
             )}
@@ -110,7 +100,7 @@ export const ProfileForm = () => {
       </div>
       <AIPanel
         isOpen={aiPanelOpen}
-        onClose={() => setAiPanelOpen(false)}
+        onClose={closePanel}
         onAccept={handleAccept}
         onRegenerate={handleRegenerate}
         streamingText={streamingText}

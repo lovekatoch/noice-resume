@@ -15,45 +15,33 @@ import {
 } from "lib/redux/resumeSlice";
 import { selectThemeColor } from "lib/redux/settingsSlice";
 import type { ResumeWorkExperience } from "lib/redux/types";
-import { useState } from "react";
+import { useAIPanel } from "lib/hooks/useAIPanel";
 
 export const WorkExperiencesForm = () => {
   const workExperiences = useAppSelector(selectWorkExperiences);
   const dispatch = useAppDispatch();
   const themeColor = useAppSelector(selectThemeColor) || "#0075de";
 
-  const [aiPanelOpen, setAiPanelOpen] = useState(false);
-  const [aiTargetIdx, setAiTargetIdx] = useState<number | null>(null);
-  const [streamingText, setStreamingText] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleAIOpen = (idx: number) => {
-    setAiTargetIdx(idx);
-    setAiPanelOpen(true);
-    setIsLoading(true);
-    setTimeout(() => {
-      setStreamingText("Led cross-functional team of 5 engineers to deliver feature ahead of schedule, resulting in 25% improvement in user engagement.");
-      setIsLoading(false);
-    }, 1500);
-  };
-
-  const handleAccept = (text: string) => {
-    if (aiTargetIdx !== null) {
-      dispatch(changeWorkExperiences({ idx: aiTargetIdx, field: "descriptions", value: [text] }));
-    }
-    setAiPanelOpen(false);
-    setStreamingText("");
-    setAiTargetIdx(null);
-  };
-
-  const handleRegenerate = () => {
-    setIsLoading(true);
-    setStreamingText("");
-    setTimeout(() => {
-      setStreamingText("Spearheaded initiatives that streamlined processes, reducing operational costs by 15% while maintaining quality standards.");
-      setIsLoading(false);
-    }, 1500);
-  };
+  const {
+    aiPanelOpen,
+    streamingText,
+    isLoading,
+    aiTargetIdx,
+    openPanel,
+    closePanel,
+    handleAccept,
+    handleRegenerate,
+  } = useAIPanel({
+    onAccept: (text) => {
+      if (aiTargetIdx !== null) {
+        dispatch(changeWorkExperiences({ idx: aiTargetIdx, field: "descriptions", value: [text] }));
+      }
+    },
+    generateMock: (isRegenerate) =>
+      isRegenerate
+        ? "Spearheaded initiatives that streamlined processes, reducing operational costs by 15% while maintaining quality standards."
+        : "Led cross-functional team of 5 engineers to deliver feature ahead of schedule, resulting in 25% improvement in user engagement.",
+  });
 
   return (
     <Form form="workExperiences" addButtonText="Add Job">
@@ -128,7 +116,7 @@ export const WorkExperiencesForm = () => {
               {descriptions.length > 0 && (
                 <div className="absolute right-2 top-8">
                   <PremiumGate>
-                    <SparkleIconButton onClick={() => handleAIOpen(idx)} color={themeColor} size="small" />
+                    <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" />
                   </PremiumGate>
                 </div>
               )}
@@ -138,7 +126,7 @@ export const WorkExperiencesForm = () => {
       })}
       <AIPanel
         isOpen={aiPanelOpen}
-        onClose={() => setAiPanelOpen(false)}
+        onClose={closePanel}
         onAccept={handleAccept}
         onRegenerate={handleRegenerate}
         streamingText={streamingText}
