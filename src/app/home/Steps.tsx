@@ -6,28 +6,23 @@ const STEPS = [
 
 export const Steps = () => {
   return (
-    <section className="bg-[var(--notion-warm-white)] px-8 py-16">
-      <h2
-        className="mb-10 text-center font-display text-2xl font-semibold tracking-tight text-[var(--notion-black)]"
-      >
+    <section className="bg-[var(--surface)] px-6 py-16">
+      <h2 className="mb-12 text-center font-display text-2xl font-semibold tracking-tight text-[var(--fg)]">
         How it works
       </h2>
-      <div className="mx-auto max-w-3xl">
-        <dl className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-4">
-          {STEPS.map(({ title, text }, idx) => (
-            <div key={idx} className="notion-card p-6 text-center">
-              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--notion-blue)] text-white">
-                <span className="text-lg font-semibold">{idx + 1}</span>
-              </div>
-              <dt className="mb-2 font-semibold text-[var(--notion-black)]">
-                {title}
-              </dt>
-              <dd className="text-sm text-[var(--notion-warm-gray-500)]">
-                {text}
-              </dd>
+      <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">
+        {STEPS.map(({ title, text }, idx) => (
+          <div
+            key={idx}
+            className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 text-center shadow-sm"
+          >
+            <div className="mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] text-sm font-semibold text-white">
+              {idx + 1}
             </div>
-          ))}
-        </dl>
+            <h3 className="mb-2 font-semibold text-[var(--fg)]">{title}</h3>
+            <p className="text-sm text-[var(--muted)]">{text}</p>
+          </div>
+        ))}
       </div>
     </section>
   );

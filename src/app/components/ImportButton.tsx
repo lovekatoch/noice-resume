@@ -73,7 +73,7 @@ export const ImportButton = () => {
         type="button"
         onClick={handleClick}
         disabled={isLoading}
-        className="notion-btn notion-btn-secondary rounded-r-none border-r-0"
+        className="inline-flex items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-6 py-2.5 font-medium text-[var(--fg)] transition hover:bg-[var(--bg)]"
         aria-label={isLoading ? "Importing PDF" : "Import PDF"}
       >
         {isLoading ? (

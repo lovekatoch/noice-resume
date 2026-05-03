@@ -4,7 +4,7 @@ import { Features } from "home/Features";
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-screen-2xl bg-[var(--notion-warm-white)] text-[var(--notion-black)]">
+    <main className="bg-[var(--bg)] text-[var(--fg)]">
       <Hero />
       <Steps />
       <Features />

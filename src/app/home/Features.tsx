@@ -38,31 +38,25 @@ const FEATURES = [
 
 export const Features = () => {
   return (
-    <section className="bg-[var(--notion-white)] px-6 py-16">
+    <section className="bg-[var(--bg)] px-6 py-16">
       <div className="mx-auto max-w-4xl">
-        <h2
-          className="mb-12 text-center font-display text-2xl font-semibold tracking-tight text-[var(--notion-black)]"
-        >
+        <h2 className="mb-12 text-center font-display text-2xl font-semibold tracking-tight text-[var(--fg)]">
           Why NoiceResume?
         </h2>
         <dl className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
           {FEATURES.map(({ src, title, text }) => (
             <div
               key={title}
-              className="notion-card flex items-start gap-4 p-6"
+              className="flex items-start gap-4 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm"
             >
-              <Image
-                src={src}
-                alt=""
-                className="h-10 w-10 flex-shrink-0"
-              />
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--accent-light)]">
+                <Image src={src} alt="" className="h-6 w-6" />
+              </div>
               <div>
-                <dt className="mb-1 font-semibold text-[var(--notion-black)]">
+                <dt className="mb-1 font-semibold text-[var(--fg)]">
                   {title}
                 </dt>
-                <dd className="text-sm text-[var(--notion-warm-gray-500)]">
-                  {text}
-                </dd>
+                <dd className="text-sm text-[var(--muted)]">{text}</dd>
               </div>
             </div>
           ))}
