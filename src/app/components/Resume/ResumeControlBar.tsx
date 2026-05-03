@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   ArrowDownTrayIcon,
   MagnifyingGlassPlusIcon,
+  MinusIcon,
 } from "@heroicons/react/24/outline";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
@@ -100,37 +101,15 @@ const ResumeControlBar = ({
         className="flex items-center justify-between border-b px-4 py-2"
         style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--fg)" }}
       >
-        {/* Format Toggle */}
-        <div className="flex items-center gap-1 rounded-md p-0.5"
-          style={{ backgroundColor: "var(--bg)", border: "1px solid var(--border)" }}
-        >
-          <button
-            onClick={() => onFormatChange("pdf")}
-            className="rounded-sm px-3 py-1 text-xs font-medium transition-colors"
-            style={{
-              backgroundColor: format === "pdf" ? "var(--surface)" : "transparent",
-              color: format === "pdf" ? "var(--fg)" : "var(--muted)",
-              boxShadow: format === "pdf" ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
-            }}
-          >
-            PDF
-          </button>
-          <button
-            onClick={() => onFormatChange("docx")}
-            className="rounded-sm px-3 py-1 text-xs font-medium transition-colors"
-            style={{
-              backgroundColor: format === "docx" ? "var(--surface)" : "transparent",
-              color: format === "docx" ? "var(--fg)" : "var(--muted)",
-              boxShadow: format === "docx" ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
-            }}
-          >
-            DOCX
-          </button>
-        </div>
-
-        {/* Zoom Slider */}
+        {/* Zoom Slider — shifted left */}
         <div className="flex items-center gap-2">
-          <span className="text-xs" style={{ color: "var(--muted)" }}>100%</span>
+          <button
+            onClick={() => onZoomChange(Math.max(100, zoomLevel - 10))}
+            className="flex h-6 w-6 items-center justify-center rounded transition-colors hover:bg-[var(--border)]"
+            aria-label="Zoom out"
+          >
+            <MinusIcon className="h-3.5 w-3.5" style={{ color: "var(--muted)" }} />
+          </button>
           <input
             type="range"
             min="100"
@@ -141,7 +120,7 @@ const ResumeControlBar = ({
             style={{ backgroundColor: "var(--border)", accentColor: "var(--accent)" }}
           />
           <MagnifyingGlassPlusIcon className="h-4 w-4" style={{ color: "var(--muted)" }} />
-          <span className="min-w-[3rem] text-sm font-medium" style={{ color: "var(--fg)" }}>
+          <span className="min-w-[2.5rem] text-sm font-medium" style={{ color: "var(--fg)" }}>
             {zoomLevel}%
           </span>
         </div>

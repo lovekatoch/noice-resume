@@ -5,7 +5,6 @@ import {
 } from "components/ResumeForm/Form/InputGroup";
 import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
-import { PremiumGate } from "components/PremiumGate";
 import type { CreateHandleChangeArgsWithDescriptions } from "components/ResumeForm/types";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import {
@@ -115,9 +114,7 @@ export const WorkExperiencesForm = () => {
               />
               {descriptions.length > 0 && (
                 <div className="absolute right-2 top-8">
-                  <PremiumGate>
                     <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" />
-                  </PremiumGate>
                 </div>
               )}
             </div>

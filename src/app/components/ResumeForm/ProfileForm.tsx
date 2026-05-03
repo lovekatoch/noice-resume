@@ -2,7 +2,6 @@ import { BaseForm } from "components/ResumeForm/Form";
 import { Input, Textarea } from "components/ResumeForm/Form/InputGroup";
 import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
-import { PremiumGate } from "components/PremiumGate";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { changeProfile, selectProfile } from "lib/redux/resumeSlice";
 import { selectThemeColor } from "lib/redux/settingsSlice";
@@ -59,9 +58,7 @@ export const ProfileForm = () => {
           />
 {summary.length > 0 && (
               <div className="absolute right-2 top-8">
-                <PremiumGate>
                   <SparkleIconButton onClick={() => openPanel()} color={themeColor} size="small" />
-                </PremiumGate>
               </div>
             )}
         </div>
