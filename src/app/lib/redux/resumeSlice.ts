@@ -63,16 +63,9 @@ export const initialResumeState: Resume = {
   custom: initialCustom,
 };
 
-// Keep the field & value type in sync with CreateHandleChangeArgsWithDescriptions (components\ResumeForm\types.ts)
-export type CreateChangeActionWithDescriptions<T> = {
-  idx: number;
-} & (
-  | {
-      field: Exclude<keyof T, "descriptions">;
-      value: string;
-    }
-  | { field: "descriptions"; value: string[] }
-);
+type ChangeDescriptionsAction<T extends { descriptions: string[] }> = {
+  [K in keyof T]: { field: K; value: T[K] };
+}[keyof T];
 
 export const resumeSlice = createSlice({
   name: "resume",
@@ -88,28 +81,44 @@ export const resumeSlice = createSlice({
     changeWorkExperiences: (
       draft,
       action: PayloadAction<
-        CreateChangeActionWithDescriptions<ResumeWorkExperience>
+        { idx: number } & ChangeDescriptionsAction<ResumeWorkExperience>
       >
     ) => {
-      const { idx, field, value } = action.payload;
-      const workExperience = draft.workExperiences[idx];
-      workExperience[field] = value as any;
+      const payload = action.payload;
+      const workExperience = draft.workExperiences[payload.idx];
+      if (payload.field === "descriptions") {
+        workExperience.descriptions = payload.value;
+      } else {
+        workExperience[payload.field] = payload.value;
+      }
     },
     changeEducations: (
       draft,
-      action: PayloadAction<CreateChangeActionWithDescriptions<ResumeEducation>>
+      action: PayloadAction<
+        { idx: number } & ChangeDescriptionsAction<ResumeEducation>
+      >
     ) => {
-      const { idx, field, value } = action.payload;
-      const education = draft.educations[idx];
-      education[field] = value as any;
+      const payload = action.payload;
+      const education = draft.educations[payload.idx];
+      if (payload.field === "descriptions") {
+        education.descriptions = payload.value;
+      } else {
+        education[payload.field] = payload.value;
+      }
     },
     changeProjects: (
       draft,
-      action: PayloadAction<CreateChangeActionWithDescriptions<ResumeProject>>
+      action: PayloadAction<
+        { idx: number } & ChangeDescriptionsAction<ResumeProject>
+      >
     ) => {
-      const { idx, field, value } = action.payload;
-      const project = draft.projects[idx];
-      project[field] = value as any;
+      const payload = action.payload;
+      const project = draft.projects[payload.idx];
+      if (payload.field === "descriptions") {
+        project.descriptions = payload.value;
+      } else {
+        project[payload.field] = payload.value;
+      }
     },
     changeSkills: (
       draft,
