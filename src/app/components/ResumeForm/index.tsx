@@ -29,6 +29,16 @@ export const ResumeForm = () => {
   const formsOrder = useAppSelector(selectFormsOrder);
   const [activeTab, setActiveTab] = useState<"content" | "style">("content");
 
+  const handleTabChange = (tab: "content" | "style") => {
+    setActiveTab(tab);
+    if (tab === "style") {
+      // Scroll to the resume preview section for a seamless experience
+      setTimeout(() => {
+        document.getElementById("resume-preview")?.scrollIntoView({ behavior: "smooth" });
+      }, 50);
+    }
+  };
+
   return (
     <div className="w-full md:h-[calc(100vh-var(--top-nav-bar-height))] md:overflow-y-scroll scrollbar-thin scrollbar-track-gray-100">
       <div
@@ -46,7 +56,7 @@ export const ResumeForm = () => {
             <button
               key={tab}
               type="button"
-              onClick={() => setActiveTab(tab)}
+              onClick={() => handleTabChange(tab)}
               className="px-3 py-1 text-sm font-medium rounded-md transition-colors"
               style={{
                 backgroundColor:
@@ -58,7 +68,7 @@ export const ResumeForm = () => {
                     : "none",
               }}
             >
-              {tab === "content" ? "Content" : "Style"}
+              {tab === "content" ? "Content" : "Preview"}
             </button>
           ))}
         </div>
