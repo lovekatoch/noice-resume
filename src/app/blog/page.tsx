@@ -60,7 +60,7 @@ const POSTS = [
 export default function BlogIndex() {
   return (
     <main className="mx-auto max-w-4xl bg-[var(--notion-warm-white)] px-6 py-16 text-[var(--notion-black)]">
-      <h1 className="mb-2 text-center font-serif text-4xl font-bold tracking-tight">
+      <h1 className="mb-2 text-center font-display text-4xl font-bold tracking-tight">
         NoiceResume Blog
       </h1>
       <p className="mb-12 text-center text-lg text-[var(--notion-warm-gray-500)]">
@@ -83,7 +83,7 @@ export default function BlogIndex() {
               ))}
             </div>
             <Link href={`/blog/${post.slug}`}>
-              <h2 className="mb-2 font-serif text-xl font-semibold text-[var(--notion-black)] hover:text-[var(--notion-blue)]">
+              <h2 className="mb-2 font-display text-xl font-semibold text-[var(--notion-black)] hover:text-[var(--notion-blue)]">
                 {post.title}
               </h2>
             </Link>

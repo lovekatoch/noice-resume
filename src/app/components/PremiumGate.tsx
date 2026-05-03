@@ -27,15 +27,15 @@ export const PremiumGate = ({
   return (
     <>
       {showBadge && (
-        <span className="inline-flex items-center rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-2 py-0.5 text-xs font-semibold text-white shadow-sm">
+        <span className="inline-flex items-center rounded-full bg-gradient-to-r from-[#5E6AD2] to-[#4a56b8] px-2 py-0.5 text-xs font-semibold text-white shadow-sm">
           {badgeText}
         </span>
       )}
       {fallback ? (
         fallback
       ) : (
-        <div className="flex flex-col items-center justify-center rounded-lg border border-amber-200 bg-amber-50 p-4 text-center">
-          <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-white">
+        <div className="flex flex-col items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--bg)] p-4 text-center">
+          <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-[#5E6AD2] to-[#4a56b8] text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

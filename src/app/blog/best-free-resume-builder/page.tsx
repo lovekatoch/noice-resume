@@ -23,7 +23,7 @@ export default function BestFreeResumeBuilder() {
         </Link>
       </div>
 
-      <h1 className="mb-4 font-serif text-3xl font-bold leading-tight tracking-tight lg:text-4xl">
+      <h1 className="mb-4 font-display text-3xl font-bold leading-tight tracking-tight lg:text-4xl">
         Best Free Resume Builder: 7 Options Compared for 2025
       </h1>
 
@@ -39,7 +39,7 @@ export default function BestFreeResumeBuilder() {
           ones that are <em>actually</em> free and actually good.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           How We Evaluated
         </h2>
 
@@ -53,7 +53,7 @@ export default function BestFreeResumeBuilder() {
           <li><strong>Privacy</strong> — Is your data stored locally or on a server?</li>
         </ul>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           The Comparison
         </h2>
 
@@ -122,11 +122,11 @@ export default function BestFreeResumeBuilder() {
           </table>
         </div>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           Detailed Reviews
         </h2>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           NoiceResume — Best Overall Free Option
         </h3>
 
@@ -144,7 +144,7 @@ export default function BestFreeResumeBuilder() {
           builder that produces ATS-friendly PDFs.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           Reactive Resume — Best Open-Source Option
         </h3>
 
@@ -158,7 +158,7 @@ export default function BestFreeResumeBuilder() {
           want full control.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           Google Docs — Best for Simplicity
         </h3>
 
@@ -172,7 +172,7 @@ export default function BestFreeResumeBuilder() {
           ready.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           Canva — Best for Design (with Caveats)
         </h3>
 
@@ -186,7 +186,7 @@ export default function BestFreeResumeBuilder() {
           more than ATS compatibility.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           Zety, Novoresume, Resume.io — The Paid Pretenders
         </h3>
 
@@ -197,7 +197,7 @@ export default function BestFreeResumeBuilder() {
           truly free.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           Our Recommendation
         </h2>
 

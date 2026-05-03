@@ -23,7 +23,7 @@ export default function FreeVsPaidResumeBuilders() {
         </Link>
       </div>
 
-      <h1 className="mb-4 font-serif text-3xl font-bold leading-tight tracking-tight lg:text-4xl">
+      <h1 className="mb-4 font-display text-3xl font-bold leading-tight tracking-tight lg:text-4xl">
         Free vs Paid Resume Builders: Which One Is Right for You?
       </h1>
 
@@ -44,7 +44,7 @@ export default function FreeVsPaidResumeBuilders() {
           you&rsquo;re looking for. Let&rsquo;s break it down.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           What Free Resume Builders Offer
         </h2>
 
@@ -68,7 +68,7 @@ export default function FreeVsPaidResumeBuilders() {
           now available for free.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           What Paid Resume Builders Offer
         </h2>
 
@@ -92,7 +92,7 @@ export default function FreeVsPaidResumeBuilders() {
           This is the most common complaint across all major paid resume builders.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           Head-to-Head Comparison
         </h2>
 
@@ -145,7 +145,7 @@ export default function FreeVsPaidResumeBuilders() {
           </table>
         </div>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           When a Free Builder Is the Right Choice
         </h2>
 
@@ -158,7 +158,7 @@ export default function FreeVsPaidResumeBuilders() {
           <li>You don&rsquo;t need advanced design customization</li>
         </ul>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           When a Paid Builder Might Be Worth It
         </h2>
 
@@ -170,7 +170,7 @@ export default function FreeVsPaidResumeBuilders() {
           <li>Your company reimburses job search expenses</li>
         </ul>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           The Hidden Costs of &ldquo;Free&rdquo; Builders
         </h2>
 
@@ -192,7 +192,7 @@ export default function FreeVsPaidResumeBuilders() {
           holding your resume hostage.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           The Verdict
         </h2>
 

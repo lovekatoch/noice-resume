@@ -27,7 +27,7 @@ export const EducationsForm = () => {
   const dispatch = useAppDispatch();
   const form = "educations";
   const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
-  const themeColor = useAppSelector(selectThemeColor) || "#0075de";
+  const themeColor = useAppSelector(selectThemeColor) || "#5E6AD2";
 
   const {
     aiPanelOpen,

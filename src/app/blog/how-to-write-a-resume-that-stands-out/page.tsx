@@ -23,7 +23,7 @@ export default function HowToWriteResumeThatStandsOut() {
         </Link>
       </div>
 
-      <h1 className="mb-4 font-serif text-3xl font-bold leading-tight tracking-tight lg:text-4xl">
+      <h1 className="mb-4 font-display text-3xl font-bold leading-tight tracking-tight lg:text-4xl">
         How to Write a Resume That Stands Out in 2026
       </h1>
 
@@ -45,7 +45,7 @@ export default function HowToWriteResumeThatStandsOut() {
           you can build a resume that consistently gets through. Here&rsquo;s exactly how.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           1. Lead with Impact, Not Description
         </h2>
 
@@ -69,7 +69,7 @@ export default function HowToWriteResumeThatStandsOut() {
           one without.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           2. Optimize for ATS Without Sacrificing Readability
         </h2>
 
@@ -109,7 +109,7 @@ export default function HowToWriteResumeThatStandsOut() {
           look in real time.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           3. Tailor Every Resume to the Role
         </h2>
 
@@ -134,7 +134,7 @@ export default function HowToWriteResumeThatStandsOut() {
           </li>
         </ul>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           4. Design Matters — But Keep It Professional
         </h2>
 
@@ -162,7 +162,7 @@ export default function HowToWriteResumeThatStandsOut() {
           </li>
         </ul>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           5. Cut the Fluff
         </h2>
 
@@ -177,7 +177,7 @@ export default function HowToWriteResumeThatStandsOut() {
           <li><strong>Irrelevant work experience</strong> — That summer job from 10 years ago? Cut it unless it&rsquo;s directly relevant.</li>
         </ul>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           6. Use AI as Your Writing Partner
         </h2>
 
@@ -193,7 +193,7 @@ export default function HowToWriteResumeThatStandsOut() {
           stand out.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           The Bottom Line
         </h2>
 

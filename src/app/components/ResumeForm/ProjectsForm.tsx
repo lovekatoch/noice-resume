@@ -20,7 +20,7 @@ import { useAIPanel } from "lib/hooks/useAIPanel";
 export const ProjectsForm = () => {
   const projects = useAppSelector(selectProjects);
   const dispatch = useAppDispatch();
-  const themeColor = useAppSelector(selectThemeColor) || "#0075de";
+  const themeColor = useAppSelector(selectThemeColor) || "#5E6AD2";
 
   const {
     aiPanelOpen,

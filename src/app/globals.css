@@ -1,21 +1,21 @@
 @import url("/fonts/fonts.css");
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
   .btn-primary {
-    @apply bg-[#0075de] text-white inline-block rounded-lg px-6 py-2 font-semibold;
+    @apply bg-[#5E6AD2] text-white inline-block rounded-lg px-6 py-2 font-semibold;
   }
   .text-primary {
-    @apply text-[#0075de] !important;
+    @apply text-[#5E6AD2] !important;
   }
   .bg-primary {
-    @apply bg-[#0075de] text-white;
+    @apply bg-[#5E6AD2] text-white;
   }
   .outline-theme-blue {
-    @apply hover:opacity-80 hover:outline-[color:var(--notion-blue)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--notion-blue)];
+    @apply hover:opacity-80 hover:outline-[color:var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)];
   }
   .sr-only {
     position: absolute;
@@ -32,21 +32,34 @@
 }
 
 :root {
-  /* Notion Color Palette */
-  --notion-black: rgba(0,0,0,0.9);
-  --notion-white: #ffffff;
-  --notion-blue: #0075de;
-  --notion-warm-white: #f7f6f3;
-  --notion-warm-dark: #31302e;
-  --notion-warm-gray-500: #615d59;
-  --notion-warm-gray-300: #a39e98;
-  --notion-border: rgba(0,0,0,0.08);
-  --notion-border-strong: rgba(0,0,0,0.1);
+  /* Linear-Stripe Palette */
+  --bg: #F7F8FA;
+  --surface: #FFFFFF;
+  --fg: #0C1628;
+  --muted: #6b7280;
+  --border: rgba(0,0,0,0.08);
+  --accent: #5E6AD2;
+  --accent-hover: #4a56b8;
+  --accent-light: rgba(94,106,210,0.1);
 
   /* Semantic Colors */
-  --notion-success: #2a9d99;
-  --notion-green: #1aae39;
-  --notion-orange: #dd5b00;
+  --success: #2a9d99;
+  --green: #1aae39;
+  --orange: #dd5b00;
+
+  /* Legacy alias (for compatibility with remaining var() references) */
+  --notion-white: var(--surface);
+  --notion-warm-white: var(--bg);
+  --notion-black: var(--fg);
+  --notion-blue: var(--accent);
+  --notion-warm-dark: var(--fg);
+  --notion-warm-gray-500: var(--muted);
+  --notion-warm-gray-300: #9ca3af;
+  --notion-border: var(--border);
+  --notion-border-strong: rgba(0,0,0,0.1);
+  --notion-success: var(--success);
+  --notion-green: var(--green);
+  --notion-orange: var(--orange);
 
   /* Spacing */
   --top-nav-bar-height: 3.5rem;
@@ -60,48 +73,48 @@
   --spacing-2xl: 3rem;
 
   /* Typography */
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* Base typography */
 body {
-  font-family: var(--font-sans);
-  color: var(--notion-black);
-  background-color: var(--notion-warm-white);
+  font-family: var(--font-body);
+  color: var(--fg);
+  background-color: var(--bg);
 }
 
-/* Serif headings */
+/* Headings use Inter too */
 h1, h2, h3 {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
 }
 
 /* Notion-style border */
 .notion-border {
-  border: 1px solid var(--notion-border);
+  border: 1px solid var(--border);
 }
 
 /* Notion-style card */
 .notion-card {
-  background: var(--notion-white);
+  background: var(--surface);
   border-radius: 8px;
-  border: 1px solid var(--notion-border);
+  border: 1px solid var(--border);
 }
 
 /* Notion-style input */
 .notion-input {
   height: 40px;
-  border: 1px solid var(--notion-border);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0 var(--spacing-sm);
-  font-family: var(--font-sans);
-  background: var(--notion-white);
+  font-family: var(--font-body);
+  background: var(--surface);
 }
 
 .notion-input:focus {
   outline: none;
-  border-color: var(--notion-blue);
-  box-shadow: 0 0 0 2px rgba(0,117,222,0.2);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(94,106,210,0.2);
 }
 
 /* Notion-style button */
@@ -118,23 +131,23 @@ h1, h2, h3 {
 }
 
 .notion-btn-primary {
-  background: var(--notion-blue);
-  color: var(--notion-white);
+  background: var(--accent);
+  color: var(--surface);
   border: none;
 }
 
 .notion-btn-primary:hover {
-  background: #005bab;
+  background: var(--accent-hover);
 }
 
 .notion-btn-secondary {
-  background: var(--notion-white);
-  color: var(--notion-black);
-  border: 1px solid var(--notion-border);
+  background: var(--surface);
+  color: var(--fg);
+  border: 1px solid var(--border);
 }
 
 .notion-btn-secondary:hover {
-  background: var(--notion-warm-white);
+  background: var(--bg);
 }
 
 /* Notion-style thin scrollbar */
@@ -144,7 +157,7 @@ h1, h2, h3 {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--notion-warm-white);
+  background: var(--bg);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -153,7 +166,7 @@ h1, h2, h3 {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--notion-warm-gray-500);
+  background: var(--muted);
 }
 
 
@@ -173,9 +186,9 @@ h1, h2, h3 {
   z-index: 10;
   width: 100%;
   max-width: 28rem;
-  background: var(--notion-white);
+  background: var(--surface);
   border-radius: 8px;
-  border: 1px solid var(--notion-border);
+  border: 1px solid var(--border);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -185,7 +198,7 @@ h1, h2, h3 {
   overflow-y: auto;
   padding: 1rem;
   font-size: 0.875rem;
-  color: var(--notion-warm-dark);
+  color: var(--fg);
 }
 
 .ai-panel-footer {
@@ -193,7 +206,7 @@ h1, h2, h3 {
   align-items: center;
   justify-content: flex-end;
   gap: 0.5rem;
-  border-top: 1px solid var(--notion-border);
+  border-top: 1px solid var(--border);
   padding: 0.75rem 1rem;
 }
 
@@ -211,7 +224,7 @@ h1, h2, h3 {
   content: "|";
   display: inline-block;
   animation: blink 1s infinite;
-  color: var(--notion-blue);
+  color: var(--accent);
 }
 
 /* AI Sparkle Button */
@@ -221,7 +234,7 @@ h1, h2, h3 {
 }
 
 .ai-sparkle-btn:hover {
-  color: var(--notion-blue);
+  color: var(--accent);
 }
 
 .ai-sparkle-btn:disabled {

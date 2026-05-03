@@ -23,7 +23,7 @@ export default function ATSFriendlyResumeTemplate() {
         </Link>
       </div>
 
-      <h1 className="mb-4 font-serif text-3xl font-bold leading-tight tracking-tight lg:text-4xl">
+      <h1 className="mb-4 font-display text-3xl font-bold leading-tight tracking-tight lg:text-4xl">
         ATS Friendly Resume Template Free: How to Beat the Bots
       </h1>
 
@@ -45,7 +45,7 @@ export default function ATSFriendlyResumeTemplate() {
           a few simple rules — and using the right tools.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           What Is an ATS and Why Does It Matter?
         </h2>
 
@@ -64,11 +64,11 @@ export default function ATSFriendlyResumeTemplate() {
           formatting issue, you won&rsquo;t show up in search results.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           7 Rules for an ATS-Friendly Resume
         </h2>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           1. Use Standard Section Headings
         </h3>
         <p>
@@ -78,7 +78,7 @@ export default function ATSFriendlyResumeTemplate() {
           Journey.&rdquo; Stick to what the bots expect.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           2. Avoid Tables and Columns
         </h3>
         <p>
@@ -87,7 +87,7 @@ export default function ATSFriendlyResumeTemplate() {
           layout can jumble your content. Use a single-column format.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           3. Use Standard Fonts
         </h3>
         <p>
@@ -95,7 +95,7 @@ export default function ATSFriendlyResumeTemplate() {
           not render correctly in the ATS, causing parsing errors.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           4. Save as PDF (the Right Way)
         </h3>
         <p>
@@ -107,7 +107,7 @@ export default function ATSFriendlyResumeTemplate() {
           generate clean, text-based PDFs that parse correctly.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           5. Include Keywords from the Job Description
         </h3>
         <p>
@@ -116,7 +116,7 @@ export default function ATSFriendlyResumeTemplate() {
           qualifications mentioned — naturally, not as a keyword-stuffed list.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           6. Avoid Headers and Footers
         </h3>
         <p>
@@ -125,7 +125,7 @@ export default function ATSFriendlyResumeTemplate() {
           header.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           7. Use Standard File Naming
         </h3>
         <p>
@@ -134,7 +134,7 @@ export default function ATSFriendlyResumeTemplate() {
           avoids special characters that some ATS systems struggle with.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           Free ATS-Friendly Resume Templates
         </h2>
 
@@ -163,7 +163,7 @@ export default function ATSFriendlyResumeTemplate() {
           </li>
         </ul>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           How to Test Your Resume for ATS Compatibility
         </h2>
 

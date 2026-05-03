@@ -23,7 +23,7 @@ export default function FreeResumeBuilderNoWatermark() {
         </Link>
       </div>
 
-      <h1 className="mb-4 font-serif text-3xl font-bold leading-tight tracking-tight lg:text-4xl">
+      <h1 className="mb-4 font-display text-3xl font-bold leading-tight tracking-tight lg:text-4xl">
         Best Free Resume Builder with No Watermark (2025)
       </h1>
 
@@ -47,7 +47,7 @@ export default function FreeResumeBuilderNoWatermark() {
           genuinely free options that respect your work and your wallet.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           Why Watermarks Are a Red Flag
         </h2>
 
@@ -65,7 +65,7 @@ export default function FreeResumeBuilderNoWatermark() {
           Your data? Your templates?
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           What Makes a Resume Builder Truly Free?
         </h2>
 
@@ -78,11 +78,11 @@ export default function FreeResumeBuilderNoWatermark() {
           <li><strong>Full export</strong> — download your resume as PDF without limitations</li>
         </ul>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           The Best Truly Free Resume Builders
         </h2>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           1. NoiceResume — The Easiest Free Option
         </h3>
 
@@ -106,7 +106,7 @@ export default function FreeResumeBuilderNoWatermark() {
           <li>Open-source foundation (built on OpenResume)</li>
         </ul>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           2. Reactive Resume
         </h3>
 
@@ -117,7 +117,7 @@ export default function FreeResumeBuilderNoWatermark() {
           Notion-style builders.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           3. Google Docs Templates
         </h3>
 
@@ -127,7 +127,7 @@ export default function FreeResumeBuilderNoWatermark() {
           structured form, and formatting can break when you edit.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           Builders to Avoid (or Approach with Caution)
         </h2>
 
@@ -150,7 +150,7 @@ export default function FreeResumeBuilderNoWatermark() {
           </li>
         </ul>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           Why NoiceResume Chose to Stay Free
         </h2>
 

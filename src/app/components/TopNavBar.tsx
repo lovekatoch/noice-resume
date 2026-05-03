@@ -23,13 +23,14 @@ export const TopNavBar = () => {
   return (
     <header
       aria-label="Site Header"
-      className={cx(
-        "flex h-[var(--top-nav-bar-height)] items-center border-b border-[var(--notion-border)] bg-[var(--notion-white)] px-4 lg:px-8"
-      )}
+      className="border-b bg-[var(--surface)]"
+      style={{ borderColor: "var(--border)" }}
     >
-      <div className="flex h-10 w-full items-center justify-between">
+      <div
+        className="mx-auto flex items-center justify-between"
+        style={{ padding: "20px 48px", maxWidth: 1200 }}
+      >
         <Link href="/">
-          {/* NR Monogram SVG - Notion style */}
           <svg
             width="36"
             height="36"
@@ -38,7 +39,7 @@ export const TopNavBar = () => {
             xmlns="http://www.w3.org/2000/svg"
             className="rounded-lg"
           >
-            <rect width="36" height="36" rx="8" fill="#0075de" />
+            <rect width="36" height="36" rx="8" fill="#5E6AD2" />
             <text
               x="18"
               y="22"
@@ -55,19 +56,25 @@ export const TopNavBar = () => {
         </Link>
         <nav
           aria-label="Site Nav Bar"
-          className="flex items-center gap-2 text-sm font-medium"
+          className="flex items-center gap-6"
         >
           {!isBuilderPage && (
             <>
               <Link
                 href="/blog"
-                className="notion-btn notion-btn-secondary text-sm"
+                className="transition-colors duration-150"
+                style={{ fontSize: 14, fontWeight: 500, color: "var(--muted)" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--fg)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
               >
                 Blog
               </Link>
               <Link
                 href="/resume-builder"
-                className="notion-btn notion-btn-secondary text-sm"
+                className="transition-colors duration-150"
+                style={{ fontSize: 14, fontWeight: 500, color: "var(--muted)" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--fg)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
               >
                 Builder
               </Link>
@@ -76,14 +83,19 @@ export const TopNavBar = () => {
           {isBuilderPage && (
             <button
               onClick={scrollToPreview}
-              className="notion-btn notion-btn-primary !px-3 md:hidden"
+              className="transition-colors duration-150 md:hidden"
+              style={{
+                fontSize: 14,
+                fontWeight: 500,
+                color: "var(--accent)",
+              }}
               aria-label="Preview resume"
             >
               <EyeIcon className="h-5 w-5" aria-hidden="true" />
             </button>
           )}
           {isPremium && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-3 py-1 text-xs font-semibold text-white shadow-sm">
+            <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-[#5E6AD2] to-[#4a56b8] px-3 py-1 text-xs font-semibold text-white shadow-sm">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

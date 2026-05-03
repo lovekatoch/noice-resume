@@ -66,7 +66,7 @@ export const UpgradeModal = ({ onClose }: UpgradeModalProps) => {
       >
         <div className="flex items-center justify-between border-b border-[var(--notion-border)] px-6 py-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-amber-400 to-orange-500">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-[#5E6AD2] to-[#4a56b8]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -108,7 +108,7 @@ export const UpgradeModal = ({ onClose }: UpgradeModalProps) => {
 
         <div className="p-6">
           <div className="mb-6 text-center">
-            <div className="mb-2 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-4 py-1 text-sm font-semibold text-white">
+            <div className="mb-2 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#5E6AD2] to-[#4a56b8] px-4 py-1 text-sm font-semibold text-white">
               Premium
             </div>
             <div className="mt-4 flex items-baseline justify-center">
@@ -151,7 +151,7 @@ export const UpgradeModal = ({ onClose }: UpgradeModalProps) => {
           <button
             onClick={handleCheckout}
             disabled={isLoading}
-            className="w-full rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-3 font-semibold text-white shadow-sm transition-all hover:from-amber-600 hover:to-orange-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-lg bg-gradient-to-r from-[#5E6AD2] to-[#4a56b8] px-4 py-3 font-semibold text-white shadow-sm transition-all hover:from-[#4a56b8] hover:to-[#3b45a0] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoading ? (
               <span className="flex items-center justify-center gap-2">

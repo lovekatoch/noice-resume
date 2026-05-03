@@ -8,7 +8,7 @@ export const Steps = () => {
   return (
     <section className="bg-[var(--notion-warm-white)] px-8 py-16">
       <h2
-        className="mb-10 text-center font-serif text-2xl font-semibold tracking-tight text-[var(--notion-black)]"
+        className="mb-10 text-center font-display text-2xl font-semibold tracking-tight text-[var(--notion-black)]"
       >
         How it works
       </h2>

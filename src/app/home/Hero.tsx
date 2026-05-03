@@ -23,7 +23,7 @@ export const Hero = () => {
         </div>
         <div className="lg:w-1/2 lg:text-left">
           <h1
-            className="mb-4 font-serif text-4xl font-bold tracking-tight text-[var(--notion-black)] lg:text-5xl"
+            className="mb-4 font-display text-4xl font-bold tracking-tight text-[var(--notion-black)] lg:text-5xl"
             style={{ letterSpacing: "-0.025em" }}
           >
             Create a professional

@@ -23,7 +23,7 @@ export default function HowToImportPdfResume() {
         </Link>
       </div>
 
-      <h1 className="mb-4 font-serif text-3xl font-bold leading-tight tracking-tight lg:text-4xl">
+      <h1 className="mb-4 font-display text-3xl font-bold leading-tight tracking-tight lg:text-4xl">
         How to Import Your Existing PDF Resume and Edit It Online
       </h1>
 
@@ -50,7 +50,7 @@ export default function HowToImportPdfResume() {
           to do it with NoiceResume.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           Why Edit a PDF Resume?
         </h2>
 
@@ -63,7 +63,7 @@ export default function HowToImportPdfResume() {
           <li><strong>Convert to ATS-friendly format</strong> — Ensure your resume passes automated filters</li>
         </ul>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           The Problem with Editing PDFs Directly
         </h2>
 
@@ -83,11 +83,11 @@ export default function HowToImportPdfResume() {
           edit it there, and re-export as a fresh PDF. This is exactly what NoiceResume does.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           How to Import and Edit Your PDF Resume with NoiceResume
         </h2>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           Step 1: Go to the Import Page
         </h3>
         <p>
@@ -98,7 +98,7 @@ export default function HowToImportPdfResume() {
           . You&rsquo;ll see a clean drag-and-drop interface where you can upload your PDF.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           Step 2: Upload Your PDF
         </h3>
         <p>
@@ -107,7 +107,7 @@ export default function HowToImportPdfResume() {
           document is never uploaded to a server.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           Step 3: Review the Parsed Content
         </h3>
         <p>
@@ -122,7 +122,7 @@ export default function HowToImportPdfResume() {
           may need minor adjustments. You can edit any field directly after the import.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           Step 4: Edit and Customize
         </h3>
         <p>
@@ -141,7 +141,7 @@ export default function HowToImportPdfResume() {
           will look like.
         </p>
 
-        <h3 className="font-serif text-xl font-semibold tracking-tight">
+        <h3 className="font-display text-xl font-semibold tracking-tight">
           Step 5: Export Your Updated Resume
         </h3>
         <p>
@@ -150,7 +150,7 @@ export default function HowToImportPdfResume() {
           and ATS-friendly structure — no sign-up required.
         </p>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           What Kind of PDFs Work Best?
         </h2>
 
@@ -173,7 +173,7 @@ export default function HowToImportPdfResume() {
           </li>
         </ul>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           Tips for a Smooth Import
         </h2>
 
@@ -193,7 +193,7 @@ export default function HowToImportPdfResume() {
           </li>
         </ul>
 
-        <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           Why This Matters
         </h2>
 

@@ -80,7 +80,7 @@ export const Form = ({
 
   const isFirstForm = useAppSelector(selectIsFirstForm(form));
   const isLastForm = useAppSelector(selectIsLastForm(form));
-  const themeColor = useAppSelector(selectThemeColor) || "#0075de";
+  const themeColor = useAppSelector(selectThemeColor) || "#5E6AD2";
 
   const handleMoveClick = (type: "up" | "down") => {
     dispatch(changeFormOrder({ form, type }));

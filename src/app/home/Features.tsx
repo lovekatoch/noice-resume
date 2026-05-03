@@ -41,7 +41,7 @@ export const Features = () => {
     <section className="bg-[var(--notion-white)] px-6 py-16">
       <div className="mx-auto max-w-4xl">
         <h2
-          className="mb-12 text-center font-serif text-2xl font-semibold tracking-tight text-[var(--notion-black)]"
+          className="mb-12 text-center font-display text-2xl font-semibold tracking-tight text-[var(--notion-black)]"
         >
           Why NoiceResume?
         </h2>
