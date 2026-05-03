@@ -4,6 +4,17 @@ jest.mock("next/navigation", () => ({
 
 import { render, act, fireEvent } from "@testing-library/react";
 import { ResumeDropzone } from "components/ResumeDropzone";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import resumeReducer from "lib/redux/resumeSlice";
+import settingsReducer from "lib/redux/settingsSlice";
+
+const store = configureStore({
+  reducer: { resume: resumeReducer, settings: settingsReducer },
+});
+
+const renderWithProvider = (ui: React.ReactElement) =>
+  render(<Provider store={store}>{ui}</Provider>);
 
 const revokeSpy = jest.fn();
 URL.revokeObjectURL = revokeSpy;
@@ -14,7 +25,7 @@ beforeEach(() => {
 });
 
 test("revokeObjectURL is called on unmount when file was set", () => {
-  const { unmount, container } = render(
+  const { unmount, container } = renderWithProvider(
     <ResumeDropzone onFileUrlChange={jest.fn()} />
   );
 
@@ -31,7 +42,7 @@ test("revokeObjectURL is called on unmount when file was set", () => {
 });
 
 test("revokeObjectURL is NOT called on unmount when no file was set", () => {
-  const { unmount } = render(
+  const { unmount } = renderWithProvider(
     <ResumeDropzone onFileUrlChange={jest.fn()} />
   );
 

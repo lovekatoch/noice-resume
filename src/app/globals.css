@@ -156,18 +156,6 @@ h1, h2, h3 {
   background: var(--notion-warm-gray-500);
 }
 
-/* Faster Notion-style transitions */
-.duration-150 {
-  transition-duration: 150ms;
-}
-
-.duration-200 {
-  transition-duration: 150ms;
-}
-
-.duration-300 {
-  transition-duration: 150ms;
-}
 
 /* AI Panel Styles */
 .ai-panel-overlay {

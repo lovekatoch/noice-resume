@@ -6,8 +6,10 @@ import {
   getHasUsedAppBefore,
   saveStateToLocalStorage,
 } from "lib/redux/local-storage";
-import { type ShowForm, initialSettings } from "lib/redux/settingsSlice";
+import { type ShowForm, initialSettings, setSettings } from "lib/redux/settingsSlice";
+import { setResume } from "lib/redux/resumeSlice";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 import addPdfSrc from "public/assets/add-pdf.svg";
 import Image from "next/image";
 import { cx } from "lib/cx";
@@ -32,6 +34,7 @@ export const ResumeDropzone = ({
   const [isHoveredOnDropzone, setIsHoveredOnDropzone] = useState(false);
   const [hasNonPdfFile, setHasNonPdfFile] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const hasFile = Boolean(file.name);
 
@@ -106,6 +109,8 @@ export const ResumeDropzone = ({
     }
 
     saveStateToLocalStorage({ resume, settings, user: { isPremium: false, checkoutSessionId: null, customerId: null, checkoutError: null } });
+    dispatch(setResume(resume));
+    dispatch(setSettings(settings));
     router.push("/resume-builder");
   };
 
