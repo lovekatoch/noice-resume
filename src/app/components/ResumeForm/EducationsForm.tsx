@@ -20,7 +20,7 @@ import {
   selectShowBulletPoints,
   selectThemeColor,
 } from "lib/redux/settingsSlice";
-import { useState } from "react";
+import { useAIPanel } from "lib/hooks/useAIPanel";
 
 export const EducationsForm = () => {
   const educations = useAppSelector(selectEducations);
@@ -29,38 +29,26 @@ export const EducationsForm = () => {
   const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
   const themeColor = useAppSelector(selectThemeColor) || "#0075de";
 
-  const [aiPanelOpen, setAiPanelOpen] = useState(false);
-  const [aiTargetIdx, setAiTargetIdx] = useState<number | null>(null);
-  const [streamingText, setStreamingText] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleAIOpen = (idx: number) => {
-    setAiTargetIdx(idx);
-    setAiPanelOpen(true);
-    setIsLoading(true);
-    setTimeout(() => {
-      setStreamingText("Dean's List recipient for 4 consecutive semesters. Led the student council as President, organizing events for 500+ students.");
-      setIsLoading(false);
-    }, 1500);
-  };
-
-  const handleAccept = (text: string) => {
-    if (aiTargetIdx !== null) {
-      dispatch(changeEducations({ idx: aiTargetIdx, field: "descriptions", value: [text] }));
-    }
-    setAiPanelOpen(false);
-    setStreamingText("");
-    setAiTargetIdx(null);
-  };
-
-  const handleRegenerate = () => {
-    setIsLoading(true);
-    setStreamingText("");
-    setTimeout(() => {
-      setStreamingText("Teaching Assistant for Data Structures and Algorithms. Mentored 30+ students weekly on coding best practices.");
-      setIsLoading(false);
-    }, 1500);
-  };
+  const {
+    aiPanelOpen,
+    streamingText,
+    isLoading,
+    aiTargetIdx,
+    openPanel,
+    closePanel,
+    handleAccept,
+    handleRegenerate,
+  } = useAIPanel({
+    onAccept: (text) => {
+      if (aiTargetIdx !== null) {
+        dispatch(changeEducations({ idx: aiTargetIdx, field: "descriptions", value: [text] }));
+      }
+    },
+    generateMock: (isRegenerate) =>
+      isRegenerate
+        ? "Teaching Assistant for Data Structures and Algorithms. Mentored 30+ students weekly on coding best practices."
+        : "Dean's List recipient for 4 consecutive semesters. Led the student council as President, organizing events for 500+ students.",
+  });
 
   return (
     <Form form={form} addButtonText="Add School">
@@ -156,7 +144,7 @@ export const EducationsForm = () => {
               {descriptions.length > 0 && (
                 <div className="absolute right-2 top-8">
                   <PremiumGate>
-                    <SparkleIconButton onClick={() => handleAIOpen(idx)} color={themeColor} size="small" />
+                    <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" />
                   </PremiumGate>
                 </div>
               )}
@@ -166,7 +154,7 @@ export const EducationsForm = () => {
       })}
       <AIPanel
         isOpen={aiPanelOpen}
-        onClose={() => setAiPanelOpen(false)}
+        onClose={closePanel}
         onAccept={handleAccept}
         onRegenerate={handleRegenerate}
         streamingText={streamingText}

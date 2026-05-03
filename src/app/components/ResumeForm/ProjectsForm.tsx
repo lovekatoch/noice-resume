@@ -15,45 +15,33 @@ import {
 } from "lib/redux/resumeSlice";
 import { selectThemeColor } from "lib/redux/settingsSlice";
 import type { ResumeProject } from "lib/redux/types";
-import { useState } from "react";
+import { useAIPanel } from "lib/hooks/useAIPanel";
 
 export const ProjectsForm = () => {
   const projects = useAppSelector(selectProjects);
   const dispatch = useAppDispatch();
   const themeColor = useAppSelector(selectThemeColor) || "#0075de";
 
-  const [aiPanelOpen, setAiPanelOpen] = useState(false);
-  const [aiTargetIdx, setAiTargetIdx] = useState<number | null>(null);
-  const [streamingText, setStreamingText] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleAIOpen = (idx: number) => {
-    setAiTargetIdx(idx);
-    setAiPanelOpen(true);
-    setIsLoading(true);
-    setTimeout(() => {
-      setStreamingText("Developed a full-stack web application using React and Node.js, serving 10K+ monthly active users with 99.9% uptime.");
-      setIsLoading(false);
-    }, 1500);
-  };
-
-  const handleAccept = (text: string) => {
-    if (aiTargetIdx !== null) {
-      dispatch(changeProjects({ idx: aiTargetIdx, field: "descriptions", value: [text] }));
-    }
-    setAiPanelOpen(false);
-    setStreamingText("");
-    setAiTargetIdx(null);
-  };
-
-  const handleRegenerate = () => {
-    setIsLoading(true);
-    setStreamingText("");
-    setTimeout(() => {
-      setStreamingText("Implemented OAuth 2.0 authentication and real-time features using WebSocket, reducing login time by 40%.");
-      setIsLoading(false);
-    }, 1500);
-  };
+  const {
+    aiPanelOpen,
+    streamingText,
+    isLoading,
+    aiTargetIdx,
+    openPanel,
+    closePanel,
+    handleAccept,
+    handleRegenerate,
+  } = useAIPanel({
+    onAccept: (text) => {
+      if (aiTargetIdx !== null) {
+        dispatch(changeProjects({ idx: aiTargetIdx, field: "descriptions", value: [text] }));
+      }
+    },
+    generateMock: (isRegenerate) =>
+      isRegenerate
+        ? "Implemented OAuth 2.0 authentication and real-time features using WebSocket, reducing login time by 40%."
+        : "Developed a full-stack web application using React and Node.js, serving 10K+ monthly active users with 99.9% uptime.",
+  });
 
   return (
     <Form form="projects" addButtonText="Add Project">
@@ -119,7 +107,7 @@ export const ProjectsForm = () => {
               {descriptions.length > 0 && (
                 <div className="absolute right-2 top-8">
                   <PremiumGate>
-                    <SparkleIconButton onClick={() => handleAIOpen(idx)} color={themeColor} size="small" />
+                    <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" />
                   </PremiumGate>
                 </div>
               )}
@@ -129,7 +117,7 @@ export const ProjectsForm = () => {
       })}
       <AIPanel
         isOpen={aiPanelOpen}
-        onClose={() => setAiPanelOpen(false)}
+        onClose={closePanel}
         onAccept={handleAccept}
         onRegenerate={handleRegenerate}
         streamingText={streamingText}

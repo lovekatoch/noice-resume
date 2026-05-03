@@ -16,6 +16,7 @@ import {
   selectThemeColor,
 } from "lib/redux/settingsSlice";
 import { useState } from "react";
+import { useAIPanel } from "lib/hooks/useAIPanel";
 
 export const SkillsForm = () => {
   const skills = useAppSelector(selectSkills);
@@ -39,43 +40,39 @@ export const SkillsForm = () => {
     dispatch(changeShowBulletPoints({ field: form, value }));
   };
 
-  const [aiPanelOpen, setAiPanelOpen] = useState(false);
-  const [streamingText, setStreamingText] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [aiMode, setAiMode] = useState<"replace" | "append">("replace");
 
-  const handleSuggestSkills = (mode: "replace" | "append") => {
-    setAiPanelOpen(true);
-    setIsLoading(true);
-    setTimeout(() => {
-      const sampleSkills = mode === "replace"
+  const {
+    aiPanelOpen,
+    streamingText,
+    isLoading,
+    openPanel,
+    closePanel,
+    handleAccept,
+    handleRegenerate,
+  } = useAIPanel({
+    onAccept: (text) => {
+      const newSkills = text.split(",").map((s) => s.trim()).filter(Boolean);
+      if (aiMode === "replace") {
+        dispatch(changeSkills({ field: "descriptions", value: newSkills }));
+      } else {
+        const combined = [...descriptions, ...newSkills];
+        dispatch(changeSkills({ field: "descriptions", value: combined }));
+      }
+    },
+    generateMock: (isRegenerate) => {
+      if (isRegenerate) {
+        return "Next.js, Tailwind CSS, PostgreSQL, Redis, CI/CD, GitHub Actions";
+      }
+      return aiMode === "replace"
         ? "JavaScript, Python, React, Node.js, SQL, AWS, Docker"
         : "TypeScript, GraphQL, Kubernetes";
-      setStreamingText(sampleSkills);
-      setIsLoading(false);
-    }, 1500);
-  };
+    },
+  });
 
-  const handleAccept = (text: string) => {
-    const newSkills = text.split(",").map((s) => s.trim()).filter(Boolean);
-    if (streamingText.includes("JavaScript")) {
-      // This was a replace action
-      dispatch(changeSkills({ field: "descriptions", value: newSkills }));
-    } else {
-      // This was an append action
-      const combined = [...descriptions, ...newSkills];
-      dispatch(changeSkills({ field: "descriptions", value: combined }));
-    }
-    setAiPanelOpen(false);
-    setStreamingText("");
-  };
-
-  const handleRegenerate = () => {
-    setIsLoading(true);
-    setStreamingText("");
-    setTimeout(() => {
-      setStreamingText("Next.js, Tailwind CSS, PostgreSQL, Redis, CI/CD, GitHub Actions");
-      setIsLoading(false);
-    }, 1500);
+  const handleSuggestSkills = (mode: "replace" | "append") => {
+    setAiMode(mode);
+    openPanel();
   };
 
   return (
@@ -133,7 +130,7 @@ export const SkillsForm = () => {
       </div>
       <AIPanel
         isOpen={aiPanelOpen}
-        onClose={() => setAiPanelOpen(false)}
+        onClose={closePanel}
         onAccept={handleAccept}
         onRegenerate={handleRegenerate}
         streamingText={streamingText}
