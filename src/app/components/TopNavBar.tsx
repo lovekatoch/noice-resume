@@ -1,9 +1,15 @@
 "use client";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import { cx } from "lib/cx";
-import { EyeIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, ArrowUpTrayIcon } from "@heroicons/react/24/outline";
+import { parseResumeFromPdf } from "lib/parse-resume-from-pdf";
+import { saveStateToLocalStorage } from "lib/redux/local-storage";
+import { initialSettings } from "lib/redux/settingsSlice";
+import { deepClone } from "lib/deep-clone";
+import type { ShowForm } from "lib/redux/settingsSlice";
 
 const scrollToPreview = () => {
   const previewSection = document.getElementById("resume-preview");
@@ -17,6 +23,37 @@ const scrollToPreview = () => {
 export const TopNavBar = () => {
   const pathName = usePathname();
   const isBuilderPage = pathName === "/resume-builder";
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    try {
+      const fileUrl = URL.createObjectURL(file);
+      const result = await parseResumeFromPdf(fileUrl);
+      if (result.success) {
+        const { resume } = result;
+        const settings = deepClone(initialSettings);
+        const sections = Object.keys(settings.formToShow) as ShowForm[];
+        const sectionToFormToShow: Record<ShowForm, boolean> = {
+          workExperiences: resume.workExperiences.length > 0,
+          educations: resume.educations.length > 0,
+          projects: resume.projects.length > 0,
+          skills: resume.skills.descriptions.length > 0,
+          custom: resume.custom.descriptions.length > 0,
+        };
+        for (const section of sections) {
+          settings.formToShow[section] = sectionToFormToShow[section];
+        }
+        saveStateToLocalStorage({ resume, settings, user: { isPremium: false, checkoutSessionId: null, customerId: null, checkoutError: null } });
+        URL.revokeObjectURL(fileUrl);
+        router.push("/resume-builder");
+      }
+    } catch (err) {
+      console.error("Failed to parse PDF:", err);
+    }
+  };
 
   return (
     <header
@@ -54,45 +91,34 @@ export const TopNavBar = () => {
         </Link>
         <nav
           aria-label="Site Nav Bar"
-          className="flex items-center gap-6"
+          className="flex items-center gap-4"
         >
-          {!isBuilderPage && (
+          {isBuilderPage && (
             <>
-              <Link
-                href="/blog"
-                className="transition-colors duration-150"
-                style={{ fontSize: 14, fontWeight: 500, color: "var(--muted)" }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--fg)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".pdf"
+                onChange={handleFileChange}
+                className="sr-only"
+              />
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="flex h-8 w-8 items-center justify-center rounded-md transition-colors hover:bg-[var(--border)]"
+                aria-label="Import PDF"
               >
-                Blog
-              </Link>
-              <Link
-                href="/resume-builder"
-                className="transition-colors duration-150"
-                style={{ fontSize: 14, fontWeight: 500, color: "var(--muted)" }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--fg)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
+                <ArrowUpTrayIcon className="h-4 w-4" style={{ color: "var(--muted)" }} />
+              </button>
+              <button
+                onClick={scrollToPreview}
+                className="flex h-8 w-8 items-center justify-center rounded-md transition-colors md:hidden"
+                style={{ color: "var(--accent)" }}
+                aria-label="Preview resume"
               >
-                Builder
-              </Link>
+                <EyeIcon className="h-5 w-5" aria-hidden="true" />
+              </button>
             </>
           )}
-          {isBuilderPage && (
-            <button
-              onClick={scrollToPreview}
-              className="transition-colors duration-150 md:hidden"
-              style={{
-                fontSize: 14,
-                fontWeight: 500,
-                color: "var(--accent)",
-              }}
-              aria-label="Preview resume"
-            >
-              <EyeIcon className="h-5 w-5" aria-hidden="true" />
-            </button>
-          )}
-
         </nav>
       </div>
     </header>
