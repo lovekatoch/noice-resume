@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef } from "react";
 import {
   useAppSelector,
   useSaveStateToLocalStorageOnChange,
@@ -27,16 +27,20 @@ export const ResumeForm = () => {
   useSaveStateToLocalStorageOnChange();
 
   const formsOrder = useAppSelector(selectFormsOrder);
-  const [activeTab, setActiveTab] = useState<"content" | "style">("content");
 
-  const handleTabChange = (tab: "content" | "style") => {
-    setActiveTab(tab);
-    if (tab === "style") {
-      // Scroll to the resume preview section for a seamless experience
-      setTimeout(() => {
-        document.getElementById("resume-preview")?.scrollIntoView({ behavior: "smooth" });
-      }, 50);
+  const scrollToTop = () => {
+    const container = document.querySelector(".md\\:overflow-y-scroll");
+    if (container) {
+      container.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
+  };
+
+  const scrollToPreview = () => {
+    document
+      .getElementById("resume-preview")
+      ?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -52,40 +56,39 @@ export const ResumeForm = () => {
           className="flex rounded-lg p-0.5 gap-0.5"
           style={{ backgroundColor: "var(--border)" }}
         >
-          {(["content", "style"] as const).map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => handleTabChange(tab)}
-              className="px-3 py-1 text-sm font-medium rounded-md transition-colors"
-              style={{
-                backgroundColor:
-                  activeTab === tab ? "var(--surface)" : "transparent",
-                color: activeTab === tab ? "var(--fg)" : "var(--muted)",
-                boxShadow:
-                  activeTab === tab
-                    ? "0 1px 3px rgba(0,0,0,0.1)"
-                    : "none",
-              }}
-            >
-              {tab === "content" ? "Content" : "Preview"}
-            </button>
-          ))}
+          <button
+            type="button"
+            onClick={scrollToTop}
+            className="px-3 py-1 text-sm font-medium rounded-md transition-colors"
+            style={{
+              backgroundColor: "var(--surface)",
+              color: "var(--fg)",
+              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+            }}
+          >
+            Content
+          </button>
+          <button
+            type="button"
+            onClick={scrollToPreview}
+            className="px-3 py-1 text-sm font-medium rounded-md transition-colors"
+            style={{
+              backgroundColor: "transparent",
+              color: "var(--muted)",
+            }}
+          >
+            Preview
+          </button>
         </div>
       </div>
-      {activeTab === "content" ? (
-        <section className="flex w-full flex-col gap-3 p-4">
-          <ProfileForm />
-          {formsOrder.map((form) => {
-            const Component = formTypeToComponent[form];
-            return <Component key={form} />;
-          })}
-        </section>
-      ) : (
-        <section className="flex w-full flex-col gap-3 p-4">
-          <ThemeForm />
-        </section>
-      )}
+      <section className="flex w-full flex-col gap-3 p-4">
+        <ProfileForm />
+        {formsOrder.map((form) => {
+          const Component = formTypeToComponent[form];
+          return <Component key={form} />;
+        })}
+        <ThemeForm />
+      </section>
     </div>
   );
 };
