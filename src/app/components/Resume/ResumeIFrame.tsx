@@ -107,7 +107,7 @@ const ResumeIframe = ({
     <div className="flex justify-center w-full">
       <div
         ref={containerRef}
-        className="w-full bg-white border border-[var(--notion-border)]"
+        className="w-full bg-white border border-[var(--border)]"
         style={{
           aspectRatio: `${documentWidth} / ${documentHeight}`,
         }}

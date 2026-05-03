@@ -210,17 +210,21 @@ export const AIPanel = ({
           className="flex items-center justify-end gap-2 px-5 py-4"
           style={{ borderTop: "1px solid var(--border)" }}
         >
-          <button onClick={onClose} className="notion-btn notion-btn-secondary" disabled={isLoading}>
+          <button onClick={onClose} disabled={isLoading}
+            className="rounded-md px-4 py-2 text-sm font-medium transition-colors"
+            style={{ backgroundColor: "var(--bg)", color: "var(--fg)", border: "1px solid var(--border)" }}>
             Cancel
           </button>
-          <button onClick={onRegenerate} className="notion-btn notion-btn-secondary" disabled={isLoading}>
+          <button onClick={onRegenerate} disabled={isLoading}
+            className="rounded-md px-4 py-2 text-sm font-medium transition-colors"
+            style={{ backgroundColor: "var(--bg)", color: "var(--fg)", border: "1px solid var(--border)" }}>
             Regenerate
           </button>
           <button
             onClick={() => onAccept(streamingText)}
-            className="notion-btn notion-btn-primary"
             disabled={isLoading || !streamingText}
-          >
+            className="rounded-md px-4 py-2 text-sm font-medium text-white transition-colors disabled:opacity-50"
+            style={{ backgroundColor: "var(--accent)" }}>
             Accept
           </button>
         </div>

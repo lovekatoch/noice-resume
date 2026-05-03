@@ -40,7 +40,7 @@ export const AISuggestButton = ({
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         disabled={disabled}
-        className="notion-btn notion-btn-secondary flex items-center gap-1"
+        className="inline-flex items-center gap-1 rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-sm font-medium text-[var(--fg)] transition-colors hover:bg-[var(--bg)]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@ export const AISuggestButton = ({
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full z-10 mt-1 w-48 rounded-lg border border-[var(--notion-border)] bg-white py-1 shadow-lg">
+        <div className="absolute right-0 top-full z-10 mt-1 w-48 rounded-lg border border-[var(--border)] bg-white py-1 shadow-lg">
           <button
             onClick={() => handleOptionClick("replace")}
             className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

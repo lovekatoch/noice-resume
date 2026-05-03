@@ -61,10 +61,10 @@ export const UpgradeModal = ({ onClose }: UpgradeModalProps) => {
       />
       <div
         ref={modalRef}
-        className="relative z-10 w-full max-w-md rounded-lg border border-[var(--notion-border)] bg-white shadow-xl"
+        className="relative z-10 w-full max-w-md rounded-lg border border-[var(--border)] bg-white shadow-xl"
         tabIndex={-1}
       >
-        <div className="flex items-center justify-between border-b border-[var(--notion-border)] px-6 py-4">
+        <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-4">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-[#5E6AD2] to-[#4a56b8]">
               <svg
