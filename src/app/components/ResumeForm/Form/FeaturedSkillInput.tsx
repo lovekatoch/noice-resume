@@ -24,6 +24,7 @@ export const FeaturedSkillInput = ({
         placeholder={placeholder}
         onChange={(e) => setSkillRating(e.target.value, rating)}
         className={INPUT_CLASS_NAME}
+        style={{ borderColor: "var(--border)" }}
       />
       <CircleRating
         rating={rating}
@@ -63,7 +64,7 @@ const CircleRating = ({
                 (hoverRating !== null && hoverRating >= idx) ||
                 (hoverRating === null && rating >= idx)
                   ? circleColor
-                  : "var(--notion-border)",
+                  : "var(--border)",
             }}
           />
         </div>

@@ -103,7 +103,7 @@ export const SkillsForm = () => {
             </PremiumGate>
           </div>
         )}
-        <div className="col-span-full mb-4 mt-6 border-t border-[var(--notion-border)]" />
+        <div className="col-span-full mb-4 mt-6 border-t" style={{ borderColor: "var(--border)" }} />
         <InputGroupWrapper
           label="Featured Skills (Optional)"
           className="col-span-full"

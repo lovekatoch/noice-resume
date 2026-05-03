@@ -33,7 +33,7 @@ export const InputGroupWrapper = ({
 );
 
 export const INPUT_CLASS_NAME =
-  "mt-1 px-3 py-2 rounded-md border border-[var(--notion-border)] text-gray-900 outline-none font-normal text-base w-full bg-white";
+  "mt-1 px-3 py-2 rounded-md border text-gray-900 outline-none font-normal text-base w-full bg-white";
 
 export const Input = <K extends string>({
   name,
@@ -52,6 +52,7 @@ export const Input = <K extends string>({
         placeholder={placeholder}
         onChange={(e) => onChange(name, e.target.value)}
         className={INPUT_CLASS_NAME}
+        style={{ borderColor: "var(--border)" }}
       />
     </InputGroupWrapper>
   );
@@ -73,6 +74,7 @@ export const Textarea = <T extends string>({
         ref={textareaRef}
         name={name}
         className={`${INPUT_CLASS_NAME} resize-none overflow-hidden`}
+        style={{ borderColor: "var(--border)" }}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(name, e.target.value)}
@@ -129,6 +131,7 @@ const BulletListTextareaGeneral = <T extends string>({
         className={`${INPUT_CLASS_NAME} cursor-text [&>div]:list-item ${
           showBulletPoints ? "pl-7" : "[&>div]:list-['']"
         }`}
+        style={{ borderColor: "var(--border)" }}
         // Note: placeholder currently doesn't work
         placeholder={placeholder}
         onChange={(e) => {

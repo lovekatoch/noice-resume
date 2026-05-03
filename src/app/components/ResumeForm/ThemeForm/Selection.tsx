@@ -21,18 +21,16 @@ const Selection = ({
   onClick: () => void;
   children: React.ReactNode;
 }) => {
-  const selectedStyle = {
-    color: "white",
-    backgroundColor: selectedColor,
-    borderColor: selectedColor,
-    ...style,
-  };
-
   return (
     <div
-      className="flex w-[105px] cursor-pointer items-center justify-center rounded-lg border border-[var(--notion-border)] py-1.5 hover:border-[var(--notion-border-strong)]"
+      className="flex cursor-pointer items-center justify-center rounded-md py-1.5 px-3 transition-colors"
       onClick={onClick}
-      style={isSelected ? selectedStyle : style}
+      style={{
+        border: isSelected ? `1px solid ${selectedColor}` : "1px solid var(--border)",
+        backgroundColor: isSelected ? selectedColor : "transparent",
+        color: isSelected ? "white" : "var(--fg)",
+        ...style,
+      }}
       onKeyDown={(e) => {
         if (["Enter", " "].includes(e.key)) onClick();
       }}

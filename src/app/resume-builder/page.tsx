@@ -4,7 +4,7 @@ import { Resume } from "components/Resume";
 
 export default function Create() {
   return (
-      <main className="relative flex h-screen w-full max-w-full flex-col bg-[var(--notion-warm-white)]">
+      <main className="relative flex h-screen w-full max-w-full flex-col bg-[var(--bg)]">
         {/* Mobile: Single scrollable column | Desktop: Side-by-side */}
         <div className="flex flex-col flex-1 overflow-y-auto md:grid md:grid-cols-12 md:h-full md:overflow-hidden">
           {/* Form Section - mobile: auto height | desktop: 45% with independent scroll */}

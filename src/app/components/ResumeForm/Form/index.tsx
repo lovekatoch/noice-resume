@@ -4,7 +4,6 @@ import {
   MoveIconButton,
   CollapseIconButton,
 } from "components/ResumeForm/Form/IconButton";
-import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import {
@@ -44,7 +43,14 @@ export const BaseForm = ({
   className?: string;
 }) => (
   <section
-    className={`flex w-full flex-col gap-3 rounded-lg bg-white p-4 pt-3 border border-[var(--notion-border)] transition-opacity duration-150 ${className}`}
+    className={`flex w-full flex-col gap-3 bg-white border ${className}`}
+    style={{
+      borderColor: "var(--border)",
+      borderRadius: "var(--radius-lg)",
+      boxShadow: "var(--shadow-card)",
+      padding: "16px",
+      marginBottom: "12px",
+    }}
   >
     {children}
   </section>
@@ -118,32 +124,44 @@ export const Form = ({
   return (
     <BaseForm
       className={`relative transition-opacity duration-200 ${
-        showForm ? "pb-6" : "pb-2 opacity-60"
+        showForm ? "pb-4" : "pb-2 opacity-60"
       }`}
     >
       <div
-        className="flex items-center justify-between gap-4"
+        className="flex items-center justify-between gap-2"
         onClick={() => setShowForm(!showForm)}
       >
-        <div className="flex grow cursor-pointer items-center gap-2">
-          <Icon className="h-6 w-6 text-gray-600" aria-hidden="true" />
+        <div className="flex grow cursor-pointer items-center gap-2 min-w-0">
+          <Icon className="h-5 w-5 shrink-0" style={{ color: "var(--muted)" }} aria-hidden="true" />
           <input
             type="text"
-            className="block w-full cursor-pointer border-b border-transparent text-lg font-semibold tracking-wide text-gray-900 outline-none hover:border-gray-300 focus:border-gray-300"
+            className="block w-full cursor-pointer border-b border-transparent text-base font-semibold outline-none"
+            style={{ color: "var(--fg)" }}
             value={heading}
             onChange={(e) => setHeading(e.target.value)}
           />
         </div>
-        <div className="flex items-center gap-0.5">
+        <div className="flex items-center gap-1 shrink-0" onClick={(e) => e.stopPropagation()}>
+          <button
+            type="button"
+            onClick={handleAIOpen}
+            className="flex items-center gap-1 px-2 py-1 text-sm font-medium rounded-md transition-colors"
+            style={{
+              backgroundColor: "var(--accent-light)",
+              color: "var(--accent)",
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
+            </svg>
+            Enhance
+          </button>
           {!isFirstForm && (
             <MoveIconButton type="up" onClick={handleMoveClick} />
           )}
           {!isLastForm && (
             <MoveIconButton type="down" onClick={handleMoveClick} />
           )}
-          <span onClick={(e) => e.stopPropagation()}>
-            <SparkleIconButton onClick={handleAIOpen} color={themeColor} />
-          </span>
           <CollapseIconButton expanded={showForm} setExpanded={setShowForm} />
         </div>
       </div>
@@ -151,16 +169,20 @@ export const Form = ({
         {children}
       </ExpanderWithHeightTransition>
       {showForm && addButtonText && (
-        <div className="mt-2 flex justify-end">
+        <div className="flex justify-center">
           <button
             type="button"
             onClick={() => {
               dispatch(addSectionInForm({ form }));
             }}
-            className="notion-btn notion-btn-secondary mt-2 flex justify-end px-4 py-2"
+            className="w-full py-2 text-sm font-medium rounded-md transition-colors"
+            style={{
+              border: "1.5px dashed var(--border)",
+              color: "var(--muted)",
+            }}
           >
             <PlusSmallIcon
-              className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+              className="-ml-0.5 mr-1.5 h-4 w-4 inline"
               aria-hidden="true"
             />
             {addButtonText}
@@ -211,47 +233,48 @@ export const FormSection = ({
   };
 
   return (
-    <>
-      {idx !== 0 && (
-        <div className="mb-2 mt-4 border-t border-[var(--notion-border)]" />
-      )}
-      <div className="relative flex flex-col gap-3">
-        {children}
-        <div className={`absolute right-0 top-0 flex gap-0.5 `}>
-          <div
-            className={`transition-all duration-300 ${
-              showMoveUp ? "" : "invisible opacity-0"
-            } ${showMoveDown ? "" : "-mr-6"}`}
-          >
-            <MoveIconButton
-              type="up"
-              size="small"
-              onClick={handleMoveClick}
-            />
-          </div>
-          <div
-            className={`transition-all duration-300 ${
-              showMoveDown ? "" : "invisible opacity-0"
-            }`}
-          >
-            <MoveIconButton
-              type="down"
-              size="small"
-              onClick={handleMoveClick}
-            />
-          </div>
-          <div
-            className={`transition-all duration-300 ${
-              showDelete ? "" : "invisible opacity-0"
-            }`}
-          >
-            <DeleteIconButton
-              onClick={handleDeleteClick}
-              tooltipText={deleteButtonTooltipText}
-            />
-          </div>
+    <div
+      className="relative flex flex-col gap-3 rounded-lg p-4"
+      style={{
+        backgroundColor: "var(--bg)",
+        border: "1px solid var(--border)",
+      }}
+    >
+      {children}
+      <div className="absolute right-2 top-2 flex gap-0.5">
+        <div
+          className={`transition-all duration-300 ${
+            showMoveUp ? "" : "invisible opacity-0"
+          }`}
+        >
+          <MoveIconButton
+            type="up"
+            size="small"
+            onClick={handleMoveClick}
+          />
+        </div>
+        <div
+          className={`transition-all duration-300 ${
+            showMoveDown ? "" : "invisible opacity-0"
+          }`}
+        >
+          <MoveIconButton
+            type="down"
+            size="small"
+            onClick={handleMoveClick}
+          />
+        </div>
+        <div
+          className={`transition-all duration-300 ${
+            showDelete ? "" : "invisible opacity-0"
+          }`}
+        >
+          <DeleteIconButton
+            onClick={handleDeleteClick}
+            tooltipText={deleteButtonTooltipText}
+          />
         </div>
       </div>
-    </>
+    </div>
   );
 };

@@ -1,7 +1,6 @@
 import { BaseForm } from "components/ResumeForm/Form";
 import { InputGroupWrapper } from "components/ResumeForm/Form/InputGroup";
 import { THEME_COLORS } from "components/ResumeForm/ThemeForm/constants";
-import { InlineInput } from "components/ResumeForm/ThemeForm/InlineInput";
 import {
   DocumentSizeSelections,
   FontFamilySelectionsCSR,
@@ -29,38 +28,55 @@ export const ThemeForm = () => {
 
   return (
     <BaseForm>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-5">
         <div className="flex items-center gap-2">
-          <Cog6ToothIcon className="h-6 w-6 text-gray-600" aria-hidden="true" />
-          <h1 className="text-lg font-semibold tracking-wide text-gray-900 ">
-            Resume Setting
+          <Cog6ToothIcon className="h-5 w-5" style={{ color: "var(--muted)" }} aria-hidden="true" />
+          <h1 className="text-base font-semibold" style={{ color: "var(--fg)" }}>
+            Resume Settings
           </h1>
         </div>
         <div>
-          <InlineInput
-            label="Theme Color"
-            name="themeColor"
-            value={settings.themeColor}
-            placeholder={DEFAULT_THEME_COLOR}
-            onChange={handleSettingsChange}
-            inputStyle={{ color: themeColor }}
-          />
-          <div className="mt-2 flex flex-wrap gap-2">
+          <p className="text-sm font-medium mb-2" style={{ color: "var(--muted)" }}>
+            Theme Color
+          </p>
+          <div className="flex items-center gap-3">
             {THEME_COLORS.map((color, idx) => (
               <div
-                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-md text-sm text-white"
-                style={{ backgroundColor: color }}
                 key={idx}
+                className="cursor-pointer rounded-full"
+                style={{
+                  width: 36,
+                  height: 36,
+                  backgroundColor: color,
+                  outline: settings.themeColor === color ? `2px solid ${color}` : "none",
+                  outlineOffset: 2,
+                  boxShadow:
+                    settings.themeColor === color
+                      ? `0 0 0 2px var(--surface), 0 0 0 4px ${color}`
+                      : "none",
+                }}
                 onClick={() => handleSettingsChange("themeColor", color)}
                 onKeyDown={(e) => {
                   if (["Enter", " "].includes(e.key))
                     handleSettingsChange("themeColor", color);
                 }}
                 tabIndex={0}
-              >
-                {settings.themeColor === color ? "✓" : ""}
-              </div>
+                role="button"
+                aria-label={`Theme color ${color}`}
+              />
             ))}
+            <input
+              type="text"
+              name="themeColor"
+              value={settings.themeColor || ""}
+              placeholder={DEFAULT_THEME_COLOR}
+              onChange={(e) => handleSettingsChange("themeColor", e.target.value)}
+              className="ml-1 w-20 border-b text-sm font-medium outline-none"
+              style={{
+                borderColor: "var(--border)",
+                color: themeColor,
+              }}
+            />
           </div>
         </div>
         <div>
@@ -72,13 +88,9 @@ export const ThemeForm = () => {
           />
         </div>
         <div>
-          <InlineInput
-            label="Font Size (pt)"
-            name="fontSize"
-            value={fontSize}
-            placeholder="11"
-            onChange={handleSettingsChange}
-          />
+          <p className="text-sm font-medium mb-2" style={{ color: "var(--muted)" }}>
+            Font Size
+          </p>
           <FontSizeSelections
             fontFamily={fontFamily as FontFamily}
             themeColor={themeColor}
