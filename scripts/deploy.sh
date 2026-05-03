@@ -17,7 +17,7 @@ echo "🚀 Deploying to Cloudflare Pages..."
 
 if [ "$DEPLOY_TYPE" = "production" ]; then
     echo "📦 Deploying to PRODUCTION..."
-    npx wrangler pages deploy out --project-name=noiceresume --branch=production
+    npx wrangler pages deploy out --project-name=noiceresume --branch=main
 else
     echo "📦 Deploying to PREVIEW..."
     npx wrangler pages deploy out --project-name=noiceresume

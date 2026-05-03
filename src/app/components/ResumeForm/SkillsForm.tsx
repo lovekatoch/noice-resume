@@ -6,6 +6,7 @@ import {
 import { FeaturedSkillInput } from "components/ResumeForm/Form/FeaturedSkillInput";
 import { BulletListIconButton } from "components/ResumeForm/Form/IconButton";
 import { AISuggestButton } from "components/AISuggestButton";
+import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { selectSkills, changeSkills } from "lib/redux/resumeSlice";
@@ -93,6 +94,11 @@ export const SkillsForm = () => {
               onClick={handleShowBulletPoints}
             />
           </div>
+          {descriptions.length > 0 && (
+            <div className="absolute right-2 top-8">
+              <SparkleIconButton onClick={() => openPanel()} color={themeColor} size="small" />
+            </div>
+          )}
         </div>
 
         {descriptions.length > 0 && (
