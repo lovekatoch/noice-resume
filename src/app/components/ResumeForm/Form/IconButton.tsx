@@ -1,7 +1,5 @@
 import { IconButton } from "components/Button";
 import {
-  EyeIcon,
-  EyeSlashIcon,
   ArrowSmallUpIcon,
   ArrowSmallDownIcon,
   TrashIcon,
@@ -9,9 +7,6 @@ import {
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 
-/**
- * CollapseIconButton - Notion-style collapse toggle with chevron icon.
- */
 export const CollapseIconButton = ({
   expanded,
   setExpanded,
@@ -39,27 +34,6 @@ export const CollapseIconButton = ({
         }`}
         aria-hidden="true"
       />
-      <span className="sr-only">{tooltipText}</span>
-    </IconButton>
-  );
-};
-
-export const ShowIconButton = ({
-  show,
-  setShow,
-}: {
-  show: boolean;
-  setShow: (show: boolean) => void;
-}) => {
-  const tooltipText = show ? "Hide section" : "Show section";
-  const onClick = () => {
-    setShow(!show);
-  };
-  const Icon = show ? EyeIcon : EyeSlashIcon;
-
-  return (
-    <IconButton onClick={onClick} tooltipText={tooltipText}>
-      <Icon className="h-6 w-6 text-gray-400" aria-hidden="true" />
       <span className="sr-only">{tooltipText}</span>
     </IconButton>
   );
