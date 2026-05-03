@@ -63,9 +63,9 @@ export const initialResumeState: Resume = {
   custom: initialCustom,
 };
 
-type ChangeDescriptionsAction<T extends { descriptions: string[] }> = {
-  [K in keyof T]: { field: K; value: T[K] };
-}[keyof T];
+type ChangeDescriptionsAction<T extends { descriptions: string[] }> =
+  | { [K in keyof T]: { field: K; value: T[K] } }[keyof T]
+  | { field: Exclude<keyof T, "descriptions">; value: string };
 
 export const resumeSlice = createSlice({
   name: "resume",

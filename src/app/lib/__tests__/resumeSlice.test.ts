@@ -236,3 +236,13 @@ describe("resumeSlice", () => {
     });
   });
 });
+
+// Type-level validation: action creators accept payloads without `as any`
+type _acceptsDescriptionsPayload =
+  Parameters<typeof changeWorkExperiences>[0] extends
+  { idx: number; field: "descriptions"; value: string[] } ? true : false;
+type _acceptsStringFieldPayload =
+  Parameters<typeof changeWorkExperiences>[0] extends
+  { idx: number; field: "company"; value: string } ? true : false;
+type _check = _acceptsDescriptionsPayload extends true ?
+  _acceptsStringFieldPayload extends true ? true : never : never;

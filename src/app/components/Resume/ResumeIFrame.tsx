@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useRef, useEffect, useState } from "react";
+import { useMemo, useRef, useEffect, useState, type ReactElement } from "react";
 import Frame from "react-frame-component";
 import {
   A4_HEIGHT_PX,
@@ -98,7 +98,7 @@ const ResumeIframe = ({
   if (enablePDFViewer) {
     return (
       <DynamicPDFViewer className="h-full w-full">
-        {children as any}
+        {children as ReactElement}
       </DynamicPDFViewer>
     );
   }

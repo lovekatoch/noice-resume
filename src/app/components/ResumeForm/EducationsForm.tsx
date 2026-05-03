@@ -46,7 +46,7 @@ export const EducationsForm = () => {
 
   const handleAccept = (text: string) => {
     if (aiTargetIdx !== null) {
-      dispatch(changeEducations({ idx: aiTargetIdx, field: "descriptions", value: [text] } as any));
+      dispatch(changeEducations({ idx: aiTargetIdx, field: "descriptions", value: [text] }));
     }
     setAiPanelOpen(false);
     setStreamingText("");
@@ -66,12 +66,13 @@ export const EducationsForm = () => {
     <Form form={form} addButtonText="Add School">
       {educations.map(({ school, degree, gpa, date, descriptions }, idx) => {
         const handleEducationChange = (
-          ...[
-            field,
-            value,
-          ]: CreateHandleChangeArgsWithDescriptions<ResumeEducation>
+          ...args: CreateHandleChangeArgsWithDescriptions<ResumeEducation>
         ) => {
-          dispatch(changeEducations({ idx, field, value } as any));
+          if (args[0] === "descriptions") {
+            dispatch(changeEducations({ idx, field: args[0], value: args[1] }));
+          } else {
+            dispatch(changeEducations({ idx, field: args[0], value: args[1] }));
+          }
         };
 
         const handleShowBulletPoints = (value: boolean) => {

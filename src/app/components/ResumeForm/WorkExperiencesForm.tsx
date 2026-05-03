@@ -39,8 +39,7 @@ export const WorkExperiencesForm = () => {
 
   const handleAccept = (text: string) => {
     if (aiTargetIdx !== null) {
-      const experience = workExperiences[aiTargetIdx];
-      dispatch(changeWorkExperiences({ idx: aiTargetIdx, field: "descriptions", value: [text] } as any));
+      dispatch(changeWorkExperiences({ idx: aiTargetIdx, field: "descriptions", value: [text] }));
     }
     setAiPanelOpen(false);
     setStreamingText("");
@@ -60,12 +59,13 @@ export const WorkExperiencesForm = () => {
     <Form form="workExperiences" addButtonText="Add Job">
       {workExperiences.map(({ company, jobTitle, date, descriptions }, idx) => {
         const handleWorkExperienceChange = (
-          ...[
-            field,
-            value,
-          ]: CreateHandleChangeArgsWithDescriptions<ResumeWorkExperience>
+          ...args: CreateHandleChangeArgsWithDescriptions<ResumeWorkExperience>
         ) => {
-          dispatch(changeWorkExperiences({ idx, field, value } as any));
+          if (args[0] === "descriptions") {
+            dispatch(changeWorkExperiences({ idx, field: args[0], value: args[1] }));
+          } else {
+            dispatch(changeWorkExperiences({ idx, field: args[0], value: args[1] }));
+          }
         };
         const showMoveUp = idx !== 0;
         const showMoveDown = idx !== workExperiences.length - 1;

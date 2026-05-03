@@ -39,7 +39,7 @@ export const ProjectsForm = () => {
 
   const handleAccept = (text: string) => {
     if (aiTargetIdx !== null) {
-      dispatch(changeProjects({ idx: aiTargetIdx, field: "descriptions", value: [text] } as any));
+      dispatch(changeProjects({ idx: aiTargetIdx, field: "descriptions", value: [text] }));
     }
     setAiPanelOpen(false);
     setStreamingText("");
@@ -59,12 +59,13 @@ export const ProjectsForm = () => {
     <Form form="projects" addButtonText="Add Project">
       {projects.map(({ project, date, descriptions }, idx) => {
         const handleProjectChange = (
-          ...[
-            field,
-            value,
-          ]: CreateHandleChangeArgsWithDescriptions<ResumeProject>
+          ...args: CreateHandleChangeArgsWithDescriptions<ResumeProject>
         ) => {
-          dispatch(changeProjects({ idx, field, value } as any));
+          if (args[0] === "descriptions") {
+            dispatch(changeProjects({ idx, field: args[0], value: args[1] }));
+          } else {
+            dispatch(changeProjects({ idx, field: args[0], value: args[1] }));
+          }
         };
         const showMoveUp = idx !== 0;
         const showMoveDown = idx !== projects.length - 1;
