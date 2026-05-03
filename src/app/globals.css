@@ -187,6 +187,29 @@ h1, h2, h3 {
   color: var(--accent);
 }
 
+/* Form Section Card hover + focus + entrance */
+.form-section-card {
+  transition: all 200ms ease;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+}
+.form-section-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-color: rgba(94,106,210,0.3);
+}
+.form-section-card:focus-within {
+  border-left: 2px solid var(--accent);
+}
+
+@keyframes formSectionEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.form-section-enter {
+  animation: formSectionEnter 300ms ease-out;
+}
+
 /* AI Sparkle Button */
 .ai-sparkle-btn {
   color: var(--notion-warm-gray-300);

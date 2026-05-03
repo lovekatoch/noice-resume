@@ -220,11 +220,7 @@ export const FormSection = ({
 
   return (
     <div
-      className="relative flex flex-col gap-3 rounded-lg p-4"
-      style={{
-        backgroundColor: "var(--bg)",
-        border: "1px solid var(--border)",
-      }}
+      className="relative flex flex-col gap-3 rounded-lg p-4 form-section-card form-section-enter"
     >
       {children}
       <div className="absolute right-2 top-2 flex gap-0.5">

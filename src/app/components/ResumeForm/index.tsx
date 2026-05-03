@@ -12,6 +12,7 @@ import { ProjectsForm } from "components/ResumeForm/ProjectsForm";
 import { SkillsForm } from "components/ResumeForm/SkillsForm";
 import { ThemeForm } from "components/ResumeForm/ThemeForm";
 import { CustomForm } from "components/ResumeForm/CustomForm";
+import { AutoSaveIndicator } from "components/AutoSaveIndicator";
 
 const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   workExperiences: WorkExperiencesForm,
@@ -37,6 +38,7 @@ export const ResumeForm = () => {
         })}
         <ThemeForm />
       </section>
+      <AutoSaveIndicator />
     </div>
   );
 };

@@ -113,7 +113,7 @@ export const WorkExperiencesForm = () => {
                 onChange={handleWorkExperienceChange}
               />
               {descriptions.length > 0 && (
-                <div className="absolute right-2 top-8">
+                <div className="absolute right-2 top-1/2 -translate-y-1/2">
                     <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" />
                 </div>
               )}

@@ -43,6 +43,22 @@ export const AIPanel = ({
   }, [isOpen]);
 
   useEffect(() => {
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes cursor-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+      @keyframes fadeSlideUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => style.remove();
+  }, []);
+
+  useEffect(() => {
     if (textRef.current) {
       textRef.current.scrollTop = textRef.current.scrollHeight;
     }
@@ -67,6 +83,7 @@ export const AIPanel = ({
         style={{
           backgroundColor: "rgba(0,0,0,0.45)",
           opacity: visible ? 1 : 0,
+          backdropFilter: visible ? "blur(2px)" : "none",
         }}
         onClick={onClose}
       />
@@ -77,7 +94,7 @@ export const AIPanel = ({
           backgroundColor: "var(--surface)",
           borderRadius: "16px 16px 0 0",
           transform: visible ? "translateY(0)" : "translateY(100%)",
-          transition: "transform 350ms cubic-bezier(0.16, 1, 0.3, 1)",
+          transition: "transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1)",
         }}
         onTransitionEnd={() => {
           if (!visible) setMounted(false);
@@ -113,11 +130,13 @@ export const AIPanel = ({
               <button
                 key={tone.value}
                 onClick={() => setSelectedTone(tone.value)}
-                className="rounded-full px-4 py-1.5 text-sm font-medium transition-colors"
+                className="rounded-full px-4 py-1.5 text-sm font-medium"
                 style={{
                   border: `1px solid ${active ? "var(--accent)" : "var(--border)"}`,
                   backgroundColor: active ? "var(--accent-light)" : "transparent",
                   color: active ? "var(--accent)" : "var(--muted)",
+                  transition: "all 200ms",
+                  transform: active ? "scale(1.02)" : "scale(1)",
                 }}
               >
                 {tone.label}
@@ -155,6 +174,7 @@ export const AIPanel = ({
               style={{
                 backgroundColor: "var(--bg)",
                 borderColor: "var(--border)",
+                animation: "fadeSlideUp 300ms ease-out",
               }}
             >
               <div className="mb-2 flex items-center gap-2">
@@ -173,7 +193,20 @@ export const AIPanel = ({
               </div>
               <p className="whitespace-pre-wrap text-sm" style={{ color: "var(--fg)" }}>
                 {streamingText}
-                {isLoading && <span className="ai-streaming-cursor" />}
+                {isLoading && (
+                  <span
+                    className="ai-streaming-cursor"
+                    style={{
+                      display: "inline-block",
+                      width: "2px",
+                      height: "1em",
+                      backgroundColor: "var(--accent)",
+                      marginLeft: "2px",
+                      animation: "cursor-blink 1s ease-in-out infinite",
+                      verticalAlign: "text-bottom",
+                    }}
+                  />
+                )}
               </p>
               <div className="mt-3 flex gap-2">
                 <button
