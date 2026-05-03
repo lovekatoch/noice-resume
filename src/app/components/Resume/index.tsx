@@ -45,7 +45,7 @@ export const Resume = () => {
   return (
     <>
       <NonEnglishFontsCSSLazyLoader />
-      <div id="resume-preview" className="relative flex w-full flex-col">
+      <div id="resume-preview" className="relative flex w-full flex-col bg-[var(--bg)]">
         <ResumeControlBarCSR
           document={document}
           fileName={formatResumeFileName(resume.profile.name, exportFormat)}

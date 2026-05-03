@@ -51,10 +51,14 @@ export const DownloadConfirmModal = ({
         onClick={onClose}
       />
 
-      <div className="relative z-10 w-full max-w-sm rounded-lg bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.1),0_1px_2px_rgba(0,0,0,0.1)]">
+      <div
+        className="relative z-10 w-full max-w-sm rounded-lg p-6 shadow-lg"
+        style={{ backgroundColor: "var(--surface)", color: "var(--fg)" }}
+      >
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+          className="absolute right-4 top-4 rounded-md p-1 transition-colors"
+          style={{ color: "var(--muted)" }}
           aria-label="Close modal"
         >
           <XMarkIcon className="h-5 w-5" aria-hidden="true" />
@@ -63,45 +67,50 @@ export const DownloadConfirmModal = ({
         {!isComplete ? (
           <>
             <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--notion-blue)]/10">
-                <CheckCircleIcon className="h-5 w-5 text-[var(--notion-blue)]" />
+              <div
+                className="flex h-10 w-10 items-center justify-center rounded-full"
+                style={{ backgroundColor: "color-mix(in srgb, var(--accent) 10%, transparent)" }}
+              >
+                <CheckCircleIcon className="h-5 w-5" style={{ color: "var(--accent)" }} />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-lg font-semibold" style={{ color: "var(--fg)" }}>
                   Ready to Download
                 </h3>
-                <p className="text-sm text-gray-500">Confirm your resume file</p>
+                <p style={{ color: "var(--muted)" }} className="text-sm">Confirm your resume file</p>
               </div>
             </div>
 
-            <div className="mb-5 rounded-md bg-[var(--notion-warm-white)] p-3">
-              <p className="text-sm font-medium text-gray-900">{fileName}</p>
-              <p className="text-xs text-gray-500">{formatLabel}</p>
+            <div className="mb-5 rounded-md p-3" style={{ backgroundColor: "var(--bg)" }}>
+              <p className="text-sm font-medium" style={{ color: "var(--fg)" }}>{fileName}</p>
+              <p className="text-xs" style={{ color: "var(--muted)" }}>{formatLabel}</p>
             </div>
 
             <div className="mb-5">
-              <p className="mb-2 text-xs font-medium text-gray-500 uppercase tracking-wide">
+              <p className="mb-2 text-xs font-medium uppercase tracking-wide" style={{ color: "var(--muted)" }}>
                 Export Format
               </p>
               <div className="flex gap-2">
                 <button
                   onClick={() => onFormatChange("pdf")}
-                  className={`flex flex-1 items-center justify-center gap-2 rounded-md border-2 px-3 py-2 text-sm font-medium transition-colors ${
-                    format === "pdf"
-                      ? "border-[var(--notion-blue)] bg-[var(--notion-blue)]/5 text-[var(--notion-blue)]"
-                      : "border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50"
-                  }`}
+                  className="flex flex-1 items-center justify-center gap-2 rounded-md border px-3 py-2 text-sm font-medium transition-colors"
+                  style={{
+                    borderColor: format === "pdf" ? "var(--accent)" : "var(--border)",
+                    backgroundColor: format === "pdf" ? "color-mix(in srgb, var(--accent) 5%, transparent)" : "transparent",
+                    color: format === "pdf" ? "var(--accent)" : "var(--muted)",
+                  }}
                 >
                   <DocumentIcon className="h-4 w-4" />
                   PDF
                 </button>
                 <button
                   onClick={() => onFormatChange("docx")}
-                  className={`flex flex-1 items-center justify-center gap-2 rounded-md border-2 px-3 py-2 text-sm font-medium transition-colors ${
-                    format === "docx"
-                      ? "border-[var(--notion-blue)] bg-[var(--notion-blue)]/5 text-[var(--notion-blue)]"
-                      : "border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50"
-                  }`}
+                  className="flex flex-1 items-center justify-center gap-2 rounded-md border px-3 py-2 text-sm font-medium transition-colors"
+                  style={{
+                    borderColor: format === "docx" ? "var(--accent)" : "var(--border)",
+                    backgroundColor: format === "docx" ? "color-mix(in srgb, var(--accent) 5%, transparent)" : "transparent",
+                    color: format === "docx" ? "var(--accent)" : "var(--muted)",
+                  }}
                 >
                   <DocumentIcon className="h-4 w-4" />
                   DOCX
@@ -109,9 +118,9 @@ export const DownloadConfirmModal = ({
               </div>
             </div>
 
-            <div className="mb-5 rounded-md bg-gray-50 p-3">
-              <p className="mb-1 text-xs font-medium text-gray-500">Share your resume</p>
-              <p className="text-xs text-gray-400">
+            <div className="mb-5 rounded-md p-3" style={{ backgroundColor: "var(--bg)" }}>
+              <p className="mb-1 text-xs font-medium" style={{ color: "var(--muted)" }}>Share your resume</p>
+              <p className="text-xs" style={{ color: "var(--muted)" }}>
                 Send the preview link to recruiters or share directly from the browser address bar.
               </p>
             </div>
@@ -119,14 +128,22 @@ export const DownloadConfirmModal = ({
             <div className="flex gap-3">
               <button
                 onClick={onClose}
-                className="notion-btn notion-btn-secondary flex-1"
+                className="flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors"
+                style={{
+                  backgroundColor: "var(--bg)",
+                  color: "var(--fg)",
+                  border: "1px solid var(--border)",
+                }}
               >
                 Cancel
               </button>
               <button
                 onClick={handleConfirm}
                 disabled={isDownloading}
-                className="flex flex-1 items-center justify-center gap-2 rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white hover:bg-[var(--accent-hover)] disabled:opacity-50"
+                className="flex flex-1 items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-white transition-colors disabled:opacity-50"
+                style={{
+                  backgroundColor: "var(--accent)",
+                }}
               >
                 {isDownloading ? (
                   <>
@@ -162,16 +179,19 @@ export const DownloadConfirmModal = ({
           </>
         ) : (
           <div className="flex flex-col items-center py-4">
-            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--notion-green)]/10">
-              <CheckCircleIcon className="h-6 w-6 text-[var(--notion-green)]" />
+            <div
+              className="mb-3 flex h-12 w-12 items-center justify-center rounded-full"
+              style={{ backgroundColor: "color-mix(in srgb, #22c55e 10%, transparent)" }}
+            >
+              <CheckCircleIcon className="h-6 w-6" style={{ color: "#22c55e" }} />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold" style={{ color: "var(--fg)" }}>
               Downloaded Successfully!
             </h3>
-            <p className="mt-1 text-sm text-gray-500">{fileName}</p>
-            <div className="mt-4 w-full space-y-2 rounded-md bg-gray-50 p-3">
-              <p className="text-xs font-medium text-gray-500">Next steps</p>
-              <ul className="space-y-1 text-xs text-gray-400">
+            <p className="mt-1 text-sm" style={{ color: "var(--muted)" }}>{fileName}</p>
+            <div className="mt-4 w-full space-y-2 rounded-md p-3" style={{ backgroundColor: "var(--bg)" }}>
+              <p className="text-xs font-medium" style={{ color: "var(--muted)" }}>Next steps</p>
+              <ul className="space-y-1 text-xs" style={{ color: "var(--muted)" }}>
                 <li>• Open in Word to edit further</li>
                 <li>• Submit to job applications</li>
                 <li>• Share the preview link with recruiters</li>

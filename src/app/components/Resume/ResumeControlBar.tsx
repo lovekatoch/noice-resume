@@ -96,20 +96,52 @@ const ResumeControlBar = ({
 
   return (
     <>
-      <div className="flex h-[var(--resume-control-bar-height)] items-center justify-between px-[var(--resume-padding)] text-gray-600">
+      <div
+        className="flex items-center justify-between border-b px-4 py-2"
+        style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--fg)" }}
+      >
+        {/* Format Toggle */}
+        <div className="flex items-center gap-1 rounded-md p-0.5"
+          style={{ backgroundColor: "var(--bg)", border: "1px solid var(--border)" }}
+        >
+          <button
+            onClick={() => onFormatChange("pdf")}
+            className="rounded-sm px-3 py-1 text-xs font-medium transition-colors"
+            style={{
+              backgroundColor: format === "pdf" ? "var(--surface)" : "transparent",
+              color: format === "pdf" ? "var(--fg)" : "var(--muted)",
+              boxShadow: format === "pdf" ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
+            }}
+          >
+            PDF
+          </button>
+          <button
+            onClick={() => onFormatChange("docx")}
+            className="rounded-sm px-3 py-1 text-xs font-medium transition-colors"
+            style={{
+              backgroundColor: format === "docx" ? "var(--surface)" : "transparent",
+              color: format === "docx" ? "var(--fg)" : "var(--muted)",
+              boxShadow: format === "docx" ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
+            }}
+          >
+            DOCX
+          </button>
+        </div>
+
         {/* Zoom Slider */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-gray-400">100%</span>
+          <span className="text-xs" style={{ color: "var(--muted)" }}>100%</span>
           <input
             type="range"
             min="100"
             max="150"
             value={zoomLevel}
             onChange={handleZoomSliderChange}
-            className="h-1 w-24 cursor-pointer appearance-none rounded-full bg-gray-200 accent-[var(--notion-blue)]"
+            className="h-1 w-24 cursor-pointer appearance-none rounded-full"
+            style={{ backgroundColor: "var(--border)", accentColor: "var(--accent)" }}
           />
-          <MagnifyingGlassPlusIcon className="h-4 w-4 text-gray-400" />
-          <span className="min-w-[3rem] text-sm font-medium text-gray-600">
+          <MagnifyingGlassPlusIcon className="h-4 w-4" style={{ color: "var(--muted)" }} />
+          <span className="min-w-[3rem] text-sm font-medium" style={{ color: "var(--fg)" }}>
             {zoomLevel}%
           </span>
         </div>
@@ -119,9 +151,11 @@ const ResumeControlBar = ({
           <button
             aria-label="Download Resume"
             onClick={handleDownloadClick}
-            className="notion-btn notion-btn-secondary !px-3"
+            className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium text-white transition-colors hover:opacity-90"
+            style={{ backgroundColor: "var(--accent)" }}
           >
-            <ArrowDownTrayIcon className="h-5 w-5" />
+            <ArrowDownTrayIcon className="h-4 w-4" />
+            Download
           </button>
         </Tooltip>
       </div>
