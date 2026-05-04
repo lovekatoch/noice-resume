@@ -1,15 +1,15 @@
 const STEPS = [
   {
-    title: "Import your existing resume",
-    text: "Drop a PDF or start from scratch. Our AI reads everything in seconds.",
+    title: "Import your resume",
+    text: "Upload a PDF or start fresh. The AI reads it in seconds.",
   },
   {
-    title: "AI refines your content",
-    text: "We optimize wording, structure, and keywords so recruiters notice you first.",
+    title: "Polish with AI",
+    text: "Get suggestions that make your experience sound better. Tweak until it feels right.",
   },
   {
-    title: "Download and apply with confidence",
-    text: "Get a resume that's built to impress — then land the interview you've earned.",
+    title: "Download and apply",
+    text: "Export a clean PDF and send it out. That is all it takes.",
   },
 ];
 

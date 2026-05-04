@@ -39,7 +39,7 @@ export const Hero = () => {
           Land interviews at <span className="text-[var(--accent)]">top companies</span>
         </h1>
         <p className="mx-auto mb-10 max-w-[540px] text-lg text-[var(--muted)]">
-          Your resume gets reviewed in seconds. NoiceResume uses AI to make sure yours stands out and gets you noticed.
+          Recruiters spend seconds on each resume. Make sure yours is the one they remember.
         </p>
         <div className="flex flex-col items-center justify-center gap-3">
           <div className="flex flex-col items-center gap-3 sm:flex-row">
