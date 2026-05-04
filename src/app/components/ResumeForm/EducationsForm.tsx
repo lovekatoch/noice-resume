@@ -124,7 +124,7 @@ export const EducationsForm = () => {
               value={gpa}
               onChange={handleEducationChange}
             />
-            <div className="relative col-span-full">
+            <div className="col-span-full">
               <BulletListTextarea
                 label="Additional Information (Optional)"
                 labelClassName="col-span-full"
@@ -133,6 +133,7 @@ export const EducationsForm = () => {
                 value={descriptions}
                 onChange={handleEducationChange}
                 showBulletPoints={showBulletPoints}
+                action={descriptions.length > 0 ? <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" /> : undefined}
               />
               <div className="absolute left-[15.6rem] top-[0.07rem]">
                 <BulletListIconButton
@@ -140,11 +141,6 @@ export const EducationsForm = () => {
                   onClick={handleShowBulletPoints}
                 />
               </div>
-              {descriptions.length > 0 && (
-                <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                    <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" />
-                </div>
-              )}
             </div>
           </FormSection>
         );

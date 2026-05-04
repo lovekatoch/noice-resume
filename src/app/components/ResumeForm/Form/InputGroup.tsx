@@ -21,13 +21,18 @@ export const InputGroupWrapper = ({
   label,
   className,
   children,
+  action,
 }: {
   label: string;
   className?: string;
   children?: React.ReactNode;
+  action?: React.ReactNode;
 }) => (
   <label className={`text-base font-medium text-gray-700 ${className}`}>
-    {label}
+    <span className="inline-flex items-center gap-2">
+      {label}
+      {action}
+    </span>
     {children}
   </label>
 );
@@ -65,11 +70,12 @@ export const Textarea = <T extends string>({
   value = "",
   placeholder,
   onChange,
-}: InputProps<T, string>) => {
+  action,
+}: InputProps<T, string> & { action?: React.ReactNode }) => {
   const textareaRef = useAutosizeTextareaHeight({ value });
 
   return (
-    <InputGroupWrapper label={label} className={wrapperClassName}>
+    <InputGroupWrapper label={label} className={wrapperClassName} action={action}>
       <textarea
         ref={textareaRef}
         name={name}
@@ -84,7 +90,7 @@ export const Textarea = <T extends string>({
 };
 
 export const BulletListTextarea = <T extends string>(
-  props: InputProps<T, string[]> & { showBulletPoints?: boolean }
+  props: InputProps<T, string[]> & { showBulletPoints?: boolean; action?: React.ReactNode }
 ) => {
   const [showFallback, setShowFallback] = useState(false);
 
@@ -122,10 +128,11 @@ const BulletListTextareaGeneral = <T extends string>({
   placeholder,
   onChange,
   showBulletPoints = true,
-}: InputProps<T, string[]> & { showBulletPoints?: boolean }) => {
+  action,
+}: InputProps<T, string[]> & { showBulletPoints?: boolean; action?: React.ReactNode }) => {
   const html = getHTMLFromBulletListStrings(bulletListStrings);
   return (
-    <InputGroupWrapper label={label} className={wrapperClassName}>
+    <InputGroupWrapper label={label} className={wrapperClassName} action={action}>
       <ContentEditable
         contentEditable={true}
         className={`${INPUT_CLASS_NAME} cursor-text [&>div]:list-item ${
@@ -199,7 +206,8 @@ const BulletListTextareaFallback = <T extends string>({
   placeholder,
   onChange,
   showBulletPoints = true,
-}: InputProps<T, string[]> & { showBulletPoints?: boolean }) => {
+  action,
+}: InputProps<T, string[]> & { showBulletPoints?: boolean; action?: React.ReactNode }) => {
   const textareaValue = getTextareaValueFromBulletListStrings(
     bulletListStrings,
     showBulletPoints
@@ -212,6 +220,7 @@ const BulletListTextareaFallback = <T extends string>({
       name={name}
       value={textareaValue}
       placeholder={placeholder}
+      action={action}
       onChange={(name, value) => {
         onChange(
           name,

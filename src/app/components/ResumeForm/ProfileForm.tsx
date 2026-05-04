@@ -47,7 +47,7 @@ export const ProfileForm = () => {
           value={name}
           onChange={handleProfileChange}
         />
-        <div className="col-span-full relative">
+        <div className="col-span-full">
           <Textarea
             label="Objective"
             labelClassName="col-span-full"
@@ -55,12 +55,8 @@ export const ProfileForm = () => {
             placeholder="Entrepreneur and educator obsessed with making education free for anyone"
             value={summary}
             onChange={handleProfileChange}
+            action={summary.length > 0 ? <SparkleIconButton onClick={() => openPanel()} color={themeColor} size="small" /> : undefined}
           />
-{summary.length > 0 && (
-              <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                  <SparkleIconButton onClick={() => openPanel()} color={themeColor} size="small" />
-              </div>
-            )}
         </div>
         <Input
           label="Email"

@@ -79,12 +79,8 @@ export const SkillsForm = () => {
             placeholder="Bullet points"
             value={descriptions}
             onChange={handleSkillsChange}
+            action={descriptions.length > 0 ? <SparkleIconButton onClick={() => openPanel()} color={themeColor} size="small" /> : undefined}
           />
-          {descriptions.length > 0 && (
-            <div className="absolute right-2 top-1/2 -translate-y-1/2">
-              <SparkleIconButton onClick={() => openPanel()} color={themeColor} size="small" />
-            </div>
-          )}
         </div>
 
         {descriptions.length > 0 && (

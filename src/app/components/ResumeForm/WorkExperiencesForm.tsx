@@ -103,7 +103,7 @@ export const WorkExperiencesForm = () => {
               value={date}
               onChange={handleWorkExperienceChange}
             />
-            <div className="col-span-full relative">
+            <div className="col-span-full">
               <BulletListTextarea
                 label="Description"
                 labelClassName="col-span-full"
@@ -111,12 +111,8 @@ export const WorkExperiencesForm = () => {
                 placeholder="Bullet points"
                 value={descriptions}
                 onChange={handleWorkExperienceChange}
+                action={descriptions.length > 0 ? <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" /> : undefined}
               />
-              {descriptions.length > 0 && (
-                <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                    <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" />
-                </div>
-              )}
             </div>
           </FormSection>
         );

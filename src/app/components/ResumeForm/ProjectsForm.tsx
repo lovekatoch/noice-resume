@@ -94,7 +94,7 @@ export const ProjectsForm = () => {
               onChange={handleProjectChange}
               labelClassName="col-span-full"
             />
-            <div className="col-span-full relative">
+            <div className="col-span-full">
               <BulletListTextarea
                 name="descriptions"
                 label="Description"
@@ -102,12 +102,8 @@ export const ProjectsForm = () => {
                 value={descriptions}
                 onChange={handleProjectChange}
                 labelClassName="col-span-full"
+                action={descriptions.length > 0 ? <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" /> : undefined}
               />
-              {descriptions.length > 0 && (
-                <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                    <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" />
-                </div>
-              )}
             </div>
           </FormSection>
         );
