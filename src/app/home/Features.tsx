@@ -1,22 +1,20 @@
-import Image from "next/image";
-import featureFreeSrc from "public/assets/feature-free.svg";
-import featurePrivacySrc from "public/assets/feature-privacy.svg";
-import collaborationSrc from "public/assets/undraw-collaboration.svg";
-import certificationSrc from "public/assets/undraw-certification.svg";
-import { Link } from "components/documentation";
-
 const ITEMS = [
   {
-    src: featureFreeSrc,
     title: "Free for everyone",
     text: "No paid plans, no trials, no credit card. Just a resume builder that works.",
+    icon: (
+      <svg className="h-5 w-5 text-[var(--accent)]" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M9 12l2 2 4-4" />
+        <circle cx="10" cy="10" r="8" />
+      </svg>
+    ),
   },
   {
     title: "Built for ATS",
     text: "Most resumes get filtered out by software before anyone reads them. Yours won't be one of them.",
     icon: (
       <svg className="h-5 w-5 text-[var(--accent)]" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <circle cx="10" cy="10" r="8" />
+        <rect x="3" y="3" width="14" height="14" rx="2" />
         <path d="M7 10l2 2 4-4" />
       </svg>
     ),
@@ -32,9 +30,14 @@ const ITEMS = [
     ),
   },
   {
-    src: featurePrivacySrc,
     title: "Stays on your device",
     text: "Nothing gets uploaded to a server. Your resume never leaves your browser.",
+    icon: (
+      <svg className="h-5 w-5 text-[var(--accent)]" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <rect x="4" y="4" width="12" height="12" rx="2" />
+        <path d="M7 10h6M10 7v6" />
+      </svg>
+    ),
   },
 ];
 
@@ -50,17 +53,13 @@ export const Features = () => {
             A resume builder that does the hard part for you.
           </p>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {ITEMS.map(({ src, title, text, icon }) => (
+            {ITEMS.map(({ title, text, icon }) => (
               <div
                 key={title}
                 className="flex items-start gap-4 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm"
               >
                 <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--accent-light)]">
-                  {src ? (
-                    <Image src={src} alt="" className="h-6 w-6" />
-                  ) : (
-                    icon
-                  )}
+                  {icon}
                 </div>
                 <div>
                   <h3 className="mb-1 font-semibold text-[var(--fg)]">{title}</h3>
@@ -68,18 +67,6 @@ export const Features = () => {
                 </div>
               </div>
             ))}
-          </div>
-          <div className="mx-auto mt-10 grid max-w-[600px] grid-cols-2 gap-6">
-            <Image
-              src={collaborationSrc}
-              alt=""
-              className="h-auto w-full"
-            />
-            <Image
-              src={certificationSrc}
-              alt=""
-              className="h-auto w-full"
-            />
           </div>
         </div>
       </section>
