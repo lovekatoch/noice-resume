@@ -56,6 +56,8 @@ export const Input = <K extends string>({
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(name, e.target.value)}
+        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
         className={INPUT_CLASS_NAME}
         style={{ borderColor: "var(--border)" }}
       />
@@ -84,6 +86,8 @@ export const Textarea = <T extends string>({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(name, e.target.value)}
+        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
       />
     </InputGroupWrapper>
   );
@@ -149,6 +153,8 @@ const BulletListTextareaGeneral = <T extends string>({
             onChange(name, newBulletListStrings);
           }
         }}
+        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
         html={html}
       />
     </InputGroupWrapper>

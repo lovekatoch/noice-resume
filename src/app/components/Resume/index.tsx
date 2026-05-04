@@ -13,19 +13,16 @@ import {
 } from "components/fonts/hooks";
 import { NonEnglishFontsCSSLazyLoader } from "components/fonts/NonEnglishFontsCSSLoader";
 
-export type ExportFormat = "pdf" | "docx";
-
-function formatResumeFileName(name: string, format: "pdf" | "docx"): string {
+function formatResumeFileName(name: string): string {
   if (!name || name.trim() === "") {
-    return `Resume_${new Date().getFullYear()}.${format}`;
+    return `Resume_${new Date().getFullYear()}.pdf`;
   }
   const normalized = name.trim().replace(/\s+/g, "_");
-  return `${normalized}_Resume_${new Date().getFullYear()}.${format}`;
+  return `${normalized}_Resume_${new Date().getFullYear()}.pdf`;
 }
 
 export const Resume = () => {
   const [zoomLevel, setZoomLevel] = useState(100);
-  const [exportFormat, setExportFormat] = useState<ExportFormat>("pdf");
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
   const document = useMemo(
@@ -48,14 +45,10 @@ export const Resume = () => {
       <div id="resume-preview" className="relative flex w-full flex-col bg-[var(--bg)]">
         <ResumeControlBarCSR
           document={document}
-          fileName={formatResumeFileName(resume.profile.name, exportFormat)}
+          fileName={formatResumeFileName(resume.profile.name)}
           scale={effectiveScale}
           zoomLevel={zoomLevel}
           onZoomChange={handleZoomChange}
-          format={exportFormat}
-          resume={resume}
-          settings={settings}
-          onFormatChange={setExportFormat}
         />
         <section className="flex-1 overflow-y-auto p-2 pb-4 scroll-mt-16 md:p-4 md:pb-4">
           <div className="flex justify-center">

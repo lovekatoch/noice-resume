@@ -1,9 +1,7 @@
 "use client";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ImportButton } from "components/ImportButton";
 import { useRouter } from "next/navigation";
-import allCheckedSrc from "public/assets/undraw-all-checked.svg";
 
 export const Hero = () => {
   const router = useRouter();
@@ -78,14 +76,6 @@ export const Hero = () => {
             </button>
           )}
         </div>
-      </div>
-      <div className="mx-auto mt-12 max-w-[600px]">
-        <Image
-          src={allCheckedSrc}
-          alt=""
-          className="h-auto w-full"
-          priority
-        />
       </div>
     </section>
   );

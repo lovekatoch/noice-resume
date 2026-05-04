@@ -1,6 +1,6 @@
 import { Form } from "components/ResumeForm/Form";
 import {
-  BulletListTextarea,
+  Textarea,
   InputGroupWrapper,
 } from "components/ResumeForm/Form/InputGroup";
 import { FeaturedSkillInput } from "components/ResumeForm/Form/FeaturedSkillInput";
@@ -9,9 +9,7 @@ import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { selectSkills, changeSkills } from "lib/redux/resumeSlice";
-import {
-  selectThemeColor,
-} from "lib/redux/settingsSlice";
+import { selectThemeColor } from "lib/redux/settingsSlice";
 import { useState } from "react";
 import { useAIPanel } from "lib/hooks/useAIPanel";
 
@@ -22,14 +20,19 @@ export const SkillsForm = () => {
   const form = "skills";
   const themeColor = useAppSelector(selectThemeColor) || "#38bdf8";
 
-  const handleSkillsChange = (field: "descriptions", value: string[]) => {
-    dispatch(changeSkills({ field, value }));
+  // Skills stored as comma-separated string for plain textarea display
+  const skillsTextValue = descriptions.join(", ");
+
+  const handleSkillsTextChange = (_name: string, value: string) => {
+    // Parse comma-separated text back into array for storage
+    const newDescriptions = value
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    dispatch(changeSkills({ field: "descriptions", value: newDescriptions }));
   };
-  const handleFeaturedSkillsChange = (
-    idx: number,
-    skill: string,
-    rating: number
-  ) => {
+
+  const handleFeaturedSkillsChange = (idx: number, skill: string, rating: number) => {
     dispatch(changeSkills({ field: "featuredSkills", idx, skill, rating }));
   };
 
@@ -43,9 +46,15 @@ export const SkillsForm = () => {
     closePanel,
     handleAccept,
     handleRegenerate,
+    error,
+    regenerateCount,
+    globalEnhanceCount,
   } = useAIPanel({
     onAccept: (text) => {
-      const newSkills = text.split(",").map((s) => s.trim()).filter(Boolean);
+      const newSkills = text
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
       if (aiMode === "replace") {
         dispatch(changeSkills({ field: "descriptions", value: newSkills }));
       } else {
@@ -53,49 +62,49 @@ export const SkillsForm = () => {
         dispatch(changeSkills({ field: "descriptions", value: combined }));
       }
     },
-    generateMock: (isRegenerate) => {
-      if (isRegenerate) {
-        return "Next.js, Tailwind CSS, PostgreSQL, Redis, CI/CD, GitHub Actions";
-      }
-      return aiMode === "replace"
-        ? "JavaScript, Python, React, Node.js, SQL, AWS, Docker"
-        : "TypeScript, GraphQL, Kubernetes";
-    },
   });
+
+  const buildPrompt = () =>
+    `[skills]\n${descriptions.length > 0 ? descriptions.join(", ") : "(none)"}`;
 
   const handleSuggestSkills = (mode: "replace" | "append") => {
     setAiMode(mode);
-    openPanel();
+    openPanel(buildPrompt());
+  };
+
+  const handleSparkleClick = () => {
+    openPanel(buildPrompt());
   };
 
   return (
     <Form form={form}>
       <div className="col-span-full grid grid-cols-6 gap-3">
         <div className="relative col-span-full">
-          <BulletListTextarea
-            label="Skills List"
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-base font-medium text-gray-700">Skills List</span>
+            {descriptions.length > 0 && (
+              <SparkleIconButton onClick={handleSparkleClick} color={themeColor} size="small" />
+            )}
+          </div>
+          <Textarea
+            label=""
             labelClassName="col-span-full"
             name="descriptions"
-            placeholder="Bullet points"
-            value={descriptions}
-            onChange={handleSkillsChange}
-            action={descriptions.length > 0 ? <SparkleIconButton onClick={() => openPanel()} color={themeColor} size="small" /> : undefined}
+            placeholder="React, Node.js, Python"
+            value={skillsTextValue}
+            onChange={handleSkillsTextChange}
           />
         </div>
 
         {descriptions.length > 0 && (
           <div className="col-span-full flex justify-end">
-              <AISuggestButton onSuggest={handleSuggestSkills} />
+            <AISuggestButton onSuggest={handleSuggestSkills} />
           </div>
         )}
         <div className="col-span-full mb-4 mt-6 border-t" style={{ borderColor: "var(--border)" }} />
-        <InputGroupWrapper
-          label="Featured Skills (Optional)"
-          className="col-span-full"
-        >
+        <InputGroupWrapper label="Featured Skills (Optional)" className="col-span-full">
           <p className="mt-2 text-sm font-normal text-gray-600">
-            Featured skills is optional to highlight top skills, with more
-            circles mean higher proficiency.
+            Featured skills is optional to highlight top skills, with more circles mean higher proficiency.
           </p>
         </InputGroupWrapper>
 
@@ -120,6 +129,9 @@ export const SkillsForm = () => {
         onRegenerate={handleRegenerate}
         streamingText={streamingText}
         isLoading={isLoading}
+        error={error}
+        regenerateCount={regenerateCount}
+        globalEnhanceCount={globalEnhanceCount}
       />
     </Form>
   );

@@ -30,17 +30,24 @@ export const ProjectsForm = () => {
     closePanel,
     handleAccept,
     handleRegenerate,
+    error,
+    regenerateCount,
+    globalEnhanceCount,
   } = useAIPanel({
     onAccept: (text) => {
       if (aiTargetIdx !== null) {
-        dispatch(changeProjects({ idx: aiTargetIdx, field: "descriptions", value: [text] }));
+        const bulletItems = text.split("\n").map((line) => line.replace(/^•\s*/, "").trim()).filter(Boolean);
+        dispatch(changeProjects({ idx: aiTargetIdx, field: "descriptions", value: bulletItems }));
       }
     },
-    generateMock: (isRegenerate) =>
-      isRegenerate
-        ? "Implemented OAuth 2.0 authentication and real-time features using WebSocket, reducing login time by 40%."
-        : "Developed a full-stack web application using React and Node.js, serving 10K+ monthly active users with 99.9% uptime.",
   });
+
+  const handleSparkleClick = (idx: number) => {
+    const section = projects[idx];
+    const prompt = `[project]
+Project: ${section.project}\n${section.date ? `Duration: ${section.date}` : ''}\n${(section.descriptions || []).length > 0 ? `\nExisting bullets:\n${section.descriptions.join('\n')}` : ''}`;
+    openPanel(prompt, idx);
+  };
 
   return (
     <Form form="projects" addButtonText="Add Project">
@@ -95,14 +102,19 @@ export const ProjectsForm = () => {
               labelClassName="col-span-full"
             />
             <div className="col-span-full">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-base font-medium text-gray-700">Description</span>
+                {descriptions.length > 0 && (
+                  <SparkleIconButton onClick={() => handleSparkleClick(idx)} color={themeColor} size="small" />
+                )}
+              </div>
               <BulletListTextarea
                 name="descriptions"
-                label="Description"
+                label=""
                 placeholder="Bullet points"
                 value={descriptions}
                 onChange={handleProjectChange}
                 labelClassName="col-span-full"
-                action={descriptions.length > 0 ? <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" /> : undefined}
               />
             </div>
           </FormSection>
@@ -115,6 +127,9 @@ export const ProjectsForm = () => {
         onRegenerate={handleRegenerate}
         streamingText={streamingText}
         isLoading={isLoading}
+        error={error}
+        regenerateCount={regenerateCount}
+        globalEnhanceCount={globalEnhanceCount}
       />
     </Form>
   );

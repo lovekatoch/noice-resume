@@ -26,15 +26,20 @@ export const ProfileForm = () => {
     closePanel,
     handleAccept,
     handleRegenerate,
+    error,
+    regenerateCount,
+    globalEnhanceCount,
   } = useAIPanel({
     onAccept: (text) => {
       dispatch(changeProfile({ field: "summary", value: text }));
     },
-    generateMock: (isRegenerate) =>
-      isRegenerate
-        ? "Innovative problem-solver passionate about leveraging technology to create meaningful impact and drive business growth."
-        : "Results-driven professional with a proven track record of delivering measurable outcomes in fast-paced environments.",
   });
+
+  const handleSparkleClick = () => {
+    const prompt = `[summary]
+${summary || '(no existing content)'}`;
+    openPanel(prompt);
+  };
 
   return (
     <BaseForm>
@@ -55,7 +60,7 @@ export const ProfileForm = () => {
             placeholder="Entrepreneur and educator obsessed with making education free for anyone"
             value={summary}
             onChange={handleProfileChange}
-            action={summary.length > 0 ? <SparkleIconButton onClick={() => openPanel()} color={themeColor} size="small" /> : undefined}
+            action={summary.length > 0 ? <SparkleIconButton onClick={handleSparkleClick} color={themeColor} size="small" /> : undefined}
           />
         </div>
         <Input
@@ -98,6 +103,9 @@ export const ProfileForm = () => {
         onRegenerate={handleRegenerate}
         streamingText={streamingText}
         isLoading={isLoading}
+        error={error}
+        regenerateCount={regenerateCount}
+        globalEnhanceCount={globalEnhanceCount}
       />
     </BaseForm>
   );

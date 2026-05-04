@@ -85,14 +85,9 @@ export const BulletListIconButton = ({
   onClick: (newShowBulletPoints: boolean) => void;
   showBulletPoints: boolean;
 }) => {
-  const tooltipText = showBulletPoints
-    ? "Hide bullet points"
-    : "Show bullet points";
-
   return (
     <IconButton
       onClick={() => onClick(!showBulletPoints)}
-      tooltipText={tooltipText}
       size="small"
       className={showBulletPoints ? "!bg-sky-100" : ""}
     >
@@ -102,7 +97,6 @@ export const BulletListIconButton = ({
         }`}
         aria-hidden="true"
       />
-      <span className="sr-only">{tooltipText}</span>
     </IconButton>
   );
 };

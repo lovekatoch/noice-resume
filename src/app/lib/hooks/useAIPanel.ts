@@ -1,9 +1,16 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
+
+const STORAGE_KEY = "noiceresume_ai_count";
+const GLOBAL_LIMIT = 10;
+const REGENERATE_LIMIT = 3;
+
+// Worker direct URL (bypasses Next.js static export)
+const WORKER_URL = "https://ai-enhance.lovekashyapkatoch.workers.dev";
+const AI_SECRET = "ai-enhance-secret-ec82c1a672e1f226";
 
 interface UseAIPanelOptions {
   onAccept: (text: string) => void;
-  generateMock?: (isRegenerate: boolean) => string;
 }
 
 interface UseAIPanelReturn {
@@ -11,52 +18,133 @@ interface UseAIPanelReturn {
   streamingText: string;
   isLoading: boolean;
   aiTargetIdx: number | null;
-  openPanel: (idx?: number) => void;
+  regenerateCount: number;
+  globalEnhanceCount: number;
+  openPanel: (prompt: string, idx?: number) => void;
   closePanel: () => void;
   handleAccept: (text: string) => void;
   handleRegenerate: () => void;
   setStreamingText: (text: string) => void;
   setAiTargetIdx: (idx: number | null) => void;
+  error: string | undefined;
+  globalLimitReached: boolean;
 }
-
-const DEFAULT_MOCK_TEXT =
-  "Generated text will appear here. Connect a real AI backend in Phase 2.";
 
 export const useAIPanel = ({
   onAccept,
-  generateMock,
 }: UseAIPanelOptions): UseAIPanelReturn => {
   const [aiPanelOpen, setAiPanelOpen] = useState(false);
   const [streamingText, setStreamingText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [aiTargetIdx, setAiTargetIdx] = useState<number | null>(null);
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [regenerateCount, setRegenerateCount] = useState(0);
+  const [globalEnhanceCount, setGlobalEnhanceCount] = useState(() => {
+    if (typeof window === "undefined") return 0;
+    try {
+      return parseInt(sessionStorage.getItem(STORAGE_KEY) || "0", 10);
+    } catch {
+      return 0;
+    }
+  });
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const contextRef = useRef<string>("");
+  const promptRef = useRef<string>("");
 
-  const triggerMock = useCallback(
-    (isRegenerate: boolean) => {
+  const globalLimitReached = globalEnhanceCount >= GLOBAL_LIMIT;
+
+  const triggerAPI = useCallback(
+    async (_isRegenerate: boolean) => {
+      // Cancel any existing request
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+
       setIsLoading(true);
       setStreamingText("");
-      setTimeout(() => {
-        setStreamingText(generateMock?.(isRegenerate) ?? DEFAULT_MOCK_TEXT);
+      setError(undefined);
+
+      const controller = new AbortController();
+      abortControllerRef.current = controller;
+
+      try {
+        // Call Worker directly — bypasses Next.js static export limitation
+        const response = await fetch(WORKER_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${AI_SECRET}`,
+          },
+          body: JSON.stringify({
+            prompt: promptRef.current,
+            context: contextRef.current || "Resume enhancement request",
+          }),
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
+          throw new Error(errorData.error || `HTTP ${response.status}`);
+        }
+
+        // Handle non-streaming JSON response
+        const result = await response.json();
+        if (result.error) {
+          throw new Error(result.error);
+        }
+        setStreamingText(result.content || "");
+      } catch (err) {
+        if (err instanceof Error && err.name === "AbortError") {
+          return;
+        }
+        setError(err instanceof Error ? err.message : "Failed to fetch AI suggestion");
+      } finally {
         setIsLoading(false);
-      }, 1500);
+      }
     },
-    [generateMock]
+    [] // no deps — uses refs
   );
 
   const openPanel = useCallback(
-    (idx?: number) => {
+    (prompt: string, idx?: number) => {
+      if (globalLimitReached) {
+        setError(`AI enhancement limit reached for this session (${GLOBAL_LIMIT} max).`);
+        return;
+      }
+
       if (idx !== undefined) setAiTargetIdx(idx);
+      promptRef.current = prompt;
+      contextRef.current = prompt;
+
+      // Increment global count
+      const newCount = globalEnhanceCount + 1;
+      setGlobalEnhanceCount(newCount);
+      try {
+        sessionStorage.setItem(STORAGE_KEY, String(newCount));
+      } catch {
+        // ignore
+      }
+
+      // Reset regenerate count for new session
+      setRegenerateCount(0);
       setAiPanelOpen(true);
-      triggerMock(false);
+      triggerAPI(false);
     },
-    [triggerMock]
+    [globalLimitReached, globalEnhanceCount, triggerAPI]
   );
 
   const closePanel = useCallback(() => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
     setAiPanelOpen(false);
     setStreamingText("");
     setAiTargetIdx(null);
     setIsLoading(false);
+    setError(undefined);
+    setRegenerateCount(0);
+    contextRef.current = "";
+    promptRef.current = "";
   }, []);
 
   const handleAccept = useCallback(
@@ -68,19 +156,37 @@ export const useAIPanel = ({
   );
 
   const handleRegenerate = useCallback(() => {
-    triggerMock(true);
-  }, [triggerMock]);
+    if (regenerateCount >= REGENERATE_LIMIT) {
+      setError(`Regeneration limit reached (${REGENERATE_LIMIT} max).`);
+      return;
+    }
+    const newRegenCount = regenerateCount + 1;
+    setRegenerateCount(newRegenCount);
+    // Count regenerate toward global 10-limit
+    const newGlobalCount = globalEnhanceCount + 1;
+    setGlobalEnhanceCount(newGlobalCount);
+    try {
+      sessionStorage.setItem(STORAGE_KEY, String(newGlobalCount));
+    } catch {
+      // ignore
+    }
+    triggerAPI(true);
+  }, [regenerateCount, globalEnhanceCount, triggerAPI]);
 
   return {
     aiPanelOpen,
     streamingText,
     isLoading,
     aiTargetIdx,
+    regenerateCount,
+    globalEnhanceCount,
     openPanel,
     closePanel,
     handleAccept,
     handleRegenerate,
     setStreamingText,
     setAiTargetIdx,
+    error,
+    globalLimitReached,
   };
 };

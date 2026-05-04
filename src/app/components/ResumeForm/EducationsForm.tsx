@@ -37,17 +37,23 @@ export const EducationsForm = () => {
     closePanel,
     handleAccept,
     handleRegenerate,
+    error,
+    regenerateCount,
+    globalEnhanceCount,
   } = useAIPanel({
     onAccept: (text) => {
       if (aiTargetIdx !== null) {
         dispatch(changeEducations({ idx: aiTargetIdx, field: "descriptions", value: [text] }));
       }
     },
-    generateMock: (isRegenerate) =>
-      isRegenerate
-        ? "Teaching Assistant for Data Structures and Algorithms. Mentored 30+ students weekly on coding best practices."
-        : "Dean's List recipient for 4 consecutive semesters. Led the student council as President, organizing events for 500+ students.",
   });
+
+  const handleSparkleClick = (idx: number) => {
+    const section = educations[idx];
+    const prompt = `[education]
+Institution: ${section.school}\nDegree: ${section.degree}\n${section.gpa ? `GPA: ${section.gpa}` : 'GPA: N/A'}\nDuration: ${section.date || 'N/A'}\n${(section.descriptions || []).length > 0 ? `\nNotes:\n${section.descriptions.join('\n')}` : ''}`;
+    openPanel(prompt, idx);
+  };
 
   return (
     <Form form={form} addButtonText="Add School">
@@ -125,15 +131,20 @@ export const EducationsForm = () => {
               onChange={handleEducationChange}
             />
             <div className="col-span-full">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-base font-medium text-gray-700">Additional Information (Optional)</span>
+                {descriptions.length > 0 && (
+                  <SparkleIconButton onClick={() => handleSparkleClick(idx)} color={themeColor} size="small" />
+                )}
+              </div>
               <BulletListTextarea
-                label="Additional Information (Optional)"
+                label=""
                 labelClassName="col-span-full"
                 name="descriptions"
                 placeholder="Free paragraph space to list out additional activities, courses, awards etc"
                 value={descriptions}
                 onChange={handleEducationChange}
                 showBulletPoints={showBulletPoints}
-                action={descriptions.length > 0 ? <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" /> : undefined}
               />
               <div className="absolute left-[15.6rem] top-[0.07rem]">
                 <BulletListIconButton
@@ -152,6 +163,9 @@ export const EducationsForm = () => {
         onRegenerate={handleRegenerate}
         streamingText={streamingText}
         isLoading={isLoading}
+        error={error}
+        regenerateCount={regenerateCount}
+        globalEnhanceCount={globalEnhanceCount}
       />
     </Form>
   );

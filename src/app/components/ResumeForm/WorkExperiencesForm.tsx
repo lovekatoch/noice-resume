@@ -30,17 +30,24 @@ export const WorkExperiencesForm = () => {
     closePanel,
     handleAccept,
     handleRegenerate,
+    error,
+    regenerateCount,
+    globalEnhanceCount,
   } = useAIPanel({
     onAccept: (text) => {
       if (aiTargetIdx !== null) {
-        dispatch(changeWorkExperiences({ idx: aiTargetIdx, field: "descriptions", value: [text] }));
+        // Split by newlines to preserve bullet structure
+        const bulletItems = text.split("\n").map((line) => line.replace(/^•\s*/, "").trim()).filter(Boolean);
+        dispatch(changeWorkExperiences({ idx: aiTargetIdx, field: "descriptions", value: bulletItems }));
       }
     },
-    generateMock: (isRegenerate) =>
-      isRegenerate
-        ? "Spearheaded initiatives that streamlined processes, reducing operational costs by 15% while maintaining quality standards."
-        : "Led cross-functional team of 5 engineers to deliver feature ahead of schedule, resulting in 25% improvement in user engagement.",
   });
+
+  const handleSparkleClick = (idx: number) => {
+    const section = workExperiences[idx];
+    const prompt = `[description]\n${(section.descriptions || []).join("\n") || "(no existing content)"}`;
+    openPanel(prompt, idx);
+  };
 
   return (
     <Form form="workExperiences" addButtonText="Add Job">
@@ -104,14 +111,19 @@ export const WorkExperiencesForm = () => {
               onChange={handleWorkExperienceChange}
             />
             <div className="col-span-full">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-base font-medium text-gray-700">Description</span>
+                {descriptions.length > 0 && (
+                  <SparkleIconButton onClick={() => handleSparkleClick(idx)} color={themeColor} size="small" />
+                )}
+              </div>
               <BulletListTextarea
-                label="Description"
+                label=""
                 labelClassName="col-span-full"
                 name="descriptions"
                 placeholder="Bullet points"
                 value={descriptions}
                 onChange={handleWorkExperienceChange}
-                action={descriptions.length > 0 ? <SparkleIconButton onClick={() => openPanel(idx)} color={themeColor} size="small" /> : undefined}
               />
             </div>
           </FormSection>
@@ -124,6 +136,9 @@ export const WorkExperiencesForm = () => {
         onRegenerate={handleRegenerate}
         streamingText={streamingText}
         isLoading={isLoading}
+        error={error}
+        regenerateCount={regenerateCount}
+        globalEnhanceCount={globalEnhanceCount}
       />
     </Form>
   );
