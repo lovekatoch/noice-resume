@@ -1,3 +1,6 @@
+import Image from "next/image";
+import morningPlansSrc from "public/assets/undraw-morning-plans.svg";
+
 const STEPS = [
   {
     title: "Import your resume",
@@ -36,6 +39,13 @@ export const Steps = () => {
               <p className="text-sm text-[var(--muted)]">{text}</p>
             </div>
           ))}
+        </div>
+        <div className="mx-auto mt-10 max-w-[500px]">
+          <Image
+            src={morningPlansSrc}
+            alt=""
+            className="h-auto w-full"
+          />
         </div>
       </div>
     </section>

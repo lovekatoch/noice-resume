@@ -1,6 +1,8 @@
 import Image from "next/image";
 import featureFreeSrc from "public/assets/feature-free.svg";
 import featurePrivacySrc from "public/assets/feature-privacy.svg";
+import collaborationSrc from "public/assets/undraw-collaboration.svg";
+import certificationSrc from "public/assets/undraw-certification.svg";
 import { Link } from "components/documentation";
 
 const ITEMS = [
@@ -66,6 +68,18 @@ export const Features = () => {
                 </div>
               </div>
             ))}
+          </div>
+          <div className="mx-auto mt-10 grid max-w-[600px] grid-cols-2 gap-6">
+            <Image
+              src={collaborationSrc}
+              alt=""
+              className="h-auto w-full"
+            />
+            <Image
+              src={certificationSrc}
+              alt=""
+              className="h-auto w-full"
+            />
           </div>
         </div>
       </section>
