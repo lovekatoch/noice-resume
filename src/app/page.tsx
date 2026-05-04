@@ -8,6 +8,17 @@ export default function Home() {
       <Hero />
       <Steps />
       <Features />
+      <footer className="border-t border-[var(--border)] px-6 py-6 text-center text-xs text-[var(--muted)]">
+        Built with &#128156; by{" "}
+        <a
+          href="https://www.linkedin.com/in/lovekatoch"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-medium text-[var(--accent)] hover:underline"
+        >
+          Love Katoch
+        </a>
+      </footer>
     </main>
   );
 }
