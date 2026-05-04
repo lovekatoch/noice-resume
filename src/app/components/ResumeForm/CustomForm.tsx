@@ -15,7 +15,13 @@ export const CustomForm = () => {
   };
 
   const handleAddSection = () => {
+    dispatch(changeCustom({ field: "descriptions", value: [""] }));
     dispatch(changeShowForm({ field: "custom", value: true }));
+  };
+
+  const handleDeleteSection = () => {
+    dispatch(changeCustom({ field: "descriptions", value: [] }));
+    dispatch(changeShowForm({ field: "custom", value: false }));
   };
 
   if (descriptions.length === 0) {
@@ -34,7 +40,7 @@ export const CustomForm = () => {
   }
 
   return (
-    <Form form="custom">
+    <Form form="custom" showDelete onDelete={handleDeleteSection}>
       <div className="col-span-full grid grid-cols-6 gap-3">
         <div className="relative col-span-full">
           <BulletListTextarea

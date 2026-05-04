@@ -70,32 +70,16 @@ export const TopNavBar = () => {
       style={{ borderColor: "var(--border)" }}
     >
       <div
-        className="mx-auto flex items-center justify-between"
-        style={{ padding: "14px 48px", maxWidth: 1200 }}
+        className="mx-auto flex items-center justify-between px-4 md:px-12"
+        style={{ maxWidth: 1200 }}
       >
         <Link href="/">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 36 36"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="rounded-lg"
-          >
-            <rect width="36" height="36" rx="8" fill="#5E6AD2" />
-            <text
-              x="18"
-              y="22"
-              textAnchor="middle"
-              fill="white"
-              fontFamily="Inter, sans-serif"
-              fontWeight="700"
-              fontSize="14"
-              letterSpacing="-0.5"
-            >
-              NR
-            </text>
-          </svg>
+          <img
+            src="/noiceresume-logo.svg"
+            alt="NoiceResume"
+            style={{ width: 180, height: "auto" }}
+            className="block"
+          />
         </Link>
         {isBuilderPage && (
           <ActiveToggle />

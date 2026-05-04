@@ -73,10 +73,14 @@ const FORM_TO_ICON: { [section in ShowForm]: typeof BuildingOfficeIcon } = {
 export const Form = ({
   form,
   addButtonText,
+  showDelete,
+  onDelete,
   children,
 }: {
   form: ShowForm;
   addButtonText?: string;
+  showDelete?: boolean;
+  onDelete?: () => void;
   children: React.ReactNode;
 }) => {
   const showForm = useAppSelector(selectShowByForm(form));
@@ -171,6 +175,9 @@ export const Form = ({
           )}
         </div>
         <div className="flex items-center gap-1 shrink-0" onClick={(e) => e.stopPropagation()}>
+          {showDelete && onDelete && (
+            <DeleteIconButton onClick={onDelete} tooltipText="Delete section" />
+          )}
           {!isFirstForm && (
             <MoveIconButton type="up" onClick={handleMoveClick} />
           )}
