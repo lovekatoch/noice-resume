@@ -1,15 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const scrollToTop = () => {
-  const container = document.querySelector(".md\\:overflow-y-scroll");
-  if (container) {
-    container.scrollTo({ top: 0, behavior: "smooth" });
-  } else {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
 const scrollToPreview = () => {
@@ -20,6 +15,16 @@ const scrollToPreview = () => {
 
 const ActiveToggle = () => {
   const [activeTab, setActiveTab] = useState<"content" | "preview">("content");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY < 100) {
+        setActiveTab("content");
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div
@@ -70,7 +75,7 @@ export const TopNavBar = () => {
       style={{ borderColor: "var(--border)" }}
     >
       <div
-        className="mx-auto flex items-center justify-between px-4 md:px-12"
+        className="mx-auto flex items-center justify-between py-3 px-4 md:px-12"
         style={{ maxWidth: 1200 }}
       >
         <Link href="/">
