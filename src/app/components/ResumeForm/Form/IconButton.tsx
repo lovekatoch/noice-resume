@@ -14,8 +14,6 @@ export const CollapseIconButton = ({
   expanded: boolean;
   setExpanded: (expanded: boolean) => void;
 }) => {
-  const tooltipText = expanded ? "Collapse section" : "Expand section";
-
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setExpanded(!expanded);
@@ -24,7 +22,6 @@ export const CollapseIconButton = ({
   return (
     <IconButton
       onClick={handleClick}
-      tooltipText={tooltipText}
       size="small"
       className="transition-transform duration-300"
     >
@@ -34,7 +31,6 @@ export const CollapseIconButton = ({
         }`}
         aria-hidden="true"
       />
-      <span className="sr-only">{tooltipText}</span>
     </IconButton>
   );
 };
@@ -49,7 +45,6 @@ export const MoveIconButton = ({
   size?: "small" | "medium";
   onClick: (type: MoveIconButtonType) => void;
 }) => {
-  const tooltipText = type === "up" ? "Move up" : "Move down";
   const sizeClassName = size === "medium" ? "h-6 w-6" : "h-4 w-4";
   const Icon = type === "up" ? ArrowSmallUpIcon : ArrowSmallDownIcon;
 
@@ -61,11 +56,9 @@ export const MoveIconButton = ({
   return (
     <IconButton
       onClick={handleClick}
-      tooltipText={tooltipText}
       size={size}
     >
       <Icon className={`${sizeClassName} text-gray-400`} aria-hidden="true" />
-      <span className="sr-only">{tooltipText}</span>
     </IconButton>
   );
 };

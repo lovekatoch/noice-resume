@@ -23,11 +23,17 @@ import {
   LightBulbIcon,
   WrenchIcon,
   PlusSmallIcon,
+  RectangleStackIcon,
 } from "@heroicons/react/24/outline";
 import {
   addSectionInForm,
   deleteSectionInFormByIdx,
   moveSectionInForm,
+  selectWorkExperiences,
+  selectEducations,
+  selectProjects,
+  selectSkills,
+  selectCustom,
 } from "lib/redux/resumeSlice";
 import { useState } from "react";
 
@@ -88,6 +94,23 @@ export const Form = ({
   const isLastForm = useAppSelector(selectIsLastForm(form));
   const themeColor = useAppSelector(selectThemeColor) || "#5E6AD2";
 
+  const workExperiences = useAppSelector(selectWorkExperiences);
+  const educations = useAppSelector(selectEducations);
+  const projects = useAppSelector(selectProjects);
+  const skills = useAppSelector(selectSkills);
+  const custom = useAppSelector(selectCustom);
+
+  const sectionCount = (() => {
+    switch (form) {
+      case "workExperiences": return workExperiences.length;
+      case "educations": return educations.length;
+      case "projects": return projects.length;
+      case "skills": return skills.descriptions.length;
+      case "custom": return custom.descriptions.length;
+      default: return 0;
+    }
+  })();
+
   const handleMoveClick = (type: "up" | "down") => {
     dispatch(changeFormOrder({ form, type }));
   };
@@ -140,6 +163,12 @@ export const Form = ({
             value={heading}
             onChange={(e) => setHeading(e.target.value)}
           />
+          {sectionCount > 0 && (
+            <div className="flex items-center gap-0.5 shrink-0 ml-1" style={{ color: "var(--accent)" }}>
+              <RectangleStackIcon className="h-3.5 w-3.5" aria-hidden="true" />
+              <span className="text-xs font-semibold leading-none">{sectionCount}</span>
+            </div>
+          )}
         </div>
         <div className="flex items-center gap-1 shrink-0" onClick={(e) => e.stopPropagation()}>
           {!isFirstForm && (

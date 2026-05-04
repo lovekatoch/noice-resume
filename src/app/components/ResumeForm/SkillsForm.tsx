@@ -4,15 +4,12 @@ import {
   InputGroupWrapper,
 } from "components/ResumeForm/Form/InputGroup";
 import { FeaturedSkillInput } from "components/ResumeForm/Form/FeaturedSkillInput";
-import { BulletListIconButton } from "components/ResumeForm/Form/IconButton";
 import { AISuggestButton } from "components/AISuggestButton";
 import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { selectSkills, changeSkills } from "lib/redux/resumeSlice";
 import {
-  selectShowBulletPoints,
-  changeShowBulletPoints,
   selectThemeColor,
 } from "lib/redux/settingsSlice";
 import { useState } from "react";
@@ -23,7 +20,6 @@ export const SkillsForm = () => {
   const dispatch = useAppDispatch();
   const { featuredSkills, descriptions } = skills;
   const form = "skills";
-  const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
   const themeColor = useAppSelector(selectThemeColor) || "#38bdf8";
 
   const handleSkillsChange = (field: "descriptions", value: string[]) => {
@@ -35,9 +31,6 @@ export const SkillsForm = () => {
     rating: number
   ) => {
     dispatch(changeSkills({ field: "featuredSkills", idx, skill, rating }));
-  };
-  const handleShowBulletPoints = (value: boolean) => {
-    dispatch(changeShowBulletPoints({ field: form, value }));
   };
 
   const [aiMode, setAiMode] = useState<"replace" | "append">("replace");
@@ -86,14 +79,7 @@ export const SkillsForm = () => {
             placeholder="Bullet points"
             value={descriptions}
             onChange={handleSkillsChange}
-            showBulletPoints={showBulletPoints}
           />
-          <div className="absolute left-[4.5rem] top-[0.07rem]">
-            <BulletListIconButton
-              showBulletPoints={showBulletPoints}
-              onClick={handleShowBulletPoints}
-            />
-          </div>
           {descriptions.length > 0 && (
             <div className="absolute right-2 top-1/2 -translate-y-1/2">
               <SparkleIconButton onClick={() => openPanel()} color={themeColor} size="small" />

@@ -23,7 +23,7 @@ export const PrimaryButton = ({ className, ...props }: ButtonProps) => (
 
 type IconButtonProps = ButtonProps & {
   size?: "small" | "medium";
-  tooltipText: string;
+  tooltipText?: string;
 };
 
 export const IconButton = ({
@@ -31,8 +31,8 @@ export const IconButton = ({
   size = "medium",
   tooltipText,
   ...props
-}: IconButtonProps) => (
-  <Tooltip text={tooltipText}>
+}: IconButtonProps) => {
+  const button = (
     <Button
       type="button"
       className={cx(
@@ -44,5 +44,11 @@ export const IconButton = ({
       )}
       {...props}
     />
-  </Tooltip>
-);
+  );
+
+  if (tooltipText) {
+    return <Tooltip text={tooltipText}>{button}</Tooltip>;
+  }
+
+  return button;
+};
