@@ -1,71 +1,105 @@
-# OpenResume
+# NoiceResume — Free Resume Builder with AI Enhancement
 
-OpenResume is a powerful open-source resume builder and resume parser.
+> I found an abandoned open-source resume project and turned it into a free, AI-powered tool. No sign-up. No paywall. Just a better resume in minutes.
 
-The goal of OpenResume is to provide everyone with free access to a modern professional resume design and enable anyone to apply for jobs with confidence.
+**Live:** [noiceresume.pages.dev](https://noiceresume.pages.dev)
 
-Official site: [https://open-resume.com](https://open-resume.com)
+---
 
-## ⚒️ Resume Builder
+## The Backstory
 
-OpenResume's resume builder allows user to create a modern professional resume easily.
+I'm a Product Manager with zero intent to become a software engineer. But I got tired of paying for resume tools that put my data behind a paywall, force account creation, or watermark my PDFs.
 
-![Resume Builder Demo](https://i.ibb.co/jzcrrt8/resume-builder-demo-optimize.gif)
+So when I stumbled on this open-source project, I decided to take it over and rebuild it — with AI enhancement features that actually make your resume *better*, not just prettier.
 
-It has 5 Core Features:
-| <div style="width:285px">**Feature**</div> | **Description** |
-|---|---|
-| **1. Real Time UI Update** | The resume PDF is updated in real time as you enter your resume information, so you can easily see the final output. |
-| **2. Modern Professional Resume Design** | The resume PDF is a modern professional design that adheres to U.S. best practices and is ATS friendly to top ATS platforms such as Greenhouse and Lever. It automatically formats fonts, sizes, margins, bullet points to ensure consistency and avoid human errors. |
-| **3. Privacy Focus** | The app only runs locally on your browser, meaning no sign up is required and no data ever leaves your browser, so it gives you peace of mind on your personal data. (Fun fact: Running only locally means the app still works even if you disconnect the internet.) |
-| **4. Import From Existing Resume PDF** | If you already have an existing resume PDF, you have the option to import it directly, so you can update your resume design to a modern professional design in literally a few seconds. |
-| **5. Successful Track Record** | OpenResume users have landed interviews and offers from top companies, such as Dropbox, Google, Meta to name a few. It has been proven to work and liken by recruiters and hiring managers. |
+The catch? I don't write code. I work with AI agents.
 
-## 🔍 Resume Parser
+This project is built entirely through conversations with coding agents — a Telegram bot that routes tasks to autonomous coding and design agents, which write, review, and deploy code on their own. I'm essentially the product manager for a team of AI agents.
 
-OpenResume’s second component is the resume parser. For those who have an existing resume, the resume parser can help test and confirm its ATS readability.
+---
 
-![Resume Parser Demo](https://i.ibb.co/JvSVwNk/resume-parser-demo-optimize.gif)
+## What It Does
 
-You can learn more about the resume parser algorithm in the ["Resume Parser Algorithm Deep Dive" section](https://open-resume.com/resume-parser).
+- **Resume Builder** — Fill in your details, see a live PDF preview updating in real-time
+- **Import Existing Resume** — Drop a PDF, it auto-fills the form fields using OCR parsing
+- **AI Enhancement** — Select any section, pick a tone (Confident / Casual / Professional), and get AI suggestions to strengthen your impact statements, add ATS keywords, and improve clarity
+- **Export** — Download as PDF, no watermarks, no sign-up
 
-## 📚 Tech Stack
+---
 
-| <div style="width:140px">**Category**</div> | <div style="width:100px">**Choice**</div> | **Descriptions** |
+## The Stack
+
+Built and deployed entirely with modern AI tooling:
+
+| Layer | Tool | Why |
 |---|---|---|
-| **Language** | [TypeScript](https://github.com/microsoft/TypeScript) | TypeScript is JavaScript with static type checking and helps catch many silly bugs at code time. |
-| **UI Library** | [React](https://github.com/facebook/react) | React’s declarative syntax and component-based architecture make it simple to develop reactive reusable components. |
-| **State Management** | [Redux Toolkit](https://github.com/reduxjs/redux-toolkit) | Redux toolkit reduces the boilerplate to set up and update a central redux store, which is used in managing the complex resume state. |
-| **CSS Framework** | [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) | Tailwind speeds up development by providing helpful css utilities and removing the need to context switch between tsx and css files. |
-| **Web Framework** | [NextJS 13](https://github.com/vercel/next.js) | Next.js supports static site generation and helps build efficient React webpages that support SEO. |
-| **PDF Reader** | [PDF.js](https://github.com/mozilla/pdf.js) | PDF.js reads content from PDF files and is used by the resume parser at its first step to read a resume PDF’s content. |
-| **PDF Renderer** | [React-pdf](https://github.com/diegomura/react-pdf) | React-pdf creates PDF files and is used by the resume builder to create a downloadable PDF file. |
+| **AI Coding Agent** | [OpenCode](https://opencode.ai) | Autonomous coding — writes, refactors, and reviews code from natural language prompts |
+| **AI Design Agent** | [OpenDesign](https://github.com/lovekatoch/open-design) | Generates UI prototypes and screens from design descriptions; 130+ design systems |
+| **Frontend Framework** | Next.js 13 (App Router) | React-based, handles routing, API routes, and static generation |
+| **UI Components** | React 18 + TypeScript | Type-safe, component-based architecture |
+| **Styling** | Tailwind CSS | Utility-first; fast iteration without context switching |
+| **State Management** | Redux Toolkit | Centralized state for the complex resume data model |
+| **PDF Rendering** | @react-pdf/renderer + pdfjs-dist | Client-side PDF generation in the browser |
+| **AI Proxy** | Cloudflare Workers | Secure serverless layer; keeps API keys out of the browser |
+| **AI Model** | DeepSeek v4 (via OpenCode Go API) | Powers all AI enhancement suggestions |
+| **Hosting** | Cloudflare Pages | Edge-deployed, fast globally, zero-config CI from GitHub |
+| **Design System** | Linear x Stripe hybrid | Clean, minimal, professional - modern SaaS aesthetic |
+| **Command Center** | Hermes Agent (Telegram) | My human-in-the-loop interface - routes tasks to OpenCode and OpenDesign via Telegram messages |
 
-## 📁 Project Structure
+---
 
-OpenResume is created with the NextJS web framework and follows its project structure. The source code can be found in `src/app`. There are a total of 4 page routes as shown in the table below. (Code path is relative to `src/app`)
+## How I Built This Without Writing Code
 
-| <div style="width:115px">**Page Route**</div> | **Code Path** | **Description** |
-|---|---|---|
-| / | /page.tsx | Home page that contains hero, auto typing resume, steps, testimonials, logo cloud, etc |
-| /resume-import | /resume-import/page.tsx | Resume import page, where you can choose to import data from an existing resume PDF. The main component used is `ResumeDropzone` (`/components/ResumeDropzone.tsx`) |
-| /resume-builder | /resume-builder/page.tsx | Resume builder page to build and download a resume PDF. The main components used are `ResumeForm` (`/components/ResumeForm`) and `Resume` (`/components/Resume`) |
-| /resume-parser | /resume-parser/page.tsx | Resume parser page to test a resume’s AST readability. The main library util used is `parseResumeFromPdf` (`/lib/parse-resume-from-pdf`) |
+Traditional development: write code, test, deploy, repeat.
 
-## 💻 Local Development
+My development loop: describe what I want, AI agent writes the code, AI agent reviews it, AI agent deploys it, I test and give feedback.
 
-### Method 1: npm
+A typical feature session looks like this:
 
-1. Download the repo `git clone https://github.com/xitanggg/open-resume.git`
-2. Change the directory `cd open-resume`
-3. Install the dependency `npm install`
-4. Start a development server `npm run dev`
-5. Open your browser and visit [http://localhost:3000](http://localhost:3000) to see OpenResume live
+1. **Telegram message to Hermes** - "Add a dark mode toggle to the resume builder"
+2. **Hermes routes to OpenCode** - OpenCode reads the codebase, writes the implementation, opens a PR
+3. **Hermes reviews the PR** - checks for regressions, verifies the build passes
+4. **PR merged, Cloudflare Pages deploys** - live in under 2 minutes
 
-### Method 2: Docker
+The design workflow is similar - I describe a screen to OpenDesign, it generates prototype HTML files, I review visually, and we iterate until it matches what I had in mind.
 
-1. Download the repo `git clone https://github.com/xitanggg/open-resume.git`
-2. Change the directory `cd open-resume`
-3. Build the container `docker build -t open-resume .`
-4. Start the container `docker run -p 3000:3000 open-resume`
-5. Open your browser and visit [http://localhost:3000](http://localhost:3000) to see OpenResume live
+---
+
+## Development
+
+```bash
+# Clone
+git clone https://github.com/lovekatoch/noice-resume.git
+cd noice-resume
+
+# Install dependencies
+pnpm install
+
+# Start dev server
+pnpm dev
+
+# Run tests
+pnpm test
+```
+
+---
+
+## Tech Philosophy
+
+- **No backend to manage** - Cloudflare handles deployment, AI routing, and edge logic
+- **No database** - resume data stays in the browser, nothing leaves the user's machine until they export
+- **Client-side PDF** - @react-pdf/renderer generates PDFs in-browser, no server round-trip
+- **API keys are server-side only** - Cloudflare Worker proxy means the AI API key is never exposed to the browser
+- **Design with constraints** - Linear x Stripe design system keeps the UI minimal and professional without me needing to make hundreds of micro-decisions
+
+---
+
+## Contributing
+
+PRs welcome. If you want to add a feature or fix a bug, feel free to open an issue or submit a PR directly.
+
+If you're a PM or non-engineer curious about agentic development - this repo is a good case study. The commit history shows a human directing AI agents, not a traditional development workflow.
+
+---
+
+*Built with AI agents. Deployed to the edge. No code written by hand.*
