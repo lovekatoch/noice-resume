@@ -1,4 +1,4 @@
-import { Page, View, Document } from "@react-pdf/renderer";
+import { Page, View, Document, Text } from "@react-pdf/renderer";
 import { styles, spacing } from "components/Resume/ResumePDF/styles";
 import { ResumePDFProfile } from "components/Resume/ResumePDF/ResumePDFProfile";
 import { ResumePDFWorkExperience } from "components/Resume/ResumePDF/ResumePDFWorkExperience";
@@ -10,6 +10,8 @@ import { DEFAULT_FONT_COLOR } from "lib/redux/settingsSlice";
 import type { Settings, ShowForm } from "lib/redux/settingsSlice";
 import type { Resume } from "lib/redux/types";
 import { SuppressResumePDFErrorMessage } from "components/Resume/ResumePDF/common/SuppressResumePDFErrorMessage";
+import { TEMPLATE_CONFIGS, getTemplateStyles } from "components/Resume/ResumePDF/templates";
+import type { TemplateId } from "components/Resume/ResumePDF/templates";
 
 /**
  * Note: ResumePDF is supposed to be rendered inside PDFViewer. However,
@@ -48,6 +50,10 @@ export const ResumePDF = ({
     showBulletPoints,
   } = settings;
   const themeColor = settings.themeColor || DEFAULT_FONT_COLOR;
+  const templateId = (settings.template || "executive-simple") as TemplateId;
+  const templateCfg = TEMPLATE_CONFIGS[templateId];
+  const tplStyles = getTemplateStyles(templateId, themeColor);
+  const sectionVariant = templateId === "sb2nov-modern" ? "border-bottom" : templateId === "jsonresume-class" ? "text-only" : "accent-bar";
 
   const showFormsOrder = formsOrder.filter((form) => formToShow[form]);
 
@@ -57,6 +63,7 @@ export const ResumePDF = ({
         heading={formToHeading["workExperiences"]}
         workExperiences={workExperiences}
         themeColor={themeColor}
+        sectionVariant={sectionVariant}
       />
     ),
     educations: () => (
@@ -65,6 +72,7 @@ export const ResumePDF = ({
         educations={educations}
         themeColor={themeColor}
         showBulletPoints={showBulletPoints["educations"]}
+        sectionVariant={sectionVariant}
       />
     ),
     projects: () => (
@@ -72,6 +80,7 @@ export const ResumePDF = ({
         heading={formToHeading["projects"]}
         projects={projects}
         themeColor={themeColor}
+        sectionVariant={sectionVariant}
       />
     ),
     skills: () => (
@@ -80,6 +89,7 @@ export const ResumePDF = ({
         skills={skills}
         themeColor={themeColor}
         showBulletPoints={showBulletPoints["skills"]}
+        sectionVariant={sectionVariant}
       />
     ),
     custom: () => (
@@ -88,6 +98,7 @@ export const ResumePDF = ({
         custom={custom}
         themeColor={themeColor}
         showBulletPoints={showBulletPoints["custom"]}
+        sectionVariant={sectionVariant}
       />
     ),
   };
@@ -104,7 +115,22 @@ export const ResumePDF = ({
             fontSize: fontSize + "pt",
           }}
         >
-          {Boolean(settings.themeColor) && (
+          {/* JSON Resume Class: banner header */}
+          {templateId === "jsonresume-class" && (
+            <View style={tplStyles.bannerHeader}>
+              <View style={styles.flexCol}>
+                <Text style={tplStyles.bannerName}>{profile.name}</Text>
+              </View>
+              {profile.summary && (
+                <View style={styles.flexCol}>
+                  <Text style={tplStyles.bannerTitle}>{profile.summary}</Text>
+                </View>
+              )}
+            </View>
+          )}
+
+          {/* Executive Simple: colored top bar */}
+          {templateCfg.showTopBar && Boolean(settings.themeColor) && (
             <View
               style={{
                 width: spacing["full"],
@@ -113,6 +139,8 @@ export const ResumePDF = ({
               }}
             />
           )}
+
+          {/* SB2Nov Modern: no top bar, clean header */}
           <View
             style={{
               ...styles.flexCol,
@@ -123,6 +151,8 @@ export const ResumePDF = ({
               profile={profile}
               themeColor={themeColor}
               isPDF={isPDF}
+              templateId={templateId}
+              sectionVariant={sectionVariant}
             />
             {showFormsOrder.map((form) => {
               const Component = formTypeToComponent[form];
