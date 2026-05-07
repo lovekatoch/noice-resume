@@ -84,13 +84,15 @@ src/app/
 
 ## Deployment
 
-- **Preview**: `npm run deploy` (builds + `wrangler pages deploy out --project-name=noiceresume`)
-- **Production**: `npm run deploy:prod`
-- **Wrangler node path**: `~/.nvm/versions/node/v25.8.0/bin` (set in `scripts/deploy.sh`)
+**Local only — no remote deploys unless explicitly requested.**
+
+All Cloudflare Pages and GitHub authentication has been deleted. The project stays local.
+Do NOT run `npm run deploy`, `npm run deploy:prod`, or any wrangler/git push commands unless the user explicitly asks to deploy.
 
 ## Important Notes
 
-- `npm run build` must pass before any deploy
+- Project is **100% local** — no GitHub pushes, no Cloudflare deploys
+- `npm run build` must pass before any deploy (if ever requested)
 - PDF import navigates to builder but data flow is unclear — needs verification
 - Never commit secrets or credentials to the repo
 - Use `git commit` with message ending in `Co-Authored-By: Paperclip <noreply@paperclip.ing>` for all commits
