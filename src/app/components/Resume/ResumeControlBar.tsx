@@ -9,18 +9,28 @@ import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 import { Tooltip } from "components/Tooltip";
 
+const TEMPLATES = [
+  { id: "executive-simple", name: "Classic" },
+  { id: "sb2nov-modern", name: "Modern" },
+  { id: "jsonresume-class", name: "Bold" },
+];
+
 const ResumeControlBar = ({
   document: pdfDocument,
   fileName,
   scale,
   zoomLevel,
   onZoomChange,
+  template,
+  onTemplateChange,
 }: {
   document: JSX.Element;
   fileName: string;
   scale: number;
   zoomLevel: number;
   onZoomChange: (percentage: number) => void;
+  template: string;
+  onTemplateChange: (templateId: string) => void;
 }) => {
   const [instance, update] = usePDF({ document: pdfDocument });
 
@@ -71,18 +81,38 @@ const ResumeControlBar = ({
         </span>
       </div>
 
-      {/* Download Button */}
-      <Tooltip text="Download Resume">
-        <button
-          aria-label="Download Resume"
-          onClick={handleDownloadClick}
-          className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium text-white transition-colors hover:opacity-90"
-          style={{ backgroundColor: "var(--accent)" }}
+      {/* Template Dropdown + Download */}
+      <div className="flex items-center gap-3">
+        <select
+          value={template}
+          onChange={(e) => onTemplateChange(e.target.value)}
+          className="rounded-md border px-3 py-1.5 text-sm font-medium outline-none transition-colors hover:border-[var(--accent)] cursor-pointer"
+          style={{
+            backgroundColor: "var(--surface)",
+            borderColor: "var(--border)",
+            color: "var(--fg)",
+          }}
+          aria-label="Select template"
         >
-          <ArrowDownTrayIcon className="h-4 w-4" />
-          Download
-        </button>
-      </Tooltip>
+          {TEMPLATES.map((tpl) => (
+            <option key={tpl.id} value={tpl.id}>
+              {tpl.name}
+            </option>
+          ))}
+        </select>
+
+        <Tooltip text="Download Resume">
+          <button
+            aria-label="Download Resume"
+            onClick={handleDownloadClick}
+            className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium text-white transition-colors hover:opacity-90"
+            style={{ backgroundColor: "var(--accent)" }}
+          >
+            <ArrowDownTrayIcon className="h-4 w-4" />
+            Download
+          </button>
+        </Tooltip>
+      </div>
     </div>
   );
 };

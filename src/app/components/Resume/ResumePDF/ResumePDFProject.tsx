@@ -11,13 +11,15 @@ export const ResumePDFProject = ({
   heading,
   projects,
   themeColor,
+  sectionVariant = "accent-bar",
 }: {
   heading: string;
   projects: ResumeProject[];
   themeColor: string;
+  sectionVariant?: "accent-bar" | "border-bottom" | "text-only";
 }) => {
   return (
-    <ResumePDFSection themeColor={themeColor} heading={heading}>
+    <ResumePDFSection themeColor={themeColor} heading={heading} sectionVariant={sectionVariant}>
       {projects.map(({ project, date, descriptions }, idx) => (
         <View key={idx}>
           <View

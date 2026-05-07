@@ -12,14 +12,16 @@ export const ResumePDFEducation = ({
   educations,
   themeColor,
   showBulletPoints,
+  sectionVariant = "accent-bar",
 }: {
   heading: string;
   educations: ResumeEducation[];
   themeColor: string;
   showBulletPoints: boolean;
+  sectionVariant?: "accent-bar" | "border-bottom" | "text-only";
 }) => {
   return (
-    <ResumePDFSection themeColor={themeColor} heading={heading}>
+    <ResumePDFSection themeColor={themeColor} heading={heading} sectionVariant={sectionVariant}>
       {educations.map(
         ({ school, degree, date, gpa, descriptions = [] }, idx) => {
           // Hide school name if it is the same as the previous school

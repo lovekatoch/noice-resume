@@ -8,6 +8,94 @@ export const ResumePDFSection = ({
   themeColor,
   heading,
   style = {},
+  sectionVariant = "accent-bar",
+  children,
+}: {
+  themeColor?: string;
+  heading?: string;
+  style?: Style;
+  sectionVariant?: "accent-bar" | "border-bottom" | "text-only";
+  children: React.ReactNode;
+}) => (
+  <View
+    style={{
+      ...styles.flexCol,
+      gap: spacing["2"],
+      marginTop: spacing["5"],
+      ...style,
+    }}
+  >
+    {heading && (
+      <>
+        {sectionVariant === "border-bottom" && (
+          <View
+            style={{
+              borderBottomWidth: 1,
+              borderBottomColor: themeColor || "#000000",
+              borderBottomStyle: "solid",
+              paddingBottom: "2pt",
+              marginBottom: "6pt",
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: "bold",
+                letterSpacing: "0.3pt",
+                textTransform: "uppercase",
+                fontSize: "11pt",
+              }}
+              debug={DEBUG_RESUME_PDF_FLAG}
+            >
+              {heading}
+            </Text>
+          </View>
+        )}
+        {sectionVariant === "text-only" && (
+          <Text
+            style={{
+              fontWeight: 600,
+              fontSize: "12pt",
+              marginBottom: "4pt",
+            }}
+            debug={DEBUG_RESUME_PDF_FLAG}
+          >
+            {heading}
+          </Text>
+        )}
+        {sectionVariant === "accent-bar" && (
+          <View style={{ ...styles.flexRow, alignItems: "center" }}>
+            {themeColor && (
+              <View
+                style={{
+                  height: "3.75pt",
+                  width: "30pt",
+                  backgroundColor: themeColor,
+                  marginRight: spacing["3.5"],
+                }}
+                debug={DEBUG_RESUME_PDF_FLAG}
+              />
+            )}
+            <Text
+              style={{
+                fontWeight: "bold",
+                letterSpacing: "0.3pt",
+              }}
+              debug={DEBUG_RESUME_PDF_FLAG}
+            >
+              {heading}
+            </Text>
+          </View>
+        )}
+      </>
+    )}
+    {children}
+  </View>
+);
+
+export const ResumePDFSectionWithBorder = ({
+  themeColor,
+  heading,
+  style = {},
   children,
 }: {
   themeColor?: string;
@@ -24,22 +112,21 @@ export const ResumePDFSection = ({
     }}
   >
     {heading && (
-      <View style={{ ...styles.flexRow, alignItems: "center" }}>
-        {themeColor && (
-          <View
-            style={{
-              height: "3.75pt",
-              width: "30pt",
-              backgroundColor: themeColor,
-              marginRight: spacing["3.5"],
-            }}
-            debug={DEBUG_RESUME_PDF_FLAG}
-          />
-        )}
+      <View
+        style={{
+          borderBottomWidth: 1,
+          borderBottomColor: themeColor || "#000000",
+          borderBottomStyle: "solid",
+          paddingBottom: "3pt",
+          marginBottom: "6pt",
+        }}
+      >
         <Text
           style={{
             fontWeight: "bold",
-            letterSpacing: "0.3pt", // tracking-wide -> 0.025em * 12 pt = 0.3pt
+            letterSpacing: "0.3pt",
+            textTransform: "uppercase",
+            fontSize: "11pt",
           }}
           debug={DEBUG_RESUME_PDF_FLAG}
         >

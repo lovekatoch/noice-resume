@@ -12,11 +12,13 @@ export const ResumePDFSkills = ({
   skills,
   themeColor,
   showBulletPoints,
+  sectionVariant = "accent-bar",
 }: {
   heading: string;
   skills: ResumeSkills;
   themeColor: string;
   showBulletPoints: boolean;
+  sectionVariant?: "accent-bar" | "border-bottom" | "text-only";
 }) => {
   const { descriptions, featuredSkills } = skills;
   const featuredSkillsWithText = featuredSkills.filter((item) => item.skill);
@@ -27,7 +29,7 @@ export const ResumePDFSkills = ({
   ];
 
   return (
-    <ResumePDFSection themeColor={themeColor} heading={heading}>
+    <ResumePDFSection themeColor={themeColor} heading={heading} sectionVariant={sectionVariant}>
       {featuredSkillsWithText.length > 0 && (
         <View style={{ ...styles.flexRowBetween, marginTop: spacing["0.5"] }}>
           {featuredSkillsPair.map((pair, idx) => (

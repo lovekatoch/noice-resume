@@ -11,16 +11,18 @@ export const ResumePDFCustom = ({
   custom,
   themeColor,
   showBulletPoints,
+  sectionVariant = "accent-bar",
 }: {
   heading: string;
   custom: ResumeCustom;
   themeColor: string;
   showBulletPoints: boolean;
+  sectionVariant?: "accent-bar" | "border-bottom" | "text-only";
 }) => {
   const { descriptions } = custom;
 
   return (
-    <ResumePDFSection themeColor={themeColor} heading={heading}>
+    <ResumePDFSection themeColor={themeColor} heading={heading} sectionVariant={sectionVariant}>
       <View style={{ ...styles.flexCol }}>
         <ResumePDFBulletList
           items={descriptions}

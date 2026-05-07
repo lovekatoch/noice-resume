@@ -75,7 +75,7 @@ export const TopNavBar = () => {
       style={{ borderColor: "var(--border)" }}
     >
       <div
-        className="mx-auto flex items-center justify-between py-3 px-4 md:px-12"
+        className="flex items-center justify-between py-3 px-4 md:px-12 w-full"
         style={{ maxWidth: 1200 }}
       >
         <Link href="/">

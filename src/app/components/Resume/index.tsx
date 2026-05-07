@@ -1,11 +1,11 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { ResumeIframeCSR } from "components/Resume/ResumeIFrame";
 import { ResumePDF } from "components/Resume/ResumePDF";
 import { ResumeControlBarCSR } from "components/Resume/ResumeControlBar";
-import { useAppSelector } from "lib/redux/hooks";
+import { useAppSelector, useAppDispatch } from "lib/redux/hooks";
 import { selectResume } from "lib/redux/resumeSlice";
-import { selectSettings } from "lib/redux/settingsSlice";
+import { selectSettings, changeSettings } from "lib/redux/settingsSlice";
 import { DEBUG_RESUME_PDF_FLAG } from "lib/constants";
 import {
   useRegisterReactPDFFont,
@@ -25,6 +25,7 @@ export const Resume = () => {
   const [zoomLevel, setZoomLevel] = useState(100);
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
+  const dispatch = useAppDispatch();
   const document = useMemo(
     () => <ResumePDF resume={resume} settings={settings} isPDF={true} />,
     [resume, settings]
@@ -39,6 +40,13 @@ export const Resume = () => {
     setZoomLevel(Math.max(100, percentage));
   };
 
+  const handleTemplateChange = useCallback(
+    (templateId: string) => {
+      dispatch(changeSettings({ field: "template", value: templateId }));
+    },
+    [dispatch]
+  );
+
   return (
     <>
       <NonEnglishFontsCSSLazyLoader />
@@ -49,6 +57,8 @@ export const Resume = () => {
           scale={effectiveScale}
           zoomLevel={zoomLevel}
           onZoomChange={handleZoomChange}
+          template={settings.template}
+          onTemplateChange={handleTemplateChange}
         />
         <section className="flex-1 overflow-y-auto p-2 pb-4 scroll-mt-16 md:p-4 md:pb-4">
           <div className="flex justify-center">
