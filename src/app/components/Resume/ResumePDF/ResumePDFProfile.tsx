@@ -217,7 +217,7 @@ export const ResumePDFProfile = ({
                   {idx > 0 && (
                     <Text
                       style={{
-                        marginHorizontal: spacing["0.5"],
+                        marginHorizontal: spacing["1.5"],
                         color: "#999",
                         fontSize: "9pt",
                       }}
