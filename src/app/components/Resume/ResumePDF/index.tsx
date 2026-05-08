@@ -1,4 +1,4 @@
-import { Page, View, Document, Text } from "@react-pdf/renderer";
+import { Page, View, Document } from "@react-pdf/renderer";
 import { styles, spacing } from "components/Resume/ResumePDF/styles";
 import { ResumePDFProfile } from "components/Resume/ResumePDF/ResumePDFProfile";
 import { ResumePDFWorkExperience } from "components/Resume/ResumePDF/ResumePDFWorkExperience";
@@ -10,7 +10,7 @@ import { DEFAULT_FONT_COLOR } from "lib/redux/settingsSlice";
 import type { Settings, ShowForm } from "lib/redux/settingsSlice";
 import type { Resume } from "lib/redux/types";
 import { SuppressResumePDFErrorMessage } from "components/Resume/ResumePDF/common/SuppressResumePDFErrorMessage";
-import { TEMPLATE_CONFIGS, getTemplateStyles } from "components/Resume/ResumePDF/templates";
+import { TEMPLATE_CONFIGS } from "components/Resume/ResumePDF/templates";
 import type { TemplateId } from "components/Resume/ResumePDF/templates";
 
 /**
@@ -52,18 +52,11 @@ export const ResumePDF = ({
   const themeColor = settings.themeColor || DEFAULT_FONT_COLOR;
   const templateId = (settings.template || "executive-simple") as TemplateId;
   const templateCfg = TEMPLATE_CONFIGS[templateId];
-  const tplStyles = getTemplateStyles(templateId, themeColor, fontFamily, fontSize);
 
   // Map templateId to sectionVariant
   const sectionVariant =
     templateId === "sb2nov-modern"
       ? "border-bottom"
-      : templateId === "jsonresume-class"
-      ? "text-only"
-      : templateId === "mcdowell"
-      ? "minimal-heading"
-      : templateId === "stackoverflow"
-      ? "accent-bar"
       : "accent-bar";
 
   const showFormsOrder = formsOrder.filter((form) => formToShow[form]);
@@ -199,21 +192,6 @@ export const ResumePDF = ({
             fontSize: fontSize + "pt",
           }}
         >
-          {/* JSON Resume Class: banner header */}
-          {templateId === "jsonresume-class" && (
-            <View style={tplStyles.bannerHeader}>
-              <View style={styles.flexCol}>
-                <Text style={tplStyles.bannerName}>{profile.name}</Text>
-              </View>
-              {profile.summary && (
-                <View style={styles.flexCol}>
-                  <Text style={tplStyles.bannerTitle}>{profile.summary}</Text>
-                </View>
-              )}
-            </View>
-          )}
-
-          {/* Executive Simple: colored top bar */}
           {templateCfg.showTopBar && Boolean(settings.themeColor) && (
             <View
               style={{
@@ -223,14 +201,10 @@ export const ResumePDF = ({
               }}
             />
           )}
-
           <View
             style={{
               ...styles.flexCol,
-              padding:
-                templateId === "mcdowell"
-                  ? `${spacing[12]} ${spacing[20]}`
-                  : `${spacing[16]} ${spacing[20]}`,
+              padding: `${spacing[16]} ${spacing[20]}`,
             }}
           >
             <ResumePDFProfile

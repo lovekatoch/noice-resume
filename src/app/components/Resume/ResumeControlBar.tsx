@@ -12,9 +12,7 @@ import { Tooltip } from "components/Tooltip";
 const TEMPLATES = [
   { id: "executive-simple", name: "Classic" },
   { id: "sb2nov-modern", name: "Modern" },
-  { id: "jsonresume-class", name: "Bold" },
   { id: "stackoverflow", name: "StackOverflow" },
-  { id: "mcdowell", name: "McDowell" },
 ];
 
 const ResumeControlBar = ({
