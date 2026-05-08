@@ -162,61 +162,73 @@ export const ResumePDFProfile = ({
               ...styles.flexRow,
               flexWrap: "wrap",
               marginTop: spacing["0.5"],
-              gap: spacing["0.5"],
             }}
           >
-            {contactParts.map((part, idx) => {
-              let content = null;
-              if (idx === 0 && email) {
-                content = (
-                  <ResumePDFLink src={`mailto:${email}`} isPDF={isPDF}>
+            {(() => {
+              const items: { key: string; el: JSX.Element }[] = [];
+              if (email)
+                items.push({
+                  key: "email",
+                  el: (
+                    <ResumePDFLink src={`mailto:${email}`} isPDF={isPDF}>
+                      <Text style={{ fontSize: "9pt", color: "#333" }}>
+                        {email}
+                      </Text>
+                    </ResumePDFLink>
+                  ),
+                });
+              if (phone)
+                items.push({
+                  key: "phone",
+                  el: (
                     <Text style={{ fontSize: "9pt", color: "#333" }}>
-                      {email}
+                      {phone}
                     </Text>
-                  </ResumePDFLink>
-                );
-              } else if (idx === 1 && phone) {
-                content = (
-                  <Text style={{ fontSize: "9pt", color: "#333" }}>
-                    {phone}
-                  </Text>
-                );
-              } else if (idx === 2 && location) {
-                content = (
-                  <Text style={{ fontSize: "9pt", color: "#333" }}>
-                    {location}
-                  </Text>
-                );
-              } else if (idx === 3 && url) {
-                content = (
-                  <ResumePDFLink
-                    src={url.startsWith("http") ? url : `https://${url}`}
-                    isPDF={isPDF}
-                  >
+                  ),
+                });
+              if (location)
+                items.push({
+                  key: "location",
+                  el: (
                     <Text style={{ fontSize: "9pt", color: "#333" }}>
-                      {url}
+                      {location}
                     </Text>
-                  </ResumePDFLink>
-                );
-              }
-              return (
+                  ),
+                });
+              if (url)
+                items.push({
+                  key: "url",
+                  el: (
+                    <ResumePDFLink
+                      src={url.startsWith("http") ? url : `https://${url}`}
+                      isPDF={isPDF}
+                    >
+                      <Text style={{ fontSize: "9pt", color: "#333" }}>
+                        {url}
+                      </Text>
+                    </ResumePDFLink>
+                  ),
+                });
+              return items.map((item, idx) => (
                 <View
-                  key={idx}
+                  key={item.key}
                   style={{ ...styles.flexRow, alignItems: "center" }}
                 >
-                  <Text
-                    style={{
-                      marginHorizontal: spacing["0.5"],
-                      color: "#999",
-                      fontSize: "9pt",
-                    }}
-                  >
-                    |
-                  </Text>
-                  {content}
+                  {idx > 0 && (
+                    <Text
+                      style={{
+                        marginHorizontal: spacing["0.5"],
+                        color: "#999",
+                        fontSize: "9pt",
+                      }}
+                    >
+                      |
+                    </Text>
+                  )}
+                  {item.el}
                 </View>
-              );
-            })}
+              ));
+            })()}
           </View>
         )}
       </View>
