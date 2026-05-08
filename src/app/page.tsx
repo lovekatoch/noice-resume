@@ -8,8 +8,8 @@ export default function Home() {
       <Hero />
       <Steps />
       <Features />
-      <footer className="border-t border-[var(--border)] px-6 py-6 text-center text-xs text-[var(--muted)]">
-        Built with &#128156; by{" "}
+      <footer className="border-t border-[var(--border)] px-6 py-8 text-center text-xs text-[var(--muted)]">
+        Built with care by{" "}
         <a
           href="https://www.linkedin.com/in/lovekatoch"
           target="_blank"

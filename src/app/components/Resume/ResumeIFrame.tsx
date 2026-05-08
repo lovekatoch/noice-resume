@@ -116,10 +116,9 @@ const ResumeIframe = ({
           style={{
             width: "100%",
             height: "100%",
-            overflow: "auto",
           }}
           initialContent={iframeInitialContent}
-          scrolling="yes"
+          scrolling="auto"
           key={isA4 ? "A4" : "LETTER"}
         >
           <div

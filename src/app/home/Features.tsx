@@ -44,26 +44,27 @@ const ITEMS = [
 export const Features = () => {
   return (
     <>
-      <section className="bg-[var(--bg)] px-6 py-16">
+      {/* Feature cards */}
+      <section className="bg-white px-6 py-20 md:py-28">
         <div className="mx-auto max-w-4xl">
-          <h2 className="mb-2 text-center font-display text-2xl font-semibold tracking-tight text-[var(--fg)]">
+          <h2 className="mb-2 text-center font-display text-3xl font-light tracking-tight text-[#0C1628]">
             Why NoiceResume
           </h2>
-          <p className="mb-10 text-center text-base text-[var(--muted)]">
+          <p className="mb-12 text-center text-base text-[#64748d]">
             A resume builder that does the hard part for you.
           </p>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {ITEMS.map(({ title, text, icon }) => (
               <div
                 key={title}
-                className="flex items-start gap-4 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm"
+                className="group flex items-start gap-5 rounded-lg border border-[#e5edf5] bg-white p-7 transition-all duration-200 hover:border-[var(--accent)]/20 hover:shadow-[rgba(50,50,93,0.08)_0px_6px_24px]"
               >
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--accent-light)]">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--accent-light)] transition-all group-hover:bg-[var(--accent)]/15">
                   {icon}
                 </div>
                 <div>
-                  <h3 className="mb-1 font-semibold text-[var(--fg)]">{title}</h3>
-                  <p className="text-sm text-[var(--muted)]">{text}</p>
+                  <h3 className="mb-1.5 font-semibold text-[#0C1628]">{title}</h3>
+                  <p className="text-sm leading-relaxed text-[#64748d]">{text}</p>
                 </div>
               </div>
             ))}
@@ -71,27 +72,36 @@ export const Features = () => {
         </div>
       </section>
 
-      {/* CTA Band */}
-      <section className="bg-[var(--fg)] px-6 py-16 text-center text-white">
+      {/* Dark CTA band — Stripe-inspired brand section */}
+      <section className="border-t border-[var(--border)] bg-[#0C1628] px-6 py-24 text-center text-white">
         <div className="mx-auto max-w-[540px]">
-          <h2 className="mb-2 font-display text-2xl font-semibold tracking-tight">
+          {/* Decorative accent line */}
+          <div className="mx-auto mb-8 h-px w-16 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent" />
+
+          <h2 className="mb-4 font-display text-3xl font-light tracking-tight">
             Your next role starts here
           </h2>
-          <p className="mb-8 text-base text-white/70">
+          <p className="mb-10 text-base leading-relaxed text-white/50">
             No sign-up required. No credit card. Just a resume that works.
           </p>
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href="/resume-builder"
-              className="inline-flex items-center rounded-md bg-[var(--accent)] px-6 py-2.5 font-semibold text-white transition hover:bg-[var(--accent-hover)]"
+              className="inline-flex items-center gap-2 rounded-md bg-[var(--accent)] px-7 py-3 font-medium text-white shadow-[rgba(94,106,210,0.35)_0px_8px_24px_-4px] transition-all hover:bg-[var(--accent-hover)] hover:shadow-[rgba(94,106,210,0.5)_0px_12px_28px_-6px] active:scale-[0.98]"
             >
               Start Fresh
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
             </a>
             <a
               href="/resume-import"
-              className="inline-flex items-center rounded-md border border-white/30 px-6 py-2.5 font-semibold text-white transition hover:bg-white/10"
+              className="inline-flex items-center gap-2 rounded-md border border-white/15 px-7 py-3 font-medium text-white/80 transition-all hover:border-white/30 hover:text-white"
             >
               Import PDF
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
             </a>
           </div>
         </div>

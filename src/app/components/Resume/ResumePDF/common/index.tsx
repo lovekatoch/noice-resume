@@ -14,7 +14,7 @@ export const ResumePDFSection = ({
   themeColor?: string;
   heading?: string;
   style?: Style;
-  sectionVariant?: "accent-bar" | "border-bottom" | "text-only";
+  sectionVariant?: "accent-bar" | "border-bottom" | "text-only" | "underline-heading" | "minimal-heading";
   children: React.ReactNode;
 }) => (
   <View
@@ -42,7 +42,6 @@ export const ResumePDFSection = ({
                 fontWeight: "bold",
                 letterSpacing: "0.3pt",
                 textTransform: "uppercase",
-                fontSize: "11pt",
               }}
               debug={DEBUG_RESUME_PDF_FLAG}
             >
@@ -54,13 +53,63 @@ export const ResumePDFSection = ({
           <Text
             style={{
               fontWeight: 600,
-              fontSize: "12pt",
               marginBottom: "4pt",
             }}
             debug={DEBUG_RESUME_PDF_FLAG}
           >
             {heading}
           </Text>
+        )}
+        {sectionVariant === "underline-heading" && (
+          <View style={{ flexDirection: "row", alignItems: "center", width: "100%" }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: "#DD3D2A",
+                fontSize: "11pt",
+                letterSpacing: "0.3pt",
+                textTransform: "uppercase",
+              }}
+              debug={DEBUG_RESUME_PDF_FLAG}
+            >
+              {heading}
+            </Text>
+            <View
+              style={{
+                flex: 1,
+                borderBottomWidth: 2,
+                borderBottomColor: "#999999",
+                borderBottomStyle: "solid",
+                marginLeft: "4pt",
+                marginBottom: "2pt",
+              }}
+            />
+          </View>
+        )}
+        {sectionVariant === "minimal-heading" && (
+          <View style={{ flexDirection: "row", alignItems: "center", width: "100%", marginBottom: "2pt" }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: "9pt",
+                letterSpacing: "0.5pt",
+                color: "#666666",
+              }}
+              debug={DEBUG_RESUME_PDF_FLAG}
+            >
+              {heading}
+            </Text>
+            <View
+              style={{
+                flex: 1,
+                borderBottomWidth: 1,
+                borderBottomColor: "#cccccc",
+                borderBottomStyle: "solid",
+                marginLeft: "4pt",
+                marginBottom: "2pt",
+              }}
+            />
+          </View>
         )}
         {sectionVariant === "accent-bar" && (
           <View style={{ ...styles.flexRow, alignItems: "center" }}>
@@ -126,7 +175,6 @@ export const ResumePDFSectionWithBorder = ({
             fontWeight: "bold",
             letterSpacing: "0.3pt",
             textTransform: "uppercase",
-            fontSize: "11pt",
           }}
           debug={DEBUG_RESUME_PDF_FLAG}
         >

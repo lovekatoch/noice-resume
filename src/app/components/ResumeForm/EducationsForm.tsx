@@ -3,7 +3,6 @@ import {
   BulletListTextarea,
   Input,
 } from "components/ResumeForm/Form/InputGroup";
-import { BulletListIconButton } from "components/ResumeForm/Form/IconButton";
 import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
 import type { CreateHandleChangeArgsWithDescriptions } from "components/ResumeForm/types";
@@ -15,8 +14,6 @@ import {
 } from "lib/redux/resumeSlice";
 import type { ResumeEducation } from "lib/redux/types";
 import {
-  changeShowBulletPoints,
-  selectShowBulletPoints,
   selectThemeColor,
 } from "lib/redux/settingsSlice";
 import { useAIPanel } from "lib/hooks/useAIPanel";
@@ -25,7 +22,6 @@ export const EducationsForm = () => {
   const educations = useAppSelector(selectEducations);
   const dispatch = useAppDispatch();
   const form = "educations";
-  const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
   const themeColor = useAppSelector(selectThemeColor) || "#5E6AD2";
 
   const {
@@ -66,10 +62,6 @@ Institution: ${section.school}\nDegree: ${section.degree}\n${section.gpa ? `GPA:
           } else {
             dispatch(changeEducations({ idx, field: args[0], value: args[1] }));
           }
-        };
-
-        const handleShowBulletPoints = (value: boolean) => {
-          dispatch(changeShowBulletPoints({ field: form, value }));
         };
 
         const showMoveUp = idx !== 0;
@@ -144,14 +136,7 @@ Institution: ${section.school}\nDegree: ${section.degree}\n${section.gpa ? `GPA:
                 placeholder="Free paragraph space to list out additional activities, courses, awards etc"
                 value={descriptions}
                 onChange={handleEducationChange}
-                showBulletPoints={showBulletPoints}
               />
-              <div className="absolute left-[15.6rem] top-[0.07rem]">
-                <BulletListIconButton
-                  showBulletPoints={showBulletPoints}
-                  onClick={handleShowBulletPoints}
-                />
-              </div>
             </div>
           </FormSection>
         );

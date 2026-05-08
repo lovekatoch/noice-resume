@@ -11,7 +11,7 @@ import {
 } from "components/Resume/ResumePDF/common";
 import type { ResumeProfile } from "lib/redux/types";
 import { TEMPLATE_CONFIGS } from "components/Resume/ResumePDF/templates";
-import type { TemplateId } from "components/Resume/ResumePDF/templates";
+import type { TemplateId, SectionVariant } from "components/Resume/ResumePDF/templates";
 
 export const ResumePDFProfile = ({
   profile,
@@ -19,16 +19,209 @@ export const ResumePDFProfile = ({
   isPDF,
   templateId = "executive-simple",
   sectionVariant = "accent-bar",
+  fontFamily,
+  fontSize = "11",
 }: {
   profile: ResumeProfile;
   themeColor: string;
   isPDF: boolean;
   templateId?: TemplateId;
-  sectionVariant?: "accent-bar" | "border-bottom" | "text-only";
+  sectionVariant?: SectionVariant;
+  fontFamily?: string;
+  fontSize?: string;
 }) => {
   const { name, email, phone, url, summary, location } = profile;
   const iconProps = { email, phone, location, url };
   const cfg = TEMPLATE_CONFIGS[templateId];
+  const nameSize = `${parseInt(fontSize) + 9}pt`;
+
+  /* ── StackOverflow sidebar: name, summary, compact contact ── */
+  if (templateId === "stackoverflow") {
+    const contactItems = [
+      location && { key: "location", label: location },
+      email && { key: "email", label: email, href: `mailto:${email}` },
+      phone && { key: "phone", label: phone },
+      url && {
+        key: "url",
+        label: url,
+        href: url.startsWith("http") ? url : `https://${url}`,
+      },
+    ].filter(Boolean) as {
+      key: string;
+      label: string;
+      href?: string;
+    }[];
+
+    return (
+      <View style={{ ...styles.flexCol, gap: spacing["1"] }}>
+        <Text
+          style={{
+            fontSize: "16pt",
+            fontWeight: "bold",
+            fontFamily: "Helvetica",
+            color: "#2d2d2d",
+          }}
+          wrap={true}
+        >
+          {name}
+        </Text>
+        {summary && (
+          <Text
+            style={{
+              fontSize: "8pt",
+              color: "#555555",
+              fontFamily: "Helvetica",
+              lineHeight: 1.4,
+            }}
+            wrap={true}
+          >
+            {summary}
+          </Text>
+        )}
+        <View
+          style={{
+            ...styles.flexCol,
+            gap: spacing["0.5"],
+            marginTop: spacing["2"],
+          }}
+        >
+          {contactItems.map((item) => (
+            <View
+              key={item.key}
+              style={{
+                ...styles.flexRow,
+                alignItems: "center",
+                gap: spacing["1"],
+              }}
+            >
+              <Text style={{ fontSize: "8pt", color: "#666666", width: "14pt" }}>
+                {item.key === "location"
+                  ? "\u2302"
+                  : item.key === "email"
+                  ? "\u2709"
+                  : item.key === "phone"
+                  ? "\u260E"
+                  : "\u2197"}
+              </Text>
+              {item.href ? (
+                <ResumePDFLink src={item.href} isPDF={isPDF}>
+                  <Text style={{ fontSize: "8pt", color: "#555555" }}>
+                    {item.label}
+                  </Text>
+                </ResumePDFLink>
+              ) : (
+                <Text style={{ fontSize: "8pt", color: "#555555" }}>
+                  {item.label}
+                </Text>
+              )}
+            </View>
+          ))}
+        </View>
+      </View>
+    );
+  }
+
+  /* ── McDowell: compact name + inline contact ── */
+  if (templateId === "mcdowell") {
+    const contactParts = [
+      email && email,
+      phone && phone,
+      location && location,
+      url && url,
+    ].filter(Boolean) as string[];
+
+    return (
+      <View style={{ ...styles.flexCol, marginBottom: spacing["1"] }}>
+        <Text
+          style={{
+            fontSize: nameSize,
+            fontWeight: "bold",
+            fontFamily: "Helvetica",
+          }}
+          wrap={true}
+        >
+          {name}
+        </Text>
+        {summary && (
+          <Text
+            style={{
+              fontSize: "9pt",
+              marginTop: spacing["0.5"],
+              color: "#444444",
+              fontFamily: "Helvetica",
+              lineHeight: 1.4,
+            }}
+            wrap={true}
+          >
+            {summary}
+          </Text>
+        )}
+        {contactParts.length > 0 && (
+          <View
+            style={{
+              ...styles.flexRow,
+              flexWrap: "wrap",
+              marginTop: spacing["0.5"],
+              gap: spacing["0.5"],
+            }}
+          >
+            {contactParts.map((part, idx) => {
+              let content = null;
+              if (idx === 0 && email) {
+                content = (
+                  <ResumePDFLink src={`mailto:${email}`} isPDF={isPDF}>
+                    <Text style={{ fontSize: "9pt", color: "#333" }}>
+                      {email}
+                    </Text>
+                  </ResumePDFLink>
+                );
+              } else if (idx === 1 && phone) {
+                content = (
+                  <Text style={{ fontSize: "9pt", color: "#333" }}>
+                    {phone}
+                  </Text>
+                );
+              } else if (idx === 2 && location) {
+                content = (
+                  <Text style={{ fontSize: "9pt", color: "#333" }}>
+                    {location}
+                  </Text>
+                );
+              } else if (idx === 3 && url) {
+                content = (
+                  <ResumePDFLink
+                    src={url.startsWith("http") ? url : `https://${url}`}
+                    isPDF={isPDF}
+                  >
+                    <Text style={{ fontSize: "9pt", color: "#333" }}>
+                      {url}
+                    </Text>
+                  </ResumePDFLink>
+                );
+              }
+              return (
+                <View
+                  key={idx}
+                  style={{ ...styles.flexRow, alignItems: "center" }}
+                >
+                  <Text
+                    style={{
+                      marginHorizontal: spacing["0.5"],
+                      color: "#999",
+                      fontSize: "9pt",
+                    }}
+                  >
+                    |
+                  </Text>
+                  {content}
+                </View>
+              );
+            })}
+          </View>
+        )}
+      </View>
+    );
+  }
 
   /* ── SB2Nov Modern: name left, contact right, no icons ── */
   if (templateId === "sb2nov-modern") {
@@ -45,36 +238,50 @@ export const ResumePDFProfile = ({
         >
           <Text
             style={{
-              fontSize: "22pt",
-              fontFamily: cfg.headingFont,
+              fontSize: nameSize,
+              fontFamily: fontFamily || cfg.headingFont,
               fontWeight: 700,
             }}
           >
             {name}
           </Text>
-          <View style={{ ...styles.flexCol, alignItems: "flex-end", gap: spacing[0.5] }}>
+          <View
+            style={{
+              ...styles.flexCol,
+              alignItems: "flex-end",
+              gap: spacing[0.5],
+            }}
+          >
             {email && (
               <ResumePDFLink src={`mailto:${email}`} isPDF={isPDF}>
-                <Text style={{ fontSize: "10pt" }}>{email}</Text>
+                <Text style={{ color: themeColor }}>{email}</Text>
               </ResumePDFLink>
             )}
             {phone && (
-              <ResumePDFLink src={`tel:${phone.replace(/[^\d+]/g, "")}`} isPDF={isPDF}>
-                <Text style={{ fontSize: "10pt" }}>{phone}</Text>
+              <ResumePDFLink
+                src={`tel:${phone.replace(/[^\d+]/g, "")}`}
+                isPDF={isPDF}
+              >
+                <Text style={{ color: themeColor }}>{phone}</Text>
               </ResumePDFLink>
             )}
             {url && (
-              <ResumePDFLink src={url.startsWith("http") ? url : `https://${url}`} isPDF={isPDF}>
-                <Text style={{ fontSize: "10pt" }}>{url}</Text>
+              <ResumePDFLink
+                src={url.startsWith("http") ? url : `https://${url}`}
+                isPDF={isPDF}
+              >
+                <Text style={{ color: themeColor }}>{url}</Text>
               </ResumePDFLink>
             )}
           </View>
         </View>
         {summary && (
-          <ResumePDFSection themeColor={themeColor} heading="SUMMARY" sectionVariant={sectionVariant}>
-            <Text style={{ fontSize: "10pt", lineHeight: 1.4 }}>
-              {summary}
-            </Text>
+          <ResumePDFSection
+            themeColor={themeColor}
+            heading="SUMMARY"
+            sectionVariant={sectionVariant}
+          >
+            <Text style={{ lineHeight: 1.4 }}>{summary}</Text>
           </ResumePDFSection>
         )}
       </>
@@ -85,16 +292,17 @@ export const ResumePDFProfile = ({
   if (templateId === "jsonresume-class") {
     return (
       <View style={{ marginTop: spacing[2], marginBottom: spacing[3] }}>
-        {/* Contact grid */}
-        <View style={{ ...styles.flexRow, flexWrap: "wrap", gap: spacing[2] }}>
+        <View
+          style={{ ...styles.flexRow, flexWrap: "wrap", gap: spacing[2] }}
+        >
           {email && (
             <View style={{ ...styles.flexCol, width: "48%" }}>
               <View>
-                <Text style={{ fontSize: "9pt", fontWeight: 600 }}>Email</Text>
+                <Text style={{ fontWeight: 600 }}>Email</Text>
               </View>
               <View>
                 <ResumePDFLink src={`mailto:${email}`} isPDF={isPDF}>
-                  <Text style={{ fontSize: "10pt", color: "#2c5999" }}>{email}</Text>
+                  <Text style={{ color: "#2c5999" }}>{email}</Text>
                 </ResumePDFLink>
               </View>
             </View>
@@ -102,21 +310,24 @@ export const ResumePDFProfile = ({
           {phone && (
             <View style={{ ...styles.flexCol, width: "48%" }}>
               <View>
-                <Text style={{ fontSize: "9pt", fontWeight: 600 }}>Phone</Text>
+                <Text style={{ fontWeight: 600 }}>Phone</Text>
               </View>
               <View>
-                <Text style={{ fontSize: "10pt" }}>{phone}</Text>
+                <Text>{phone}</Text>
               </View>
             </View>
           )}
           {url && (
             <View style={{ ...styles.flexCol, width: "48%" }}>
               <View>
-                <Text style={{ fontSize: "9pt", fontWeight: 600 }}>Website</Text>
+                <Text style={{ fontWeight: 600 }}>Website</Text>
               </View>
               <View>
-                <ResumePDFLink src={url.startsWith("http") ? url : `https://${url}`} isPDF={isPDF}>
-                  <Text style={{ fontSize: "10pt", color: "#2c5999" }}>{url}</Text>
+                <ResumePDFLink
+                  src={url.startsWith("http") ? url : `https://${url}`}
+                  isPDF={isPDF}
+                >
+                  <Text style={{ color: "#2c5999" }}>{url}</Text>
                 </ResumePDFLink>
               </View>
             </View>
@@ -124,15 +335,14 @@ export const ResumePDFProfile = ({
           {location && (
             <View style={{ ...styles.flexCol, width: "48%" }}>
               <View>
-                <Text style={{ fontSize: "9pt", fontWeight: 600 }}>Location</Text>
+                <Text style={{ fontWeight: 600 }}>Location</Text>
               </View>
               <View>
-                <Text style={{ fontSize: "10pt" }}>{location}</Text>
+                <Text>{location}</Text>
               </View>
             </View>
           )}
         </View>
-        {/* About section is in banner header — not duplicated here */}
       </View>
     );
   }
@@ -143,7 +353,7 @@ export const ResumePDFProfile = ({
       <ResumePDFText
         bold={true}
         themeColor={themeColor}
-        style={{ fontSize: "20pt", textAlign: "center" }}
+        style={{ fontSize: nameSize, textAlign: "center" }}
       >
         {name}
       </ResumePDFText>

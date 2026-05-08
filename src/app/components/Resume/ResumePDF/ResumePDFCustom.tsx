@@ -17,7 +17,7 @@ export const ResumePDFCustom = ({
   custom: ResumeCustom;
   themeColor: string;
   showBulletPoints: boolean;
-  sectionVariant?: "accent-bar" | "border-bottom" | "text-only";
+  sectionVariant?: "accent-bar" | "border-bottom" | "text-only" | "underline-heading" | "minimal-heading";
 }) => {
   const { descriptions } = custom;
 

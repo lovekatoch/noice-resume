@@ -18,7 +18,7 @@ export const ResumePDFSkills = ({
   skills: ResumeSkills;
   themeColor: string;
   showBulletPoints: boolean;
-  sectionVariant?: "accent-bar" | "border-bottom" | "text-only";
+  sectionVariant?: "accent-bar" | "border-bottom" | "text-only" | "underline-heading" | "minimal-heading";
 }) => {
   const { descriptions, featuredSkills } = skills;
   const featuredSkillsWithText = featuredSkills.filter((item) => item.skill);

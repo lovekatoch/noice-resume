@@ -16,7 +16,7 @@ export const ResumePDFProject = ({
   heading: string;
   projects: ResumeProject[];
   themeColor: string;
-  sectionVariant?: "accent-bar" | "border-bottom" | "text-only";
+  sectionVariant?: "accent-bar" | "border-bottom" | "text-only" | "underline-heading" | "minimal-heading";
 }) => {
   return (
     <ResumePDFSection themeColor={themeColor} heading={heading} sectionVariant={sectionVariant}>

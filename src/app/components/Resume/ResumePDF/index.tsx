@@ -52,8 +52,19 @@ export const ResumePDF = ({
   const themeColor = settings.themeColor || DEFAULT_FONT_COLOR;
   const templateId = (settings.template || "executive-simple") as TemplateId;
   const templateCfg = TEMPLATE_CONFIGS[templateId];
-  const tplStyles = getTemplateStyles(templateId, themeColor);
-  const sectionVariant = templateId === "sb2nov-modern" ? "border-bottom" : templateId === "jsonresume-class" ? "text-only" : "accent-bar";
+  const tplStyles = getTemplateStyles(templateId, themeColor, fontFamily, fontSize);
+
+  // Map templateId to sectionVariant
+  const sectionVariant =
+    templateId === "sb2nov-modern"
+      ? "border-bottom"
+      : templateId === "jsonresume-class"
+      ? "text-only"
+      : templateId === "mcdowell"
+      ? "minimal-heading"
+      : templateId === "stackoverflow"
+      ? "accent-bar"
+      : "accent-bar";
 
   const showFormsOrder = formsOrder.filter((form) => formToShow[form]);
 
@@ -103,9 +114,82 @@ export const ResumePDF = ({
     ),
   };
 
+  /* ── Two-column layout (StackOverflow) ── */
+  if (templateId === "stackoverflow") {
+    return (
+      <>
+        <Document
+          title={`${name} Resume`}
+          author={name}
+          producer={"NoiceResume"}
+        >
+          <Page
+            size={documentSize === "A4" ? "A4" : "LETTER"}
+            style={{
+              ...styles.flexRow,
+              color: DEFAULT_FONT_COLOR,
+              fontFamily,
+              fontSize: fontSize + "pt",
+            }}
+          >
+            {/* Left Sidebar */}
+            <View
+              style={{
+                width: "30%",
+                backgroundColor: "#f0f0f0",
+                padding: `${spacing[12]} ${spacing[8]}`,
+                ...styles.flexCol,
+              }}
+            >
+              <ResumePDFProfile
+                profile={profile}
+                themeColor={themeColor}
+                isPDF={isPDF}
+                templateId={templateId}
+                sectionVariant={sectionVariant}
+                fontFamily={fontFamily}
+                fontSize={fontSize}
+              />
+              <View style={{ marginTop: spacing["6"] }}>
+                <ResumePDFSkills
+                  heading={formToHeading["skills"]}
+                  skills={skills}
+                  themeColor={themeColor}
+                  showBulletPoints={showBulletPoints["skills"]}
+                  sectionVariant={sectionVariant}
+                />
+              </View>
+            </View>
+
+            {/* Right Main Content */}
+            <View
+              style={{
+                width: "70%",
+                padding: `${spacing[12]} ${spacing[8]} ${spacing[12]} ${spacing[6]}`,
+                ...styles.flexCol,
+              }}
+            >
+              {showFormsOrder
+                .filter((form) => form !== "skills")
+                .map((form) => {
+                  const Component = formTypeToComponent[form];
+                  return <Component key={form} />;
+                })}
+            </View>
+          </Page>
+        </Document>
+        <SuppressResumePDFErrorMessage />
+      </>
+    );
+  }
+
   return (
     <>
-      <Document title={`${name} Resume`} author={name} producer={"NoiceResume"}>
+      <Document
+        title={`${name} Resume`}
+        author={name}
+        producer={"NoiceResume"}
+      >
         <Page
           size={documentSize === "A4" ? "A4" : "LETTER"}
           style={{
@@ -140,11 +224,13 @@ export const ResumePDF = ({
             />
           )}
 
-          {/* SB2Nov Modern: no top bar, clean header */}
           <View
             style={{
               ...styles.flexCol,
-              padding: `${spacing[0]} ${spacing[20]}`,
+              padding:
+                templateId === "mcdowell"
+                  ? `${spacing[12]} ${spacing[20]}`
+                  : `${spacing[16]} ${spacing[20]}`,
             }}
           >
             <ResumePDFProfile
@@ -153,6 +239,8 @@ export const ResumePDF = ({
               isPDF={isPDF}
               templateId={templateId}
               sectionVariant={sectionVariant}
+              fontFamily={fontFamily}
+              fontSize={fontSize}
             />
             {showFormsOrder.map((form) => {
               const Component = formTypeToComponent[form];

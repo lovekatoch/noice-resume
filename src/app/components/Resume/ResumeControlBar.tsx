@@ -13,6 +13,8 @@ const TEMPLATES = [
   { id: "executive-simple", name: "Classic" },
   { id: "sb2nov-modern", name: "Modern" },
   { id: "jsonresume-class", name: "Bold" },
+  { id: "stackoverflow", name: "StackOverflow" },
+  { id: "mcdowell", name: "McDowell" },
 ];
 
 const ResumeControlBar = ({
@@ -54,7 +56,7 @@ const ResumeControlBar = ({
 
   return (
     <div
-      className="flex items-center justify-between border-b px-4 py-2"
+      className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b px-4 py-2"
       style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)", color: "var(--fg)" }}
     >
       {/* Zoom Slider */}
@@ -81,8 +83,8 @@ const ResumeControlBar = ({
         </span>
       </div>
 
-      {/* Template Dropdown + Download */}
-      <div className="flex items-center gap-3">
+      {/* Template Dropdown */}
+      <div className="flex items-center">
         <select
           value={template}
           onChange={(e) => onTemplateChange(e.target.value)}
@@ -100,12 +102,15 @@ const ResumeControlBar = ({
             </option>
           ))}
         </select>
+      </div>
 
+      {/* Download Button — new row on mobile */}
+      <div className="flex w-full sm:w-auto">
         <Tooltip text="Download Resume">
           <button
             aria-label="Download Resume"
             onClick={handleDownloadClick}
-            className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium text-white transition-colors hover:opacity-90"
+            className="flex w-full items-center justify-center gap-1.5 rounded-md px-4 py-2 text-sm font-medium text-white transition-colors hover:opacity-90"
             style={{ backgroundColor: "var(--accent)" }}
           >
             <ArrowDownTrayIcon className="h-4 w-4" />

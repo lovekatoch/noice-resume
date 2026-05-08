@@ -4,7 +4,7 @@ import { Resume } from "components/Resume";
 
 export default function Create() {
   return (
-    <main className="relative w-full max-w-full bg-[var(--bg)]">
+    <main className="relative w-full max-w-full bg-[var(--bg)] md:max-h-screen md:overflow-hidden">
       <div className="flex flex-col md:grid md:grid-cols-12">
         <div className="md:col-span-5">
           <ResumeForm />

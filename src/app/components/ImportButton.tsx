@@ -73,7 +73,7 @@ export const ImportButton = () => {
         type="button"
         onClick={handleClick}
         disabled={isLoading}
-        className="inline-flex items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-6 py-2.5 font-medium text-[var(--fg)] transition hover:bg-[var(--bg)]"
+        className="inline-flex items-center gap-2 rounded-md border border-[var(--accent)]/25 bg-white px-7 py-3 font-medium text-[var(--accent)] transition-all hover:border-[var(--accent)]/40 hover:bg-[var(--accent)]/5"
         aria-label={isLoading ? "Importing PDF" : "Import PDF"}
       >
         {isLoading ? (
@@ -98,17 +98,17 @@ export const ImportButton = () => {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
               />
             </svg>
-            <span className="ml-2">Importing...</span>
+            <span>Importing...</span>
           </>
         ) : (
           <>
             <ArrowUpTrayIcon className="h-4 w-4" aria-hidden="true" />
-            <span className="ml-2">Import pdf</span>
+            <span>Import PDF</span>
           </>
         )}
       </button>
       {error && (
-        <p className="absolute -bottom-6 left-0 text-xs text-red-500">{error}</p>
+        <p className="text-xs text-red-500">{error}</p>
       )}
     </>
   );
