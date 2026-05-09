@@ -51,7 +51,7 @@ export const ResumePDF = ({
   } = settings;
   const themeColor = settings.themeColor || DEFAULT_FONT_COLOR;
   const templateId = (settings.template || "executive-simple") as TemplateId;
-  const templateCfg = TEMPLATE_CONFIGS[templateId];
+  const templateCfg = TEMPLATE_CONFIGS[templateId] || TEMPLATE_CONFIGS["executive-simple"];
 
   // Map templateId to sectionVariant
   const sectionVariant =

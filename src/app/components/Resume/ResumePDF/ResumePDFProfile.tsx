@@ -32,7 +32,7 @@ export const ResumePDFProfile = ({
 }) => {
   const { name, email, phone, url, summary, location } = profile;
   const iconProps = { email, phone, location, url };
-  const cfg = TEMPLATE_CONFIGS[templateId];
+  const cfg = TEMPLATE_CONFIGS[templateId] || TEMPLATE_CONFIGS["executive-simple"];
   const nameSize = `${parseInt(fontSize) + 9}pt`;
 
   /* ── StackOverflow sidebar: name, summary, compact contact ── */
