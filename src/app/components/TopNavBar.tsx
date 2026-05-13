@@ -29,7 +29,7 @@ export const TopNavBar = () => {
 
         {isEditor && (
           <div className="flex-shrink-0">
-            <ImportButton />
+            <ImportButton compact />
           </div>
         )}
       </div>

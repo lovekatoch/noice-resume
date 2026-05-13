@@ -8,7 +8,11 @@ import { deepClone } from "lib/deep-clone";
 import { useRouter } from "next/navigation";
 import type { ShowForm } from "lib/redux/settingsSlice";
 
-export const ImportButton = () => {
+type Props = {
+  compact?: boolean;
+};
+
+export const ImportButton = ({ compact }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -73,7 +77,9 @@ export const ImportButton = () => {
         type="button"
         onClick={handleClick}
         disabled={isLoading}
-        className="inline-flex items-center gap-2 rounded-md border border-[var(--accent)]/25 bg-white px-7 py-3 font-medium text-[var(--accent)] transition-all hover:border-[var(--accent)]/40 hover:bg-[var(--accent)]/5"
+        className={`inline-flex items-center gap-2 rounded-md border border-[var(--accent)]/25 bg-white font-medium text-[var(--accent)] transition-all hover:border-[var(--accent)]/40 hover:bg-[var(--accent)]/5 ${
+          compact ? "px-3 py-1.5 text-xs" : "px-7 py-3 text-sm"
+        }`}
         aria-label={isLoading ? "Importing PDF" : "Import PDF"}
       >
         {isLoading ? (
