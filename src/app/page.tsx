@@ -64,6 +64,23 @@ function Hero() {
         />
       </div>
 
+      {/* Continue as Candidate — top right */}
+      {savedName && (
+        <div className="absolute top-4 right-6 md:top-6 md:right-8 z-10">
+          <button
+            onClick={() => router.push("/resume-builder")}
+            className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium transition-all hover:shadow-md"
+            style={{ color: "#6B6B6B", backgroundColor: "rgba(255,255,255,0.7)" }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+            Continue{" "}
+            <span style={{ color: TERRA, fontWeight: 600 }}>"{savedName}"</span>
+          </button>
+        </div>
+      )}
+
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col md:flex-row items-center gap-6 md:gap-16">
           {/* Illustration - smaller on mobile, shown first */}
@@ -97,7 +114,7 @@ function Hero() {
               Free, modern, and beautiful resume builder. No sign-up required. Just pick a template and go.
             </p>
 
-            <div className="flex flex-col items-center gap-3 md:gap-4">
+              <div className="flex flex-col items-center gap-3 md:gap-4">
               <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4">
                 <button
                   onClick={handleStartFresh}
@@ -118,18 +135,6 @@ function Hero() {
               >
                 View Templates
               </a>
-              {savedName && (
-                <button
-                  onClick={() => router.push("/resume-builder")}
-                  className="inline-flex items-center gap-2 rounded-lg px-5 py-2 md:px-5 md:py-2 text-xs md:text-sm font-medium transition-all hover:shadow-md"
-                  style={{ color: "#6B6B6B" }}
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                  Continue <span style={{ color: TERRA, fontWeight: 600 }}>"{savedName}"</span>
-                </button>
-              )}
             </div>
           </div>
         </div>
