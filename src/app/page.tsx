@@ -128,13 +128,6 @@ function Hero() {
                 </button>
                 <ImportButton />
               </div>
-              <a
-                href="#templates"
-                className="inline-flex items-center gap-2 rounded-lg px-5 py-2.5 md:px-6 md:py-3 text-sm md:text-base font-semibold transition-all hover:shadow-md active:scale-[0.97]"
-                style={{ color: TERRA, border: `2px solid ${TERRA}` }}
-              >
-                View Templates
-              </a>
             </div>
           </div>
         </div>

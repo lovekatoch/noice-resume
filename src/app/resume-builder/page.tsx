@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { ResumeForm } from "components/ResumeForm";
 import { Resume } from "components/Resume";
+import { ImportButton } from "components/ImportButton";
 
 export default function Create() {
   const [mobileTab, setMobileTab] = useState<"form" | "preview">("form");
@@ -16,6 +17,12 @@ export default function Create() {
 
   return (
     <main className="relative w-full max-w-full bg-[var(--bg)] md:max-h-screen md:overflow-hidden">
+      {/* Import PDF — top right on desktop */}
+      {!isMobile && (
+        <div className="absolute top-3 right-4 z-50">
+          <ImportButton />
+        </div>
+      )}
       {/* Mobile tab bar */}
       {isMobile && (
         <div
