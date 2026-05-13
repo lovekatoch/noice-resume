@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoiceResume · Design Comparison</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,450;14..32,500;14..32,510;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f5f5f4;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    padding: 40px 20px;
+    color: #1a1a1a;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    color: #0c1628;
+  }
+  .header p {
+    font-size: 14px;
+    color: #5a6577;
+    margin-top: 6px;
+  }
+
+  .comparison {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .column {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .col-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .col-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0c1628;
+  }
+
+  .col-badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .badge-spotify { background: #1ed760; color: #000; }
+  .badge-pinterest { background: #e60023; color: #fff; }
+  .badge-ls { background: #eef0ff; color: #5e6ad2; }
+
+  .col-content {
+    padding: 20px;
+  }
+
+  .mockup {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    background: #f8f8f8;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .mockup img {
+    width: 100%;
+    display: block;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 16px;
+  }
+  .tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #f0f0ef;
+    color: #5a6577;
+  }
+
+  .attr-table {
+    margin-top: 16px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .attr-table td {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    vertical-align: top;
+  }
+  .attr-table td:first-child {
+    font-weight: 500;
+    color: #8b95a5;
+    width: 80px;
+  }
+  .attr-table td:last-child {
+    color: #1a2332;
+  }
+
+  .vibe-score {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .vibe-item {
+    flex: 1;
+    text-align: center;
+    padding: 12px 8px;
+    border-radius: 8px;
+    background: #f8f8f7;
+  }
+  .vibe-item .label {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b95a5;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .vibe-item .value {
+    font-size: 16px;
+    font-weight: 500;
+    color: #0c1628;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 900px) {
+    .comparison { grid-template-columns: 1fr; max-width: 400px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>NoiceResume · Design Direction Comparison</h1>
+    <p>Three directions side by side. Which one fits the brand?</p>
+  </div>
+
+  <div class="comparison">
+
+    <!-- Spotify -->
+    <div class="column">
+      <div class="col-header">
+        <span class="col-name">Spotify</span>
+        <span class="col-badge badge-spotify">dark · immersive</span>
+      </div>
+      <div class="col-content">
+        <div class="mockup">
+          <img src="file:///Users/lovekatoch/.hermes/cache/screenshots/browser_screenshot_2e03bc51c127444fb0dfd133dc243ded.png" alt="Spotify landing page" style="width:100%;">
+        </div>
+        <table class="attr-table">
+          <tr><td>Palette</td><td>Near-black #121212 · Green #1ed760</td></tr>
+          <tr><td>Vibes</td><td>Immersive, theatrical, content-first</td></tr>
+          <tr><td>Radii</td><td>Pills (500px–9999px) + circles</td></tr>
+          <tr><td>Buttons</td><td>Uppercase + wide tracking</td></tr>
+          <tr><td>Shadows</td><td>Heavy (0.5 opacity) dramatic lift</td></tr>
+          <tr><td>Font</td><td>CircularSp (compact, 10–24px)</td></tr>
+          <tr><td>Best for</td><td>Entertainment, media, night mode</td></tr>
+        </table>
+        <div class="vibe-score">
+          <div class="vibe-item"><div class="label">Maturity</div><div class="value">★★★</div></div>
+          <div class="vibe-item"><div class="label">Luxury</div><div class="value">★★★</div></div>
+          <div class="vibe-item"><div class="label">Resume fit</div><div class="value">★★</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pinterest -->
+    <div class="column">
+      <div class="col-header">
+        <span class="col-name">Pinterest</span>
+        <span class="col-badge badge-pinterest">warm · discovery</span>
+      </div>
+      <div class="col-content">
+        <div class="mockup">
+          <img src="file:///Users/lovekatoch/.hermes/cache/screenshots/browser_screenshot_f63e511551ff41f28d832119e96a5223.png" alt="Pinterest landing page" style="width:100%;">
+        </div>
+        <table class="attr-table">
+          <tr><td>Palette</td><td>Cream #fbfbf9 · Red #e60023</td></tr>
+          <tr><td>Vibes</td><td>Discovery, editorial, warm</td></tr>
+          <tr><td>Radii</td><td>16px standard · 32px large</td></tr>
+          <tr><td>Buttons</td><td>16px rounded, normal case</td></tr>
+          <tr><td>Shadows</td><td>Flat — effectively no shadows</td></tr>
+          <tr><td>Font</td><td>Pin Sans (Inter) 70px→14px</td></tr>
+          <tr><td>Best for</td><td>Lifestyle, social, creative tools</td></tr>
+        </table>
+        <div class="vibe-score">
+          <div class="vibe-item"><div class="label">Maturity</div><div class="value">★★</div></div>
+          <div class="vibe-item"><div class="label">Luxury</div><div class="value">★★</div></div>
+          <div class="vibe-item"><div class="label">Resume fit</div><div class="value">★★★</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Linear × Stripe -->
+    <div class="column" style="box-shadow: 0 0 0 2px #5e6ad2, 0 4px 20px rgba(94,106,210,0.15);">
+      <div class="col-header" style="background: #eef0ff;">
+        <span class="col-name">Linear × Stripe</span>
+        <span class="col-badge badge-ls">premium · precise</span>
+      </div>
+      <div class="col-content">
+        <div class="mockup">
+          <img src="file:///Users/lovekatoch/.hermes/cache/screenshots/browser_screenshot_b2f418f2c57848c88bf1720806c036bc.png" alt="Linear Stripe landing page" style="width:100%;">
+        </div>
+        <table class="attr-table">
+          <tr><td>Palette</td><td>White #fff · Deep navy #0c1628 · Indigo #5e6ad2</td></tr>
+          <tr><td>Vibes</td><td>Premium, precise, authoritative</td></tr>
+          <tr><td>Radii</td><td>4–8px conservative (no pills)</td></tr>
+          <tr><td>Buttons</td><td>Sharp, clean, 510 weight</td></tr>
+          <tr><td>Shadows</td><td>Blue-tinted, structural, subtle</td></tr>
+          <tr><td>Font</td><td>Inter Variable (300–510)</td></tr>
+          <tr><td>Best for</td><td>SaaS, fintech, professional tools</td></tr>
+        </table>
+        <div class="vibe-score">
+          <div class="vibe-item"><div class="label">Maturity</div><div class="value">★★★★★</div></div>
+          <div class="vibe-item"><div class="label">Luxury</div><div class="value">★★★★★</div></div>
+          <div class="vibe-item"><div class="label">Resume fit</div><div class="value">★★★★★</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="max-width:1400px; margin: 40px auto 0; text-align:center; font-size:13px; color:#8b95a5;">
+    Linear × Stripe hybrid <strong style="color:#5e6ad2;">recommended</strong> — aligns with your existing design system at ~/open-design/design-systems/linear-stripe/
+  </div>
+
+</body>
+</html>

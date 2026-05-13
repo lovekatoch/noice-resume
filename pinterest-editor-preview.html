@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoiceResume Editor × Pinterest</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #fbfbf9;
+    font-family: 'Inter', -apple-system, system-ui, 'Segoe UI', Roboto, sans-serif;
+    color: #211922;
+    min-height: 100vh;
+  }
+
+  /* ─── Sticky Top Nav ─── */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 64px;
+    border-bottom: 1px solid #dadad3;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: #211922;
+    letter-spacing: -0.3px;
+  }
+  .logo span { color: #e60023; }
+
+  .back-btn {
+    background: #f6f6f3;
+    border: none;
+    border-radius: 16px;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    color: #211922;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .back-btn:hover { background: #e5e5e0; }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn-primary {
+    background: #e60023;
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    padding: 6px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    height: 40px;
+    cursor: pointer;
+  }
+  .btn-primary:hover { background: #cc001f; }
+
+  .btn-secondary {
+    background: #e5e5e0;
+    color: #000;
+    border: none;
+    border-radius: 16px;
+    padding: 6px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    height: 40px;
+    cursor: pointer;
+  }
+  .btn-secondary:hover { background: #c8c8c1; }
+
+  .template-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #62625b;
+  }
+
+  /* ─── Editor Layout ─── */
+  .editor {
+    display: grid;
+    grid-template-columns: 360px 1fr 340px;
+    min-height: calc(100vh - 64px);
+  }
+
+  /* ─── Left Panel — Sections ─── */
+  .left-panel {
+    background: #fff;
+    border-right: 1px solid #dadad3;
+    padding: 24px;
+    overflow-y: auto;
+  }
+
+  .panel-title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #211922;
+    margin-bottom: 20px;
+  }
+
+  .section-group {
+    margin-bottom: 4px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: #fbfbf9;
+    border-radius: 16px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.1s;
+  }
+  .section-header:hover { background: #f6f6f3; }
+
+  .section-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-icon {
+    width: 32px;
+    height: 32px;
+    background: #e5e5e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .section-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #211922;
+  }
+  .section-count {
+    font-size: 12px;
+    font-weight: 500;
+    color: #91918c;
+  }
+
+  .section-arrow {
+    color: #91918c;
+    font-size: 14px;
+    transition: transform 0.15s;
+  }
+  .section-arrow.open { transform: rotate(180deg); }
+
+  .section-content {
+    padding: 12px 12px 12px 54px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .field-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .field-row label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #62625b;
+  }
+  .field-row input, .field-row textarea {
+    background: #f6f6f3;
+    border: 1px solid #e5e5e0;
+    border-radius: 16px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #211922;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.1s;
+  }
+  .field-row input:focus, .field-row textarea:focus {
+    background: #fff;
+    border-color: #91918c;
+    box-shadow: 0 0 0 2px #435ee5, 0 0 0 4px #fff;
+  }
+  .field-row textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
+
+  .add-item-btn {
+    background: transparent;
+    border: 1px dashed #c8c8c1;
+    border-radius: 16px;
+    padding: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #62625b;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+  .add-item-btn:hover {
+    border-color: #91918c;
+    color: #211922;
+    background: #fbfbf9;
+  }
+
+  /* ─── Center — Resume Preview ─── */
+  .center-panel {
+    background: #fbfbf9;
+    padding: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  .resume-page {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    padding: 48px 40px;
+  }
+
+  .resume-page .name {
+    font-size: 28px;
+    font-weight: 700;
+    color: #211922;
+    margin-bottom: 2px;
+  }
+  .resume-page .title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #62625b;
+    margin-bottom: 4px;
+  }
+  .resume-page .contact {
+    font-size: 13px;
+    color: #91918c;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e5e5e0;
+  }
+
+  .resume-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #211922;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
+
+  .resume-entry {
+    margin-bottom: 12px;
+  }
+  .resume-entry .role {
+    font-size: 14px;
+    font-weight: 600;
+    color: #211922;
+  }
+  .resume-entry .org {
+    font-size: 13px;
+    color: #62625b;
+  }
+  .resume-entry .date {
+    font-size: 12px;
+    color: #91918c;
+  }
+  .resume-entry p {
+    font-size: 13px;
+    color: #33332e;
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  /* ─── Right Panel — Template Settings ─── */
+  .right-panel {
+    background: #fff;
+    border-left: 1px solid #dadad3;
+    padding: 24px;
+    overflow-y: auto;
+  }
+
+  .setting-group {
+    margin-bottom: 20px;
+  }
+
+  .setting-group h4 {
+    font-size: 12px;
+    font-weight: 700;
+    color: #91918c;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  .color-swatches {
+    display: flex;
+    gap: 8px;
+  }
+
+  .swatch {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.1s;
+  }
+  .swatch:hover { transform: scale(1.1); }
+  .swatch.active { border-color: #211922; }
+
+  .template-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    background: #fbfbf9;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .template-option:hover { background: #f6f6f3; }
+  .template-option.active { background: #e5e5e0; }
+
+  .template-option .thumb {
+    width: 40px;
+    height: 48px;
+    background: #e5e5e0;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .template-option .info {
+    display: flex;
+    flex-direction: column;
+  }
+  .template-option .info strong {
+    font-size: 14px;
+    font-weight: 600;
+    color: #211922;
+  }
+  .template-option .info span {
+    font-size: 12px;
+    color: #91918c;
+  }
+
+  .font-select {
+    width: 100%;
+    background: #f6f6f3;
+    border: 1px solid #e5e5e0;
+    border-radius: 16px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #211922;
+    font-family: inherit;
+    outline: none;
+  }
+
+  .range-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .range-row input[type="range"] {
+    flex: 1;
+    accent-color: #e60023;
+  }
+  .range-row span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #211922;
+    min-width: 32px;
+  }
+
+  .export-section {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e5e0;
+  }
+
+  .export-section .btn-primary {
+    width: 100%;
+    padding: 10px;
+    height: auto;
+  }
+
+  .export-section .btn-secondary {
+    width: 100%;
+    padding: 10px;
+    height: auto;
+    margin-top: 8px;
+  }
+
+  /* ─── Scrollbar ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #c8c8c1; border-radius: 9999px; }
+
+  @media (max-width: 1024px) {
+    .editor { grid-template-columns: 1fr; }
+    .right-panel { border-left: none; border-top: 1px solid #dadad3; }
+    .left-panel { border-right: none; border-bottom: 1px solid #dadad3; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="top-nav">
+    <div class="nav-left">
+      <button class="back-btn">← Templates</button>
+      <div class="logo">Noice<span>Resume</span></div>
+      <span class="template-name">/ Classic</span>
+    </div>
+    <div class="nav-right">
+      <button class="btn-secondary">Preview</button>
+      <button class="btn-primary">Export PDF</button>
+    </div>
+  </div>
+
+  <div class="editor">
+
+    <!-- ─── Left: Sections ─── -->
+    <div class="left-panel">
+      <div class="panel-title">Sections</div>
+
+      <!-- Personal Info -->
+      <div class="section-group">
+        <div class="section-header">
+          <div class="section-header-left">
+            <div class="section-icon">👤</div>
+            <div>
+              <div class="section-name">Personal Info</div>
+              <div class="section-count">5 fields</div>
+            </div>
+          </div>
+          <span class="section-arrow open">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="field-row">
+            <label>Full Name</label>
+            <input value="Love Katoch">
+          </div>
+          <div class="field-row">
+            <label>Job Title</label>
+            <input value="Senior Product Manager">
+          </div>
+          <div class="field-row">
+            <label>Email</label>
+            <input value="love@example.com">
+          </div>
+          <div class="field-row">
+            <label>Phone</label>
+            <input value="+91 98765 43210">
+          </div>
+          <div class="field-row">
+            <label>Location</label>
+            <input value="Delhi, India">
+          </div>
+        </div>
+      </div>
+
+      <!-- Experience -->
+      <div class="section-group">
+        <div class="section-header">
+          <div class="section-header-left">
+            <div class="section-icon">💼</div>
+            <div>
+              <div class="section-name">Experience</div>
+              <div class="section-count">2 entries</div>
+            </div>
+          </div>
+          <span class="section-arrow open">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="field-row">
+            <label>Job Title</label>
+            <input value="Senior Product Manager">
+          </div>
+          <div class="field-row">
+            <label>Company</label>
+            <input value="GetMega">
+          </div>
+          <div class="field-row">
+            <label>Duration</label>
+            <input value="Jun 2023 — Present">
+          </div>
+          <div class="field-row">
+            <label>Description</label>
+            <textarea>Leading product strategy for real-money gaming platform. Driving user retention and monetization initiatives.</textarea>
+          </div>
+          <button class="add-item-btn">+ Add experience</button>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="section-group">
+        <div class="section-header">
+          <div class="section-header-left">
+            <div class="section-icon">🎓</div>
+            <div>
+              <div class="section-name">Education</div>
+              <div class="section-count">1 entry</div>
+            </div>
+          </div>
+          <span class="section-arrow">▶</span>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="section-group">
+        <div class="section-header">
+          <div class="section-header-left">
+            <div class="section-icon">⚡</div>
+            <div>
+              <div class="section-name">Skills</div>
+              <div class="section-count">6 skills</div>
+            </div>
+          </div>
+          <span class="section-arrow">▶</span>
+        </div>
+      </div>
+
+      <!-- Add section -->
+      <button class="add-item-btn" style="margin-top: 16px;">+ Add Section</button>
+    </div>
+
+    <!-- ─── Center: Resume Preview ─── -->
+    <div class="center-panel">
+      <div class="resume-page">
+        <div class="name">Love Katoch</div>
+        <div class="title">Senior Product Manager</div>
+        <div class="contact">love@example.com · +91 98765 43210 · Delhi, India</div>
+
+        <div class="resume-section-title">Experience</div>
+
+        <div class="resume-entry">
+          <div class="role">Senior Product Manager</div>
+          <div class="org">GetMega · Full-time</div>
+          <div class="date">Jun 2023 — Present · 2 yrs 3 mos</div>
+          <p>Leading product strategy for India's leading real-money gaming platform. Driving user retention through personalized engagement, optimizing monetization funnels, and scaling the product to 1M+ DAU.</p>
+        </div>
+
+        <div class="resume-entry">
+          <div class="role">Sales Lead</div>
+          <div class="org">Various · Full-time</div>
+          <div class="date">2018 — 2024 · 6 yrs</div>
+          <p>Built and managed high-performing sales teams across multiple verticals. Consistently exceeded revenue targets and developed scalable sales processes.</p>
+        </div>
+
+        <div class="resume-section-title">Education</div>
+        <div class="resume-entry">
+          <div class="role">Bachelor of Arts</div>
+          <div class="org">Himachal Pradesh University</div>
+          <div class="date">2015 — 2018</div>
+        </div>
+
+        <div class="resume-section-title">Skills</div>
+        <p style="font-size:13px; color:#33332e;">
+          Product Management · User Research · Data Analysis · A/B Testing · Team Leadership · Roadmapping · SQL · Figma
+        </p>
+      </div>
+    </div>
+
+    <!-- ─── Right: Settings ─── -->
+    <div class="right-panel">
+      <div class="setting-group">
+        <h4>Template</h4>
+        <div class="template-option active">
+          <div class="thumb" style="background: #d4cfc4;"></div>
+          <div class="info">
+            <strong>Classic</strong>
+            <span>233 uses this week</span>
+          </div>
+        </div>
+        <div class="template-option">
+          <div class="thumb" style="background: #c4c9d4;"></div>
+          <div class="info">
+            <strong>Modern</strong>
+            <span>198 uses this week</span>
+          </div>
+        </div>
+        <div class="template-option">
+          <div class="thumb" style="background: #d4d4ce;"></div>
+          <div class="info">
+            <strong>Minimal</strong>
+            <span>167 uses this week</span>
+          </div>
+        </div>
+        <div class="template-option">
+          <div class="thumb" style="background: #cec4d4;"></div>
+          <div class="info">
+            <strong>Bold</strong>
+            <span>142 uses this week</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <h4>Accent Color</h4>
+        <div class="color-swatches">
+          <div class="swatch active" style="background:#e60023;"></div>
+          <div class="swatch" style="background:#1ed760;"></div>
+          <div class="swatch" style="background:#435ee5;"></div>
+          <div class="swatch" style="background:#f5a623;"></div>
+          <div class="swatch" style="background:#211922;"></div>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <h4>Font</h4>
+        <select class="font-select">
+          <option>Inter</option>
+          <option>Manrope</option>
+          <option selected>SF Pro</option>
+          <option>Playfair Display</option>
+          <option>JetBrains Mono</option>
+        </select>
+      </div>
+
+      <div class="setting-group">
+        <h4>Font Size</h4>
+        <div class="range-row">
+          <input type="range" min="10" max="16" value="13">
+          <span>13px</span>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <h4>Line Spacing</h4>
+        <div class="range-row">
+          <input type="range" min="1.2" max="2.0" step="0.1" value="1.5">
+          <span>1.5</span>
+        </div>
+      </div>
+
+      <div class="export-section">
+        <button class="btn-primary">Export PDF</button>
+        <button class="btn-secondary">Share link</button>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

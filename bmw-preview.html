@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoiceResume — BMW Design</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #262626; }
+
+    /* Nav */
+    .nav { background: #000; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+    .nav-logo { font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 900; color: #fff; text-decoration: none; text-transform: uppercase; letter-spacing: 0.02em; }
+    .nav-links a:hover { color: #1c69d4; }
+
+  /* Hero */
+  .hero { background: #000; padding: 100px 40px; position: relative; overflow: hidden; min-height: 550px; display: flex; align-items: center; }
+  .hero-bg { position: absolute; inset: 0; z-index: 0; }
+  .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.6) 100%); z-index: 1; }
+  .hero-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+    .hero h1 { font-family: 'DM Sans', sans-serif; font-size: clamp(2.5rem, 5vw, 3.75rem); font-weight: 300; text-transform: uppercase; color: #fff; line-height: 1.3; letter-spacing: 0.02em; margin-bottom: 20px; }
+    .hero p { font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 400; color: rgba(255,255,255,0.7); line-height: 1.15; margin-bottom: 40px; max-width: 500px; }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { background: transparent; color: #fff; border: none; border-bottom: 1px solid #fff; padding: 8px 0; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; border-radius: 0; text-transform: uppercase; letter-spacing: 0.05em; }
+    .btn-primary:hover { color: #1c69d4; border-bottom-color: #1c69d4; }
+    .btn-secondary { background: transparent; color: #bbbbbb; border: 1px solid #bbbbbb; padding: 8px 24px; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 400; cursor: pointer; text-decoration: none; border-radius: 0; text-transform: uppercase; letter-spacing: 0.03em; }
+    .btn-secondary:hover { border-color: #1c69d4; color: #1c69d4; }
+
+    /* Section */
+    .section { padding: 80px 40px; }
+    .section h2 { font-family: 'DM Sans', sans-serif; font-size: clamp(1.75rem, 3vw, 2rem); font-weight: 400; text-transform: uppercase; line-height: 1.3; letter-spacing: 0.02em; text-align: center; margin-bottom: 8px; color: #262626; }
+    .section .subtitle { font-size: 16px; font-weight: 400; line-height: 1.15; text-align: center; color: #757575; margin-bottom: 48px; }
+
+    /* Steps */
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; max-width: 1000px; margin: 0 auto; }
+    .step-card { padding: 48px 32px; text-align: center; border-right: 1px solid #e5e5e5; }
+    .step-card:last-child { border-right: none; }
+    .step-num { font-family: 'DM Sans', sans-serif; font-size: 48px; font-weight: 300; color: #1c69d4; margin-bottom: 16px; line-height: 1; }
+    .step-card h3 { font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 12px; color: #262626; }
+    .step-card p { font-size: 16px; font-weight: 400; line-height: 1.3; color: #757575; }
+
+    /* Feature Cards */
+    .card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; max-width: 1000px; margin: 0 auto; background: #e5e5e5; border: 1px solid #e5e5e5; }
+    .card { background: #fff; padding: 40px 32px; text-align: center; }
+    .card-icon { width: 40px; height: 40px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; }
+    .card-icon svg { width: 28px; height: 28px; color: #1c69d4; }
+    .card h3 { font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 8px; color: #262626; }
+    .card p { font-size: 15px; font-weight: 400; line-height: 1.3; color: #757575; }
+
+    /* CTA band */
+    .cta-band { background: #000; text-align: center; padding: 80px 40px; }
+    .cta-band h2 { font-family: 'DM Sans', sans-serif; font-size: 32px; font-weight: 300; text-transform: uppercase; color: #fff; line-height: 1.3; margin-bottom: 12px; }
+    .cta-band p { font-size: 16px; color: #757575; line-height: 1.15; margin-bottom: 32px; }
+    .cta-band .btn-primary { border-bottom-color: #fff; }
+    .cta-band .btn-secondary { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+
+    /* Footer */
+    .footer { text-align: center; padding: 32px 40px; font-size: 14px; color: #bbbbbb; border-top: 1px solid #e5e5e5; }
+    .footer a { color: #1c69d4; text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    /* 0px radius everywhere */
+    .nav, .btn-primary, .btn-secondary, .card, .step-card { border-radius: 0; }
+  </style>
+</head>
+<body>
+  <!-- Nav -->
+  <nav class="nav">
+    <span class="nav-logo">NoiceResume</span>
+    <div class="nav-links">
+      <a href="#">Hero</a>
+      <a href="#">Steps</a>
+      <a href="#">Features</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1600&q=80" alt="Luxury car in dramatic lighting">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Your Story<br>Your Resume</h1>
+      <p>Recruiters spend seconds on each resume. Make sure yours is the one they remember.</p>
+      <div class="hero-ctas">
+        <a href="#" class="btn-primary">Start Fresh →</a>
+        <a href="#" class="btn-secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Steps -->
+  <section class="section" style="background:#f8f8f8;">
+    <h2>How It Works</h2>
+    <p class="subtitle">From upload to interview call in minutes.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <h3>Import</h3>
+        <p>Upload a PDF or start fresh. The AI reads it in seconds.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <h3>Enhance</h3>
+        <p>AI-powered suggestions that make your experience sound better.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <h3>Export</h3>
+        <p>Download a professional PDF and send it out.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Break — urban drive -->
+  <div style="position:relative;height:450px;overflow:hidden;">
+    <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1600&q=80" alt="Open road and city skyline" style="width:100%;height:100%;object-fit:cover;">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 40%, rgba(0,0,0,0.6) 100%);display:flex;align-items:center;justify-content:center;">
+      <div style="text-align:center;">
+        <h2 style="font-family:'DM Sans',sans-serif;font-size:32px;font-weight:300;text-transform:uppercase;color:#fff;line-height:1.3;margin-bottom:8px;">Built for the road ahead</h2>
+        <p style="font-size:16px;color:rgba(255,255,255,0.7);line-height:1.15;">Your career deserves a resume that moves as fast as you do.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section class="section" style="background:#fff;">
+    <h2>Why NoiceResume</h2>
+    <p class="subtitle">A resume builder that does the hard part for you.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><circle cx="10" cy="10" r="8"/></svg>
+        </div>
+        <h3>Free Forever</h3>
+        <p>No paid plans, no credit card. Just a resume builder that works.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 10l2 2 4-4"/></svg>
+        </div>
+        <h3>ATS Ready</h3>
+        <p>Pass automated screening systems with ease.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+        </div>
+        <h3>AI Powered</h3>
+        <p>Real suggestions based on what recruiters look for.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        <h3>Private</h3>
+        <p>Everything stays on your device. Nothing leaves your browser.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <h2>Ready to Build?</h2>
+    <p>No sign-up required. Just a resume that works.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="#" class="btn-primary">Start Fresh →</a>
+      <a href="#" class="btn-secondary">Import PDF</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    Built with care by <a href="#">Love Katoch</a>
+  </footer>
+</body>
+</html>

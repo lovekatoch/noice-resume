@@ -10,7 +10,6 @@ import { WorkExperiencesForm } from "components/ResumeForm/WorkExperiencesForm";
 import { EducationsForm } from "components/ResumeForm/EducationsForm";
 import { ProjectsForm } from "components/ResumeForm/ProjectsForm";
 import { SkillsForm } from "components/ResumeForm/SkillsForm";
-import { ThemeForm } from "components/ResumeForm/ThemeForm";
 import { CustomForm } from "components/ResumeForm/CustomForm";
 import { AutoSaveIndicator } from "components/AutoSaveIndicator";
 
@@ -36,7 +35,6 @@ export const ResumeForm = () => {
           const Component = formTypeToComponent[form];
           return <Component key={form} />;
         })}
-        <ThemeForm />
       </section>
       <AutoSaveIndicator />
     </div>

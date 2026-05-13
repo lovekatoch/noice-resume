@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {
   ArrowDownTrayIcon,
   MagnifyingGlassPlusIcon,
@@ -8,6 +8,7 @@ import {
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 import { Tooltip } from "components/Tooltip";
+import { useSound } from "lib/sound/provider";
 
 const TEMPLATES = [
   { id: "executive-simple", name: "Classic" },
@@ -33,6 +34,8 @@ const ResumeControlBar = ({
   onTemplateChange: (templateId: string) => void;
 }) => {
   const [instance, update] = usePDF({ document: pdfDocument });
+  const { play } = useSound();
+  const lastZoomRef = useRef(zoomLevel);
 
   useEffect(() => {
     update();
@@ -44,12 +47,18 @@ const ResumeControlBar = ({
       link.href = instance.url;
       link.download = fileName;
       link.click();
+      void play("hero.complete");
     }
   };
 
   const handleZoomSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     onZoomChange(value);
+    // Play subtle sound on every 10% change to avoid spam
+    if (Math.abs(value - lastZoomRef.current) >= 10) {
+      lastZoomRef.current = value;
+      void play("interaction.subtle");
+    }
   };
 
   return (
@@ -81,11 +90,14 @@ const ResumeControlBar = ({
         </span>
       </div>
 
-      {/* Template Dropdown */}
-      <div className="flex items-center">
+      {/* Template Dropdown + Download Button — same row on mobile */}
+      <div className="flex items-center gap-2 flex-1 sm:flex-none justify-end">
         <select
           value={template}
-          onChange={(e) => onTemplateChange(e.target.value)}
+          onChange={(e) => {
+            onTemplateChange(e.target.value);
+            void play("overlay.open");
+          }}
           className="rounded-md border px-3 py-1.5 text-sm font-medium outline-none transition-colors hover:border-[var(--accent)] cursor-pointer"
           style={{
             backgroundColor: "var(--surface)",
@@ -100,15 +112,11 @@ const ResumeControlBar = ({
             </option>
           ))}
         </select>
-      </div>
-
-      {/* Download Button — new row on mobile */}
-      <div className="flex w-full sm:w-auto">
         <Tooltip text="Download Resume">
           <button
             aria-label="Download Resume"
             onClick={handleDownloadClick}
-            className="flex w-full items-center justify-center gap-1.5 rounded-md px-4 py-2 text-sm font-medium text-white transition-colors hover:opacity-90"
+            className="flex items-center justify-center gap-1.5 rounded-md px-4 py-1.5 text-sm font-medium text-white transition-colors hover:opacity-90 whitespace-nowrap"
             style={{ backgroundColor: "var(--accent)" }}
           >
             <ArrowDownTrayIcon className="h-4 w-4" />

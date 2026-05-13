@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoiceResume × Pinterest Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #fbfbf9;
+    font-family: 'Inter', -apple-system, system-ui, 'Segoe UI', Roboto, sans-serif;
+    color: #211922;
+    min-height: 100vh;
+  }
+
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 64px;
+    border-bottom: 1px solid #dadad3;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: #211922;
+    letter-spacing: -0.3px;
+  }
+  .logo span { color: #e60023; }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+  }
+  .nav-links a {
+    font-size: 16px;
+    font-weight: 600;
+    color: #211922;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 9999px;
+  }
+  .nav-links a:hover { background: #f6f6f3; }
+  .nav-links a.active { background: #e5e5e0; }
+
+  .search-bar {
+    flex: 1;
+    max-width: 520px;
+    margin: 0 24px;
+  }
+  .search-bar input {
+    width: 100%;
+    background: #f6f6f3;
+    border: none;
+    border-radius: 9999px;
+    padding: 11px 15px 11px 40px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #33332e;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.15s;
+  }
+  .search-bar input:focus {
+    background: #fff;
+    border: 1px solid #91918c;
+  }
+  .search-bar input::placeholder { color: #91918c; }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-signup {
+    background: #e60023;
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    height: 40px;
+    cursor: pointer;
+  }
+  .btn-signup:hover { background: #cc001f; }
+  .btn-login {
+    background: #e5e5e0;
+    color: #000;
+    border: none;
+    border-radius: 16px;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    height: 40px;
+    cursor: pointer;
+  }
+  .btn-login:hover { background: #c8c8c1; }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: 600px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 64px 48px;
+  }
+
+  .hero-text h1 {
+    font-size: 70px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -1.2px;
+    color: #211922;
+    margin-bottom: 24px;
+  }
+
+  .hero-text h1 em {
+    font-style: normal;
+    color: #e60023;
+  }
+
+  .hero-text p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #33332e;
+    margin-bottom: 28px;
+    max-width: 440px;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .hero-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 32px;
+  }
+
+  .hero-image-inner {
+    width: 100%;
+    max-width: 380px;
+    border-radius: 32px;
+    background: #f6f6f3;
+    padding: 24px;
+    overflow: hidden;
+  }
+
+  .phone-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+  }
+  .phone-header-bar {
+    background: #e60023;
+    height: 4px;
+    width: 100%;
+  }
+  .phone-card-body {
+    padding: 20px 20px 24px;
+  }
+  .phone-card-body h3 {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #211922;
+    margin-bottom: 4px;
+  }
+  .phone-card-body .sub {
+    font-size: 14px;
+    color: #62625b;
+    margin-bottom: 16px;
+  }
+  .phone-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background: #f6f6f3;
+    border-radius: 16px;
+    font-size: 14px;
+    color: #33332e;
+  }
+  .phone-field .icon {
+    width: 24px;
+    height: 24px;
+    background: #e5e5e0;
+    border-radius: 50%;
+  }
+  .phone-btn-block {
+    background: #e60023;
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    padding: 8px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    margin-top: 12px;
+    cursor: pointer;
+  }
+
+  .features {
+    background: #fff;
+    padding: 64px 24px;
+  }
+
+  .features-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .features h2 {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -1.2px;
+    color: #211922;
+    margin-bottom: 40px;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .feature-item {
+    background: #fbfbf9;
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .feature-item .badge {
+    background: #e5e5e0;
+    border-radius: 9999px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #211922;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+
+  .feature-item h3 {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #211922;
+    margin-bottom: 8px;
+  }
+
+  .feature-item p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #33332e;
+  }
+
+  .pin-section {
+    background: #fbfbf9;
+    padding: 64px 24px;
+  }
+
+  .pin-section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .pin-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .pin-section-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -1.2px;
+    color: #211922;
+  }
+
+  .pin-section-header a {
+    font-size: 14px;
+    font-weight: 600;
+    color: #62625b;
+    text-decoration: none;
+  }
+
+  .masonry {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .pin-tile {
+    background: #f6f6f3;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .pin-tile:hover { transform: scale(1.01); }
+
+  .pin-tile-img {
+    aspect-ratio: 3/4;
+    background: #e5e5e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #91918c;
+    font-size: 14px;
+  }
+
+  .pin-tile-img.light { background: #ebebe6; }
+  .pin-tile-img.dark { background: #d4d4ce; }
+
+  .pin-tile-label {
+    padding: 8px 12px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #33332e;
+  }
+
+  .footer {
+    background: #fff;
+    padding: 32px 24px;
+    border-top: 1px solid #dadad3;
+  }
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+  .footer-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: #62625b;
+    text-decoration: none;
+  }
+  .footer-links a:hover { color: #211922; }
+
+  .footer p {
+    font-size: 14px;
+    color: #62625b;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 20px;
+  }
+  .stat-item .num {
+    font-size: 28px;
+    font-weight: 700;
+    color: #211922;
+  }
+  .stat-item .lbl {
+    font-size: 12px;
+    font-weight: 500;
+    color: #62625b;
+  }
+
+  .pill-chips {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .pill-chip {
+    background: #f6f6f3;
+    color: #211922;
+    border-radius: 9999px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+  }
+  .pill-chip.active {
+    background: #211922;
+    color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-text { padding: 32px 24px; }
+    .hero-text h1 { font-size: 44px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .masonry { grid-template-columns: repeat(2, 1fr); }
+    .search-bar { display: none; }
+    .nav-links { display: none; }
+    .stats-row { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="top-nav">
+    <div class="nav-left">
+      <div class="logo">Noice<span>Resume</span></div>
+      <div class="nav-links">
+        <a href="#" class="active">Explore</a>
+        <a href="#">Templates</a>
+        <a href="#">Builder</a>
+      </div>
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search resume templates, tips...">
+    </div>
+    <div class="nav-right">
+      <button class="btn-login">Log in</button>
+      <button class="btn-signup">Sign up</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-text">
+      <h1>Your next role<br>starts with your<br><em>resume</em>.</h1>
+      <p>Build a stunning, ATS-friendly resume on your iPhone — no desktop, no design skills, no fuss. Just your story, beautifully framed.</p>
+      <div class="hero-cta-row">
+        <button class="btn-signup" style="padding: 8px 20px; height: auto;">Get started free</button>
+        <button class="btn-login" style="padding: 8px 20px; height: auto;">Explore templates</button>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="num">15+</div>
+          <div class="lbl">Templates</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">10K</div>
+          <div class="lbl">Resumes made</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">4.9★</div>
+          <div class="lbl">App Store</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="hero-image-inner">
+        <div class="phone-card">
+          <div class="phone-header-bar"></div>
+          <div class="phone-card-body">
+            <h3>Love Katoch</h3>
+            <div class="sub">Senior Product Manager</div>
+            <div class="phone-field">
+              <div class="icon"></div>
+              <span>GetMega · 2 yrs 3 mos</span>
+            </div>
+            <div class="phone-field">
+              <div class="icon"></div>
+              <span>Sales Lead · 6 yrs exp</span>
+            </div>
+            <button class="phone-btn-block">Generate resume</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="features-inner">
+      <h2>Built for iPhone, <br>designed for impact.</h2>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="badge">📱 Native</div>
+          <h3>No desktop needed</h3>
+          <p>Built from the ground up for iOS. Create, edit, and export your resume entirely from your iPhone.</p>
+        </div>
+        <div class="feature-item">
+          <div class="badge">🎨 Curated</div>
+          <h3>Pro-grade templates</h3>
+          <p>15+ designer templates that pass ATS parsing. Fully customizable — fonts, colors, layout, sections.</p>
+        </div>
+        <div class="feature-item">
+          <div class="badge">⚡ Instant</div>
+          <h3>One-tap export</h3>
+          <p>Export to PDF, share to email, WhatsApp, or LinkedIn. Your resume, anywhere in seconds.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pin-section">
+    <div class="pin-section-inner">
+      <div class="pin-section-header">
+        <h2>Popular templates</h2>
+        <a href="#">See all →</a>
+      </div>
+      <div class="pill-chips">
+        <button class="pill-chip active">All</button>
+        <button class="pill-chip">Professional</button>
+        <button class="pill-chip">Creative</button>
+        <button class="pill-chip">Minimal</button>
+        <button class="pill-chip">Executive</button>
+      </div>
+      <div class="masonry">
+        <div class="pin-tile">
+          <div class="pin-tile-img">Classic</div>
+          <div class="pin-tile-label">Classic · 233 uses</div>
+        </div>
+        <div class="pin-tile">
+          <div class="pin-tile-img light">Modern</div>
+          <div class="pin-tile-label">Modern · 198 uses</div>
+        </div>
+        <div class="pin-tile">
+          <div class="pin-tile-img dark">Minimal</div>
+          <div class="pin-tile-label">Minimal · 167 uses</div>
+        </div>
+        <div class="pin-tile">
+          <div class="pin-tile-img">Bold</div>
+          <div class="pin-tile-label">Bold · 142 uses</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-inner">
+      <p>© 2026 NoiceResume</p>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoiceResume × Spotify Blue</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --accent: #5e6ad2;
+    --accent-hover: #6f7ae0;
+    --accent-bg: rgba(94, 106, 210, 0.15);
+    --bg: #121212;
+    --surface: #181818;
+    --surface-hover: #1f1f1f;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --border: #2a2a2a;
+    --input-bg: #1f1f1f;
+    --pill-radius: 9999px;
+  }
+
+  body {
+    background: var(--bg);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+
+  .header {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0 20px;
+  }
+
+  .logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--accent);
+  }
+  .logo span { color: var(--text-primary); }
+
+  .nav {
+    display: flex;
+    gap: 6px;
+  }
+
+  .nav a {
+    padding: 8px 16px;
+    border-radius: var(--pill-radius);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.15s;
+    letter-spacing: 0.5px;
+  }
+  .nav a:hover { color: var(--text-primary); background: var(--surface-hover); }
+  .nav a.active { color: var(--text-primary); background: var(--surface-hover); font-weight: 700; }
+
+  .hero {
+    max-width: 1100px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    padding: 60px 0 40px;
+  }
+
+  .hero-content h1 {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+  }
+  .hero-content h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-content p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    max-width: 440px;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 40px;
+    border-radius: var(--pill-radius);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    transform: scale(1.02);
+  }
+
+  .btn-secondary {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+    padding: 14px 32px;
+    border-radius: var(--pill-radius);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-secondary:hover {
+    background: #2a2a2a;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface-hover);
+    border-radius: var(--pill-radius);
+    padding: 4px 14px 4px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+  .badge-dot {
+    background: var(--accent);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .phone-mockup {
+    background: var(--surface);
+    border-radius: 32px;
+    padding: 16px;
+    box-shadow: rgba(0,0,0,0.5) 0px 16px 48px;
+    position: relative;
+    aspect-ratio: 9/19;
+    max-width: 300px;
+    margin: 0 auto;
+    width: 100%;
+    border: 1px solid var(--border);
+  }
+  .phone-screen {
+    background: #1a1a1a;
+    border-radius: 24px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    gap: 12px;
+    overflow: hidden;
+  }
+
+  .phone-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .phone-header .time {
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .phone-header .icons {
+    display: flex;
+    gap: 4px;
+  }
+  .phone-header .icons div {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .phone-title {
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 8px;
+  }
+  .phone-subtitle {
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .phone-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .phone-input {
+    background: var(--input-bg);
+    border-radius: 500px;
+    padding: 10px 14px;
+    border: none;
+    color: var(--text-primary);
+    font-size: 12px;
+    font-weight: 400;
+    box-shadow: rgb(18,18,18) 0px 1px 0px, rgb(124,124,124) 0px 0px 0px 1px inset;
+  }
+  .phone-input::placeholder { color: #666; }
+
+  .phone-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--pill-radius);
+    padding: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    margin-top: 4px;
+    cursor: pointer;
+  }
+
+  .phone-card {
+    background: var(--surface-hover);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .phone-card-title {
+    color: var(--text-primary);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .phone-card-sub {
+    color: var(--text-secondary);
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .features {
+    max-width: 1100px;
+    width: 100%;
+    padding: 40px 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .feature-card {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 28px 24px;
+    transition: background 0.2s;
+  }
+  .feature-card:hover {
+    background: var(--surface-hover);
+  }
+
+  .feature-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--surface-hover);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 18px;
+  }
+
+  .feature-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .feature-card p {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .templates {
+    max-width: 1100px;
+    width: 100%;
+    padding: 40px 0;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .section-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .section-header a {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+  }
+  .section-header a:hover { color: var(--text-primary); }
+
+  .template-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .template-item {
+    background: var(--surface);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .template-item:hover {
+    background: var(--surface-hover);
+    transform: translateY(-2px);
+    box-shadow: rgba(0,0,0,0.3) 0px 8px 8px;
+  }
+
+  .template-preview {
+    aspect-ratio: 3/4;
+    background: var(--surface-hover);
+    margin: 8px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    font-size: 12px;
+  }
+
+  .template-info {
+    padding: 10px 12px 14px;
+  }
+  .template-info h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+  .template-info p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+
+  .footer {
+    max-width: 1100px;
+    width: 100%;
+    padding: 40px 0 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .footer p {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  .footer-links a:hover { color: var(--text-primary); }
+
+  .stats {
+    max-width: 1100px;
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    gap: 40px;
+  }
+
+  .stat {
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    margin-top: 4px;
+  }
+
+  .label-pill {
+    display: inline-block;
+    background: var(--accent-bg);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    padding: 3px 10px;
+    border-radius: var(--pill-radius);
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; text-align: center; }
+    .hero-content p { margin: 0 auto 32px; }
+    .cta-row { justify-content: center; }
+    .phone-mockup { max-width: 240px; }
+    .features { grid-template-columns: 1fr; }
+    .template-grid { grid-template-columns: repeat(2, 1fr); }
+    .header { flex-direction: column; gap: 16px; }
+    .stats { justify-content: center; }
+    .hero-content h1 { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">Noice<span>Resume</span></div>
+    <nav class="nav">
+      <a href="#" class="active">Templates</a>
+      <a href="#">Builder</a>
+      <a href="#">Pricing</a>
+      <a href="#">Blog</a>
+    </nav>
+  </div>
+
+  <div class="hero">
+    <div class="hero-content">
+      <div class="badge">
+        <div class="badge-dot"></div>
+        Built for iPhone · iOS only
+      </div>
+      <h1>Your resume.<br><em>Your story.</em></h1>
+      <p>
+        Craft a stunning resume right from your iPhone in minutes. 
+        No desktop needed. No design skills required. Just your story, beautifully told.
+      </p>
+      <div class="cta-row">
+        <a href="#" class="btn-primary">Get started free</a>
+        <a href="#" class="btn-secondary">View templates</a>
+      </div>
+      <div class="stats" style="padding: 30px 0 0;">
+        <div class="stat">
+          <div class="stat-number">15+</div>
+          <div class="stat-label">Templates</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">10k</div>
+          <div class="stat-label">Resumes made</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">4.9★</div>
+          <div class="stat-label">App Store</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-mockup">
+      <div class="phone-screen">
+        <div class="phone-header">
+          <span class="time">9:41</span>
+          <div class="icons">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <div class="phone-title">NoiceResume</div>
+        <div class="phone-subtitle">Create your resume</div>
+        <div class="phone-form">
+          <input class="phone-input" placeholder="Full Name" value="Love Katoch">
+          <input class="phone-input" placeholder="Job Title" value="Senior Product Manager">
+          <input class="phone-input" placeholder="Email" value="love@example.com">
+          <button class="phone-btn">Generate resume</button>
+        </div>
+        <div class="phone-card">
+          <div class="phone-card-title">Product Manager</div>
+          <div class="phone-card-sub">GetMega · 2 yrs 3 mos</div>
+        </div>
+        <div class="phone-card">
+          <div class="phone-card-title">Sales Lead</div>
+          <div class="phone-card-sub">6 years of experience</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3>iPhone Native</h3>
+      <p>Built from the ground up for iOS. No web wrappers, no compromises — a true native resume builder in your pocket.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎨</div>
+      <h3>Pro Templates</h3>
+      <p>15+ designer-curated templates. ATS-friendly, beautifully typeset, and fully customizable to your personal brand.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Instant Export</h3>
+      <p>Export to PDF with one tap. Share directly to email, LinkedIn, or WhatsApp. Your resume, anywhere you need it.</p>
+    </div>
+  </div>
+
+  <div class="templates">
+    <div class="section-header">
+      <h2>Popular templates</h2>
+      <a href="#">Show all →</a>
+    </div>
+    <div class="template-grid">
+      <div class="template-item">
+        <div class="template-preview">Classic</div>
+        <div class="template-info">
+          <h4>Classic</h4>
+          <p>233 uses this week</p>
+        </div>
+      </div>
+      <div class="template-item">
+        <div class="template-preview">Modern</div>
+        <div class="template-info">
+          <h4>Modern</h4>
+          <p>198 uses this week</p>
+        </div>
+      </div>
+      <div class="template-item">
+        <div class="template-preview">Minimal</div>
+        <div class="template-info">
+          <h4>Minimal</h4>
+          <p>167 uses this week</p>
+        </div>
+      </div>
+      <div class="template-item">
+        <div class="template-preview">Bold</div>
+        <div class="template-info">
+          <h4>Bold</h4>
+          <p>142 uses this week</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© 2026 NoiceResume. Crafted with care.</p>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+
+</body>
+</html>

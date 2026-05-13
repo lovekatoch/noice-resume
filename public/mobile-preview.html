@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Mobile Preview</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #e8e8e8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+      font-family: -apple-system, system-ui, sans-serif;
+    }
+    .device {
+      width: 390px;
+      height: 844px;
+      background: #fff;
+      border-radius: 44px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.05);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .notch {
+      height: 44px;
+      background: #FAF5EF;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .notch-inner {
+      width: 120px;
+      height: 6px;
+      background: #ccc;
+      border-radius: 3px;
+    }
+    iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      background: #FAF5EF;
+    }
+    .home-bar {
+      height: 34px;
+      background: #FAF5EF;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .home-indicator {
+      width: 134px;
+      height: 5px;
+      background: #ccc;
+      border-radius: 3px;
+    }
+    .label {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #888;
+      text-align: center;
+    }
+    .toggle-btns {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .toggle-btns a {
+      padding: 8px 18px;
+      border-radius: 8px;
+      background: #fff;
+      color: #555;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid #ddd;
+      transition: all 0.2s;
+    }
+    .toggle-btns a:hover {
+      border-color: #C75B39;
+      color: #C75B39;
+    }
+  </style>
+</head>
+<body>
+  <div class="toggle-btns">
+    <a href="?view=landing">Landing Page</a>
+    <a href="?view=resume-builder">Resume Builder</a>
+  </div>
+
+  <div class="device">
+    <div class="notch"><div class="notch-inner"></div></div>
+    <iframe id="preview" src="/" loading="lazy"></iframe>
+    <div class="home-bar"><div class="home-indicator"></div></div>
+  </div>
+  <div class="label">iPhone 15 Pro · 390 × 844</div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const view = params.get('view') || 'landing';
+    const iframe = document.getElementById('preview');
+    if (view === 'resume-builder') iframe.src = '/resume-builder';
+    else if (view === 'landing') iframe.src = '/';
+  </script>
+</body>
+</html>

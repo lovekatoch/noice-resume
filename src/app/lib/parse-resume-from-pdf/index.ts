@@ -64,7 +64,7 @@ export const parseResumeFromPdf = async (
         educations: [],
         workExperiences: [],
         projects: [],
-        skills: { featuredSkills: [], descriptions: [] },
+        skills: { descriptions: [] },
         custom: { descriptions: [] },
       },
       textItems: [],

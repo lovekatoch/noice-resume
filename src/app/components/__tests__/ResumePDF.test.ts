@@ -71,18 +71,7 @@ describe("ResumePDFWorkExperience data", () => {
 
 // Test ResumePDFSkills data
 describe("ResumePDFSkills data", () => {
-  const featuredSkills = [
-    { skill: "TypeScript", rating: 4 },
-    { skill: "React", rating: 5 },
-  ];
-
-  test("featured skills have required fields", () => {
-    expect(featuredSkills[0].skill).toBe("TypeScript");
-    expect(featuredSkills[0].rating).toBeGreaterThanOrEqual(1);
-    expect(featuredSkills[0].rating).toBeLessThanOrEqual(5);
-  });
-
-  test("descriptions are optional alternative to featured skills", () => {
+  test("descriptions work correctly", () => {
     const descriptions = "JavaScript, Python, Go";
     expect(descriptions.length).toBeGreaterThan(0);
   });

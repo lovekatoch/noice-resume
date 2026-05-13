@@ -94,6 +94,7 @@ export const ResumePDF = ({
         themeColor={themeColor}
         showBulletPoints={showBulletPoints["skills"]}
         sectionVariant={sectionVariant}
+        templateId={templateId}
       />
     ),
     custom: () => (
@@ -150,6 +151,7 @@ export const ResumePDF = ({
                   themeColor={themeColor}
                   showBulletPoints={showBulletPoints["skills"]}
                   sectionVariant={sectionVariant}
+                  templateId={templateId}
                 />
               </View>
             </View>

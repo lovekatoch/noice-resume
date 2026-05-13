@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>NoiceResume · Editor</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,450;14..32,500;14..32,510;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --canvas: #ffffff;
+    --surface: #f8f9fa;
+    --sidebar: #f3f4f6;
+    --heading: #0c1628;
+    --body: #1a2332;
+    --muted: #5a6577;
+    --tertiary: #8b95a5;
+    --accent: #5e6ad2;
+    --accent-hover: #4a5acf;
+    --accent-subtle: #eef0ff;
+    --accent-ring: rgba(94,106,210,0.25);
+    --border-subtle: rgba(0,0,0,0.06);
+    --border-standard: rgba(0,0,0,0.10);
+    --shadow-1: rgba(50,50,93,0.08);
+    --shadow-2: rgba(0,0,0,0.04);
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+
+  body {
+    background: var(--canvas);
+    font-family: var(--font);
+    color: var(--body);
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* ─── Status Bar ─── */
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--heading);
+    background: var(--canvas);
+  }
+  .status-bar .icons {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+  .status-bar .icons span {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: var(--border-standard);
+    display: inline-block;
+  }
+
+  /* ─── Top Bar ─── */
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 16px;
+    background: var(--canvas);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .back-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: var(--canvas);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--heading);
+  }
+  .back-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+  .brand {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--heading);
+    letter-spacing: -0.3px;
+  }
+  .brand span { color: var(--accent); }
+
+  .template-badge {
+    font-size: 12px;
+    font-weight: 450;
+    color: var(--muted);
+    background: var(--surface);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    margin-left: 4px;
+  }
+
+  .top-bar-right {
+    display: flex;
+    gap: 6px;
+  }
+
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: var(--canvas);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.12s;
+  }
+  .icon-btn:hover { color: var(--heading); border-color: var(--border-standard); }
+  .icon-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+  /* ─── Tab Bar (top navigation tabs) ─── */
+  .tab-strip {
+    display: flex;
+    gap: 0;
+    padding: 0 16px;
+    background: var(--canvas);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .tab-strip a {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--tertiary);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .tab-strip a.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 510;
+  }
+  .tab-strip a:not(.active):hover {
+    color: var(--muted);
+  }
+
+  /* ─── Scrollable Content ─── */
+  .scroll-content {
+    height: calc(100vh - 116px);
+    overflow-y: auto;
+    padding-bottom: 80px;
+  }
+  .scroll-content::-webkit-scrollbar { width: 3px; }
+  .scroll-content::-webkit-scrollbar-thumb { background: var(--border-standard); border-radius: 999px; }
+
+  /* ─── Section Cards ─── */
+  .section {
+    margin: 10px 16px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--canvas);
+    overflow: hidden;
+    transition: box-shadow 0.15s;
+  }
+  .section:focus-within {
+    box-shadow: 0 0 0 1px var(--accent-ring);
+    border-color: transparent;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .section-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-count {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-subtle);
+    padding: 1px 7px;
+    border-radius: 999px;
+    line-height: 1.4;
+    min-width: 18px;
+    text-align: center;
+  }
+
+  .sec-name {
+    font-size: 14px;
+    font-weight: 510;
+    color: var(--heading);
+    letter-spacing: -0.01em;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .enhance-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 510;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  .enhance-btn:hover { background: #dde0ff; }
+  .enhance-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  .expand-icon {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--tertiary);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .expand-icon.open { transform: rotate(180deg); }
+  .expand-icon svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  .section-body {
+    padding: 0 14px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .field label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+  }
+  .field input, .field textarea {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--heading);
+    font-family: var(--font);
+    outline: none;
+    transition: all 0.12s;
+    -webkit-appearance: none;
+  }
+  .field input:focus, .field textarea:focus {
+    background: var(--canvas);
+    border-color: var(--accent-ring);
+    box-shadow: 0 0 0 2px var(--accent-subtle);
+  }
+  .field textarea {
+    resize: none;
+    min-height: 60px;
+    line-height: 1.5;
+  }
+
+  .entry-card {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    background: var(--surface);
+    margin-bottom: 8px;
+  }
+  .entry-card:last-child { margin-bottom: 0; }
+
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .entry-title {
+    font-size: 13px;
+    font-weight: 510;
+    color: var(--heading);
+  }
+  .entry-controls {
+    display: flex;
+    gap: 2px;
+  }
+  .entry-controls button {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: transparent;
+    color: var(--tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.1s;
+  }
+  .entry-controls button:hover {
+    background: var(--border-subtle);
+    color: var(--heading);
+  }
+  .entry-controls button svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .entry-controls button:disabled { opacity: 0.25; pointer-events: none; }
+
+  .entry-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    border: 1px dashed var(--border-standard);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 450;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.12s;
+    width: 100%;
+  }
+  .add-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-subtle);
+  }
+  .add-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+  /* ─── Add Section Button (at bottom) ─── */
+  .add-section {
+    margin: 4px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px;
+    border: 1px dashed var(--border-standard);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--tertiary);
+    font-size: 13px;
+    font-weight: 450;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .add-section:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-subtle);
+  }
+  .add-section svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+  /* ─── Bottom Action Bar ─── */
+  .bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: var(--canvas);
+    border-top: 1px solid var(--border-subtle);
+    padding: 8px 16px 20px;
+    display: flex;
+    gap: 8px;
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.92);
+  }
+
+  .btn-primary {
+    flex: 1;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 510;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: background 0.12s;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-primary:active { background: #3d4ec0; }
+
+  .btn-secondary {
+    background: var(--canvas);
+    color: var(--heading);
+    border: 1px solid var(--border-standard);
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .btn-secondary:hover { background: var(--surface); border-color: var(--accent); color: var(--accent); }
+  .btn-secondary:active { background: var(--accent-subtle); }
+
+</style>
+</head>
+<body>
+
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="icons"><span></span><span></span></div>
+  </div>
+
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <div class="back-btn">
+        <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+      </div>
+      <div>
+        <span class="brand">Noice<span>Resume</span></span>
+        <span class="template-badge">Classic</span>
+      </div>
+    </div>
+    <div class="top-bar-right">
+      <div class="icon-btn">
+        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <div class="icon-btn">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-strip">
+    <a href="#" class="active">Editor</a>
+    <a href="#">Enhance</a>
+    <a href="#">Preview</a>
+  </div>
+
+  <div class="scroll-content">
+
+    <!-- Personal Info -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <span class="sec-name">Personal Info</span>
+        </div>
+        <div class="header-actions">
+          <div class="expand-icon open">
+            <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label>Full name</label>
+          <input value="Love Katoch">
+        </div>
+        <div class="field">
+          <label>Job title</label>
+          <input value="Senior Product Manager">
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input value="love@example.com" type="email">
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input value="+91 98765 43210" type="tel">
+        </div>
+        <div class="field">
+          <label>Location</label>
+          <input value="Delhi, India">
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <span class="sec-name">Work Experience</span>
+          <span class="section-count">2</span>
+        </div>
+        <div class="header-actions">
+          <button class="enhance-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 2l1.5 6.5L20 10l-6.5 1.5L12 18l-1.5-6.5L4 10l6.5-1.5z"/></svg>
+            Enhance
+          </button>
+          <div class="expand-icon open">
+            <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-title">Senior Product Manager</span>
+            <div class="entry-controls">
+              <button disabled>
+                <svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg>
+              </button>
+              <button>
+                <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <button>
+                <svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="M6 6h0"/><path d="M18 18h0"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="entry-fields">
+            <div class="field">
+              <label>Company</label>
+              <input value="GetMega">
+            </div>
+            <div class="field">
+              <label>Duration</label>
+              <input value="Jun 2023 — Present">
+            </div>
+            <div class="field">
+              <label>Description</label>
+              <textarea>Leading product strategy for India's leading real-money gaming platform. Driving user retention through personalized engagement and optimizing monetization funnels.</textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="entry-header">
+            <span class="entry-title">Sales Lead</span>
+            <div class="entry-controls">
+              <button>
+                <svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg>
+              </button>
+              <button disabled>
+                <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <button>
+                <svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="M6 6h0"/><path d="M18 18h0"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="entry-fields">
+            <div class="field">
+              <label>Company</label>
+              <input value="Various">
+            </div>
+            <div class="field">
+              <label>Duration</label>
+              <input value="2018 — 2024">
+            </div>
+            <div class="field">
+              <label>Description</label>
+              <textarea>Built and managed high-performing sales teams across multiple verticals. Consistently exceeded revenue targets.</textarea>
+            </div>
+          </div>
+        </div>
+
+        <button class="add-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Add position
+        </button>
+      </div>
+    </div>
+
+    <!-- Education (collapsed) -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <span class="sec-name">Education</span>
+          <span class="section-count">1</span>
+        </div>
+        <div class="header-actions">
+          <button class="enhance-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 2l1.5 6.5L20 10l-6.5 1.5L12 18l-1.5-6.5L4 10l6.5-1.5z"/></svg>
+            Enhance
+          </button>
+          <div class="expand-icon">
+            <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills (collapsed) -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-header-left">
+          <span class="sec-name">Skills</span>
+          <span class="section-count">6</span>
+        </div>
+        <div class="header-actions">
+          <button class="enhance-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 2l1.5 6.5L20 10l-6.5 1.5L12 18l-1.5-6.5L4 10l6.5-1.5z"/></svg>
+            Enhance
+          </button>
+          <div class="expand-icon">
+            <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Section -->
+    <div class="add-section">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      Add Section
+    </div>
+
+    <div style="height: 16px;"></div>
+  </div>
+
+  <div class="bottom-bar">
+    <button class="btn-secondary">Preview</button>
+    <button class="btn-primary">Export PDF</button>
+  </div>
+
+</body>
+</html>

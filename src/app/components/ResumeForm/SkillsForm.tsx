@@ -3,7 +3,6 @@ import {
   Textarea,
   InputGroupWrapper,
 } from "components/ResumeForm/Form/InputGroup";
-import { FeaturedSkillInput } from "components/ResumeForm/Form/FeaturedSkillInput";
 import { AISuggestButton } from "components/AISuggestButton";
 import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
@@ -16,9 +15,9 @@ import { useAIPanel } from "lib/hooks/useAIPanel";
 export const SkillsForm = () => {
   const skills = useAppSelector(selectSkills);
   const dispatch = useAppDispatch();
-  const { featuredSkills, descriptions } = skills;
+  const { descriptions } = skills;
   const form = "skills";
-  const themeColor = useAppSelector(selectThemeColor) || "#38bdf8";
+  const themeColor = useAppSelector(selectThemeColor) || "#C75B39";
 
   // Skills stored as comma-separated string for plain textarea display
   const skillsTextValue = descriptions.join(", ");
@@ -30,10 +29,6 @@ export const SkillsForm = () => {
       .map((s) => s.trim())
       .filter(Boolean);
     dispatch(changeSkills({ field: "descriptions", value: newDescriptions }));
-  };
-
-  const handleFeaturedSkillsChange = (idx: number, skill: string, rating: number) => {
-    dispatch(changeSkills({ field: "featuredSkills", idx, skill, rating }));
   };
 
   const [aiMode, setAiMode] = useState<"replace" | "append">("replace");
@@ -101,26 +96,6 @@ export const SkillsForm = () => {
             <AISuggestButton onSuggest={handleSuggestSkills} />
           </div>
         )}
-        <div className="col-span-full mb-4 mt-6 border-t" style={{ borderColor: "var(--border)" }} />
-        <InputGroupWrapper label="Featured Skills (Optional)" className="col-span-full">
-          <p className="mt-2 text-sm font-normal text-gray-600">
-            Featured skills is optional to highlight top skills, with more circles mean higher proficiency.
-          </p>
-        </InputGroupWrapper>
-
-        {featuredSkills.map(({ skill, rating }, idx) => (
-          <FeaturedSkillInput
-            key={idx}
-            className="col-span-full"
-            skill={skill}
-            rating={rating}
-            setSkillRating={(newSkill, newRating) => {
-              handleFeaturedSkillsChange(idx, newSkill, newRating);
-            }}
-            placeholder={`Featured Skill ${idx + 1}`}
-            circleColor={themeColor}
-          />
-        ))}
       </div>
       <AIPanel
         isOpen={aiPanelOpen}

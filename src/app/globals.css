@@ -6,13 +6,13 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-[#5E6AD2] text-white inline-block rounded-lg px-6 py-2 font-semibold;
+    @apply bg-[#C75B39] text-white inline-block rounded-lg px-6 py-2 font-semibold;
   }
   .text-primary {
-    @apply text-[#5E6AD2] !important;
+    @apply text-[#C75B39] !important;
   }
   .bg-primary {
-    @apply bg-[#5E6AD2] text-white;
+    @apply bg-[#C75B39] text-white;
   }
   .outline-theme-blue {
     @apply hover:opacity-80 hover:outline-[color:var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)];
@@ -32,15 +32,15 @@
 }
 
 :root {
-  /* Linear-Stripe Palette */
-  --bg: #F7F8FA;
+  /* Warm Terracotta Palette */
+  --bg: #FAF5EF;
   --surface: #FFFFFF;
-  --fg: #0C1628;
-  --muted: #6b7280;
-  --border: rgba(0,0,0,0.08);
-  --accent: #5E6AD2;
-  --accent-hover: #4a56b8;
-  --accent-light: rgba(94,106,210,0.1);
+  --fg: #2D2D2D;
+  --muted: #8A8680;
+  --border: rgba(0,0,0,0.07);
+  --accent: #C75B39;
+  --accent-hover: #b54e2e;
+  --accent-light: rgba(199,91,57,0.1);
 
   /* Semantic Colors */
   --success: #2a9d99;

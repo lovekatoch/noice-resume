@@ -28,7 +28,6 @@ describe("SkillsForm", () => {
     renderWithStore({
       ...resumeReducer(undefined, { type: "__init" }),
       skills: {
-        featuredSkills: Array.from({ length: 6 }, () => ({ skill: "", rating: 4 })),
         descriptions: ["JavaScript", "Python"],
       },
     });

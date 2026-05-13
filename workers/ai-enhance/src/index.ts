@@ -13,22 +13,42 @@ interface Env {
 }
 
 // ─────────────────────────────────────────────
-// System prompt — compact but clear
+// System prompt — tight directive with templates
 // ─────────────────────────────────────────────
-const SYSTEM_PROMPT = `You are an expert resume writer. Improve the resume content below.
-IMPORTANT: Return ONLY the improved content for the section indicated. No labels, no headers, no explanations.
-- Summary section: 2-3 sentences, no bullets, no periods, no first-person pronouns
-- Experience/Description: bullet points, each starting with •, action verb first, no periods
-- Education section: bullet points or plain text
-- Project section: bullet points, each starting with •, action verb first, no periods
-- Skills section: comma-separated list only (e.g. React, Node.js, Python)
-Keep it concise and quantified. Return content only.`;
+const SYSTEM_PROMPT = `You rewrite resume sections. Follow the EXACT format below for each section.
+
+OBJECTIVE — Based on the user's RESUME DATA (profile, work history, education, skills, projects), write a compelling PROFESSIONAL SUMMARY / SALES PITCH that highlights their most relevant experience and achievements. Rules:
+- Write in flowing paragraph form (2-3 sentences). No comma-separated fragments.
+- BE SELECTIVE — do NOT include everything. Pick only 1-2 strongest, most impressive achievements.
+- SKIP weak/amateur content — if something sounds basic, generic, or like an entry-level task, leave it out.
+- If an achievement has no numbers/metrics, consider skipping it unless it's truly impressive.
+- Open with their role + years of experience. Close with a strong value proposition.
+- Write grammatically correct English. End each sentence with a period.
+- Quality over quantity. A tight 2-sentence pitch is better than a 4-sentence list of everything.
+- BAD (merging everything): "Led product strategy and managed roadmaps and coordinated with teams and did A/B testing and also launched features..."
+- GOOD (selective): "Senior product manager with 5+ years in gaming, specializing in growth strategy and product-led innovation. Drove 35% user growth and launched 3 new game categories at a real-money gaming platform."
+- This is a SALES PITCH — make every word count. Cut the filler.
+
+SUMMARY — rewrite into 2-3 fragments, third person, NO first-person, NO periods. Like this:
+"Senior product manager with 8+ years in consumer tech | specialization in growth strategy and data analytics | cross-functional leadership across 3 major product launches"
+
+EXPERIENCE/DESCRIPTION — bullet points starting with •, action verb first, NO periods. Quantify.
+"• Increased revenue 40% by redesigning checkout flow"
+
+EDUCATION — plain list of degrees, schools, years.
+
+PROJECT — bullet points starting with •, impact-focused, NO periods.
+
+SKILLS — comma-separated: React, Node.js, Python, TypeScript
+
+RULES: Return ONLY the rewritten content. No labels, no explanations, no markdown. Never include "[objective]" or "[summary]" prefixes. Keep it concise.`;
 
 // ─────────────────────────────────────────────
 // Per-section token caps
 // ─────────────────────────────────────────────
 const MAX_TOKENS: Record<string, number> = {
   summary: 200,
+  objective: 400,
   description: 400,
   education: 350,
   project: 350,
@@ -41,7 +61,8 @@ const MAX_TOKENS: Record<string, number> = {
 function detectSectionType(context: string): string {
   const c = (context || "").toLowerCase();
   if (c.includes("skill")) return "skills";
-  if (c.includes("summary") || c.includes("objective") || c.includes("profile")) return "summary";
+  if (c.includes("objective")) return "objective";
+  if (c.includes("summary") || c.includes("profile")) return "summary";
   if (c.includes("project")) return "project";
   if (c.includes("education") || c.includes("school") || c.includes("degree")) return "education";
   return "description";
@@ -68,6 +89,25 @@ function normalizeOutput(text: string, sectionType: string): string {
     return skills.slice(0, 10).join(", ");
   }
 
+  // Objective → flowing professional summary paragraph, not fragments
+  if (sectionType === "objective") {
+    let text = lines.join(" ")
+      .replace(/RESUME DATA|\[OBJECTIVE\]|PROFILE|WORK EXPERIENCE|EDUCATION|SKILLS|PROJECTS|Write a compelling professional summary|sales pitch|based on their full resume/gi, " ")
+      .replace(/[•\-*]\s*/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    // Remove leading orphaned lowercase letter from truncation
+    text = text.replace(/^[a-z]\s+/, "");
+    // Ensure ends with period
+    if (text.length > 0 && !/[.!?]$/.test(text)) {
+      text += ".";
+    }
+    // Cap at ~3-4 sentences or ~500 chars
+    const sentences = text.split(/(?<=[.!])\s+/).filter(s => s.trim().length > 15);
+    if (sentences.length === 0) return text.slice(0, 500);
+    return sentences.slice(0, 4).join(" ").trim();
+  }
+
   // Summary → single paragraph, max 3 sentences
   if (sectionType === "summary") {
     let text = lines.join(" ")
@@ -75,8 +115,8 @@ function normalizeOutput(text: string, sectionType: string): string {
       .replace(/Summary|Bullets|Skills|EXPERIENCE|EDUCATION|PROJECT|DESCRIPTION|SUMMARY|DESCRIPTION|EDUCATION|PROJECT|SKILL/gi, " ")
       .replace(/\s+/g, " ")
       .trim();
-    // Fix truncated first word (e.g. "d software" → "software")
-    text = text.replace(/^[a-z]\s+/i, "");
+    // Remove leading orphaned lowercase letter from truncation (e.g. "d software" → "software")
+    text = text.replace(/^[a-z]\s+/, "");
     // Split on sentence-like patterns and take first 3
     const sentences = text.split(/(?<=[.!])\s+/).filter(s => s.trim().length > 10);
     if (sentences.length === 0) return text.slice(0, 200);
@@ -142,9 +182,12 @@ export default {
       const sectionType = detectSectionType(context || prompt);
       const maxTokens = MAX_TOKENS[sectionType] ?? 200;
 
+      // Strip any [section] bracket prefixes the frontend may have already sent
+      const cleanPrompt = prompt.replace(/^\[\w+\]\s*/i, "").trim();
+
       const messages = [
         { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: `[${sectionType.toUpperCase()}]\n${prompt}` }
+        { role: "user", content: `[${sectionType.toUpperCase()}]\n${cleanPrompt}` }
       ];
 
       // Non-streaming — simple, reliable, no concatenation issues
@@ -161,7 +204,7 @@ export default {
             messages,
             stream: false,
             max_tokens: maxTokens,
-            temperature: 0.6,
+            temperature: 0.7,
           })
         }
       );
@@ -184,7 +227,7 @@ export default {
           headers: {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-          }
+          },
         }
       );
     } catch (error) {

@@ -275,36 +275,3 @@ export const ResumePDFLink = ({
   );
 };
 
-export const ResumeFeaturedSkill = ({
-  skill,
-  rating,
-  themeColor,
-  style = {},
-}: {
-  skill: string;
-  rating: number;
-  themeColor: string;
-  style?: Style;
-}) => {
-  const numCircles = 5;
-
-  return (
-    <View style={{ ...styles.flexRow, alignItems: "center", ...style }}>
-      <ResumePDFText style={{ marginRight: spacing[0.5] }}>
-        {skill}
-      </ResumePDFText>
-      {[...Array(numCircles)].map((_, idx) => (
-        <View
-          key={idx}
-          style={{
-            height: "9pt",
-            width: "9pt",
-            marginLeft: "2.25pt",
-            backgroundColor: rating >= idx ? themeColor : "#d9d9d9",
-            borderRadius: "100%",
-          }}
-        />
-      ))}
-    </View>
-  );
-};

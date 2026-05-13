@@ -3,6 +3,7 @@ import { useState, useMemo, useCallback } from "react";
 import { ResumeIframeCSR } from "components/Resume/ResumeIFrame";
 import { ResumePDF } from "components/Resume/ResumePDF";
 import { ResumeControlBarCSR } from "components/Resume/ResumeControlBar";
+import { ThemeForm } from "components/ResumeForm/ThemeForm";
 import { useAppSelector, useAppDispatch } from "lib/redux/hooks";
 import { selectResume } from "lib/redux/resumeSlice";
 import { selectSettings, changeSettings } from "lib/redux/settingsSlice";
@@ -60,6 +61,7 @@ export const Resume = () => {
           template={settings.template}
           onTemplateChange={handleTemplateChange}
         />
+        <ThemeForm />
         <section className="flex-1 overflow-y-auto p-2 pb-4 scroll-mt-16 md:p-4 md:pb-4">
           <div className="flex justify-center">
             <ResumeIframeCSR

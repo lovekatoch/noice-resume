@@ -20,7 +20,7 @@ interface UseAIPanelReturn {
   aiTargetIdx: number | null;
   regenerateCount: number;
   globalEnhanceCount: number;
-  openPanel: (prompt: string, idx?: number) => void;
+  openPanel: (prompt: string, idx?: number, context?: string) => void;
   closePanel: () => void;
   handleAccept: (text: string) => void;
   handleRegenerate: () => void;
@@ -106,7 +106,7 @@ export const useAIPanel = ({
   );
 
   const openPanel = useCallback(
-    (prompt: string, idx?: number) => {
+    (prompt: string, idx?: number, context?: string) => {
       if (globalLimitReached) {
         setError(`AI enhancement limit reached for this session (${GLOBAL_LIMIT} max).`);
         return;
@@ -114,7 +114,7 @@ export const useAIPanel = ({
 
       if (idx !== undefined) setAiTargetIdx(idx);
       promptRef.current = prompt;
-      contextRef.current = prompt;
+      contextRef.current = context ?? prompt;
 
       // Increment global count
       const newCount = globalEnhanceCount + 1;

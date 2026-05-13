@@ -119,20 +119,6 @@ describe("resumeSlice", () => {
       );
       expect(state.skills.descriptions).toEqual(["Skill A", "Skill B"]);
     });
-
-    it("should update featured skills at an index", () => {
-      const state = resumeReducer(
-        initialResumeState,
-        changeSkills({
-          field: "featuredSkills",
-          idx: 0,
-          skill: "TypeScript",
-          rating: 5,
-        })
-      );
-      expect(state.skills.featuredSkills[0].skill).toBe("TypeScript");
-      expect(state.skills.featuredSkills[0].rating).toBe(5);
-    });
   });
 
   describe("changeCustom", () => {

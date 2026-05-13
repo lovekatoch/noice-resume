@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Samples</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #e5e7eb; display: flex; flex-direction: column; align-items: center; padding: 40px; gap: 60px; }
+.sheet { width: 595px; min-height: 842px; background: #fff; padding: 50px 55px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1d1d1f; position: relative; }
+.classic .top-bar { height: 4px; background: #003366; margin: -50px -55px 0; }
+.classic .name { font-size: 28px; font-weight: 700; color: #1d1d1f; margin-top: 20px; letter-spacing: -0.3px; }
+.classic .title { font-size: 14px; color: #003366; font-weight: 500; margin-top: 2px; }
+.classic .contact { font-size: 10px; color: #6b7280; margin-top: 6px; display: flex; gap: 12px; flex-wrap: wrap; }
+.classic .summary { font-size: 10.5px; color: #4b5563; line-height: 1.5; margin-top: 14px; padding-top: 12px; border-top: 1px solid #e5e7eb; }
+.classic .section { margin-top: 16px; }
+.classic .section-title { font-size: 11px; font-weight: 600; color: #003366; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.classic .section-title::after { content: ''; flex: 1; height: 1px; background: #e5e7eb; }
+.classic .entry { margin-bottom: 10px; }
+.classic .entry-header { display: flex; justify-content: space-between; align-items: baseline; }
+.classic .entry-title { font-size: 11px; font-weight: 600; color: #1d1d1f; }
+.classic .entry-sub { font-size: 10px; color: #4b5563; font-weight: 500; margin-top: 1px; }
+.classic .entry-date { font-size: 10px; color: #6b7280; white-space: nowrap; }
+.classic .entry-body { font-size: 10px; color: #4b5563; line-height: 1.5; margin-top: 3px; padding-left: 0; }
+.classic .entry-body li { margin-left: 14px; margin-bottom: 2px; }
+.classic .skills-grid { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 10px; color: #4b5563; }
+.classic .skill-tag { background: #f3f4f6; padding: 2px 8px; font-size: 9px; color: #374151; border-radius: 2px; }
+
+.modern .name { font-size: 26px; font-weight: 700; color: #1d1d1f; letter-spacing: -0.5px; }
+.modern .contact-row { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 10px; color: #4b5563; margin-top: 4px; }
+.modern .contact-row span { display: flex; align-items: center; gap: 4px; }
+.modern .summary { font-size: 10px; color: #4b5563; line-height: 1.5; margin-top: 12px; padding-bottom: 10px; border-bottom: 2px solid #2a9d99; }
+.modern .section { margin-top: 14px; }
+.modern .section-title { font-size: 10px; font-weight: 700; color: #2a9d99; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.modern .entry { margin-bottom: 10px; border-left: 2px solid #e5e7eb; padding-left: 10px; }
+.modern .entry-header { display: flex; justify-content: space-between; }
+.modern .entry-title { font-size: 11px; font-weight: 600; color: #1d1d1f; }
+.modern .entry-sub { font-size: 10px; color: #2a9d99; font-weight: 500; }
+.modern .entry-date { font-size: 9px; color: #9ca3af; }
+.modern .entry-body { font-size: 10px; color: #4b5563; line-height: 1.5; margin-top: 2px; padding-left: 0; }
+.modern .entry-body li { margin-left: 14px; margin-bottom: 1px; }
+.modern .skills-list { display: flex; flex-wrap: wrap; gap: 4px; font-size: 10px; color: #4b5563; }
+.modern .skill-badge { background: #ecfdf5; color: #2a9d99; padding: 2px 10px; font-size: 9px; font-weight: 500; }
+
+.stackoverflow .main-row { display: flex; gap: 24px; }
+.stackoverflow .sidebar { width: 160px; flex-shrink: 0; }
+.stackoverflow .content { flex: 1; }
+.stackoverflow .name { font-size: 24px; font-weight: 700; color: #1d1d1f; }
+.stackoverflow .contact-stack { display: flex; flex-direction: column; gap: 4px; font-size: 9px; color: #6b7280; margin-top: 8px; }
+.stackoverflow .contact-stack span { display: flex; align-items: center; gap: 4px; }
+.stackoverflow .sidebar-section { margin-top: 14px; }
+.stackoverflow .sidebar-title { font-size: 9px; font-weight: 600; color: #dd5b00; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+.stackoverflow .skill-pill { font-size: 9px; padding: 2px 8px; background: #fff7ed; color: #9a3412; margin-bottom: 3px; display: inline-block; border-left: 2px solid #dd5b00; }
+.stackoverflow .summary { font-size: 10px; color: #4b5563; line-height: 1.5; margin-top: 8px; }
+.stackoverflow .section { margin-top: 14px; }
+.stackoverflow .section-title { font-size: 10px; font-weight: 600; color: #dd5b00; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #fed7aa; padding-bottom: 4px; margin-bottom: 6px; }
+.stackoverflow .entry { margin-bottom: 10px; }
+.stackoverflow .entry-header { display: flex; justify-content: space-between; }
+.stackoverflow .entry-title { font-size: 10.5px; font-weight: 600; color: #1d1d1f; }
+.stackoverflow .entry-sub { font-size: 10px; color: #dd5b00; font-weight: 500; }
+.stackoverflow .entry-date { font-size: 9px; color: #9ca3af; }
+.stackoverflow .entry-body { font-size: 10px; color: #4b5563; line-height: 1.5; margin-top: 2px; padding-left: 0; }
+.stackoverflow .entry-body li { margin-left: 14px; margin-bottom: 1px; }
+.label { font-family: monospace; font-size: 12px; color: #6b7280; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 2px; }
+</style>
+</head>
+<body>
+
+<div class="label">Classic Template</div>
+<div class="sheet classic">
+  <div class="top-bar"></div>
+  <div class="name">Alex Rivera</div>
+  <div class="title">Senior Product Manager</div>
+  <div class="contact"><span>alex.rivera@email.com</span> <span>+1 (415) 555-0189</span> <span>San Francisco, CA</span> <span>linkedin.com/in/alexrivera</span></div>
+  <div class="summary">Senior Product Manager with 8+ years of experience driving B2B SaaS products from concept to scale. Led cross-functional teams to deliver $12M ARR growth through data-driven product strategy and user-centric design.</div>
+  <div class="section">
+    <div class="section-title">Work Experience</div>
+    <div class="entry"><div class="entry-header"><div><div class="entry-title">NexusTech Inc.</div><div class="entry-sub">Senior Product Manager</div></div><div class="entry-date">Jan 2022 — Present</div></div><ul class="entry-body"><li>Led product strategy for a B2B analytics platform serving 500+ enterprise clients, driving 40% YoY revenue growth to $12M ARR</li><li>Shipped 12 major features across 3 product lines, resulting in 25% increase in NPS</li><li>Established data-informed culture, reducing feature cycles from 6 to 2 weeks</li><li>Negotiated 8 strategic partnerships worth $3M in co-sell revenue</li></ul></div>
+    <div class="entry"><div class="entry-header"><div><div class="entry-title">CloudBase Solutions</div><div class="entry-sub">Product Manager</div></div><div class="entry-date">Mar 2019 — Dec 2021</div></div><ul class="entry-body"><li>Owned pricing strategy for a $5M SaaS product, increasing ARPU by 35%</li><li>Conducted 100+ customer interviews, reducing churn by 22%</li><li>Managed end-to-end launch achieving 15% adoption in 3 months</li></ul></div>
+    <div class="entry"><div class="entry-header"><div><div class="entry-title">DataVista Labs</div><div class="entry-sub">Associate PM</div></div><div class="entry-date">Jun 2017 — Feb 2019</div></div><ul class="entry-body"><li>Defined features for data viz tool used by 200+ companies</li><li>Led A/B testing improving onboarding conversion by 30%</li></ul></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Education</div>
+    <div class="entry"><div class="entry-header"><div><div class="entry-title">Stanford University</div><div class="entry-sub">MBA, Product Management</div></div><div class="entry-date">2015 — 2017</div></div><ul class="entry-body"><li>Dean's List, Graduate School of Business</li></ul></div>
+    <div class="entry"><div class="entry-header"><div><div class="entry-title">UC Berkeley</div><div class="entry-sub">B.S. Computer Science</div></div><div class="entry-date">2011 — 2015</div></div><ul class="entry-body"><li>Minor in Psychology</li></ul></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Skills</div>
+    <div class="skills-grid"><span class="skill-tag">Product Strategy</span><span class="skill-tag">Data Analytics</span><span class="skill-tag">A/B Testing</span><span class="skill-tag">Roadmapping</span><span class="skill-tag">User Research</span><span class="skill-tag">Agile/Scrum</span><span style="font-size:9px;color:#6b7280;width:100%;margin-top:4px;">Tools: Amplitude, Mixpanel, Tableau, SQL, Python · Domains: B2B SaaS, Enterprise Analytics · Languages: English, Spanish, French</span></div>
+  </div>
+</div>
+
+<div class="label">Modern Template</div>
+<div class="sheet modern">
+  <div class="name">Alex Rivera</div>
+  <div class="contact-row"><span>alex.rivera@email.com</span> <span>+1 (415) 555-0189</span> <span>San Francisco, CA</span> <span>linkedin.com/in/alexrivera</span></div>
+  <div class="summary">Senior Product Manager with 8+ years of experience driving B2B SaaS products from concept to scale. Led cross-functional teams to deliver $12M ARR growth through data-driven product strategy and user-centric design.</div>
+  <div class="section">
+    <div class="section-title">Experience</div>
+    <div class="entry"><div class="entry-header"><div><div class="entry-title">NexusTech Inc.</div><div class="entry-sub">Senior Product Manager</div></div><div class="entry-date">2022 — Present</div></div><ul class="entry-body"><li>Drove B2B analytics platform strategy for 500+ enterprise clients, achieving 40% YoY growth to $12M ARR</li><li>Delivered 12 major features across 3 product lines, improving NPS by 25%</li><li>Built analytics dashboards that cut feature iteration from 6 weeks to 2 weeks</li></ul></div>
+    <div class="entry"><div class="entry-header"><div><div class="entry-title">CloudBase Solutions</div><div class="entry-sub">Product Manager</div></div><div class="entry-date">2019 — 2021</div></div><ul class="entry-body"><li>Restructured pricing for $5M SaaS product, boosting ARPU by 35%</li><li>Conducted 100+ user interviews, reducing churn by 22%</li></ul></div>
+    <div class="entry"><div class="entry-header"><div><div class="entry-title">DataVista Labs</div><div class="entry-sub">Associate PM</div></div><div class="entry-date">2017 — 2019</div></div><ul class="entry-body"><li>Prioritized features for data viz tool serving 200+ businesses</li><li>Led A/B tests that improved user onboarding by 30%</li></ul></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Education</div>
+    <div class="entry"><div class="entry-header"><div><div class="entry-title">Stanford University</div><div class="entry-sub">MBA, Product Management</div></div><div class="entry-date">2015 — 2017</div></div></div>
+    <div class="entry"><div class="entry-header"><div><div class="entry-title">UC Berkeley</div><div class="entry-sub">B.S. Computer Science</div></div><div class="entry-date">2011 — 2015</div></div></div>
+  </div>
+  <div class="section">
+    <div class="section-title">Skills &amp; Tools</div>
+    <div class="skills-list"><span class="skill-badge">Product Strategy</span><span class="skill-badge">Data Analytics</span><span class="skill-badge">A/B Testing</span><span class="skill-badge">Roadmapping</span><span class="skill-badge">User Research</span><span class="skill-badge">Agile/Scrum</span></div>
+    <div style="font-size:9px;color:#6b7280;margin-top:6px;">Amplitude · Mixpanel · Tableau · SQL · Python · English, Spanish, French</div>
+  </div>
+</div>
+
+<div class="label">StackOverflow Template</div>
+<div class="sheet stackoverflow">
+  <div class="main-row">
+    <div class="sidebar">
+      <div class="name">Alex Rivera</div>
+      <div class="contact-stack"><span>alex.rivera@email.com</span><span>+1 (415) 555-0189</span><span>San Francisco, CA</span><span>linkedin.com/in/alexrivera</span></div>
+      <div class="sidebar-section"><div class="sidebar-title">Skills</div><div class="skill-pill">Product Strategy</div><div class="skill-pill">Data Analytics</div><div class="skill-pill">A/B Testing</div><div class="skill-pill">Roadmapping</div><div class="skill-pill">User Research</div><div class="skill-pill">Agile/Scrum</div></div>
+      <div class="sidebar-section"><div class="sidebar-title">Tools</div><div style="font-size:8px;color:#6b7280;line-height:1.6;">Amplitude, Mixpanel, Tableau, SQL, Python</div></div>
+      <div class="sidebar-section"><div class="sidebar-title">Languages</div><div style="font-size:9px;color:#4b5563;">English (Native)<br>Spanish (Native)<br>French (Professional)</div></div>
+    </div>
+    <div class="content">
+      <div class="summary">Senior Product Manager with 8+ years of experience driving B2B SaaS products from concept to scale. Led cross-functional teams to deliver $12M ARR growth through data-driven product strategy.</div>
+      <div class="section">
+        <div class="section-title">Experience</div>
+        <div class="entry"><div class="entry-header"><div><div class="entry-title">NexusTech Inc.</div><div class="entry-sub">Senior Product Manager</div></div><div class="entry-date">2022 — Present</div></div><ul class="entry-body"><li>Led product strategy for B2B analytics platform, driving 40% YoY growth to $12M ARR</li><li>Shipped 12 major features that increased NPS by 25%</li><li>Reduced feature iteration cycle from 6 weeks to 2 weeks</li></ul></div>
+        <div class="entry"><div class="entry-header"><div><div class="entry-title">CloudBase Solutions</div><div class="entry-sub">Product Manager</div></div><div class="entry-date">2019 — 2021</div></div><ul class="entry-body"><li>Increased ARPU by 35% through pricing strategy for $5M SaaS product</li><li>Reduced churn by 22% through 100+ customer discovery interviews</li></ul></div>
+        <div class="entry"><div class="entry-header"><div><div class="entry-title">DataVista Labs</div><div class="entry-sub">Associate PM</div></div><div class="entry-date">2017 — 2019</div></div><ul class="entry-body"><li>Defined features for data viz tool used by 200+ companies</li><li>Improved onboarding conversion by 30% through A/B testing</li></ul></div>
+      </div>
+      <div class="section">
+        <div class="section-title">Education</div>
+        <div class="entry"><div class="entry-header"><div><div class="entry-title">Stanford University</div><div class="entry-sub">MBA, Product Management</div></div><div class="entry-date">2015 — 2017</div></div><ul class="entry-body"><li>Dean's List</li></ul></div>
+        <div class="entry"><div class="entry-header"><div><div class="entry-title">UC Berkeley</div><div class="entry-sub">B.S. Computer Science</div></div><div class="entry-date">2011 — 2015</div></div><ul class="entry-body"><li>Minor in Psychology</li></ul></div>
+      </div>
+      <div class="section">
+        <div class="section-title">Projects</div>
+        <div class="entry"><div class="entry-header"><div><div class="entry-title">AI-Powered Recommendation Engine</div></div><div class="entry-date">2023</div></div><ul class="entry-body"><li>Designed ML-based recommendation system increasing feature adoption by 35%</li></ul></div>
+        <div class="entry"><div class="entry-header"><div><div class="entry-title">Enterprise SSO Integration</div></div><div class="entry-date">2022</div></div><ul class="entry-body"><li>Led SAML/OAuth SSO integration, unblocking 50+ enterprise deals worth $2M</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

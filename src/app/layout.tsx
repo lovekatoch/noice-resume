@@ -4,6 +4,7 @@ import { TopNavBar } from "components/TopNavBar";
 import { PostHogProvider } from "components/PostHogProvider";
 import { PageViewTracker } from "components/PageViewTracker";
 import { ReduxProvider } from "components/ReduxProvider";
+import { SoundProvider } from "lib/sound/provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,9 +31,11 @@ export default function RootLayout({
       <body>
         <ReduxProvider>
           <PostHogProvider>
-            <TopNavBar />
-            {children}
-            <PageViewTracker />
+            <SoundProvider>
+              <TopNavBar />
+              {children}
+              <PageViewTracker />
+            </SoundProvider>
           </PostHogProvider>
         </ReduxProvider>
       </body>

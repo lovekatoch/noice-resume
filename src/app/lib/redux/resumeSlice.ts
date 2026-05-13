@@ -1,7 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "lib/redux/store";
 import type {
-  FeaturedSkill,
   Resume,
   ResumeEducation,
   ResumeProfile,
@@ -41,12 +40,7 @@ export const initialProject: ResumeProject = {
   descriptions: [],
 };
 
-export const initialFeaturedSkill: FeaturedSkill = { skill: "", rating: 4 };
-export const initialFeaturedSkills: FeaturedSkill[] = Array(6).fill({
-  ...initialFeaturedSkill,
-});
 export const initialSkills: ResumeSkills = {
-  featuredSkills: initialFeaturedSkills,
   descriptions: [],
 };
 
@@ -122,26 +116,9 @@ export const resumeSlice = createSlice({
     },
     changeSkills: (
       draft,
-      action: PayloadAction<
-        | { field: "descriptions"; value: string[] }
-        | {
-            field: "featuredSkills";
-            idx: number;
-            skill: string;
-            rating: number;
-          }
-      >
+      action: PayloadAction<{ field: "descriptions"; value: string[] }>
     ) => {
-      const { field } = action.payload;
-      if (field === "descriptions") {
-        const { value } = action.payload;
-        draft.skills.descriptions = value;
-      } else {
-        const { idx, skill, rating } = action.payload;
-        const featuredSkill = draft.skills.featuredSkills[idx];
-        featuredSkill.skill = skill;
-        featuredSkill.rating = rating;
-      }
+      draft.skills.descriptions = action.payload.value;
     },
     changeCustom: (
       draft,
