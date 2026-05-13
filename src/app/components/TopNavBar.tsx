@@ -1,6 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ImportButton } from "components/ImportButton";
 
 export const TopNavBar = () => {
+  const pathname = usePathname();
+  const isEditor = pathname === "/resume-builder";
+
   return (
     <header
       aria-label="Site Header"
@@ -19,6 +26,12 @@ export const TopNavBar = () => {
             className="block"
           />
         </Link>
+
+        {isEditor && (
+          <div className="flex-shrink-0">
+            <ImportButton />
+          </div>
+        )}
       </div>
     </header>
   );
