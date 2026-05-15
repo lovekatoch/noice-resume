@@ -17,7 +17,7 @@ export const SkillsForm = () => {
   const dispatch = useAppDispatch();
   const { descriptions } = skills;
   const form = "skills";
-  const themeColor = useAppSelector(selectThemeColor) || "#C75B39";
+  const themeColor = useAppSelector(selectThemeColor) || "#1E3A5F";
 
   // Skills stored as comma-separated string for plain textarea display
   const skillsTextValue = descriptions.join(", ");
@@ -76,7 +76,7 @@ export const SkillsForm = () => {
       <div className="col-span-full grid grid-cols-6 gap-3">
         <div className="relative col-span-full">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-base font-medium text-gray-700">Skills List</span>
+            <span className="text-base font-medium" style={{ color: "var(--muted)" }}>Skills List</span>
             {descriptions.length > 0 && (
               <SparkleIconButton onClick={handleSparkleClick} color={themeColor} size="small" />
             )}

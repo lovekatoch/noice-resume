@@ -19,7 +19,7 @@ import { useAIPanel } from "lib/hooks/useAIPanel";
 export const WorkExperiencesForm = () => {
   const workExperiences = useAppSelector(selectWorkExperiences);
   const dispatch = useAppDispatch();
-  const themeColor = useAppSelector(selectThemeColor) || "#C75B39";
+  const themeColor = useAppSelector(selectThemeColor) || "#1E3A5F";
 
   const {
     aiPanelOpen,
@@ -112,7 +112,7 @@ export const WorkExperiencesForm = () => {
             />
             <div className="col-span-full">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-base font-medium text-gray-700">Description</span>
+                <span className="text-base font-medium" style={{ color: "var(--muted)" }}>Description</span>
                 {descriptions.length > 0 && (
                   <SparkleIconButton onClick={() => handleSparkleClick(idx)} color={themeColor} size="small" />
                 )}

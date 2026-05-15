@@ -77,9 +77,10 @@ export const ImportButton = ({ compact }: Props) => {
         type="button"
         onClick={handleClick}
         disabled={isLoading}
-        className={`inline-flex items-center gap-2 rounded-md border border-[var(--accent)]/25 bg-white font-medium text-[var(--accent)] transition-all hover:border-[var(--accent)]/40 hover:bg-[var(--accent)]/5 ${
-          compact ? "px-3 py-1.5 text-xs" : "px-7 py-3 text-sm"
+        className={`inline-flex items-center gap-2 rounded-md border border-[var(--accent)]/25 font-medium text-[var(--accent)] transition-all hover:border-[var(--accent)]/40 ${
+          compact ? "px-3 py-1.5 text-xs" : "px-7 py-3 md:px-8 md:py-3.5 text-sm md:text-base rounded-xl"
         }`}
+        style={{ backgroundColor: "var(--surface)" }}
         aria-label={isLoading ? "Importing PDF" : "Import PDF"}
       >
         {isLoading ? (

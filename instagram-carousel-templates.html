@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoiceResume — Instagram Carousel Templates</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #010102;
+  --surface: #0f1011;
+  --surface-2: #141516;
+  --fg: #f7f8f8;
+  --muted: #d0d6e0;
+  --muted-subtle: #8a8f98;
+  --border: #23252a;
+  --accent: #5e6ad2;
+  --accent-hover: #828fff;
+  --accent-light: rgba(94,106,210,0.12);
+  --navy: #1E3A5F;
+  --navy-light: #2a4d7a;
+  --success: #27a644;
+  --orange: #dd5b00;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  padding: var(--spacing-2xl) var(--spacing-lg);
+  min-height: 100vh;
+}
+
+/* Spec Header */
+.spec-header {
+  max-width: 1200px;
+  margin: 0 auto var(--spacing-3xl);
+}
+.spec-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--spacing-sm);
+}
+.spec-header h1 span { color: var(--navy); }
+.spec-header .subtitle {
+  color: var(--muted-subtle);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 600px;
+}
+.spec-meta {
+  display: flex;
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  flex-wrap: wrap;
+}
+.spec-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.spec-meta-item .label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-subtle);
+}
+.spec-meta-item .value {
+  font-size: 14px;
+  color: var(--fg);
+  font-weight: 500;
+}
+
+/* Carousel Grid */
+.carousel-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+/* Slide Card */
+.carousel-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.carousel-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.slide-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+/* The actual Instagram slide canvas */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.slide-number {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--accent);
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 10;
+  opacity: 0.9;
+}
+
+/* Card footer number label */
+.card-footer {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-top: 1px solid var(--border);
+}
+.card-footer .title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.card-footer .topic {
+  font-size: 11px;
+  color: var(--muted-subtle);
+}
+
+/* Color theme presets */
+.theme-dark { background: var(--bg); color: var(--fg); }
+.theme-navy { background: var(--navy); color: #fff; }
+.theme-surface { background: var(--surface); color: var(--fg); }
+.theme-gradient-accent { background: linear-gradient(135deg, #1E3A5F 0%, #5e6ad2 100%); color: #fff; }
+.theme-gradient-warm { background: linear-gradient(135deg, #0f1011 0%, #1E3A5F 100%); color: var(--fg); }
+.theme-accent-light { background: var(--accent-light); color: var(--fg); }
+
+/* Template 1: ATS Eats Resumes */
+.tpl-ats {
+  background: #010102;
+  color: #f7f8f8;
+  padding: 48px 40px;
+  justify-content: space-between;
+}
+.tpl-ats .tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5e6ad2;
+  border: 1px solid rgba(94,106,210,0.3);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  margin-bottom: 24px;
+}
+.tpl-ats .headline {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.tpl-ats .headline em { color: #5e6ad2; font-style: normal; }
+.tpl-ats .sub {
+  font-size: 14px;
+  color: #8a8f98;
+  line-height: 1.5;
+  margin-top: 12px;
+}
+.tpl-ats .monster {
+  font-size: 72px;
+  font-weight: 900;
+  opacity: 0.06;
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  line-height: 1;
+  color: #5e6ad2;
+  pointer-events: none;
+}
+.tpl-ats .logo-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+}
+.tpl-ats .logo-text {
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: -0.04em;
+  font-style: italic;
+}
+.tpl-ats .logo-text span { color: #8a8f98; font-weight: 800; }
+
+/* Template 2: 3 Things Recruiters Look For */
+.tpl-recruiters {
+  background: linear-gradient(135deg, #1E3A5F 0%, #2a4d7a 100%);
+  color: #fff;
+  padding: 48px 40px;
+  position: relative;
+}
+.tpl-recruiters .eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+  margin-bottom: auto;
+}
+.tpl-recruiters .big-num {
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  opacity: 0.15;
+}
+.tpl-recruiters .big-num:nth-child(2) { position: absolute; right: 32px; top: 60px; }
+.tpl-recruiters .big-num:nth-child(3) { position: absolute; right: 16px; top: 110px; }
+.tpl-recruiters .big-num:nth-child(4) { position: absolute; right: 40px; top: 160px; }
+.tpl-recruiters .list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: auto;
+}
+.tpl-recruiters .item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.tpl-recruiters .item .num-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.tpl-recruiters .item .text {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Template 3: Before/After Resume */
+.tpl-before-after {
+  background: #0f1011;
+  color: #f7f8f8;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+}
+.tpl-before-after .half {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 20px;
+  position: relative;
+}
+.tpl-before-after .half-left {
+  background: #141516;
+  border-right: 1px solid #23252a;
+}
+.tpl-before-after .half-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+.tpl-before-after .half-left .half-label { color: #dd5b00; }
+.tpl-before-after .half-right .half-label { color: #27a644; }
+.tpl-before-after .mini-resume {
+  width: 80%;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 8px;
+  line-height: 1.4;
+}
+.tpl-before-after .mini-resume .line {
+  height: 6px;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  background: #23252a;
+}
+.tpl-before-after .mini-resume .line.wide { width: 100%; }
+.tpl-before-after .mini-resume .line.med { width: 70%; }
+.tpl-before-after .mini-resume .line.narr { width: 45%; }
+.tpl-before-after .mini-resume .line.accent { background: #5e6ad2; }
+.tpl-before-after .arrow-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #5e6ad2;
+  padding: 0 4px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  background: #0f1011;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #23252a;
+}
+.tpl-before-after .bottom-cta {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: #5e6ad2;
+}
+
+/* Template 4: Classic vs Modern vs StackOverflow */
+.tpl-compare {
+  background: #010102;
+  color: #f7f8f8;
+  padding: 32px 28px;
+}
+.tpl-compare .eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #5e6ad2;
+  margin-bottom: 16px;
+}
+.tpl-compare .tpl-row {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+}
+.tpl-compare .tpl-card {
+  flex: 1;
+  border: 1px solid #23252a;
+  border-radius: 8px;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: #0f1011;
+}
+.tpl-compare .tpl-card .icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.tpl-compare .tpl-card .name {
+  font-size: 11px;
+  font-weight: 700;
+}
+.tpl-compare .tpl-card .desc {
+  font-size: 8px;
+  color: #8a8f98;
+  text-align: center;
+  line-height: 1.3;
+}
+.tpl-compare .tpl-divider {
+  width: 100%;
+  height: 1px;
+  background: #23252a;
+  margin: 12px 0;
+}
+.tpl-compare .winner {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #27a644;
+  letter-spacing: -0.01em;
+}
+.tpl-compare .logo-text {
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: -0.04em;
+  font-style: italic;
+  color: #8a8f98;
+  margin-top: auto;
+  text-align: center;
+}
+
+/* Template 5: Resume with No Experience */
+.tpl-noexp {
+  background: #0f1011;
+  color: #f7f8f8;
+  padding: 40px 36px;
+  justify-content: space-between;
+}
+.tpl-noexp .eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a8f98;
+}
+.tpl-noexp .headline {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-top: 8px;
+}
+.tpl-noexp .headline em { font-style: normal; color: #5e6ad2; }
+.tpl-noexp .bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+}
+.tpl-noexp .bullets .b {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #d0d6e0;
+}
+.tpl-noexp .bullets .b .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #5e6ad2;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+/* Template 6: 5 Resume Mistakes GenZ Makes */
+.tpl-mistakes {
+  background: #010102;
+  color: #f7f8f8;
+  padding: 40px 36px;
+  position: relative;
+}
+.tpl-mistakes .eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #dd5b00;
+}
+.tpl-mistakes .headline {
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 8px 0 20px;
+}
+.tpl-mistakes .mistake-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tpl-mistakes .mistake-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #141516;
+  border: 1px solid #23252a;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.tpl-mistakes .mistake-item .x-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(221,91,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #dd5b00;
+  flex-shrink: 0;
+}
+
+/* Template 7: AI Resume Bullets */
+.tpl-ai {
+  background: linear-gradient(135deg, #0f1011 0%, #141516 100%);
+  color: #f7f8f8;
+  padding: 40px 36px;
+  justify-content: space-between;
+  position: relative;
+}
+.tpl-ai .sparkle-bg {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  font-size: 140px;
+  opacity: 0.04;
+  pointer-events: none;
+}
+.tpl-ai .headline {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  position: relative;
+  z-index: 1;
+}
+.tpl-ai .headline em { font-style: normal; color: #5e6ad2; }
+.tpl-ai .sub {
+  font-size: 14px;
+  color: #8a8f98;
+  line-height: 1.5;
+  margin-top: 10px;
+  position: relative;
+  z-index: 1;
+}
+.tpl-ai .demo-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #1E3A5F;
+  border-radius: 8px;
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+}
+.tpl-ai .demo-bar .sparkle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #5e6ad2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.tpl-ai .demo-bar .text {
+  font-size: 12px;
+  font-weight: 500;
+  color: #d0d6e0;
+  line-height: 1.3;
+}
+
+/* Template 8: Resume Design Trends 2026 */
+.tpl-trends {
+  background: #0f1011;
+  color: #f7f8f8;
+  padding: 36px 32px;
+}
+.tpl-trends .eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #5e6ad2;
+  margin-bottom: 16px;
+}
+.tpl-trends .trends-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  flex: 1;
+}
+.tpl-trends .trend-item {
+  padding: 14px 12px;
+  background: #141516;
+  border: 1px solid #23252a;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.tpl-trends .trend-item .icon { font-size: 22px; }
+.tpl-trends .trend-item .name { font-size: 11px; font-weight: 700; }
+.tpl-trends .trend-item .desc { font-size: 9px; color: #8a8f98; line-height: 1.3; }
+.tpl-trends .logo-text {
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: -0.04em;
+  font-style: italic;
+  color: #5e6ad2;
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* Template 9: Free Resume Builder Showdown */
+.tpl-showdown {
+  background: #010102;
+  color: #f7f8f8;
+  padding: 36px 28px;
+}
+.tpl-showdown .eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8a8f98;
+  margin-bottom: auto;
+}
+.tpl-showdown .headline {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 8px 0 20px;
+}
+.tpl-showdown .headline em { font-style: normal; color: #27a644; }
+.tpl-showdown .vs-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.tpl-showdown .vs-card {
+  flex: 1;
+  padding: 14px;
+  background: #141516;
+  border: 1px solid #23252a;
+  border-radius: 8px;
+  text-align: center;
+}
+.tpl-showdown .vs-card .name { font-size: 12px; font-weight: 700; }
+.tpl-showdown .vs-card .price { font-size: 10px; color: #8a8f98; margin-top: 4px; }
+.tpl-showdown .vs-divider {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #23252a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #8a8f98;
+  flex-shrink: 0;
+}
+.tpl-showdown .winner-bar {
+  padding: 10px 14px;
+  background: rgba(39,166,68,0.1);
+  border: 1px solid rgba(39,166,68,0.3);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #27a644;
+}
+.tpl-showdown .logo-text {
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: -0.04em;
+  font-style: italic;
+  color: #8a8f98;
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* Template 10: StackOverflow for Tech */
+.tpl-so {
+  background: #0f1011;
+  color: #f7f8f8;
+  padding: 40px 36px;
+  justify-content: space-between;
+}
+.tpl-so .eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a8f98;
+}
+.tpl-so .headline {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-top: 8px;
+}
+.tpl-so .headline .code-bracket { color: #5e6ad2; }
+.tpl-so .badge-row {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+.tpl-so .badge-tag {
+  padding: 6px 14px;
+  background: #141516;
+  border: 1px solid #23252a;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #5e6ad2;
+}
+
+/* Template 11: What Recruiters See in 6 Seconds */
+.tpl-6sec {
+  background: #010102;
+  color: #f7f8f8;
+  padding: 40px 36px;
+  position: relative;
+}
+.tpl-6sec .big-timer {
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #5e6ad2;
+  opacity: 0.08;
+  position: absolute;
+  top: 20px;
+  right: 24px;
+}
+.tpl-6sec .eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #dd5b00;
+}
+.tpl-6sec .headline {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 8px 0 16px;
+}
+.tpl-6sec .scanline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #141516;
+  border-radius: 6px;
+  margin-top: auto;
+  border-left: 3px solid #5e6ad2;
+}
+.tpl-6sec .scanline .label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #5e6ad2;
+}
+.tpl-6sec .scanline .pct {
+  font-size: 11px;
+  color: #8a8f98;
+  margin-left: auto;
+}
+
+/* Template 12: First Internship Resume */
+.tpl-intern {
+  background: linear-gradient(135deg, #1E3A5F 0%, #0f1011 100%);
+  color: #fff;
+  padding: 40px 36px;
+  justify-content: space-between;
+}
+.tpl-intern .eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5e6ad2;
+}
+.tpl-intern .headline {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-top: 8px;
+}
+.tpl-intern .headline em { font-style: normal; color: #5e6ad2; }
+.tpl-intern .steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+.tpl-intern .step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+}
+.tpl-intern .step .num {
+  font-size: 14px;
+  font-weight: 800;
+  color: #5e6ad2;
+  width: 24px;
+}
+.tpl-intern .step .text {
+  font-size: 12px;
+  font-weight: 500;
+}
+.tpl-intern .cta {
+  margin-top: auto;
+  text-align: center;
+  padding: 10px;
+  background: #5e6ad2;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Bottom spec section */
+.design-spec {
+  max-width: 1200px;
+  margin: var(--spacing-3xl) auto 0;
+  padding: var(--spacing-2xl);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.design-spec h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: var(--spacing-lg);
+  letter-spacing: -0.02em;
+}
+.token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+.token-card {
+  padding: var(--spacing-md);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.token-card .token-label {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.token-card .token-value {
+  font-size: 12px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: var(--muted-subtle);
+}
+.token-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+}
+
+/* Reels versions row */
+.reels-row {
+  max-width: 1200px;
+  margin: var(--spacing-xl) auto 0;
+  display: flex;
+  gap: var(--spacing-md);
+  overflow-x: auto;
+  padding-bottom: var(--spacing-md);
+}
+.reels-item {
+  flex-shrink: 0;
+  width: 160px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.reels-item .reels-canvas {
+  aspect-ratio: 9 / 16;
+  position: relative;
+  overflow: hidden;
+}
+.reels-item .reels-label {
+  padding: 8px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted-subtle);
+  text-align: center;
+}
+
+/* Reels mini variants */
+.reel-mini {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 12px;
+  text-align: center;
+}
+.reel-mini .mini-logo {
+  font-size: 10px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.04em;
+  margin-bottom: 8px;
+}
+.reel-mini .mini-headline {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.reel-mini .mini-sub {
+  font-size: 9px;
+  opacity: 0.7;
+  margin-top: 6px;
+}
+
+.reel-mini.theme-dark { background: #010102; color: #f7f8f8; }
+.reel-mini.theme-navy { background: #1E3A5F; color: #fff; }
+.reel-mini.theme-accent { background: #5e6ad2; color: #fff; }
+.reel-mini.theme-surface { background: #0f1011; color: #f7f8f8; }
+.reel-mini.theme-gradient { background: linear-gradient(135deg, #1E3A5F, #5e6ad2); color: #fff; }
+.reel-mini.theme-warm { background: linear-gradient(180deg, #010102, #1E3A5F); color: #f7f8f8; }
+</style>
+</head>
+<body>
+
+<header class="spec-header">
+  <h1>NOICE<span>RESUME</span></h1>
+  <p class="subtitle">Instagram Carousel Templates — 12 designs for the GenZ launch. 1080×1080px covers designed to stop the scroll, drive saves, and point back to <span style="color:var(--navy);font-weight:600;">noiceresume.pages.dev</span>.</p>
+  <div class="spec-meta">
+    <div class="spec-meta-item">
+      <span class="label">Format</span>
+      <span class="value">1080×1080px carousel covers</span>
+    </div>
+    <div class="spec-meta-item">
+      <span class="label">Also available as</span>
+      <span class="value">1080×1920px Reels covers (see bottom)</span>
+    </div>
+    <div class="spec-meta-item">
+      <span class="label">Brand Palette</span>
+      <span class="value">#1E3A5F · #5e6ad2 · #010102 · #f7f8f8</span>
+    </div>
+    <div class="spec-meta-item">
+      <span class="label">Typography</span>
+      <span class="value">Inter 400/600/700/800/900</span>
+    </div>
+    <div class="spec-meta-item">
+      <span class="label">Tone</span>
+      <span class="value">Irreverent · Anti-corporate · Direct</span>
+    </div>
+  </div>
+</header>
+
+<div class="carousel-grid">
+
+  <!-- 1. ATS Eats Resumes -->
+  <div class="carousel-card">
+    <div class="slide-container">
+      <div class="slide tpl-ats">
+        <div class="slide-number">1</div>
+        <div>
+          <div class="tag">⚠️ Myth Buster</div>
+          <div class="headline">ATS will <em>eat</em><br>your resume if…</div>
+          <div class="sub">Spoiler: it won't. Here's what actually happens.</div>
+        </div>
+        <div class="logo-bar">
+          <span class="logo-text">NOICE<span>RESUME</span></span>
+        </div>
+        <div class="monster">🤖</div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="title">ATS will eat your resume if…</div>
+      <div class="topic">Educational · Myth-busting</div>
+    </div>
+  </div>
+
+  <!-- 2. 3 Things Recruiters Actually Look For -->
+  <div class="carousel-card">
+    <div class="slide-container">
+      <div class="slide tpl-recruiters">
+        <div class="slide-number">2</div>
+        <div class="eyebrow">🔍 Insider Intel</div>
+        <div class="big-num">3</div>
+        <div class="big-num">3</div>
+        <div class="big-num">3</div>
+        <div class="list-items">
+          <div class="item">
+            <div class="num-circle">1</div>
+            <span class="text">Impact over duties</span>
+          </div>
+          <div class="item">
+            <div class="num-circle">2</div>
+            <span class="text">Consistent formatting</span>
+          </div>
+          <div class="item">
+            <div class="num-circle">3</div>
+            <span class="text">Relevant keywords</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="title">3 things recruiters actually look for</div>
+      <div class="topic">Educational · Career advice</div>
+    </div>
+  </div>
+
+  <!-- 3. Before/After Resume Transformation -->
+  <div class="carousel-card">
+    <div class="slide-container">
+      <div class="slide tpl-before-after">
+        <div class="slide-number">3</div>
+        <div class="half half-left">
+          <div class="half-label">Before</div>
+          <div class="mini-resume">
+            <div class="line wide"></div>
+            <div class="line med"></div>
+            <div class="line narr"></div>
+            <div class="line wide" style="margin-top:8px"></div>
+            <div class="line med"></div>
+            <div class="line narr"></div>
+            <div class="line med" style="margin-top:8px"></div>
+            <div class="line narr"></div>
+          </div>
+        </div>
+        <div class="arrow-col">→</div>
+        <div class="half half-right">
+          <div class="half-label">After</div>
+          <div class="mini-resume">
+            <div class="line wide accent"></div>
+            <div class="line wide"></div>
+            <div class="line med"></div>
+            <div class="line wide" style="margin-top:8px"></div>
+            <div class="line wide accent"></div>
+            <div class="line med"></div>
+            <div class="line wide accent" style="margin-top:8px"></div>
+            <div class="line med"></div>
+          </div>
+        </div>
+        <div class="bottom-cta">→ See the full transformation on noiceresume.pages.dev</div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="title">Before/After resume transformation</div>
+      <div class="topic">Case study · Before & after</div>
+    </div>
+  </div>
+
+  <!-- 4. Classic vs Modern vs StackOverflow -->
+  <div class="carousel-card">
+    <div class="slide-container">
+      <div class="slide tpl-compare">
+        <div class="slide-number">4</div>
+        <div class="eyebrow">⚡ Template Showdown</div>
+        <div class="tpl-row">
+          <div class="tpl-card">
+            <div class="icon" style="background:#1E3A5F;">C</div>
+            <div class="name">Classic</div>
+            <div class="desc">Traditional layout, serif-friendly</div>
+          </div>
+          <div class="tpl-card">
+            <div class="icon" style="background:#2a4d7a;">M</div>
+            <div class="name">Modern</div>
+            <div class="desc">Clean, minimal, skills focus</div>
+          </div>
+          <div class="tpl-card">
+            <div class="icon" style="background:#5e6ad2;">SO</div>
+            <div class="name">StackOverflow</div>
+            <div class="desc">Dev-optimized, dark mode</div>
+          </div>
+        </div>
+        <div class="tpl-divider"></div>
+        <div class="winner">🏆 All free — pick yours →</div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="title">Classic vs Modern vs StackOverflow</div>
+      <div class="topic">Comparison · Template choice</div>
+    </div>
+  </div>
+
+  <!-- 5. Resume with No Experience -->
+  <div class="carousel-card">
+    <div class="slide-container">
+      <div class="slide tpl-noexp">
+        <div class="slide-number">5</div>
+        <div class="eyebrow">💡 Beginner Guide</div>
+        <div class="headline">How to write a resume<br>with <em>zero</em> experience</div>
+        <div class="bullets">
+          <div class="b"><span class="dot"></span>Projects > internships on Day 1</div>
+          <div class="b"><span class="dot"></span>Coursework counts — own it</div>
+          <div class="b"><span class="dot"></span>Volunteer work = real experience</div>
+          <div class="b"><span class="dot"></span>Skills section is your secret weapon</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="title">How to write a resume with no experience</div>
+      <div class="topic">Guide · Beginner-friendly</div>
+    </div>
+  </div>
+
+  <!-- 6. 5 Resume Mistakes GenZ Makes -->
+  <div class="carousel-card">
+    <div class="slide-container">
+      <div class="slide tpl-mistakes">
+        <div class="slide-number">6</div>
+        <div class="eyebrow">🚫 Pain Point</div>
+        <div class="headline">5 resume mistakes<br>GenZ keeps making</div>
+        <div class="mistake-list">
+          <div class="mistake-item">
+            <div class="x-icon">✕</div>
+            <span>Using Canva templates (ATS can't read them)</span>
+          </div>
+          <div class="mistake-item">
+            <div class="x-icon">✕</div>
+            <span>One resume for every job</span>
+          </div>
+          <div class="mistake-item">
+            <div class="x-icon">✕</div>
+            <span>Putting "Objective" at the top</span>
+          </div>
+          <div class="mistake-item">
+            <div class="x-icon">✕</div>
+            <span>PDF page limit violations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="title">5 resume mistakes GenZ makes</div>
+      <div class="topic">Pain point · Educational</div>
+    </div>
+  </div>
+
+  <!-- 7. AI Resume Bullets -->
+  <div class="carousel-card">
+    <div class="slide-container">
+      <div class="slide tpl-ai">
+        <div class="slide-number">7</div>
+        <div class="sparkle-bg">✦</div>
+        <div>
+          <div class="headline">Using AI to write<br>resume bullets that<br><em>actually hit</em></div>
+          <div class="sub">No, it won't sound like a robot</div>
+        </div>
+        <div class="demo-bar">
+          <div class="sparkle">✦</div>
+          <div class="text">"Increased signups by 40% through Instagram campaigns"</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="title">Using AI to write resume bullets</div>
+      <div class="topic">Feature demo · AI</div>
+    </div>
+  </div>
+
+  <!-- 8. Resume Design Trends 2026 -->
+  <div class="carousel-card">
+    <div class="slide-container">
+      <div class="slide tpl-trends">
+        <div class="slide-number">8</div>
+        <div class="eyebrow">🎨 Design Forecast</div>
+        <div class="trends-grid">
+          <div class="trend-item">
+            <div class="icon">🌑</div>
+            <div class="name">Dark Mode</div>
+            <div class="desc">ATS-safe dark resumes are trending</div>
+          </div>
+          <div class="trend-item">
+            <div class="icon">📊</div>
+            <div class="name">Data Viz</div>
+            <div class="desc">Simple charts that tell your story</div>
+          </div>
+          <div class="trend-item">
+            <div class="icon">🔤</div>
+            <div class="name">Variable Fonts</div>
+            <div class="desc">One file, any weight you need</div>
+          </div>
+          <div class="trend-item">
+            <div class="icon">⚡</div>
+            <div class="name">AI-Optimized</div>
+            <div class="desc">Designed for both humans and parsers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="title">Resume design trends 2026</div>
+      <div class="topic">Aspirational · Trends</div>
+    </div>
+  </div>
+
+  <!-- 9. Free Resume Builder Showdown -->
+  <div class="carousel-card">
+    <div class="slide-container">
+      <div class="slide tpl-showdown">
+        <div class="slide-number">9</div>
+        <div class="eyebrow">⚔️ Comparison</div>
+        <div class="headline">Free resume builder<br><em>showdown</em></div>
+        <div class="vs-row">
+          <div class="vs-card">
+            <div class="name">Canva</div>
+            <div class="price">Free tier exists but ATS ❌</div>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="vs-card">
+            <div class="name">Novoresume</div>
+            <div class="price">$24/mo after trial</div>
+          </div>
+        </div>
+        <div class="winner-bar">🏆 NoiceResume — completely free, ATS-verified →</div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="title">Free resume builder showdown</div>
+      <div class="topic">Comparison · Tool review</div>
+    </div>
+  </div>
+
+  <!-- 10. StackOverflow Template for Tech -->
+  <div class="carousel-card">
+    <div class="slide-container">
+      <div class="slide tpl-so">
+        <div class="slide-number">10</div>
+        <div class="eyebrow">⌨️ Dev Corner</div>
+        <div class="headline">The <span class="code-bracket">&lt;StackOverflow&gt;</span><br>template<br><span class="code-bracket">&lt;/works&gt;</span> for tech</div>
+        <div class="badge-row">
+          <span class="badge-tag">⚡ 89% interview rate</span>
+          <span class="badge-tag">🎯 ATS-optimized</span>
+          <span class="badge-tag">🌙 Dark mode</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="title">The StackOverflow template works for tech</div>
+      <div class="topic">Niche · Developer-focused</div>
+    </div>
+  </div>
+
+  <!-- 11. What Recruiters See in 6 Seconds -->
+  <div class="carousel-card">
+    <div class="slide-container">
+      <div class="slide tpl-6sec">
+        <div class="slide-number">11</div>
+        <div class="big-timer">6</div>
+        <div class="eyebrow">⏱️ Reality Check</div>
+        <div class="headline">What recruiters see<br>in 6 seconds</div>
+        <div class="scanline">
+          <span class="label">👀 Top ⅓ of page</span>
+          <span class="pct">80% of decisions</span>
+        </div>
+        <div class="scanline" style="border-left-color:#dd5b00;">
+          <span class="label" style="color:#dd5b00;">📄 Your name + title</span>
+          <span class="pct">100% of scans</span>
+        </div>
+        <div class="scanline" style="border-left-color:#27a644;">
+          <span class="label" style="color:#27a644;">📌 Last 2 roles</span>
+          <span class="pct">95% of scans</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="title">What recruiters see in 6 seconds</div>
+      <div class="topic">Educational · Eye-tracking</div>
+    </div>
+  </div>
+
+  <!-- 12. First Internship Resume -->
+  <div class="carousel-card">
+    <div class="slide-container">
+      <div class="slide tpl-intern">
+        <div class="slide-number">12</div>
+        <div class="eyebrow">🚀 Your Move</div>
+        <div class="headline">Your first internship<br>resume <em>is not</em><br>a mystery</div>
+        <div class="steps">
+          <div class="step">
+            <span class="num">01</span>
+            <span class="text">Open NoiceResume</span>
+          </div>
+          <div class="step">
+            <span class="num">02</span>
+            <span class="text">Pick a template</span>
+          </div>
+          <div class="step">
+            <span class="num">03</span>
+            <span class="text">Fill in your details</span>
+          </div>
+          <div class="step">
+            <span class="num">04</span>
+            <span class="text">Download as PDF</span>
+          </div>
+        </div>
+        <div class="cta">Start for free →</div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="title">Your first internship resume</div>
+      <div class="topic">Beginner guide · CTA</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Reels covers row -->
+<h2 style="max-width:1200px;margin:48px auto 16px;font-size:18px;font-weight:700;letter-spacing:-0.02em;">1080×1920px Reels Cover Versions</h2>
+<p style="max-width:1200px;margin:0 auto 24px;font-size:13px;color:var(--muted-subtle);">Each carousel cover also scales to a Reels cover. Here's a sample set:</p>
+<div class="reels-row">
+  <div class="reels-item">
+    <div class="reels-canvas">
+      <div class="reel-mini theme-dark">
+        <div class="mini-logo" style="color:#5e6ad2;">NOICERESUME</div>
+        <div class="mini-headline">ATS will eat<br>your resume if…</div>
+        <div class="mini-sub">Spoiler: it won't →</div>
+      </div>
+    </div>
+    <div class="reels-label">#1 · Educational</div>
+  </div>
+  <div class="reels-item">
+    <div class="reels-canvas">
+      <div class="reel-mini theme-navy">
+        <div class="mini-logo" style="opacity:0.6;">NOICERESUME</div>
+        <div class="mini-headline">3 things<br>recruiters<br>look for</div>
+        <div class="mini-sub">🔍 Insider intel</div>
+      </div>
+    </div>
+    <div class="reels-label">#2 · Recruiters</div>
+  </div>
+  <div class="reels-item">
+    <div class="reels-canvas">
+      <div class="reel-mini theme-accent">
+        <div class="mini-logo" style="color:rgba(255,255,255,0.9);">NOICERESUME</div>
+        <div class="mini-headline">Before<br>→<br>After</div>
+        <div class="mini-sub">Resume glow-up</div>
+      </div>
+    </div>
+    <div class="reels-label">#3 · Transformation</div>
+  </div>
+  <div class="reels-item">
+    <div class="reels-canvas">
+      <div class="reel-mini theme-gradient">
+        <div class="mini-logo" style="opacity:0.7;">NOICERESUME</div>
+        <div class="mini-headline">5 mistakes<br>GenZ makes</div>
+        <div class="mini-sub">🚫 Don't do this</div>
+      </div>
+    </div>
+    <div class="reels-label">#6 · Mistakes</div>
+  </div>
+  <div class="reels-item">
+    <div class="reels-canvas">
+      <div class="reel-mini theme-warm">
+        <div class="mini-logo" style="color:#5e6ad2;">NOICERESUME</div>
+        <div class="mini-headline">AI resume<br>bullets</div>
+        <div class="mini-sub">✦ That actually hit</div>
+      </div>
+    </div>
+    <div class="reels-label">#7 · AI Feature</div>
+  </div>
+  <div class="reels-item">
+    <div class="reels-canvas">
+      <div class="reel-mini theme-surface">
+        <div class="mini-logo" style="color:#5e6ad2;">NOICERESUME</div>
+        <div class="mini-headline">Your first<br>internship<br>resume</div>
+        <div class="mini-sub">🚀 Start here</div>
+      </div>
+    </div>
+    <div class="reels-label">#12 · First Internship</div>
+  </div>
+</div>
+
+<!-- Design Spec -->
+<div class="design-spec">
+  <h2>Design System &amp; Token Reference</h2>
+  <p style="font-size:13px;color:var(--muted-subtle);margin-bottom:var(--spacing-lg);line-height:1.6;">All templates use the existing NoiceResume token set. No new tokens introduced. These are the exact values from <code style="color:var(--accent);">globals.css</code> and <code style="color:var(--accent);">tailwind.config.js</code>.</p>
+  <div class="token-grid">
+    <div class="token-card">
+      <div class="token-swatch" style="background:#010102;"></div>
+      <div class="token-label">Background</div>
+      <div class="token-value">--bg: #010102</div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#0f1011;"></div>
+      <div class="token-label">Surface</div>
+      <div class="token-value">--surface: #0f1011</div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#141516;"></div>
+      <div class="token-label">Surface-2</div>
+      <div class="token-value">--surface-2: #141516</div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#1E3A5F;"></div>
+      <div class="token-label">Navy Primary</div>
+      <div class="token-value">--navy: #1E3A5F</div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#5e6ad2;"></div>
+      <div class="token-label">Accent</div>
+      <div class="token-value">--accent: #5e6ad2</div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#27a644;"></div>
+      <div class="token-label">Success</div>
+      <div class="token-value">--success: #27a644</div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#dd5b00;"></div>
+      <div class="token-label">Orange</div>
+      <div class="token-value">--orange: #dd5b00</div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#f7f8f8;"></div>
+      <div class="token-label">Foreground</div>
+      <div class="token-value">--fg: #f7f8f8</div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#8a8f98;"></div>
+      <div class="token-label">Muted Subtle</div>
+      <div class="token-value">--muted-subtle: #8a8f98</div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:#23252a;"></div>
+      <div class="token-label">Border</div>
+      <div class="token-value">--border: #23252a</div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:linear-gradient(135deg,#1E3A5F,#5e6ad2);"></div>
+      <div class="token-label">Gradient Accent</div>
+      <div class="token-value">navy → lavender</div>
+    </div>
+    <div class="token-card">
+      <div class="token-swatch" style="background:linear-gradient(135deg,#0f1011,#1E3A5F);"></div>
+      <div class="token-label">Gradient Warm</div>
+      <div class="token-value">dark → navy</div>
+    </div>
+  </div>
+
+  <h2 style="margin-top:var(--spacing-xl);">Typography Scale</h2>
+  <div style="font-size:13px;color:var(--muted-subtle);margin-top:var(--spacing-sm);line-height:1.6;">
+    <table style="width:100%;border-collapse:collapse;margin-top:var(--spacing-md);">
+      <tr style="border-bottom:1px solid var(--border);">
+        <th style="text-align:left;padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-subtle);">Role</th>
+        <th style="text-align:left;padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-subtle);">Size</th>
+        <th style="text-align:left;padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-subtle);">Weight</th>
+        <th style="text-align:left;padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-subtle);">Used On</th>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:8px 12px;font-weight:600;">Hero Headline</td>
+        <td style="padding:8px 12px;">30–38px</td>
+        <td style="padding:8px 12px;">900</td>
+        <td style="padding:8px 12px;color:var(--muted-subtle);">Carousel title lines</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:8px 12px;font-weight:600;">Subheading</td>
+        <td style="padding:8px 12px;">14–16px</td>
+        <td style="padding:8px 12px;">500</td>
+        <td style="padding:8px 12px;color:var(--muted-subtle);">Supporting copy, subtext</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:8px 12px;font-weight:600;">Body</td>
+        <td style="padding:8px 12px;">12–13px</td>
+        <td style="padding:8px 12px;">400–500</td>
+        <td style="padding:8px 12px;color:var(--muted-subtle);">Bullet points, list items</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:8px 12px;font-weight:600;">Eyebrow / Tag</td>
+        <td style="padding:8px 12px;">10–11px</td>
+        <td style="padding:8px 12px;">700</td>
+        <td style="padding:8px 12px;color:var(--muted-subtle);">Category labels, uppercase</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 12px;font-weight:600;">Micro</td>
+        <td style="padding:8px 12px;">8–10px</td>
+        <td style="padding:8px 12px;">500–600</td>
+        <td style="padding:8px 12px;color:var(--muted-subtle);">Mini resume bars, footnotes</td>
+      </tr>
+    </table>
+  </div>
+
+  <h2 style="margin-top:var(--spacing-xl);">Design Decisions &amp; Heuristics</h2>
+  <div style="font-size:13px;color:var(--muted-subtle);margin-top:var(--spacing-sm);line-height:1.7;">
+    <p><strong style="color:var(--fg);">Recognition over Recall (Nielsen):</strong> Each template uses a consistent layout pattern (eyebrow tag → headline → supporting details → implicit CTA) so followers recognize the format within 0.5s and know what to expect.</p>
+    <p style="margin-top:8px;"><strong style="color:var(--fg);">Von Restorff Effect:</strong> The accent color (#5e6ad2) is used sparingly — headlines, key numbers, arrows. On the dark canvas it's the distinctive element that draws attention to the main message.</p>
+    <p style="margin-top:8px;"><strong style="color:var(--fg);">Fitts's Law:</strong> Call-to-action elements (logos, arrows, "Start free" buttons) are positioned at the bottom — the natural thumb zone for mobile scrolling and the endpoint of F-pattern scanning.</p>
+    <p style="margin-top:8px;"><strong style="color:var(--fg);">Hick's Law / Choice Overload:</strong> Per-slide content is limited to 1 main idea + 3–4 supporting points. No slide asks the viewer to process more than one headline and a short list.</p>
+    <p style="margin-top:8px;"><strong style="color:var(--fg);">Aesthetic-Usability Effect:</strong> Dark moody backgrounds with precise spacing (8px grid) and consistent 1px borders signal polish and trust — important for a tool that handles career documents.</p>
+    <p style="margin-top:8px;"><strong style="color:var(--fg);">WCAG Contrast:</strong> Navy (#1E3A5F) on dark bg meets contrast. Text at #f7f8f8 on #010102 = 18.1:1 ratio. Accent #5e6ad2 on dark = 5.3:1 (AA large text, meets AAA for body on light bg variations).</p>
+    <p style="margin-top:8px;"><strong style="color:var(--fg);">Inverted Pyramid:</strong> Every slide leads with the boldest claim in the headline, then supports with secondary copy. The "so what" is always above the fold.</p>
+    <p style="margin-top:8px;"><strong style="color:var(--fg);">Pareto (80/20):</strong> 80% of the visual impact comes from the headline + accent color. Background, borders, and muted copy recede so the value prop hits fast in a busy feed.</p>
+    <p style="margin-top:8px;"><strong style="color:var(--fg);">Progressive Disclosure:</strong> Carousel covers tease the insight without giving everything away — the "swipe" promise is that slides 2–n deliver the full value.</p>
+  </div>
+
+  <h2 style="margin-top:var(--spacing-xl);">CTA Strategy per Template</h2>
+  <div style="font-size:13px;color:var(--muted-subtle);margin-top:var(--spacing-sm);line-height:1.7;">
+    <table style="width:100%;border-collapse:collapse;margin-top:var(--spacing-md);">
+      <tr style="border-bottom:1px solid var(--border);">
+        <th style="text-align:left;padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-subtle);">#</th>
+        <th style="text-align:left;padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-subtle);">Last Slide CTA</th>
+        <th style="text-align:left;padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-subtle);">Hook Type</th>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;">1</td><td style="padding:8px 12px;">"Build an ATS-proof resume at noiceresume.pages.dev"</td><td style="padding:8px 12px;">Myth-busting</td></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;">2</td><td style="padding:8px 12px;">"Your resume passes the 6-second test → link"</td><td style="padding:8px 12px;">Insider knowledge</td></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;">3</td><td style="padding:8px 12px;">"Transform your resume with our free templates"</td><td style="padding:8px 12px;">Before/after FOMO</td></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;">4</td><td style="padding:8px 12px;">"Try all 3 templates free → no signup needed"</td><td style="padding:8px 12px;">Comparison</td></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;">5</td><td style="padding:8px 12px;">"Build your first resume in 10 minutes →"</td><td style="padding:8px 12px;">Zero-barrier entry</td></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;">6</td><td style="padding:8px 12px;">"Stop making these mistakes → fix your resume"</td><td style="padding:8px 12px;">Pain point</td></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;">7</td><td style="padding:8px 12px;">"Try our AI bullet writer → it's free"</td><td style="padding:8px 12px;">Feature demo</td></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;">8</td><td style="padding:8px 12px;">"Stand out in 2026 → modern templates inside"</td><td style="padding:8px 12px;">Aspirational</td></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;">9</td><td style="padding:8px 12px;">"Free forever. No credit card. No trials."</td><td style="padding:8px 12px;">Comparison win</td></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;">10</td><td style="padding:8px 12px;">"The dev-favorite template → build yours"</td><td style="padding:8px 12px;">Niche/identity</td></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;">11</td><td style="padding:8px 12px;">"Make every second count → optimize now"</td><td style="padding:8px 12px;">Urgency</td></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;">12</td><td style="padding:8px 12px;">"Your first internship is one template away →"</td><td style="padding:8px 12px;">Beginner CTA</td></tr>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

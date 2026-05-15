@@ -9,6 +9,8 @@ import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 import { Tooltip } from "components/Tooltip";
 import { useSound } from "lib/sound/provider";
+import { captureReferralToken, notifyReferralCompleted } from "lib/referral";
+import { captureDownload } from "lib/analytics";
 
 const TEMPLATES = [
   { id: "executive-simple", name: "Classic" },
@@ -48,6 +50,10 @@ const ResumeControlBar = ({
       link.download = fileName;
       link.click();
       void play("hero.complete");
+      const refToken = captureReferralToken();
+      if (refToken) {
+        void notifyReferralCompleted(refToken);
+      }
     }
   };
 

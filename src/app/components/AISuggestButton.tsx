@@ -60,19 +60,26 @@ export const AISuggestButton = ({
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full z-10 mt-1 w-48 rounded-lg border border-[var(--border)] bg-white py-1 shadow-lg">
+        <div className="absolute right-0 top-full z-10 mt-1 w-48 rounded-lg border border-[var(--border)] py-1 shadow-lg"
+          style={{ backgroundColor: "var(--surface)" }}>
           <button
             onClick={() => handleOptionClick("replace")}
-            className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            className="flex w-full items-center px-4 py-2 text-sm"
+            style={{ color: "var(--muted)" }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--surface-2)"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
           >
-            <span className="mr-2 text-gray-400">→</span>
+            <span className="mr-2" style={{ color: "var(--muted-subtle)" }}>→</span>
             Replace all skills
           </button>
           <button
             onClick={() => handleOptionClick("append")}
-            className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            className="flex w-full items-center px-4 py-2 text-sm"
+            style={{ color: "var(--muted)" }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--surface-2)"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
           >
-            <span className="mr-2 text-gray-400">+</span>
+            <span className="mr-2" style={{ color: "var(--muted-subtle)" }}>+</span>
             Append to existing
           </button>
         </div>

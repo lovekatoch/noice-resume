@@ -1,5 +1,5 @@
 import "globals.css";
-import { Inter } from "next/font/google";
+import { Inter, EB_Garamond } from "next/font/google";
 import { TopNavBar } from "components/TopNavBar";
 import { PostHogProvider } from "components/PostHogProvider";
 import { PageViewTracker } from "components/PageViewTracker";
@@ -10,6 +10,12 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+});
+
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-garamond",
 });
 
 export const metadata = {
@@ -27,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${ebGaramond.variable}`}>
       <body>
         <ReduxProvider>
           <PostHogProvider>

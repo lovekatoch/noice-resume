@@ -5,11 +5,11 @@ module.exports = {
     extend: {
       colors: {
         surface: '#FFFFFF',
-        muted: '#6b7280',
+        muted: '#86868B',
         accent: {
-          DEFAULT: '#5E6AD2',
-          hover: '#4a56b8',
-          light: 'rgba(94,106,210,0.1)',
+          DEFAULT: '#1E3A5F',
+          hover: '#162d4d',
+          light: 'rgba(30,58,95,0.08)',
         },
       },
       fontFamily: {
@@ -21,6 +21,7 @@ module.exports = {
         md: '6px',
         lg: '8px',
         xl: '12px',
+        '2xl': '16px',
       },
       boxShadow: {
         card: '0 1px 2px rgba(50,50,93,0.08), 0 2px 6px rgba(50,50,93,0.06)',
@@ -28,6 +29,14 @@ module.exports = {
       },
       backgroundImage: {
         dot: "url('/assets/dots.svg')",
+      },
+      keyframes: {
+        gradient: {
+          "to": { backgroundPosition: "200% center" },
+        },
+      },
+      animation: {
+        gradient: "gradient 6s linear infinite",
       },
     },
   },

@@ -50,8 +50,9 @@ export const BaseForm = ({
   className?: string;
 }) => (
   <section
-    className={`flex w-full flex-col gap-3 bg-white border ${className}`}
+    className={`flex w-full flex-col gap-3 border ${className}`}
     style={{
+      backgroundColor: "var(--surface)",
       borderColor: "var(--border)",
       borderRadius: "var(--radius-lg)",
       boxShadow: "var(--shadow-card)",
@@ -99,7 +100,7 @@ export const Form = ({
 
   const isFirstForm = useAppSelector(selectIsFirstForm(form));
   const isLastForm = useAppSelector(selectIsLastForm(form));
-  const themeColor = useAppSelector(selectThemeColor) || "#C75B39";
+  const themeColor = useAppSelector(selectThemeColor) || "#1E3A5F";
 
   const workExperiences = useAppSelector(selectWorkExperiences);
   const educations = useAppSelector(selectEducations);

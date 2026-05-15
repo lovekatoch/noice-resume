@@ -17,10 +17,11 @@ export default function ImportResume() {
 
   return (
     <main>
-      <div className="mx-auto mt-14 max-w-3xl rounded-lg border border-[var(--notion-border)] bg-white px-10 py-10 text-center">
+      <div className="mx-auto mt-14 max-w-3xl rounded-lg border border-[var(--notion-border)] px-10 py-10 text-center"
+        style={{ backgroundColor: "var(--surface)" }}>
         {!hasUsedAppBefore ? (
           <>
-            <h1 className="text-lg font-semibold text-gray-900">
+            <h1 className="text-lg font-semibold" style={{ color: "var(--fg)" }}>
               Import data from an existing resume
             </h1>
             <ResumeDropzone
@@ -48,7 +49,7 @@ export default function ImportResume() {
                 <OrDivider />
               </>
             )}
-            <h1 className="font-semibold text-gray-900">
+            <h1 className="font-semibold" style={{ color: "var(--fg)" }}>
               Override data with a new resume
             </h1>
             <ResumeDropzone
@@ -65,7 +66,7 @@ export default function ImportResume() {
 const OrDivider = () => (
   <div className="mx-[-2.5rem] flex items-center pb-6 pt-8" aria-hidden="true">
     <div className="flex-grow border-t border-[var(--notion-border)]" />
-    <span className="mx-2 mt-[-2px] flex-shrink text-lg text-gray-400">or</span>
+    <span className="mx-2 mt-[-2px] flex-shrink text-lg" style={{ color: "var(--muted-subtle)" }}>or</span>
     <div className="flex-grow border-t border-[var(--notion-border)]" />
   </div>
 );
@@ -79,7 +80,7 @@ const SectionWithHeadingAndCreateButton = ({
 }) => {
   return (
     <>
-      <p className="font-semibold text-gray-900">{heading}</p>
+      <p className="font-semibold" style={{ color: "var(--fg)" }}>{heading}</p>
       <div className="mt-5">
         <Link
           href="/resume-builder"

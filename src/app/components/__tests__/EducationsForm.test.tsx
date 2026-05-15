@@ -4,6 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import resumeReducer from "lib/redux/resumeSlice";
 import settingsReducer, { initialSettings } from "lib/redux/settingsSlice";
 import userReducer from "lib/redux/userSlice";
+import { SoundProvider } from "lib/sound/provider";
 import { EducationsForm } from "components/ResumeForm/EducationsForm";
 
 const renderWithStore = (resumeOverrides?: any) => {
@@ -15,7 +16,13 @@ const renderWithStore = (resumeOverrides?: any) => {
       resume: resumeOverrides ?? resumeReducer(undefined, { type: "__init" }),
     },
   });
-  return render(<Provider store={store}><EducationsForm /></Provider>);
+  return render(
+    <Provider store={store}>
+      <SoundProvider>
+        <EducationsForm />
+      </SoundProvider>
+    </Provider>
+  );
 };
 
 describe("EducationsForm", () => {

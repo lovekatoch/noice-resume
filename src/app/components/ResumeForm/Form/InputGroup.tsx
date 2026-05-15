@@ -28,7 +28,8 @@ export const InputGroupWrapper = ({
   children?: React.ReactNode;
   action?: React.ReactNode;
 }) => (
-  <label className={`text-base font-medium text-gray-700 ${className}`}>
+  <label className={`text-base font-medium ${className}`}
+    style={{ color: "var(--muted)" }}>
     <span className="inline-flex items-center gap-2">
       {label}
       {action}
@@ -38,7 +39,13 @@ export const InputGroupWrapper = ({
 );
 
 export const INPUT_CLASS_NAME =
-  "mt-1 px-3 py-2 rounded-md border text-gray-900 outline-none font-normal text-base w-full bg-white";
+  "mt-1 px-3 py-2 rounded-md border outline-none font-normal text-base w-full";
+
+export const INPUT_STYLE: React.CSSProperties = {
+  backgroundColor: "var(--surface)",
+  color: "var(--fg)",
+  borderColor: "var(--border)",
+};
 
 export const Input = <K extends string>({
   name,
@@ -59,7 +66,7 @@ export const Input = <K extends string>({
         onClick={(e) => e.stopPropagation()}
         onMouseDown={(e) => e.stopPropagation()}
         className={INPUT_CLASS_NAME}
-        style={{ borderColor: "var(--border)" }}
+        style={INPUT_STYLE}
       />
     </InputGroupWrapper>
   );
@@ -82,7 +89,7 @@ export const Textarea = <T extends string>({
         ref={textareaRef}
         name={name}
         className={`${INPUT_CLASS_NAME} resize-none overflow-hidden`}
-        style={{ borderColor: "var(--border)" }}
+        style={INPUT_STYLE}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(name, e.target.value)}
@@ -142,7 +149,7 @@ const BulletListTextareaGeneral = <T extends string>({
         className={`${INPUT_CLASS_NAME} cursor-text [&>div]:list-item ${
           showBulletPoints ? "pl-7" : "[&>div]:list-['']"
         }`}
-        style={{ borderColor: "var(--border)" }}
+        style={INPUT_STYLE}
         // Note: placeholder currently doesn't work
         placeholder={placeholder}
         onChange={(e) => {

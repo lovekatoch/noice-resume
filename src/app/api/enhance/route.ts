@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 
 const WORKER_URL = "https://ai-enhance.lovekashyapkatoch.workers.dev";
-const AI_SECRET = process.env.NEXT_PUBLIC_AI_ENHANCE_SECRET;
+const AI_SECRET = process.env.AI_ENHANCE_SECRET;
 
 export async function POST(request: NextRequest) {
   try {

@@ -26,8 +26,10 @@ export const SparkleIconButton = ({
         type="button"
         onClick={onClick}
         disabled={disabled}
-        className={`rounded-md p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent ${baseColorClass} ${className}`}
-        style={color ? { color } : undefined}
+        className={`rounded-md p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent ${baseColorClass} ${className}`}
+        style={color ? { color } : { color: "var(--muted)" }}
+        onMouseEnter={(e) => { if (!e.currentTarget.disabled) e.currentTarget.style.backgroundColor = "var(--surface-2)"; }}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent" }
         aria-label={tooltipText}
       >
         <svg

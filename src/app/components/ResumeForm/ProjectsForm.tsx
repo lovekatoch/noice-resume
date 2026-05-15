@@ -19,7 +19,7 @@ import { useAIPanel } from "lib/hooks/useAIPanel";
 export const ProjectsForm = () => {
   const projects = useAppSelector(selectProjects);
   const dispatch = useAppDispatch();
-  const themeColor = useAppSelector(selectThemeColor) || "#C75B39";
+  const themeColor = useAppSelector(selectThemeColor) || "#1E3A5F";
 
   const {
     aiPanelOpen,
@@ -103,18 +103,18 @@ Project: ${section.project}\n${section.date ? `Duration: ${section.date}` : ''}\
             />
             <div className="col-span-full">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-base font-medium text-gray-700">Description</span>
+                <span className="text-base font-medium" style={{ color: "var(--muted)" }}>Description</span>
                 {descriptions.length > 0 && (
                   <SparkleIconButton onClick={() => handleSparkleClick(idx)} color={themeColor} size="small" />
                 )}
               </div>
               <BulletListTextarea
-                name="descriptions"
                 label=""
+                labelClassName="col-span-full"
+                name="descriptions"
                 placeholder="Bullet points"
                 value={descriptions}
                 onChange={handleProjectChange}
-                labelClassName="col-span-full"
               />
             </div>
           </FormSection>

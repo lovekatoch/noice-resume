@@ -121,8 +121,10 @@ export const AIPanel = ({
           </h2>
           <button
             onClick={onClose}
-            className="rounded-md p-1 hover:bg-gray-100"
-            style={{ color: "var(--muted)" }}
+            className="rounded-md p-1 transition-colors"
+            style={{ color: "var(--muted)", backgroundColor: "transparent" }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--surface-2)"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
             aria-label="Close"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

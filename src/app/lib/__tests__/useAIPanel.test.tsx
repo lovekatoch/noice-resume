@@ -27,21 +27,21 @@ describe("useAIPanel", () => {
       useAIPanel({ onAccept: jest.fn(), generateMock: () => MOCK_TEXT })
     );
     act(() => {
-      result.current.openPanel();
+      result.current.openPanel("prompt");
     });
     expect(result.current.aiPanelOpen).toBe(true);
     expect(result.current.isLoading).toBe(true);
     expect(result.current.streamingText).toBe("");
   });
 
-  it("should finish loading after timeout and set text", () => {
+  it("should finish loading after timeout and set text", async () => {
     const { result } = renderHook(() =>
       useAIPanel({ onAccept: jest.fn(), generateMock: () => MOCK_TEXT })
     );
     act(() => {
-      result.current.openPanel();
+      result.current.openPanel("prompt");
     });
-    act(() => {
+    await act(async () => {
       jest.advanceTimersByTime(1500);
     });
     expect(result.current.isLoading).toBe(false);
@@ -54,7 +54,7 @@ describe("useAIPanel", () => {
       useAIPanel({ onAccept, generateMock: () => MOCK_TEXT })
     );
     act(() => {
-      result.current.openPanel();
+      result.current.openPanel("prompt");
     });
     act(() => {
       result.current.handleAccept("Accepted text");
@@ -69,7 +69,7 @@ describe("useAIPanel", () => {
       useAIPanel({ onAccept: jest.fn(), generateMock: () => MOCK_TEXT })
     );
     act(() => {
-      result.current.openPanel(2);
+      result.current.openPanel("prompt", 2);
     });
     expect(result.current.aiTargetIdx).toBe(2);
     act(() => {
@@ -81,7 +81,7 @@ describe("useAIPanel", () => {
     expect(result.current.isLoading).toBe(false);
   });
 
-  it("should regenerate and reload", () => {
+  it("should regenerate and reload", async () => {
     const generateMock = jest
       .fn()
       .mockReturnValueOnce("First text")
@@ -90,9 +90,9 @@ describe("useAIPanel", () => {
       useAIPanel({ onAccept: jest.fn(), generateMock })
     );
     act(() => {
-      result.current.openPanel();
+      result.current.openPanel("prompt");
     });
-    act(() => {
+    await act(async () => {
       jest.advanceTimersByTime(1500);
     });
     expect(result.current.streamingText).toBe("First text");
@@ -103,7 +103,7 @@ describe("useAIPanel", () => {
     expect(result.current.isLoading).toBe(true);
     expect(result.current.streamingText).toBe("");
 
-    act(() => {
+    await act(async () => {
       jest.advanceTimersByTime(1500);
     });
     expect(result.current.isLoading).toBe(false);
@@ -115,7 +115,7 @@ describe("useAIPanel", () => {
       useAIPanel({ onAccept: jest.fn() })
     );
     act(() => {
-      result.current.openPanel(3);
+      result.current.openPanel("prompt", 3);
     });
     expect(result.current.aiTargetIdx).toBe(3);
   });
@@ -125,19 +125,19 @@ describe("useAIPanel", () => {
       useAIPanel({ onAccept: jest.fn() })
     );
     act(() => {
-      result.current.openPanel();
+      result.current.openPanel("prompt");
     });
     expect(result.current.aiTargetIdx).toBeNull();
   });
 
-  it("should use default mock text when generateMock is not provided", () => {
+  it("should use default mock text when generateMock is not provided", async () => {
     const { result } = renderHook(() =>
       useAIPanel({ onAccept: jest.fn() })
     );
     act(() => {
-      result.current.openPanel();
+      result.current.openPanel("prompt");
     });
-    act(() => {
+    await act(async () => {
       jest.advanceTimersByTime(1500);
     });
     expect(result.current.streamingText).toBeTruthy();

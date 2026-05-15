@@ -22,7 +22,7 @@ export const EducationsForm = () => {
   const educations = useAppSelector(selectEducations);
   const dispatch = useAppDispatch();
   const form = "educations";
-  const themeColor = useAppSelector(selectThemeColor) || "#C75B39";
+  const themeColor = useAppSelector(selectThemeColor) || "#1E3A5F";
 
   const {
     aiPanelOpen,
@@ -124,7 +124,7 @@ Institution: ${section.school}\nDegree: ${section.degree}\n${section.gpa ? `GPA:
             />
             <div className="col-span-full">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-base font-medium text-gray-700">Additional Information (Optional)</span>
+                <span className="text-base font-medium" style={{ color: "var(--muted)" }}>Additional Information (Optional)</span>
                 {descriptions.length > 0 && (
                   <SparkleIconButton onClick={() => handleSparkleClick(idx)} color={themeColor} size="small" />
                 )}

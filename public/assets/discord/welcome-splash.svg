@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" fill="none">
+  <title>NoiceResume Welcome — Join the Community</title>
+  <desc>Welcome channel graphic for NoiceResume Discord — explains the builder pitch</desc>
+
+  <defs>
+    <linearGradient id="bg-warm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FAF5EF"/>
+      <stop offset="100%" stop-color="#FFFCF7"/>
+    </linearGradient>
+
+    <linearGradient id="accent-bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C75B39"/>
+      <stop offset="100%" stop-color="#E8A56E"/>
+    </linearGradient>
+
+    <linearGradient id="btn-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C75B39"/>
+      <stop offset="100%" stop-color="#D97A4A"/>
+    </linearGradient>
+
+    <linearGradient id="card-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="white"/>
+      <stop offset="100%" stop-color="#FFFCF7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="600" fill="url(#bg-warm)"/>
+
+  <!-- Top accent bar -->
+  <rect width="960" height="6" fill="url(#accent-bar)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="80" cy="80" r="160" fill="#C75B39" opacity="0.04"/>
+  <circle cx="880" cy="520" r="200" fill="#C75B39" opacity="0.04"/>
+  <circle cx="700" cy="100" r="100" fill="#E8A56E" opacity="0.06"/>
+
+  <!-- Document icon (large, top-left of content area) -->
+  <g transform="translate(120, 120)">
+    <rect x="0" y="0" width="64" height="80" rx="8" fill="#C75B39" opacity="0.1"/>
+    <rect x="4" y="4" width="56" height="72" rx="6" fill="#FAF5EF" stroke="#C75B39" stroke-width="2.5"/>
+    <rect x="14" y="18" width="36" height="5" rx="2.5" fill="#C75B39" opacity="0.5"/>
+    <rect x="14" y="30" width="28" height="5" rx="2.5" fill="#C75B39" opacity="0.35"/>
+    <rect x="14" y="42" width="32" height="5" rx="2.5" fill="#C75B39" opacity="0.35"/>
+    <rect x="14" y="54" width="20" height="5" rx="2.5" fill="#C75B39" opacity="0.35"/>
+    <!-- Sparkle -->
+    <circle cx="52" cy="10" r="3" fill="#C75B39"/>
+  </g>
+
+  <!-- Welcome heading -->
+  <text x="200" y="148" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="40" font-weight="800" letter-spacing="-0.03em" fill="#2D2D2D">
+    Welcome to NoiceResume
+  </text>
+
+  <text x="200" y="180" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="16" font-weight="400" fill="#6B6B6B">
+    The free, AI-powered resume builder that <tspan fill="#C75B39" font-weight="600">actually</tspan> helps you get hired.
+  </text>
+
+  <!-- Cards row -->
+  <!-- Card 1: Free -->
+  <g transform="translate(80, 240)">
+    <rect width="240" height="180" rx="12" fill="url(#card-bg)" stroke="#E8D5C8" stroke-width="1.5"/>
+    <circle cx="120" cy="40" r="20" fill="#C75B39" opacity="0.1"/>
+    <text x="120" y="46" text-anchor="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="700" fill="#C75B39">$</text>
+    <text x="120" y="85" text-anchor="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="700" fill="#2D2D2D">Free Forever</text>
+    <text x="120" y="115" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B6B6B">No sign-up, no paywall,</text>
+    <text x="120" y="133" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B6B6B">no credit card. Just</text>
+    <text x="120" y="151" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B6B6B">a resume that works.</text>
+  </g>
+
+  <!-- Card 2: AI-Powered -->
+  <g transform="translate(360, 240)">
+    <rect width="240" height="180" rx="12" fill="url(#card-bg)" stroke="#E8D5C8" stroke-width="1.5"/>
+    <circle cx="120" cy="40" r="20" fill="#C75B39" opacity="0.1"/>
+    <text x="120" y="47" text-anchor="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="700" fill="#C75B39">AI</text>
+    <text x="120" y="85" text-anchor="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="700" fill="#2D2D2D">AI-Powered</text>
+    <text x="120" y="115" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B6B6B">AI writes bullet points,</text>
+    <text x="120" y="133" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B6B6B">tailors to job</text>
+    <text x="120" y="151" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B6B6B">descriptions, optimizes</text>
+    <text x="120" y="169" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B6B6B">for ATS.</text>
+  </g>
+
+  <!-- Card 3: Community -->
+  <g transform="translate(640, 240)">
+    <rect width="240" height="180" rx="12" fill="url(#card-bg)" stroke="#E8D5C8" stroke-width="1.5"/>
+    <circle cx="120" cy="40" r="20" fill="#C75B39" opacity="0.1"/>
+    <text x="120" y="47" text-anchor="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="700" fill="#C75B39">+</text>
+    <text x="120" y="85" text-anchor="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="700" fill="#2D2D2D">Community</text>
+    <text x="120" y="115" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B6B6B">Get resume reviews,</text>
+    <text x="120" y="133" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B6B6B">share templates, ask</text>
+    <text x="120" y="151" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B6B6B">career questions — all</text>
+    <text x="120" y="169" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B6B6B">from people who get it.</text>
+  </g>
+
+  <!-- CTA section -->
+  <g transform="translate(480, 480)">
+    <!-- CTA Button -->
+    <rect x="-160" y="-24" width="320" height="48" rx="24" fill="url(#btn-grad)"/>
+    <text x="0" y="6" text-anchor="middle" font-family="'Inter', sans-serif" font-size="16" font-weight="700" fill="white">Start Building → noiceresume.com</text>
+
+    <!-- Subtext -->
+    <text x="0" y="40" text-anchor="middle" font-family="'Inter', sans-serif" font-size="12" fill="#8A8680">Already have a resume? Share it in #resume-review for feedback</text>
+  </g>
+
+  <!-- Footer line -->
+  <line x1="200" y1="560" x2="760" y2="560" stroke="#E8D5C8" stroke-width="1"/>
+  <text x="480" y="580" text-anchor="middle" font-family="'Inter', sans-serif" font-size="11" fill="#8A8680">NoiceResume · Build a Resume That Gets You Hired</text>
+</svg>

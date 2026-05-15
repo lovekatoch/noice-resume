@@ -1,0 +1,31 @@
+# GitHub issue labels for NoiceResume
+# Apply with: gh label create <name> --color <color> --description "<desc>"
+# Or use a GitHub Action like crazy-max/ghaction-github-labeler
+
+- name: good-first-issue
+  color: "7057ff"
+  description: Beginner-friendly, scoped, documented issues
+
+- name: help-wanted
+  color: "008672"
+  description: Needs contributor attention, not actively worked by core
+
+- name: hacktoberfest
+  color: "ff7518"
+  description: Eligible for Hacktoberfest contributions
+
+- name: bug
+  color: "d73a4a"
+  description: Something is broken
+
+- name: enhancement
+  color: "a2eeef"
+  description: Feature request or improvement
+
+- name: template
+  color: "fbca04"
+  description: Template design contribution
+
+- name: discussion
+  color: "d4c5f9"
+  description: RFC, design discussion, or open-ended conversation

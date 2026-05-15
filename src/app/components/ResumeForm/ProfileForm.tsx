@@ -13,7 +13,7 @@ export const ProfileForm = () => {
   const fullResume = useAppSelector(selectResume);
   const dispatch = useAppDispatch();
   const { name, email, phone, url, summary, location } = profile;
-  const themeColor = useAppSelector(selectThemeColor) || "#C75B39";
+  const themeColor = useAppSelector(selectThemeColor) || "#1E3A5F";
 
   const handleProfileChange = (field: keyof ResumeProfile, value: string) => {
     dispatch(changeProfile({ field, value }));

@@ -1,0 +1,13 @@
+name = "referral-webhook"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "REFERRAL_KV"
+id = "your-kv-namespace-id-here"
+preview_id = "your-preview-kv-id-here"
+
+[vars]
+DISCORD_BOT_WEBHOOK_SECRET = "change-me-to-match-bot-env"
+DISCORD_BOT_WEBHOOK_URL = "http://localhost:3456/webhook"
+REWARD_DAYS = "7"

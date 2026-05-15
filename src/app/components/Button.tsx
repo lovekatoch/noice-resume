@@ -36,7 +36,7 @@ export const IconButton = ({
     <Button
       type="button"
       className={cx(
-        "outline-none hover:bg-gray-100 focus-visible:bg-gray-100 flex items-center justify-center",
+        "outline-none flex items-center justify-center",
         size === "medium"
           ? "min-w-[44px] min-h-[44px] p-1.5 rounded-full"
           : "min-w-[26px] min-h-[26px] p-0.5 rounded-md",

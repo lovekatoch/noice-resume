@@ -43,11 +43,23 @@ export function useSoundFor(role: SoundRole): () => void {
 function useReducedMotion(): boolean {
   const [matches, setMatches] = useState(() => {
     if (typeof window === "undefined") return false;
+    
+    // Handle case where matchMedia is not available (e.g., in JSDOM test environment)
+    if (typeof window.matchMedia !== "function") {
+      return false;
+    }
+    
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    
+    // Handle case where matchMedia is not available (e.g., in JSDOM test environment)
+    if (typeof window.matchMedia !== "function") {
+      return;
+    }
+    
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const handler = (e: MediaQueryListEvent) => setMatches(e.matches);
     mq.addEventListener("change", handler);

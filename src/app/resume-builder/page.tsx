@@ -1,17 +1,34 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { useDispatch } from "react-redux";
 import { ResumeForm } from "components/ResumeForm";
 import { Resume } from "components/Resume";
+import { changeSettings } from "lib/redux/settingsSlice";
+import { captureReferralToken } from "lib/referral";
 
 export default function Create() {
   const [mobileTab, setMobileTab] = useState<"form" | "preview">("form");
   const [isMobile, setIsMobile] = useState(false);
+  const dispatch = useDispatch();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const template = searchParams.get("template");
+    if (template) {
+      dispatch(changeSettings({ field: "template", value: template }));
+    }
+  }, [searchParams, dispatch]);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
+  }, []);
+
+  useEffect(() => {
+    captureReferralToken();
   }, []);
 
   return (
