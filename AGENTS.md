@@ -1,12 +1,29 @@
 # NoiceResume — Project Context
 
-All agents must know this context. Updated: 2026-05-01.
+All agents must know this context. Updated: 2026-05-15.
 
 ## Project
 
-**Name:** NoiceResume — A Notion-inspired resume builder
+**Name:** NoiceResume — AI-powered resume builder for GenZ
 **URL:** https://noiceresume.pages.dev/
+**Staging URL:** https://v2.noiceresume.pages.dev/
 **Repo:** `/Users/lovekatoch/Documents/noiceresume`
+**Goal:** 100 resume downloads/day
+
+## Staging → Production Pipeline
+
+**CRITICAL — All agents must follow this workflow:**
+
+1. Always work on the `v2` branch (currently checked out)
+2. After making changes: commit, push, then run `npm run deploy` to deploy to Cloudflare Pages preview
+3. The preview URL becomes `v2.noiceresume.pages.dev` automatically
+4. The board (CEO/Love) reviews changes on v2
+5. Once approved: `git checkout main && git merge v2 && git checkout v2` then run `npm run deploy:prod`
+6. Production deploy requires approval — do NOT merge to main or deploy to prod without board approval
+
+Deploy scripts:
+- `npm run deploy` → Preview deploy from current branch (use for staging deploys)
+- `npm run deploy:prod` → Production deploy (main branch only, requires board approval)
 
 ## Stack
 
@@ -24,11 +41,11 @@ Next.js 13 · TypeScript · Tailwind CSS · Redux Toolkit · React-PDF · Heroic
 ## Key Dev Commands
 
 ```bash
-npm run dev        # Dev server
-npm run build      # Production build (CTO must run before deploy)
-npm run deploy     # Cloudflare Pages preview deploy
-npm run deploy:prod # Cloudflare Pages production deploy
-npm test           # Jest tests (67 total, 8 failing)
+npm run dev           # Dev server
+npm run build         # Production build (must pass before deploy)
+npm run deploy        # Preview deploy to v2.noiceresume.pages.dev
+npm run deploy:prod   # Production deploy to noiceresume.pages.dev
+npm test              # Jest tests (67 total, 8 failing)
 ```
 
 ## Tech Stack Details
@@ -37,62 +54,19 @@ npm test           # Jest tests (67 total, 8 failing)
 - **Redux Toolkit** — `resumeSlice` (profile, workExperiences, educations, projects, skills, custom) + `settingsSlice` (theme, font, size)
 - **Persistence** — localStorage key `open-resume-state`, deep-merged on load
 - **PDF rendering** — `@react-pdf/renderer` + `pdfjs-dist`
-- **Cloudflare Pages** — deploy via `npx wrangler pages deploy out --project-name=noiceresume`
+- **Cloudflare Pages** — project name: `noiceresume`
 
-## Form Sections (`src/app/components/ResumeForm/`)
+## Agent Roles
 
-| Form | File | AI-Enhanced? |
-|------|------|-------------|
-| ProfileForm | ProfileForm.tsx | ✅ Objective |
-| WorkExperiencesForm | WorkExperiencesForm.tsx | ✅ Description bullets |
-| EducationsForm | EducationsForm.tsx | ✅ Descriptions |
-| ProjectsForm | ProjectsForm.tsx | ✅ Descriptions |
-| SkillsForm | SkillsForm.tsx | ✅ AISuggestButton |
-| CustomForm | CustomForm.tsx | ❌ |
-| ThemeForm | ThemeForm/index.tsx | ❌ Color/font/size |
+- **CEO (Love)** — Strategy, decisions, board approval. Model: deepseek-v4-pro
+- **CTO** — Engineering, fixes, features, deploys. Model: deepseek-v4-flash. Budget: $3/mo
+- **GrowthPM** — Sprint planning, task tracking, coordination. Model: deepseek-v4-flash. Budget: $3/mo
+- **CMO** — Marketing, growth, SEO, social. Model: deepseek-v4-flash. Budget: $2/mo
+- **UXDesigner** — UI/UX, design system, templates. Model: deepseek-v4-flash. Budget: $2/mo
 
-## AI Feature (Phase 1 UI — backend TBD)
+## Milestones
 
-- **SparkleIconButton** — blue sparkle, size="small"|"medium"
-- **AIPanel** — modal overlay, Accept/Regenerate/Cancel, Escape-to-close, backdrop-click-to-close
-- **AISuggestButton** — Replace all / Append to existing dropdown
-- All AI calls currently use `setTimeout` mock (1.5s delay) — Phase 2 will add real backend
-
-## Current State
-
-- **Build**: ✅ Passes `npm run build`
-- **Tests**: 67 total — 59 passed (88.1%), 8 failed, 2 skipped
-- **Failing tests**: Font selector (uses `div` not `button`), bulk click (buttons hidden in collapsed sections)
-- **Phase 2 pending**: Real AI backend integration (model, prompts, API)
-
-## Architecture
-
-```
-src/app/
-├── components/
-│   ├── ResumeForm/        # All form sections
-│   ├── SparkleIconButton.tsx
-│   ├── AIPanel.tsx        # AI modal
-│   ├── AISuggestButton.tsx
-│   └── Resume/            # Preview + PDF rendering
-├── lib/redux/
-│   ├── resumeSlice.ts     # Resume data
-│   ├── settingsSlice.ts   # Theme/settings
-│   └── local-storage.ts  # Persistence
-└── lib/parse-resume-from-pdf/
-```
-
-## Deployment
-
-**Local only — no remote deploys unless explicitly requested.**
-
-All Cloudflare Pages and GitHub authentication has been deleted. The project stays local.
-Do NOT run `npm run deploy`, `npm run deploy:prod`, or any wrangler/git push commands unless the user explicitly asks to deploy.
-
-## Important Notes
-
-- Project is **100% local** — no GitHub pushes, no Cloudflare deploys
-- `npm run build` must pass before any deploy (if ever requested)
-- PDF import navigates to builder but data flow is unclear — needs verification
-- Never commit secrets or credentials to the repo
-- Use `git commit` with message ending in `Co-Authored-By: Paperclip <noreply@paperclip.ing>` for all commits
+- **M1**: Staging pipeline live, first feature shipped (week 1)
+- **M2**: 10 organic downloads/day (week 2)
+- **M3**: 50 downloads/day (week 4)
+- **M4**: 100 downloads/day (week 6)
