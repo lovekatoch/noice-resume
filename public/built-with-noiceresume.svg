@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="286" height="20" role="img" aria-label="built with NoiceResume">
+  <title>built with NoiceResume</title>
+  <linearGradient id="s" x2="0" y2="100%">
+    <stop offset="0" stop-color="#fff" stop-opacity=".7"/>
+    <stop offset=".1" stop-color="#aaa" stop-opacity=".1"/>
+    <stop offset=".9" stop-color="#000" stop-opacity=".3"/>
+    <stop offset="1" stop-color="#000" stop-opacity=".5"/>
+  </linearGradient>
+  <clipPath id="r">
+    <rect width="286" height="20" rx="3" fill="#fff"/>
+  </clipPath>
+  <g clip-path="url(#r)">
+    <rect width="96" height="20" fill="#555"/>
+    <rect x="96" width="190" height="20" fill="#1E3A5F"/>
+    <rect width="286" height="20" fill="url(#s)"/>
+  </g>
+  <g fill="#fff" font-family="Verdana,DejaVu Sans,sans-serif" font-size="11px" text-anchor="middle">
+    <text x="48" y="14">built with</text>
+    <text x="191" y="14">NoiceResume</text>
+  </g>
+</svg>
