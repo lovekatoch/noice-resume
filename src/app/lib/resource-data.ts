@@ -632,6 +632,286 @@ export const RESOURCES: ResourceMeta[] = [
       },
     ],
   },
+  {
+    slug: "career-change-resume",
+    title: "Career Change Resume Guide — How to Switch Industries Successfully",
+    headline: "How to Write a Career Change Resume That Gets Interviews",
+    subheadline:
+      "Switching careers? Learn how to reframe your experience, highlight transferable skills, and write a resume that convinces hiring managers to take a chance on you.",
+    description:
+      "Complete guide to writing a career change resume. Learn how to identify transferable skills, reframe unrelated experience, choose the right format, and craft a narrative that makes hiring managers say yes.",
+    keywords: [
+      "career change resume",
+      "career change resume guide",
+      "switching careers resume",
+      "career transition resume",
+      "resume for career changers",
+      "how to change careers",
+      "career change resume examples",
+      "career pivot resume tips",
+    ],
+    ogTitle: "Career Change Resume Guide — How to Switch Industries | NoiceResume",
+    ogDescription:
+      "Switching careers? Learn how to write a resume that highlights transferable skills and convinces hiring managers to say yes. Free builder included.",
+    sections: [
+      {
+        heading: "Start with a powerful career change summary",
+        body: "Your resume summary is the most critical section for career changers. Don't open with what you've done — open with what you'll bring. State your target role, then connect your past experience to it through transferable skills and results. Example: 'Operations manager transitioning to product management. 7 years of leading cross-functional teams, analyzing data to drive decisions, and launching initiatives that improved efficiency by 40%. Product School certified with experience managing product roadmaps.' This immediately tells the recruiter why you're a fit, not why you're a risk.",
+      },
+      {
+        heading: "Use a hybrid or functional resume format",
+        body: "A chronological resume highlights your career timeline — which is exactly what works against you when you're changing fields. Use a hybrid format instead: lead with a skills summary section that groups your most relevant capabilities by theme, then follow with a condensed chronological work history. This puts your transferable skills front and center while still showing professional continuity. Avoid a purely functional format if possible — many recruiters are skeptical of resumes that hide the timeline entirely.",
+      },
+      {
+        heading: "Identify and spotlight your transferable skills",
+        body: "Every job teaches skills that transfer across industries. A teacher develops presentation, stakeholder management, and curriculum design skills. A retail manager develops operations, team leadership, and P&L management skills. A journalist develops research, storytelling, and deadline management skills. Make a list of everything you've done, then translate each into skills relevant to your target role. Use industry-specific language: if you're targeting tech, frame 'managing a store team' as 'leading cross-functional teams to achieve operational KPIs.'",
+      },
+      {
+        heading: "Reframe your experience bullets for the new industry",
+        body: "Rewrite every experience bullet to speak the language of your target industry. Strip out jargon from your old field and replace it with terms your new industry uses. Focus on results and impact, not responsibilities. Example reframe — instead of 'Managed restaurant inventory and placed weekly supply orders,' write 'Optimized supply chain and inventory management across 200+ SKUs, reducing waste by 22% through data-driven ordering.' The second version uses language relevant to supply chain, operations, and analytics roles.",
+      },
+      {
+        heading: "Add relevant projects, certifications, and education",
+        body: "Bridge the experience gap by showcasing what you've done to prepare for the transition. Completed a bootcamp or certification? List it prominently. Built side projects or done freelance work in the new field? Add a Projects section. Volunteer experience relevant to the target role belongs on your resume. Taking online courses? Include them under a Professional Development section. These signals show the hiring manager you're serious about the switch and have already started building competence in the new field.",
+      },
+      {
+        heading: "Address the elephant in the room — briefly",
+        body: "Don't try to hide that you're changing careers — address it confidently. A brief line in your summary or cover letter like 'Transitioning from finance to UX design after completing a 6-month immersive program and shipping 3 client projects' turns a potential concern into a story of initiative. Your resume should make the case that you're not starting from zero — you're bringing years of professional experience plus new, targeted skills. The best career change resumes make the transition feel like a strategic move, not a leap of faith.",
+      },
+      {
+        heading: "Network your way past the ATS",
+        body: "Career changers often face an uphill battle with ATS systems that filter for exact industry keywords. Combat this by networking alongside your applications. Reach out to people in your target role for informational interviews. Ask for referrals — a referred candidate is 4x more likely to get an interview. Use your cover letter to explicitly connect your past experience to the role requirements. And build your resume with NoiceResume, which helps you optimize keywords and format for the highest possible ATS score.",
+      },
+      {
+        heading: "Include a strong cover letter — it matters more for career changers",
+        body: "For career changers, a cover letter isn't optional — it's where you tell the full story of your transition. Use it to explain why you're changing careers, what you've done to prepare, and why your unique background makes you a stronger candidate than someone who's been in the field for years. Your resume shows what you've done. Your cover letter shows why it matters. Together, they should paint a cohesive picture of a candidate who brings a fresh perspective and proven professional skills to the table.",
+      },
+    ],
+  },
+  {
+    slug: "cover-letter-guide",
+    title: "How to Write a Cover Letter in 2025 — Complete Guide With Examples",
+    headline: "How to Write a Cover Letter That Gets You the Interview",
+    subheadline:
+      "A step-by-step guide to writing a cover letter that hiring managers actually read. Includes templates, examples, and AI-powered tips for 2025.",
+    description:
+      "Learn how to write a cover letter that stands out in 2025. Step-by-step structure, examples for every career stage, and tips for AI-powered customization that gets responses.",
+    keywords: [
+      "how to write a cover letter",
+      "cover letter guide 2025",
+      "cover letter examples",
+      "cover letter template",
+      "cover letter tips",
+      "professional cover letter",
+      "cover letter format",
+      "cover letter for job application",
+    ],
+    ogTitle: "How to Write a Cover Letter in 2025 — Complete Guide | NoiceResume",
+    ogDescription:
+      "Write a cover letter that hiring managers actually read. Step-by-step structure, proven examples, and AI-powered tips. Free builder included.",
+    sections: [
+      {
+        heading: "Why cover letters still matter in 2025",
+        body: "Despite headlines declaring the cover letter dead, 83% of hiring managers say a strong cover letter can get an interview even when the resume isn't perfect. In 2025, a cover letter is your differentiator. Resumes are constrained by format and ATS optimization — they show what you did. A cover letter shows who you are, why you're interested, and how you think. It's your chance to tell the story your resume can't. For career changers, applicants with employment gaps, and anyone applying to smaller companies, a cover letter is often the deciding factor.",
+      },
+      {
+        heading: "The proven cover letter structure",
+        body: "A winning cover letter follows a clear four-paragraph structure. Paragraph 1: Hook — state the role you're applying for and one compelling reason you're excited about it (reference something specific about the company). Paragraph 2: Value — connect 2-3 of your strongest achievements directly to the role's requirements. Paragraph 3: Fit — explain why this company and this role specifically, not just any job. Paragraph 4: Call to action — express enthusiasm for next steps and make it easy to reach you. Keep the entire letter under 300 words — shorter is almost always better.",
+      },
+      {
+        heading: "Open with a hook, not 'I am writing to apply'",
+        body: "The first sentence of your cover letter determines whether the rest gets read. Never open with 'I am writing to apply for the position of...' — it wastes the most valuable real estate in your letter. Instead, lead with something specific and compelling. Example: 'When I saw that Acme Corp is looking for a product designer to reimagine the creator tools experience, I immediately thought of the design system I built that reduced shipping time by 40% at my current company.' This shows you've done your research and you're already thinking about how you'd contribute.",
+      },
+      {
+        heading: "Match achievements to job requirements",
+        body: "Use the body of your cover letter to directly connect your experience to the role's top requirements. Pick the 3 most important qualifications from the job description and address each with a specific achievement. Don't just repeat your resume bullets — add context and narrative. Example: 'Your posting emphasizes data-driven decision making. At Company X, I built a dashboard that combined customer support tickets with product analytics, surfacing the top 3 friction points that, once fixed, reduced churn by 15%.' This shows you read the job description carefully and have directly relevant experience.",
+      },
+      {
+        heading: "Show you know the company",
+        body: "The 'why this company' section separates great cover letters from generic ones. Mention a recent product launch, a company value that resonates with you, a piece of content they published, or a challenge they face that you'd be excited to help solve. This takes 5 minutes of research but signals genuine interest. Example: 'I've been following NoiceResume's growth since launch and was particularly impressed by the template system — as someone who has designed consumer products, I'd love to help push the builder experience even further.' Generic flattery doesn't work. Specific observations do.",
+      },
+      {
+        heading: "Keep it short, scannable, and human",
+        body: "Hiring managers spend an average of 30-60 seconds on a cover letter. Your letter must work at a glance. Keep paragraphs to 3-4 sentences max. Use clear, direct language — write like you speak, not like a corporate memo. Avoid clichés and buzzwords (no 'leverage my skillset,' 'synergistic approach,' or 'proven track record of success'). Read your letter aloud. If it sounds like a human wrote it, you're on the right track. If it sounds like a template, rewrite it. Your personality should come through.",
+      },
+      {
+        heading: "Tailor every cover letter — AI can help",
+        body: "Sending the same cover letter to every application is worse than sending none. But tailoring each one from scratch takes time. Use AI tools to accelerate the process: paste the job description and your resume, ask for a draft that matches your achievements to key requirements, then edit heavily to add your voice, company-specific details, and personality. NoiceResume's AI-powered writing assistant can help you generate tailored cover letter drafts, but the final polish should always be yours. AI gets you 80% there — your editing makes it authentic.",
+      },
+      {
+        heading: "Common cover letter mistakes to avoid",
+        body: "The most common mistakes include: addressing the wrong company or role (double-check every time); rehashing your resume without adding new context; writing too long (over 300 words); using a generic template with no company-specific details; being overly formal or using corporate jargon; making it all about what you want rather than what you'll contribute; and forgetting a clear call to action. Every sentence in your cover letter should answer the hiring manager's core question: 'Why should I interview this person over everyone else?' If a sentence doesn't help answer that, cut it.",
+      },
+    ],
+  },
+  {
+    slug: "resume-action-verbs",
+    title: "250+ Resume Action Verbs & Power Words for 2025",
+    headline: "250+ Resume Action Verbs That Make Your Bullets Stand Out",
+    subheadline:
+      "Ditch weak language. These 250+ action verbs and power words will make your resume bullets irresistible to recruiters and ATS-friendly at the same time.",
+    description:
+      "The ultimate list of 250+ resume action verbs organized by skill category. Learn which power words recruiters look for, why weak verbs cost you interviews, and how to use strong verbs to maximize impact.",
+    keywords: [
+      "resume action verbs",
+      "resume action words",
+      "resume power words",
+      "action verbs for resume",
+      "strong resume verbs",
+      "resume bullet verbs",
+      "best resume action words 2025",
+      "resume language tips",
+    ],
+    ogTitle: "250+ Resume Action Verbs & Power Words for 2025 | NoiceResume",
+    ogDescription:
+      "250+ action verbs and power words to make your resume bullets stand out. Organized by skill category — leadership, teamwork, analysis, creativity, and more.",
+    sections: [
+      {
+        heading: "Why action verbs matter more than you think",
+        body: "The first word of every bullet on your resume sets the tone for the entire statement. Weak openings like 'Responsible for,' 'Helped with,' or 'Duties included' signal passivity and make your contributions sound like job descriptions. Strong action verbs like 'Launched,' 'Designed,' 'Negotiated,' and 'Accelerated' signal ownership, impact, and initiative. ATS systems and recruiters both respond to action-oriented language. In fact, studies show resumes with varied, powerful verbs at the start of each bullet are rated as more competent and hireable than those using weak language — even when the achievements are identical.",
+      },
+      {
+        heading: "Leadership and management verbs",
+        body: "Use these verbs when you led teams, managed projects, or directed initiatives: Accelerated, Championed, Coached, Coordinated, Cultivated, Delegated, Directed, Empowered, Established, Executed, Founded, Guided, Hired, Influenced, Initiated, Inspired, Launched, Led, Managed, Mentored, Mobilized, Motivated, Orchestrated, Oversaw, Pioneered, Recruited, Spearheaded, Steered, Streamlined, Supervised, Transformed. Example: 'Spearheaded a cross-functional initiative that aligned engineering, design, and marketing teams, reducing product launch cycles from 12 weeks to 6 weeks.'",
+      },
+      {
+        heading: "Achievement and results verbs",
+        body: "Use these verbs when you want to emphasize tangible outcomes: Achieved, Amplified, Attained, Boosted, Captured, Consolidated, Decreased, Delivered, Drove, Earned, Elevated, Exceeded, Expanded, Generated, Grew, Improved, Increased, Maximized, Outperformed, Produced, Raised, Realized, Reduced, Saved, Secured, Strengthened, Surpassed, Yielded. Always pair these with a number. Example: 'Grew organic search traffic by 340% within 12 months, generating 50,000+ monthly visitors and a 22% conversion rate to product signups.'",
+      },
+      {
+        heading: "Creativity and innovation verbs",
+        body: "Use these verbs when you built, designed, or created something new: Authored, Brainstormed, Built, Composed, Conceptualized, Crafted, Created, Designed, Developed, Devised, Drafted, Engineered, Envisioned, Formulated, Imagined, Innovated, Invented, Originated, Prototyped, Reimagined, Revitalized, Shaped, Strategized, Visualized. Example: 'Designed and prototyped a new onboarding experience that reduced time-to-first-value from 3 days to under 4 hours for enterprise customers.'",
+      },
+      {
+        heading: "Analysis and problem-solving verbs",
+        body: "Use these verbs when you analyzed data, solved problems, or improved processes: Analyzed, Assessed, Audited, Calculated, Diagnosed, Discovered, Evaluated, Examined, Forecasted, Identified, Interpreted, Investigated, Measured, Modeled, Pinpointed, Projected, Quantified, Reconciled, Researched, Resolved, Solved, Surveyed, Tested, Uncovered, Validated. Example: 'Analyzed 2 years of customer churn data, uncovering 3 root causes that, once addressed, reduced churn by 28% and saved $1.4M in annual revenue.'",
+      },
+      {
+        heading: "Communication and collaboration verbs",
+        body: "Use these verbs when you communicated, collaborated, or built relationships: Advocated, Arbitrated, Briefed, Collaborated, Conveyed, Counseled, Facilitated, Liaised, Mediated, Negotiated, Partnered, Persuaded, Pitched, Presented, Promoted, Publicized, Reported, Represented, Synthesized, Translated, Unified. Example: 'Presented quarterly strategy updates to C-suite executives, translating complex data into actionable insights that shaped $5M in budget allocation decisions.'",
+      },
+      {
+        heading: "Technical and operational verbs",
+        body: "Use these verbs when you implemented systems, built technical solutions, or optimized operations: Administered, Automated, Centralized, Configured, Deployed, Digitized, Implemented, Installed, Integrated, Migrated, Modernized, Optimized, Overhauled, Programmed, Reengineered, Refactored, Scaled, Standardized, Systematized, Upgraded. Example: 'Migrated 200+ microservices to Kubernetes, reducing infrastructure costs by 35% while improving deployment frequency from monthly to multiple times per day.'",
+      },
+      {
+        heading: "How to use action verbs effectively",
+        body: "Now that you have the list, here's how to use it: 1) Start every experience bullet with a different verb — variety shows range. 2) Match the verb's intensity to the achievement: 'Improved typing speed by 10%' and 'Transformed the engineering culture' are different levels of impact. 3) Pair strong verbs with quantified results for maximum effect. 4) Use present tense verbs (Manage, Lead, Develop) for your current role, past tense (Managed, Led, Developed) for previous roles. 5) Avoid overused verbs like 'Managed' and 'Worked on' — dig into this list for more specific, powerful alternatives. Build your resume with NoiceResume and our AI will suggest the strongest verbs for each achievement.",
+      },
+    ],
+  },
+  {
+    slug: "resume-with-no-experience",
+    title: "How to Write a Resume With No Experience — Complete Guide for 2025",
+    headline: "How to Write a Resume When You Have No Work Experience",
+    subheadline:
+      "No work experience? No problem. Learn how to build a compelling resume using education, projects, volunteer work, and skills that get you hired — even with a blank work history.",
+    description:
+      "Step-by-step guide to writing a resume with no work experience. Learn what to include instead of experience, how to showcase projects and education, and templates that work for students and career starters.",
+    keywords: [
+      "resume with no experience",
+      "no experience resume",
+      "first job resume",
+      "student resume guide",
+      "entry level resume no experience",
+      "resume for students",
+      "how to write first resume",
+      "resume without work history",
+    ],
+    ogTitle: "How to Write a Resume With No Experience — Complete Guide | NoiceResume",
+    ogDescription:
+      "No work experience? Build a resume that gets hired anyway. Expert guide on using education, projects, and skills to land your first job. Free builder included.",
+    sections: [
+      {
+        heading: "Shift your mindset — you have more than you think",
+        body: "The biggest mistake people with no formal work experience make is assuming they have nothing to put on a resume. You have more than you think: class projects, volunteer work, internships, freelance gigs, student organizations, sports teams, personal projects, online courses, certifications, even hobbies that demonstrate relevant skills. A side project you built for fun? That's a project. Tutoring your neighbor's kid? That demonstrates communication and teaching skills. Organizing a charity event? That's project management. Every experience that developed a skill belongs on your resume when you're starting out.",
+      },
+      {
+        heading: "Lead with a strong career objective",
+        body: "When you lack experience, your career objective does the heavy lifting of framing you as a serious candidate. Write 2-3 sentences that state: 1) who you are (student, recent grad, career starter), 2) what you bring (key skills, education, projects), and 3) what you're looking for (target role, industry). Example: 'Computer science student at University of Michigan with hands-on experience building full-stack web applications through coursework and hackathons. Seeking a software engineering internship where I can contribute to real-world products while learning from experienced engineers.' This frames you professionally without pretending you have experience you don't.",
+      },
+      {
+        heading: "Put education front and center",
+        body: "When work experience is thin, education becomes your headline section. Place it at the top, below your summary. Include your degree, university name, expected graduation date, GPA (if 3.0+), relevant coursework, academic honors, and any study abroad or special programs. List 4-8 courses directly relevant to your target role — a marketing major applying for content roles might list Digital Marketing Strategy, Consumer Behavior, Content Creation, and SEO Fundamentals. If you've taken online courses or earned certifications (Coursera, edX, Google Certificates), include those too under a separate Professional Development section.",
+      },
+      {
+        heading: "Build a projects section that shows real skills",
+        body: "A strong projects section can substitute for work experience when you're starting out. Projects demonstrate that you can apply skills to create real outputs — which is what employers actually care about. For each project, include: the project name, a one-line description, the tools/technologies used, and 2-3 bullet points describing what you built and the results. Example: 'Built a donation tracker app using React, Node.js, and PostgreSQL that processed 500+ donations during a week-long charity drive, used by 4 nonprofit organizations.' Class projects, hackathon entries, personal websites, and freelance work all count.",
+      },
+      {
+        heading: "Include volunteer experience and extracurriculars",
+        body: "Volunteer work and extracurricular activities are real experience — list them in a dedicated section with the same format as work experience. Include the organization name, your role, dates, and 2-3 bullets describing what you did and accomplished. Leading a student club is leadership experience. Organizing a fundraising event is project management. Running a club's social media is marketing experience. Managing a budget for a student organization is financial experience. Frame each activity in professional terms: 'Coordinated 15 volunteers across 3 committees to execute a campus-wide charity event that raised $12,000.'",
+      },
+      {
+        heading: "Showcase your skills section prominently",
+        body: "Your skills section becomes especially important when you lack work history. List hard skills (software, tools, programming languages, frameworks, lab techniques) and relevant soft skills (communication, teamwork, adaptability, problem-solving). Group them by category: Technical Skills, Tools & Software, Languages, Interpersonal Skills. Be honest — only list skills you can demonstrate in an interview. If you say you know Python but can't write a simple script when asked, you'll lose credibility. Place the skills section after education and before projects for maximum visibility.",
+      },
+      {
+        heading: "What to cut — things that don't belong",
+        body: "When space is precious, every line counts. Remove: high school information if you're in or beyond college, a photo (creates hiring bias), references or 'references available upon request' (wasted space), hobbies unrelated to the job (unless they demonstrate a relevant skill), and filler phrases like 'hard worker' or 'fast learner' — show don't tell. Also avoid listing soft skills without evidence — don't say you're a 'team player,' describe a group project where you collaborated effectively. Every element of your resume should answer the question: 'Does this make me look more qualified?' If the answer is no, cut it.",
+      },
+      {
+        heading: "Use a clean, professional template designed for entry-level",
+        body: "Your resume format matters even more when content is light. A clean, well-structured template signals professionalism and attention to detail. NoiceResume offers templates specifically designed for entry-level candidates and students — they emphasize education, skills, and projects while maintaining a polished, ATS-friendly layout. The builder also uses AI to suggest stronger language for your bullets and helps you identify content gaps. Build your first resume in minutes, not hours — it's free and requires no sign-up.",
+      },
+    ],
+  },
+  {
+    slug: "resume-vs-cv",
+    title: "Resume vs CV — What's the Difference and When to Use Each",
+    headline: "Resume vs CV — What's the Real Difference?",
+    subheadline:
+      "Resume or CV? The terms are used interchangeably, but they're not the same. Learn the key differences, when to use each, and how to format both correctly for 2025.",
+    description:
+      "Clear, comprehensive guide to the differences between a resume and a CV. Learn when to use each, how long they should be, what to include, and geographic variations in 2025.",
+    keywords: [
+      "resume vs CV",
+      "difference between resume and CV",
+      "resume or CV",
+      "what is a CV",
+      "CV vs resume difference",
+      "curriculum vitae vs resume",
+      "when to use CV",
+      "resume vs CV USA",
+    ],
+    ogTitle: "Resume vs CV — What's the Difference? Complete Guide | NoiceResume",
+    ogDescription:
+      "Resume or CV? Learn the key differences, when to use each, and how to format both correctly. Clear guidance for the US, UK, Europe, and beyond.",
+    sections: [
+      {
+        heading: "The fundamental difference — length and purpose",
+        body: "A resume is a concise, targeted summary of your relevant experience, skills, and achievements — typically 1-2 pages. Its purpose is to get you an interview by showing why you're a fit for a specific role. A CV (curriculum vitae) is a comprehensive, detailed record of your entire academic and professional history — often 3+ pages with no page limit. Its purpose is to present your complete career narrative, typically for academic, research, medical, or international positions. In short: a resume is a highlight reel, a CV is the full documentary. In the US and Canada, most private-sector jobs want a resume. In the UK, Europe, and many other regions, 'CV' is the standard term even for what Americans would call a resume.",
+      },
+      {
+        heading: "What a resume includes",
+        body: "A standard resume includes: contact information, a professional summary or objective, work experience (last 10-15 years, most relevant first), education, and skills. Optional sections include certifications, projects, volunteer experience, and languages. The key principle: every item on a resume should be directly relevant to the job you're applying for. Irrelevant experience, even if impressive, should be cut or condensed. Resumes use concise bullet points, not paragraphs. They're designed for quick scanning — recruiters spend 7 seconds on average before deciding whether to read further.",
+      },
+      {
+        heading: "What a CV includes",
+        body: "A comprehensive CV includes everything a resume does, plus: a detailed education section (including dissertation title and advisors), research experience, teaching experience, publications and presentations, grants and fellowships, awards and honors, professional affiliations, conferences attended, languages (with proficiency levels), and references. A CV grows over time as your career progresses — there's no page limit because the goal is completeness, not concision. Academic CVs for senior professors can run 10-20 pages or more. If you're applying for a faculty position, research grant, fellowship, or PhD program, you need a CV.",
+      },
+      {
+        heading: "Geographic differences — what the term 'CV' means where you are",
+        body: "This is where most confusion comes from. In the United States and Canada: a 'resume' is the standard for private-sector jobs (1-2 pages, tailored), a 'CV' means the long-form academic document. In the United Kingdom, Ireland, and New Zealand: 'CV' is the standard term for what Americans call a resume — a 1-2 page job application document. The long academic document is called an 'academic CV.' In mainland Europe: 'CV' is the standard term for all job applications. European CVs are typically 1-2 pages, similar to US resumes, though formats like Europass are common. In Australia, India, and South Africa: 'resume' and 'CV' are used interchangeably for job applications, though academic positions still require the long-form version. When in doubt, check the job posting's language and mirror what they ask for.",
+      },
+      {
+        heading: "When to use a CV vs resume — decision flowchart",
+        body: "Use a CV if: you're applying for an academic position (professor, researcher, postdoc), applying to graduate school or a fellowship, applying for a research grant, applying for a medical or scientific position in a hospital or lab, or the job posting explicitly requests a CV. Use a resume if: you're applying for a private-sector job (tech, business, marketing, operations, etc.), you're applying for a government or nonprofit role (unless a CV is specified), the job posting asks for a 'resume,' or you're in the US/Canada and the posting says 'CV' but it's a standard corporate role (they likely mean resume). When both are accepted, default to a resume for brevity unless your academic background is your strongest selling point.",
+      },
+      {
+        heading: "How to convert between resume and CV",
+        body: "Converting a resume to a CV: expand each section with full detail. Replace bullet points with paragraphs describing your contributions. Add publications, presentations, research, teaching experience, and professional service. Remove the page limit. Converting a CV to a resume: cut ruthlessly. Keep only experience from the last 10-15 years. Condense paragraphs into 1-2 line bullets. Remove publications unless directly relevant to the job. Cut sections that don't apply to the role (conference attendance, academic service, detailed research descriptions). Trim to 1-2 pages. The core principle: a resume tells a targeted story for one role; a CV tells your complete professional story.",
+      },
+      {
+        heading: "Common mistakes when confusing the two",
+        body: "The most frequent mistakes include: submitting a 4-page academic CV for a marketing manager role (the hiring manager won't read past page 2); submitting a 1-page resume for a faculty position (it looks like you haven't accomplished anything); using the word 'CV' on a short resume in the US (confuses recruiters who expect a long document); including personal information like marital status, photo, or date of birth on a US resume (standard on some international CVs but inappropriate and potentially biasing in the US); and failing to check country-specific conventions before applying internationally. Always research what's expected in your target country and industry before submitting.",
+      },
+      {
+        heading: "Build both with NoiceResume",
+        body: "Whether you need a concise, ATS-optimized resume or a comprehensive CV, NoiceResume makes the process fast and professional. Our resume builder creates beautifully formatted, single-page resumes optimized for both ATS screening and human reading. For longer documents, you can use the builder as a foundation and expand. All templates are clean, modern, and designed with recruiter psychology in mind. No sign-up required — start building your resume or CV for free in minutes.",
+      },
+    ],
+  },
 ];
 
 export function getResourceBySlug(slug: string): ResourceMeta | undefined {

@@ -50,7 +50,24 @@ const ROLE_GUIDE_SLUGS = [
   "consultant",
 ];
 
-const RESOURCE_SLUGS = ["how-to-write-resume"];
+const RESOURCE_SLUGS = [
+  "how-to-write-resume",
+  "resume-tips-2025",
+  "ats-friendly-resume",
+  "professional-resume-format",
+  "resume-summary-objective",
+  "resume-keywords-skills",
+  "ats-friendly-tips-2025",
+  "resume-keywords-2025",
+  "beat-ai-screening",
+  "one-page-resume-guide",
+  "resume-formatting-mistakes",
+  "career-change-resume",
+  "cover-letter-guide",
+  "resume-action-verbs",
+  "resume-with-no-experience",
+  "resume-vs-cv",
+];
 
 let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
 xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
