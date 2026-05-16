@@ -16,6 +16,11 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://noiceresume.pages.dev/resume-parser</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://noiceresume.pages.dev/resources</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>

@@ -7,6 +7,7 @@ const STATIC_ROUTES = [
   { loc: "/", priority: "1.0", changefreq: "weekly" },
   { loc: "/resume-builder", priority: "0.9", changefreq: "monthly" },
   { loc: "/resume-import", priority: "0.8", changefreq: "monthly" },
+  { loc: "/resume-parser", priority: "0.5", changefreq: "monthly" },
   { loc: "/resources", priority: "0.8", changefreq: "weekly" },
   { loc: "/compare", priority: "0.8", changefreq: "weekly" },
   { loc: "/guides/role", priority: "0.8", changefreq: "weekly" },
