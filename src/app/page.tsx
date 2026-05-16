@@ -479,13 +479,23 @@ function FAQSection() {
         </div>
 
         <div className="mt-12 text-center">
-          <a
-            href="/resources"
-            className="inline-flex items-center gap-2 text-sm font-medium transition-all hover:opacity-70"
-            style={{ color: "var(--accent)" }}
-          >
-            Explore our resume guides and resources <ArrowRight />
-          </a>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <a href="/resources" className="inline-flex items-center gap-2 text-sm font-medium transition-all hover:opacity-70"
+              style={{ color: "var(--accent)" }}
+            >
+              Resume Guides <ArrowRight />
+            </a>
+            <a href="/compare" className="inline-flex items-center gap-2 text-sm font-medium transition-all hover:opacity-70"
+              style={{ color: "var(--accent)" }}
+            >
+              Comparisons <ArrowRight />
+            </a>
+            <a href="/guides/role" className="inline-flex items-center gap-2 text-sm font-medium transition-all hover:opacity-70"
+              style={{ color: "var(--accent)" }}
+            >
+              Role-Specific Guides <ArrowRight />
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -529,6 +539,10 @@ function FinalCTA() {
       <div className="mt-16 pt-16" style={{ borderTop: "1px solid var(--border)" }}>
         <div className="mb-4 flex flex-wrap items-center justify-center gap-4 text-xs" style={{ color: "var(--muted-subtle)" }}>
           <a href="/resources" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Guides</a>
+          <span>&middot;</span>
+          <a href="/compare" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Compare</a>
+          <span>&middot;</span>
+          <a href="/guides/role" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Role Guides</a>
           <span>&middot;</span>
           <a href="/templates/ats-friendly" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Templates</a>
           <span>&middot;</span>
