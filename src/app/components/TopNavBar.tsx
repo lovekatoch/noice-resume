@@ -26,7 +26,7 @@ export const TopNavBar = () => {
       >
         <Link href="/" className="md:mx-0">
           <img
-            src="/noiceresume-logo-white.svg"
+            src="/noiceresume-logo.svg"
             alt="NoiceResume"
             style={{ width: 180, height: "auto" }}
             className="block"

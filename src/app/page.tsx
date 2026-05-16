@@ -155,26 +155,16 @@ function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 pt-24 pb-20 md:pt-28 md:pb-24"
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pb-20 pt-24 md:pb-24 md:pt-28"
       style={{ backgroundColor: "var(--bg)" }}
     >
-      {/* Ambient gradient */}
-      <div className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          backgroundImage: `
-            radial-gradient(ellipse 70% 50% at 50% 0%, rgba(122,90,68,0.05) 0%, transparent 60%),
-            radial-gradient(ellipse 30% 40% at 80% 30%, rgba(122,90,68,0.025) 0%, transparent 50%)
-          `,
-        }}
-      />
-
-      <div className="w-full max-w-2xl mx-auto text-center relative z-10">
+      <div className="relative z-10 mx-auto w-full max-w-2xl text-center">
         {/* Badge */}
-        <div className="mb-8 inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium"
+        <div className="mb-8 inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-sm font-medium"
           style={{
             backgroundColor: "var(--surface)",
             color: "var(--accent)",
-            border: "1px solid var(--border)",
+            borderColor: "var(--accent-light)",
           }}
         >
           <Sparkles />
@@ -182,11 +172,11 @@ function Hero() {
         </div>
 
         {/* Headline */}
-        <h1 className="mb-6 text-[clamp(2.25rem,5.5vw,3.5rem)] font-light leading-[1.1] tracking-[-0.03em]"
+        <h1 className="mb-6 font-display text-[clamp(2.5rem,6vw,3.75rem)] font-light leading-[1.08] tracking-[-0.03em]"
           style={{ color: "var(--fg)" }}
         >
           Land interviews at{" "}
-          <span className="bg-gradient-to-r from-[var(--accent)] to-[#7b83d9] bg-clip-text text-transparent">
+          <span style={{ color: "var(--accent)" }}>
             top companies
           </span>
         </h1>
@@ -203,11 +193,10 @@ function Hero() {
           <div className="flex flex-col items-center gap-4 sm:flex-row">
             <button
               onClick={handleStartFresh}
-              className="inline-flex items-center gap-2 px-7 py-3 font-medium text-white transition-all hover:opacity-90 active:scale-[0.98]"
+              className="inline-flex items-center gap-2 rounded-full px-7 py-3 font-medium text-white transition-all hover:opacity-90 active:scale-[0.98]"
               style={{
                 backgroundColor: "var(--accent)",
-                borderRadius: 8,
-                boxShadow: "rgba(122,90,68,0.35) 0px 8px 24px -4px",
+                boxShadow: "rgba(30,58,95,0.3) 0px 8px 24px -4px",
               }}
             >
               <Plus />
@@ -218,18 +207,17 @@ function Hero() {
 
           {/* Social proof — near CTA for trust */}
           <p className="text-sm" style={{ color: "var(--muted-subtle)" }}>
-            Join <span style={{ color: "var(--accent)", fontWeight: 600 }}>8,400+</span> job seekers who have built their resume this month
+            Used by <span style={{ color: "var(--accent)", fontWeight: 600 }}>8,400+</span> job seekers this month
           </p>
 
           {/* Continue for returning users */}
           {savedName && (
             <button
               onClick={handleContinue}
-              className="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-medium transition-all hover:opacity-70"
+              className="inline-flex items-center gap-2 rounded-full border px-6 py-2.5 text-sm font-medium transition-all hover:opacity-70"
               style={{
-                color: "var(--accent-hover)",
-                border: "1px solid var(--border)",
-                borderRadius: 8,
+                color: "var(--accent)",
+                borderColor: "var(--border)",
                 backgroundColor: "var(--surface)",
               }}
             >
@@ -271,7 +259,7 @@ function Features() {
   return (
     <section className="px-6 py-20 md:py-28" style={{ backgroundColor: "var(--bg)" }}>
       <div className="mx-auto max-w-4xl">
-        <h2 className="mb-2 text-center text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
+        <h2 className="mb-2 text-center font-display text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
           Why NoiceResume
         </h2>
         <p className="mb-14 text-center text-base" style={{ color: "var(--muted)" }}>
@@ -286,10 +274,10 @@ function Features() {
               style={{
                 backgroundColor: "var(--surface)",
                 border: "1px solid var(--border)",
-                borderRadius: 10,
+                borderRadius: 16,
               }}
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px]"
                 style={{ backgroundColor: "var(--accent-light)", color: "var(--accent)" }}
               >
                 {icon}
@@ -310,7 +298,7 @@ function Steps() {
   return (
     <section className="px-6 py-20 md:py-28" style={{ backgroundColor: "var(--surface)" }}>
       <div className="mx-auto max-w-4xl text-center">
-        <h2 className="mb-2 text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
+        <h2 className="mb-2 font-display text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
           Three steps to a better resume
         </h2>
         <p className="mb-14 text-base" style={{ color: "var(--muted)" }}>
@@ -318,29 +306,21 @@ function Steps() {
         </p>
 
         <div className="relative grid grid-cols-1 gap-6 md:grid-cols-3">
-          {/* Connecting line */}
-          <div className="absolute left-[calc(16.67%+24px)] right-[calc(16.67%+24px)] top-8 hidden h-px md:block"
-            style={{
-              background: "linear-gradient(to right, transparent, var(--accent), transparent)",
-              opacity: 0.2,
-            }}
-          />
-
           {STEPS.map(({ number, title, text }) => (
             <div
               key={number}
               className="group relative p-8 text-center transition-all duration-200"
               style={{
-                backgroundColor: "var(--bg)",
+                backgroundColor: "var(--surface)",
                 border: "1px solid var(--border)",
-                borderRadius: 10,
+                borderRadius: 16,
               }}
             >
               <div className="relative mx-auto mb-5 flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium"
                 style={{
                   backgroundColor: "var(--surface)",
                   color: "var(--accent)",
-                  boxShadow: "rgba(122,90,68,0.2) 0px 4px 16px",
+                  boxShadow: "rgba(30,58,95,0.15) 0px 4px 16px",
                 }}
               >
                 <span className="relative z-10">{number}</span>
@@ -366,7 +346,7 @@ function TemplatePreviews() {
   return (
     <section className="px-6 py-20 md:py-28" style={{ backgroundColor: "var(--surface)" }}>
       <div className="mx-auto max-w-5xl">
-        <h2 className="mb-2 text-center text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
+        <h2 className="mb-2 text-center font-display text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
           Choose your template
         </h2>
         <p className="mb-14 text-center text-base" style={{ color: "var(--muted)" }}>
@@ -378,24 +358,24 @@ function TemplatePreviews() {
             <div
               key={t.name}
               onClick={() => router.push(`/resume-builder?template=${t.id}`)}
-              className="group overflow-hidden transition-all duration-200 hover:-translate-y-1 cursor-pointer"
+              className="group cursor-pointer overflow-hidden transition-all duration-200 hover:-translate-y-1"
               style={{
-                backgroundColor: "var(--bg)",
+                backgroundColor: "var(--surface)",
                 border: "1px solid var(--border)",
-                borderRadius: 12,
+                borderRadius: 16,
               }}
             >
               <div className="overflow-hidden" style={{ borderBottom: "1px solid var(--border)" }}>
                 <img
                   src={t.src}
                   alt={`${t.name} resume template`}
-                  className="w-full h-auto block transition-transform duration-300 group-hover:scale-[1.02]"
+                  className="block h-auto w-full transition-transform duration-300 group-hover:scale-[1.02]"
                   loading="lazy"
                 />
               </div>
               <div className="px-5 py-4">
-                <h3 className="font-semibold text-sm" style={{ color: "var(--fg)" }}>{t.name}</h3>
-                <p className="text-xs mt-1" style={{ color: "var(--muted-subtle)" }}>{t.description}</p>
+                <h3 className="text-sm font-semibold" style={{ color: "var(--fg)" }}>{t.name}</h3>
+                <p className="mt-1 text-xs" style={{ color: "var(--muted-subtle)" }}>{t.description}</p>
               </div>
             </div>
           ))}
@@ -411,7 +391,7 @@ function FAQSection() {
   return (
     <section className="px-6 py-20 md:py-28" style={{ backgroundColor: "var(--surface)" }}>
       <div className="mx-auto max-w-2xl">
-        <h2 className="mb-2 text-center text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
+        <h2 className="mb-2 text-center font-display text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
           Questions & Answers
         </h2>
         <p className="mb-14 text-center text-base" style={{ color: "var(--muted)" }}>
@@ -424,9 +404,9 @@ function FAQSection() {
             return (
               <div key={idx}
                 style={{
-                  backgroundColor: "var(--bg)",
+                  backgroundColor: "var(--surface)",
                   border: "1px solid var(--border)",
-                  borderRadius: 10,
+                  borderRadius: 16,
                 }}
               >
                 <button
@@ -460,16 +440,9 @@ function FinalCTA() {
 
   return (
     <section className="px-6 py-24 text-center"
-      style={{ backgroundColor: "var(--bg)", borderTop: "1px solid var(--border)" }}
+      style={{ backgroundColor: "var(--surface)", borderTop: "1px solid var(--border)" }}
     >
-      {/* Decorative accent line */}
-      <div className="mx-auto mb-8 h-px w-16"
-        style={{
-          background: "linear-gradient(to right, transparent, var(--accent), transparent)",
-        }}
-      />
-
-      <h2 className="mb-4 text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
+      <h2 className="mb-4 font-display text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
         Your next role starts here
       </h2>
       <p className="mb-10 text-base leading-relaxed" style={{ color: "var(--muted)" }}>
@@ -482,11 +455,10 @@ function FinalCTA() {
             localStorage.removeItem("open-resume-state");
             router.push("/resume-builder");
           }}
-          className="inline-flex items-center gap-2 px-7 py-3 font-medium text-white transition-all hover:opacity-90 active:scale-[0.98]"
+          className="inline-flex items-center gap-2 rounded-full px-7 py-3 font-medium text-white transition-all hover:opacity-90 active:scale-[0.98]"
           style={{
             backgroundColor: "var(--accent)",
-            borderRadius: 8,
-            boxShadow: "rgba(122,90,68,0.35) 0px 8px 24px -4px",
+            boxShadow: "rgba(30,58,95,0.3) 0px 8px 24px -4px",
           }}
         >
           <Plus />
@@ -497,7 +469,7 @@ function FinalCTA() {
       </div>
 
       {/* Footer */}
-      <div className="pt-16 mt-16" style={{ borderTop: "1px solid var(--border)" }}>
+      <div className="mt-16 pt-16" style={{ borderTop: "1px solid var(--border)" }}>
         <p className="text-sm" style={{ color: "var(--muted-subtle)" }}>
           Built with <span style={{ color: "var(--accent)" }}>&#x2764;</span> by Love
         </p>
