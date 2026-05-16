@@ -3,6 +3,7 @@
 import posthog from "posthog-js";
 
 const DEVICE_ID_KEY = "noiceresume_device_id";
+let _sessionStarted = false;
 
 function getDeviceId(): string {
   if (typeof window === "undefined") return "";
@@ -25,6 +26,15 @@ export function initAnalytics() {
   });
   if (!localStorage.getItem("noiceresume_first_visit")) {
     localStorage.setItem("noiceresume_first_visit", String(Date.now()));
+  }
+  if (!_sessionStarted) {
+    _sessionStarted = true;
+    capture("session_start", {
+      device_id: deviceId,
+      referrer: document.referrer || null,
+      url: window.location.href,
+      user_agent: navigator.userAgent,
+    });
   }
 }
 
@@ -303,6 +313,19 @@ export function captureAiEnhanceAccepted(opts: {
   capture("ai_enhance_accepted", {
     section_type: opts.sectionType,
     global_enhance_count: opts.globalEnhanceCount,
+  });
+}
+
+export function captureError(opts: {
+  errorMessage: string;
+  componentStack?: string;
+  errorType?: string;
+}) {
+  capture("error_caught", {
+    error_message: opts.errorMessage,
+    component_stack: opts.componentStack ?? null,
+    error_type: opts.errorType ?? null,
+    $current_url: typeof window !== "undefined" ? window.location.href : null,
   });
 }
 

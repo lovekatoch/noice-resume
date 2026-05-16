@@ -89,6 +89,7 @@ function FloatingButton() {
         const data = await resp.json();
         const url = `${SHARE_WORKER_URL}/${data.id}`;
         setShareUrl(url);
+        captureShareEvent("share_url_generated", { share_id: data.id });
         captureShareEvent("share_link_created", { share_id: data.id });
       } else {
         setShareUrl("https://noiceresume.pages.dev");

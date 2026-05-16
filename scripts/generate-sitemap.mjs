@@ -35,6 +35,8 @@ const COMPARE_SLUGS = [
   "noiceresume-vs-novoresume",
   "noiceresume-vs-zety",
   "noiceresume-vs-resumeio",
+  "noiceresume-vs-kickresume",
+  "noiceresume-vs-enhancv",
   "noiceresume-vs-canva",
 ];
 

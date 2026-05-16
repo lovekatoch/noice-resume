@@ -1,5 +1,6 @@
 "use client";
 import { Component, ErrorInfo, ReactNode } from "react";
+import { captureError } from "lib/analytics";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -25,6 +26,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.props.onError?.(error, errorInfo);
+    captureError({
+      errorMessage: error.message,
+      componentStack: errorInfo.componentStack,
+      errorType: error.name,
+    });
   }
 
   componentDidUpdate(prevProps: Readonly<ErrorBoundaryProps>) {

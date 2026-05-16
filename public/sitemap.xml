@@ -131,6 +131,16 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://noiceresume.pages.dev/compare/noiceresume-vs-kickresume</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/compare/noiceresume-vs-enhancv</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://noiceresume.pages.dev/compare/noiceresume-vs-canva</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
