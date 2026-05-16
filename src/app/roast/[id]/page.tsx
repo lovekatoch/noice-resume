@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: "AI Roasted This Resume on NoiceResume",
     description:
       "Get your own resume roasted by AI. Free resume builder, no sign-up required.",
-    url: "https://noiceresume.pages.dev",
+    url: "https://noiceresume.pages.dev/roast/preview",
     type: "website",
     siteName: "NoiceResume",
     locale: "en_US",
@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     description:
       "Get your own resume roasted by AI. Free resume builder, no sign-up required.",
     images: ["/og-default.svg"],
+  },
+  alternates: {
+    canonical: "https://noiceresume.pages.dev/roast/preview",
   },
 };
 
