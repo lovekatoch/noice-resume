@@ -11,6 +11,7 @@ import {
 
 const COOLDOWN_STORAGE_KEY = "noiceresume_ai_cooldown";
 const COUNT_STORAGE_KEY = "noiceresume_ai_count";
+const CACHE_STORAGE_KEY = "noiceresume_ai_cache";
 const COOLDOWN_SECONDS = 60;
 const REGENERATE_LIMIT = 3;
 
@@ -52,6 +53,33 @@ function classifyError(err: unknown): AIError {
   return { message, type: "unknown", retryable: false };
 }
 
+interface CacheEntry {
+  text: string;
+  prompt: string;
+  timestamp: number;
+}
+
+function saveToCache(text: string, prompt: string) {
+  try {
+    const entry: CacheEntry = { text, prompt, timestamp: Date.now() };
+    localStorage.setItem(CACHE_STORAGE_KEY, JSON.stringify(entry));
+  } catch {
+    // storage full or unavailable
+  }
+}
+
+function loadFromCache(prompt: string): string | null {
+  try {
+    const raw = localStorage.getItem(CACHE_STORAGE_KEY);
+    if (!raw) return null;
+    const entry: CacheEntry = JSON.parse(raw);
+    if (entry.prompt !== prompt) return null;
+    return entry.text;
+  } catch {
+    return null;
+  }
+}
+
 interface UseAIPanelOptions {
   onAccept: (text: string) => void;
   onClose?: () => void;
@@ -75,6 +103,8 @@ interface UseAIPanelReturn {
   retryCount: number;
   isCooldown: boolean;
   cooldownRemaining: number;
+  isOffline: boolean;
+  cachedSuggestion: string | null;
 }
 
 export const useAIPanel = ({
@@ -89,6 +119,10 @@ export const useAIPanel = ({
   const [aiError, setAiError] = useState<AIError | undefined>(undefined);
   const [regenerateCount, setRegenerateCount] = useState(0);
   const [retryCount, setRetryCount] = useState(0);
+  const [isOffline, setIsOffline] = useState(
+    typeof navigator !== "undefined" ? !navigator.onLine : false
+  );
+  const [cachedSuggestion, setCachedSuggestion] = useState<string | null>(null);
   const [now, setNow] = useState(() => Date.now());
   const [cooldownUntil, setCooldownUntil] = useState(() => {
     if (typeof window === "undefined") return 0;
@@ -118,7 +152,15 @@ export const useAIPanel = ({
 
   useEffect(() => {
     const interval = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(interval);
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
   }, []);
 
   const cooldownRemaining = Math.max(0, Math.ceil((cooldownUntil - now) / 1000));
@@ -225,6 +267,7 @@ export const useAIPanel = ({
             }
           }
 
+          saveToCache(accumulatedText, promptRef.current);
           captureAiEnhanceSuccess({
             sectionType: sectionTypeRef.current,
             isRegenerate: _isRegenerate,
@@ -236,7 +279,9 @@ export const useAIPanel = ({
           if (result.error) {
             throw new Error(result.error);
           }
-          setStreamingText(result.content || "");
+          const finalText = result.content || "";
+          setStreamingText(finalText);
+          saveToCache(finalText, promptRef.current);
 
           captureAiEnhanceSuccess({
             sectionType: sectionTypeRef.current,
@@ -265,6 +310,13 @@ export const useAIPanel = ({
         setAiError(classified);
         const errorMessage = classified.message;
         setError(errorMessage);
+
+        const cached = loadFromCache(promptRef.current);
+        if (cached) {
+          setCachedSuggestion(cached);
+          setStreamingText(cached);
+        }
+
         captureAiEnhanceError({
           sectionType: sectionTypeRef.current,
           isRegenerate: _isRegenerate,
@@ -295,6 +347,7 @@ export const useAIPanel = ({
       setCooldown();
       setRegenerateCount(0);
       setRetryCount(0);
+      setCachedSuggestion(null);
       setAiPanelOpen(true);
       setIsLoading(true);
       captureAiEnhanceRequested({
@@ -321,6 +374,7 @@ export const useAIPanel = ({
     setIsLoading(false);
     setError(undefined);
     setAiError(undefined);
+    setCachedSuggestion(null);
     setRegenerateCount(0);
     setRetryCount(0);
     contextRef.current = "";
@@ -357,16 +411,21 @@ export const useAIPanel = ({
       globalEnhanceCount: globalEnhanceCountRef.current,
     });
     setRetryCount(0);
+    setCachedSuggestion(null);
     triggerAPI(true);
   }, [regenerateCount, triggerAPI, incrementGlobalCount]);
 
   const handleRetry = useCallback(() => {
-    if (retryCount >= 2) {
+    if (retryCount >= 3) {
       setError("Max retries reached. Please try again later.");
       return;
     }
+    const delay = Math.min(1000 * Math.pow(2, retryCount), 8000);
     setRetryCount((c) => c + 1);
-    triggerAPI(false);
+    setError(undefined);
+    setAiError(undefined);
+    setCachedSuggestion(null);
+    setTimeout(() => triggerAPI(false), delay);
   }, [retryCount, triggerAPI]);
 
   return {
@@ -387,5 +446,7 @@ export const useAIPanel = ({
     retryCount,
     isCooldown,
     cooldownRemaining,
+    isOffline,
+    cachedSuggestion,
   };
 };

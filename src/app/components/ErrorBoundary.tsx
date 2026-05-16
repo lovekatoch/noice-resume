@@ -1,12 +1,13 @@
 "use client";
-import { Component, ErrorInfo, ReactNode } from "react";
-import { captureError } from "lib/analytics";
+
+import { Component, type ReactNode, type ErrorInfo } from "react";
+import { AIErrorFallback } from "./AIErrorFallback";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
   fallback?: ReactNode | ((error: Error, reset: () => void) => ReactNode);
+  fallbackRender?: (error: Error, reset: () => void) => ReactNode;
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
-  resetKeys?: unknown[];
 }
 
 interface ErrorBoundaryState {
@@ -26,67 +27,31 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.props.onError?.(error, errorInfo);
-    captureError({
-      errorMessage: error.message,
-      componentStack: errorInfo.componentStack,
-      errorType: error.name,
-    });
   }
 
-  componentDidUpdate(prevProps: Readonly<ErrorBoundaryProps>) {
-    if (
-      this.state.hasError &&
-      this.props.resetKeys &&
-      prevProps.resetKeys &&
-      this.props.resetKeys.length === prevProps.resetKeys.length
-    ) {
-      const changed = this.props.resetKeys.some(
-        (key, i) => key !== prevProps.resetKeys![i]
-      );
-      if (changed) this.reset();
-    }
-  }
-
-  reset = () => {
+  handleReset = () => {
     this.setState({ hasError: false, error: null });
   };
 
   render() {
-    if (this.state.hasError && this.state.error) {
-      if (typeof this.props.fallback === "function") {
-        return this.props.fallback(this.state.error, this.reset);
+    if (this.state.hasError) {
+      const { fallback, fallbackRender } = this.props;
+      if (fallbackRender) {
+        return fallbackRender(this.state.error!, this.handleReset);
       }
-      if (this.props.fallback) {
-        return this.props.fallback;
+      if (typeof fallback === "function") {
+        return (fallback as (error: Error, reset: () => void) => ReactNode)(this.state.error!, this.handleReset);
       }
-      return <DefaultFallback error={this.state.error} reset={this.reset} />;
+      if (fallback) {
+        return fallback;
+      }
+      return (
+        <AIErrorFallback
+          error={this.state.error!}
+          reset={this.handleReset}
+        />
+      );
     }
     return this.props.children;
   }
-}
-
-function DefaultFallback({ error, reset }: { error: Error; reset: () => void }) {
-  return (
-    <div
-      className="rounded-lg border p-4 text-center"
-      style={{
-        backgroundColor: "var(--canvas)",
-        borderColor: "var(--border)",
-      }}
-    >
-      <p className="text-sm font-medium" style={{ color: "var(--fg)" }}>
-        Something went wrong
-      </p>
-      <p className="mt-1 text-xs" style={{ color: "var(--muted)" }}>
-        {error.message || "An unexpected error occurred"}
-      </p>
-      <button
-        onClick={reset}
-        className="mt-3 rounded-md px-3 py-1.5 text-xs font-medium text-white transition-colors"
-        style={{ backgroundColor: "var(--accent)" }}
-      >
-        Try Again
-      </button>
-    </div>
-  );
 }
