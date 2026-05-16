@@ -174,10 +174,6 @@ function Footer() {
 }
 
 export function TemplatePageClient({ template }: { template: TemplateMeta | undefined }) {
-  useEffect(() => {
-    captureTemplateView({ templateSlug: template.slug, templateName: template.title });
-  }, [template]);
-
   if (!template) {
     return (
       <main className="flex min-h-screen items-center justify-center px-6" style={{ backgroundColor: "var(--canvas)" }}>
@@ -188,6 +184,10 @@ export function TemplatePageClient({ template }: { template: TemplateMeta | unde
       </main>
     );
   }
+
+  useEffect(() => {
+    captureTemplateView({ templateSlug: template.slug, templateName: template.title });
+  }, [template]);
 
   return (
     <main>
