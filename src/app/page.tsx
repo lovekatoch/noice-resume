@@ -57,6 +57,14 @@ function UploadSimple() {
   );
 }
 
+function ShareNetwork() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+    </svg>
+  );
+}
+
 function Plus() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -103,6 +111,11 @@ const FEATURES = [
     title: "Stays on your device",
     text: "Nothing ever leaves your browser. No upload, no server, no privacy trade-off.",
     icon: <Shield />,
+  },
+  {
+    title: "Share with one click",
+    text: "Turn your resume into a shareable link. Recruiters see it instantly — no PDF attachment needed.",
+    icon: <ShareNetwork />,
   },
 ];
 
@@ -158,6 +171,7 @@ function Hero() {
 
   const ctaVariant = useExperiment(EXPERIMENTS.HERO_CTA);
   const socialProofVariant = useExperiment(EXPERIMENTS.SOCIAL_PROOF);
+  const headlineVariant = useExperiment(EXPERIMENTS.HEADLINE);
   const trackGoal = useExperimentGoal();
 
   const handleStartFresh = () => {
@@ -203,17 +217,23 @@ function Hero() {
         <h1 className="mb-6 font-display text-[clamp(2.5rem,6vw,3.75rem)] font-light leading-[1.08] tracking-[-0.03em]"
           style={{ color: "var(--fg)" }}
         >
-          Land interviews at{" "}
-          <span style={{ color: "var(--accent)" }}>
-            top companies
-          </span>
+          {headlineVariant === "benefit" ? (
+            <>Write your resume once. Get hired{" "}
+              <span style={{ color: "var(--accent)" }}>faster</span>.</>
+          ) : headlineVariant === "free-first" ? (
+            <>The resume builder that&rsquo;s always{" "}
+              <span style={{ color: "var(--accent)" }}>free</span>. No catch, no sign-up.</>
+          ) : (
+            <>Land interviews at{" "}
+              <span style={{ color: "var(--accent)" }}>top companies</span></>
+          )}
         </h1>
 
         {/* Subheadline */}
         <p className="mx-auto mb-10 max-w-lg text-base leading-relaxed md:text-lg"
           style={{ color: "var(--muted)" }}
         >
-          Recruiters spend seconds on each resume. Make sure yours is the one they remember — with AI that helps you write better, formats for ATS, and zero sign-up.
+          AI that writes with you. ATS-friendly formatting. Zero sign-up. No paid plans. Ever.
         </p>
 
         {/* CTAs */}
@@ -427,6 +447,10 @@ function TemplatePreviews() {
             </div>
           ))}
         </div>
+
+        <p className="mt-12 text-center text-sm" style={{ color: "var(--muted-subtle)" }}>
+          Join <span style={{ color: "var(--accent)", fontWeight: 600 }}>8,400+</span> job seekers who built their resume this month
+        </p>
       </div>
     </section>
   );
@@ -512,8 +536,11 @@ function FinalCTA() {
       <h2 className="mb-4 font-display text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
         Your next role starts here
       </h2>
-      <p className="mb-10 text-base leading-relaxed" style={{ color: "var(--muted)" }}>
-        No sign-up required. No credit card. Just a resume that works.
+      <p className="mb-6 text-base leading-relaxed" style={{ color: "var(--muted)" }}>
+        Start building — it takes 5 minutes.
+      </p>
+      <p className="mb-10 text-xs" style={{ color: "var(--muted-subtle)" }}>
+        No account needed. No credit card. Just a resume that works.
       </p>
 
       <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -537,7 +564,7 @@ function FinalCTA() {
 
       {/* Footer */}
       <div className="mt-16 pt-16" style={{ borderTop: "1px solid var(--border)" }}>
-        <div className="mb-4 flex flex-wrap items-center justify-center gap-4 text-xs" style={{ color: "var(--muted-subtle)" }}>
+        <div className="mb-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs" style={{ color: "var(--muted-subtle)" }}>
           <a href="/resources" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Guides</a>
           <span>&middot;</span>
           <a href="/compare" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Compare</a>
@@ -547,6 +574,12 @@ function FinalCTA() {
           <a href="/templates/ats-friendly" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Templates</a>
           <span>&middot;</span>
           <a href="/resume-builder" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Builder</a>
+          <span>&middot;</span>
+          <a href="/resume-import" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Import</a>
+          <span>&middot;</span>
+          <a href="/privacy" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Privacy</a>
+          <span>&middot;</span>
+          <a href="/resources" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Resources</a>
         </div>
         <p className="text-sm" style={{ color: "var(--muted-subtle)" }}>
           Built with <span style={{ color: "var(--accent)" }}>&#x2764;</span> by Love

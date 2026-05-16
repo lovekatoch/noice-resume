@@ -33,7 +33,6 @@ export const EducationsForm = () => {
     closePanel,
     handleAccept,
     handleRegenerate,
-    handleRetry,
     error,
     regenerateCount,
     isCooldown,
@@ -148,7 +147,6 @@ Institution: ${section.school}\nDegree: ${section.degree}\n${section.gpa ? `GPA:
         onClose={closePanel}
         onAccept={handleAccept}
         onRegenerate={handleRegenerate}
-        onRetry={handleRetry}
         streamingText={streamingText}
         isLoading={isLoading}
         error={error}

@@ -21,6 +21,16 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://noiceresume.pages.dev/compare</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/guides/role</loc>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://noiceresume.pages.dev/templates/ats-friendly</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
@@ -88,6 +98,71 @@
   <url>
     <loc>https://noiceresume.pages.dev/resources/how-to-write-resume</loc>
     <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/compare/noiceresume-vs-rezi</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/compare/noiceresume-vs-teal</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/compare/noiceresume-vs-novoresume</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/compare/noiceresume-vs-zety</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/compare/noiceresume-vs-resumeio</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/compare/noiceresume-vs-canva</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/guides/role/software-engineer</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/guides/role/product-manager</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/guides/role/data-scientist</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/guides/role/marketing</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/guides/role/ux-designer</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/guides/role/project-manager</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/guides/role/consultant</loc>
+    <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
 </urlset>

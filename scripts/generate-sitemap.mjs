@@ -8,6 +8,8 @@ const STATIC_ROUTES = [
   { loc: "/resume-builder", priority: "0.9", changefreq: "monthly" },
   { loc: "/resume-import", priority: "0.8", changefreq: "monthly" },
   { loc: "/resources", priority: "0.8", changefreq: "weekly" },
+  { loc: "/compare", priority: "0.8", changefreq: "weekly" },
+  { loc: "/guides/role", priority: "0.8", changefreq: "weekly" },
 ];
 
 const TEMPLATE_SLUGS = [
@@ -24,6 +26,25 @@ const TEMPLATE_SLUGS = [
   "business-analyst",
   "project-manager",
   "graphic-designer",
+];
+
+const COMPARE_SLUGS = [
+  "noiceresume-vs-rezi",
+  "noiceresume-vs-teal",
+  "noiceresume-vs-novoresume",
+  "noiceresume-vs-zety",
+  "noiceresume-vs-resumeio",
+  "noiceresume-vs-canva",
+];
+
+const ROLE_GUIDE_SLUGS = [
+  "software-engineer",
+  "product-manager",
+  "data-scientist",
+  "marketing",
+  "ux-designer",
+  "project-manager",
+  "consultant",
 ];
 
 const RESOURCE_SLUGS = ["how-to-write-resume"];
@@ -43,8 +64,16 @@ for (const slug of RESOURCE_SLUGS) {
   xml += `  <url>\n    <loc>${SITE_URL}/resources/${slug}</loc>\n    <priority>0.9</priority>\n    <changefreq>monthly</changefreq>\n  </url>\n`;
 }
 
+for (const slug of COMPARE_SLUGS) {
+  xml += `  <url>\n    <loc>${SITE_URL}/compare/${slug}</loc>\n    <priority>0.7</priority>\n    <changefreq>monthly</changefreq>\n  </url>\n`;
+}
+
+for (const slug of ROLE_GUIDE_SLUGS) {
+  xml += `  <url>\n    <loc>${SITE_URL}/guides/role/${slug}</loc>\n    <priority>0.8</priority>\n    <changefreq>monthly</changefreq>\n  </url>\n`;
+}
+
 xml += "</urlset>\n";
 
 const outPath = path.join(process.cwd(), "public", "sitemap.xml");
 fs.writeFileSync(outPath, xml, "utf-8");
-console.log(`Generated sitemap.xml with ${STATIC_ROUTES.length + TEMPLATE_SLUGS.length + RESOURCE_SLUGS.length} URLs → ${outPath}`);
+console.log(`Generated sitemap.xml with ${STATIC_ROUTES.length + TEMPLATE_SLUGS.length + RESOURCE_SLUGS.length + COMPARE_SLUGS.length + ROLE_GUIDE_SLUGS.length} URLs → ${outPath}`);

@@ -1,0 +1,23 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1A2E"/>
+      <stop offset="50%" stop-color="#1A2F45"/>
+      <stop offset="100%" stop-color="#0F1F33"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="80%" cy="20%" r="50%">
+      <stop offset="0%" stop-color="#3884FF" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#3884FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect x="40" y="32" width="32" height="32" rx="8" fill="#3884FF"/>
+  <text x="82" y="54" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="20" font-weight="600">NoiceResume</text>
+  <text x="600" y="280" text-anchor="middle" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="64" font-weight="700" letter-spacing="-1.5">Free AI Resume</text>
+  <text x="600" y="350" text-anchor="middle" fill="#3884FF" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="64" font-weight="700" letter-spacing="-1.5">Builder</text>
+  <text x="600" y="410" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="22">Create a professional resume in minutes.</text>
+  <text x="600" y="445" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="22">No sign-up required.</text>
+  <text x="1060" y="580" fill="rgba(255,255,255,0.3)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14">noiceresume.pages.dev</text>
+  <text x="40" y="60" fill="white" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="700" opacity="0">N</text>
+</svg>

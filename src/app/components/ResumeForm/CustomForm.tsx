@@ -24,12 +24,10 @@ export const CustomForm = () => {
     closePanel,
     handleAccept,
     handleRegenerate,
-    handleRetry,
     error,
-    aiError,
-    retryCount,
     regenerateCount,
-    globalEnhanceCount,
+    isCooldown,
+    cooldownRemaining,
   } = useAIPanel({
     onAccept: (text) => {
       dispatch(changeCustom({ field: "descriptions", value: text.split("\n").filter(Boolean) }));
@@ -137,14 +135,12 @@ Rewrite the custom section bullet points to be more impactful. Use • prefix. M
         onClose={closePanel}
         onAccept={handleAccept}
         onRegenerate={handleRegenerate}
-        onRetry={handleRetry}
         streamingText={streamingText}
         isLoading={isLoading}
         error={error}
-        aiError={aiError}
-        retryCount={retryCount}
         regenerateCount={regenerateCount}
-        globalEnhanceCount={globalEnhanceCount}
+        isCooldown={isCooldown}
+        cooldownRemaining={cooldownRemaining}
       />
     </Form>
   );

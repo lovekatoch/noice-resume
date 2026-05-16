@@ -30,7 +30,6 @@ export const WorkExperiencesForm = () => {
     closePanel,
     handleAccept,
     handleRegenerate,
-    handleRetry,
     error,
     regenerateCount,
     isCooldown,
@@ -136,7 +135,6 @@ export const WorkExperiencesForm = () => {
         onClose={closePanel}
         onAccept={handleAccept}
         onRegenerate={handleRegenerate}
-        onRetry={handleRetry}
         streamingText={streamingText}
         isLoading={isLoading}
         error={error}

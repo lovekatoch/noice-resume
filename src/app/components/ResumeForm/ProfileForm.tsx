@@ -27,7 +27,6 @@ export const ProfileForm = () => {
     closePanel,
     handleAccept,
     handleRegenerate,
-    handleRetry,
     error,
     regenerateCount,
     isCooldown,
@@ -146,7 +145,6 @@ Write a compelling professional summary / sales pitch for this candidate based o
         onClose={closePanel}
         onAccept={handleAccept}
         onRegenerate={handleRegenerate}
-        onRetry={handleRetry}
         streamingText={streamingText}
         isLoading={isLoading}
         error={error}
