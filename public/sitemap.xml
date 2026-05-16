@@ -101,6 +101,11 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://noiceresume.pages.dev/resources/best-free-resume-builder</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://noiceresume.pages.dev/resources/how-to-write-resume</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
@@ -247,6 +252,21 @@
   </url>
   <url>
     <loc>https://noiceresume.pages.dev/guides/role/project-manager</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/guides/role/nurse</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/guides/role/sales</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://noiceresume.pages.dev/guides/role/teacher</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
