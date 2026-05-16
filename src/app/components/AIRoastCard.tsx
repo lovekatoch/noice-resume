@@ -73,14 +73,13 @@ function ScoreRing({ score, size = 80 }: { score: number; size?: number }) {
 
 interface AIRoastCardProps {
   onClose: () => void;
-  resumeName?: string;
 }
 
 function generateShareId(): string {
   return Math.random().toString(36).substring(2, 10);
 }
 
-export function AIRoastCard({ onClose, resumeName }: AIRoastCardProps) {
+export function AIRoastCard({ onClose }: AIRoastCardProps) {
   const resume = useAppSelector(selectResume);
   const [roastData, setRoastData] = useState<RoastData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -116,7 +115,6 @@ export function AIRoastCard({ onClose, resumeName }: AIRoastCardProps) {
   }, [resume]);
 
   const shareUrl = `https://noiceresume.pages.dev/roast/${shareId}`;
-  const namePart = resumeName || resume.profile.name || "My";
   const siteUrl = "https://noiceresume.pages.dev";
 
   const handleShareX = useCallback(() => {

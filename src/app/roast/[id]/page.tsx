@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "AI Roasted My Resume | NoiceResume",
   description:

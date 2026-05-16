@@ -204,7 +204,6 @@ Write a compelling professional summary / sales pitch for this candidate based o
             setShowRoastCard(false);
             setShowRoastPrompt(false);
           }}
-          resumeName={name}
         />
       )}
     </BaseForm>

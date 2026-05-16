@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   ArrowDownTrayIcon,
   ChevronDownIcon,
@@ -196,7 +196,7 @@ export const ExportButton = ({
   );
 
   return (
-    <>
+    <div className="contents">
       {showShareModal && shareUrl && (
         <PostDownloadShare
           onClose={() => setShowShareModal(false)}
@@ -299,6 +299,6 @@ export const ExportButton = ({
         </div>
       )}
     </div>
-    </>
+    </div>
   );
 };
