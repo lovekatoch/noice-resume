@@ -3,7 +3,7 @@
 const DEVICE_ID_KEY = "noiceresume_device_id";
 let _sessionStarted = false;
 
-function getDeviceId(): string {
+export function getDeviceId(): string {
   if (typeof window === "undefined") return "";
   let id = localStorage.getItem(DEVICE_ID_KEY);
   if (!id) {
