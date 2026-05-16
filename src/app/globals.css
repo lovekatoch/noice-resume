@@ -5,18 +5,6 @@
 @tailwind utilities;
 
 @layer components {
-  .btn-primary {
-    @apply bg-[#1E3A5F] text-white inline-block rounded-lg px-6 py-2 font-semibold;
-  }
-  .text-primary {
-    @apply text-[#1E3A5F] !important;
-  }
-  .bg-primary {
-    @apply bg-[#1E3A5F] text-white;
-  }
-  .outline-theme-blue {
-    @apply hover:opacity-80 hover:outline-[color:var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)];
-  }
   .sr-only {
     position: absolute;
     width: 1px;
@@ -32,25 +20,30 @@
 }
 
 :root {
-  /* Editorial Luxury — Deep Navy accent, off-white canvas (board direction 2026-05-16) */
-  --bg: #F5F5F7;
-  --surface: #FFFFFF;
-  --surface-2: #FAFAFA;
-  --fg: #1D1D1F;
-  --muted: #86868B;
-  --muted-subtle: #A1A1A6;
-  --border: rgba(0,0,0,0.06);
+  /* NoiceResume Brand Tokens — Modern Luxury, Quiet Authority */
   --accent: #1E3A5F;
   --accent-hover: #264B78;
   --accent-focus: #1E3A5F;
   --accent-light: rgba(30,58,95,0.08);
+  --bg: #F5F5F7;
+  --canvas: #F5F5F7;
+  --canvas-soft: #FAFAFA;
+  --surface: #FFFFFF;
+  --fg: #1D1D1F;
+  --body: #4A4A52;
+  --muted: #86868B;
+  --muted-subtle: #A1A1A6;
+  --border: rgba(0,0,0,0.06);
+  --border-strong: rgba(0,0,0,0.10);
+  --on-accent: #FFFFFF;
 
-  /* Semantic Colors */
-  --success: #27a644;
-  --green: #27a644;
-  --orange: #dd5b00;
+  /* Semantic */
+  --success: #27A644;
+  --green: #27A644;
+  --orange: #DD5B00;
+  --error: #DC2626;
 
-  /* Legacy alias (for compatibility with remaining var() references) */
+  /* Legacy aliases (backward compatibility) */
   --notion-white: var(--surface);
   --notion-warm-white: var(--bg);
   --notion-black: var(--fg);

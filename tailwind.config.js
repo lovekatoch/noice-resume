@@ -4,28 +4,37 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        canvas: '#F5F5F7',
+        'canvas-soft': '#FAFAFA',
         surface: '#FFFFFF',
+        fg: '#1D1D1F',
+        body: '#4A4A52',
         muted: '#86868B',
+        'muted-subtle': '#A1A1A6',
+        border: 'rgba(0,0,0,0.06)',
         accent: {
           DEFAULT: '#1E3A5F',
-          hover: '#162d4d',
+          hover: '#264B78',
           light: 'rgba(30,58,95,0.08)',
         },
+        success: '#27A644',
+        error: '#DC2626',
       },
       fontFamily: {
-        display: ['Inter', 'system-ui', 'sans-serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['var(--font-garamond)', 'Times New Roman', 'serif'],
+        body: ['var(--font-inter)', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
       borderRadius: {
-        sm: '4px',
-        md: '6px',
-        lg: '8px',
-        xl: '12px',
-        '2xl': '16px',
+        sm: '6px',
+        md: '8px',
+        lg: '12px',
+        xl: '16px',
+        '2xl': '24px',
       },
       boxShadow: {
         card: '0 1px 2px rgba(50,50,93,0.08), 0 2px 6px rgba(50,50,93,0.06)',
-        lifted: '0 4px 12px rgba(50,50,93,0.1), 0 1px 3px rgba(50,50,93,0.06)',
+        lifted: '0 4px 12px rgba(50,50,93,0.10), 0 1px 3px rgba(50,50,93,0.06)',
+        cta: 'rgba(30,58,95,0.30) 0px 8px 24px -4px',
       },
       backgroundImage: {
         dot: "url('/assets/dots.svg')",
