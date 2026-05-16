@@ -2,6 +2,7 @@ import { BaseForm } from "components/ResumeForm/Form";
 import { Input, Textarea } from "components/ResumeForm/Form/InputGroup";
 import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
+import { ErrorBoundary } from "components/ErrorBoundary";
 import { AIRoastCard } from "components/AIRoastCard";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { changeProfile, selectResume, selectProfile } from "lib/redux/resumeSlice";
@@ -35,6 +36,9 @@ export const ProfileForm = () => {
     regenerateCount,
     isCooldown,
     cooldownRemaining,
+    handleRetry,
+    isOffline,
+    cachedSuggestion,
   } = useAIPanel({
     onAccept: (text) => {
       dispatch(changeProfile({ field: "summary", value: text }));
@@ -147,18 +151,23 @@ Write a compelling professional summary / sales pitch for this candidate based o
           onChange={handleProfileChange}
         />
       </div>
-      <AIPanel
-        isOpen={aiPanelOpen}
-        onClose={closePanel}
-        onAccept={handleAccept}
-        onRegenerate={handleRegenerate}
-        streamingText={streamingText}
-        isLoading={isLoading}
-        error={error}
-        regenerateCount={regenerateCount}
-        isCooldown={isCooldown}
-        cooldownRemaining={cooldownRemaining}
-      />
+      <ErrorBoundary>
+        <AIPanel
+          isOpen={aiPanelOpen}
+          onClose={closePanel}
+          onAccept={handleAccept}
+          onRegenerate={handleRegenerate}
+          onRetry={handleRetry}
+          streamingText={streamingText}
+          isLoading={isLoading}
+          error={error}
+          regenerateCount={regenerateCount}
+          isCooldown={isCooldown}
+          cooldownRemaining={cooldownRemaining}
+          isOffline={isOffline}
+          cachedSuggestion={cachedSuggestion}
+        />
+      </ErrorBoundary>
 
       {showRoastPrompt && !showRoastCard && (
         <div

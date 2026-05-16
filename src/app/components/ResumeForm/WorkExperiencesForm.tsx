@@ -5,6 +5,7 @@ import {
 } from "components/ResumeForm/Form/InputGroup";
 import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
+import { ErrorBoundary } from "components/ErrorBoundary";
 import type { CreateHandleChangeArgsWithDescriptions } from "components/ResumeForm/types";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import {
@@ -34,6 +35,9 @@ export const WorkExperiencesForm = () => {
     regenerateCount,
     isCooldown,
     cooldownRemaining,
+    handleRetry,
+    isOffline,
+    cachedSuggestion,
   } = useAIPanel({
     onAccept: (text) => {
       if (aiTargetIdx !== null) {
@@ -130,18 +134,23 @@ export const WorkExperiencesForm = () => {
           </FormSection>
         );
       })}
-      <AIPanel
-        isOpen={aiPanelOpen}
-        onClose={closePanel}
-        onAccept={handleAccept}
-        onRegenerate={handleRegenerate}
-        streamingText={streamingText}
-        isLoading={isLoading}
-        error={error}
-        regenerateCount={regenerateCount}
-        isCooldown={isCooldown}
-        cooldownRemaining={cooldownRemaining}
-      />
+      <ErrorBoundary>
+        <AIPanel
+          isOpen={aiPanelOpen}
+          onClose={closePanel}
+          onAccept={handleAccept}
+          onRegenerate={handleRegenerate}
+          onRetry={handleRetry}
+          streamingText={streamingText}
+          isLoading={isLoading}
+          error={error}
+          regenerateCount={regenerateCount}
+          isCooldown={isCooldown}
+          cooldownRemaining={cooldownRemaining}
+          isOffline={isOffline}
+          cachedSuggestion={cachedSuggestion}
+        />
+      </ErrorBoundary>
     </Form>
   );
 };

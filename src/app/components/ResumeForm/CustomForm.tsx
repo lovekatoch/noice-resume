@@ -2,6 +2,7 @@ import { Form } from "components/ResumeForm/Form";
 import { BulletListTextarea } from "components/ResumeForm/Form/InputGroup";
 import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
+import { ErrorBoundary } from "components/ErrorBoundary";
 import { PlusSmallIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { changeCustom, selectCustom, selectResume } from "lib/redux/resumeSlice";
@@ -28,6 +29,9 @@ export const CustomForm = () => {
     regenerateCount,
     isCooldown,
     cooldownRemaining,
+    handleRetry,
+    isOffline,
+    cachedSuggestion,
   } = useAIPanel({
     onAccept: (text) => {
       dispatch(changeCustom({ field: "descriptions", value: text.split("\n").filter(Boolean) }));
@@ -130,18 +134,23 @@ Rewrite the custom section bullet points to be more impactful. Use • prefix. M
           />
         </div>
       </div>
-      <AIPanel
-        isOpen={aiPanelOpen}
-        onClose={closePanel}
-        onAccept={handleAccept}
-        onRegenerate={handleRegenerate}
-        streamingText={streamingText}
-        isLoading={isLoading}
-        error={error}
-        regenerateCount={regenerateCount}
-        isCooldown={isCooldown}
-        cooldownRemaining={cooldownRemaining}
-      />
+      <ErrorBoundary>
+        <AIPanel
+          isOpen={aiPanelOpen}
+          onClose={closePanel}
+          onAccept={handleAccept}
+          onRegenerate={handleRegenerate}
+          onRetry={handleRetry}
+          streamingText={streamingText}
+          isLoading={isLoading}
+          error={error}
+          regenerateCount={regenerateCount}
+          isCooldown={isCooldown}
+          cooldownRemaining={cooldownRemaining}
+          isOffline={isOffline}
+          cachedSuggestion={cachedSuggestion}
+        />
+      </ErrorBoundary>
     </Form>
   );
 };

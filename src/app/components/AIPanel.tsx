@@ -1,10 +1,12 @@
 import { useEffect, useState, useRef } from "react";
+import { AIErrorFallback } from "./AIErrorFallback";
 
 interface AIPanelProps {
   isOpen: boolean;
   onClose: () => void;
   onAccept: (text: string) => void;
   onRegenerate: () => void;
+  onRetry?: () => void;
   streamingText: string;
   isLoading: boolean;
   error?: string;
@@ -12,6 +14,8 @@ interface AIPanelProps {
   maxRegenerate?: number;
   isCooldown?: boolean;
   cooldownRemaining?: number;
+  isOffline?: boolean;
+  cachedSuggestion?: string | null;
 }
 
 const MAX_REGENERATE = 3;
@@ -28,6 +32,9 @@ export const AIPanel = ({
   maxRegenerate = MAX_REGENERATE,
   isCooldown = false,
   cooldownRemaining = 0,
+  isOffline = false,
+  cachedSuggestion = null,
+  onRetry,
 }: AIPanelProps) => {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -132,15 +139,33 @@ export const AIPanel = ({
           </button>
         </div>
 
-        {/* Cooldown / usage display */}
+        {/* Status display */}
         <div className="px-5 pb-3">
-          {isCooldown ? (
+          {isOffline ? (
+            <p className="text-xs" style={{ color: "var(--muted)" }}>
+              <span className="inline-flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                </svg>
+                Offline — showing cached suggestions
+              </span>
+            </p>
+          ) : isCooldown ? (
             <p className="text-xs" style={{ color: "var(--muted)" }}>
               <span className="inline-flex items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Next enhancement available in {cooldownRemaining}s
+              </span>
+            </p>
+          ) : cachedSuggestion ? (
+            <p className="text-xs" style={{ color: "var(--muted)" }}>
+              <span className="inline-flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                </svg>
+                Showing cached suggestion — AI unavailable
               </span>
             </p>
           ) : (
@@ -167,13 +192,12 @@ export const AIPanel = ({
             </div>
           )}
 
-          {error && (
-            <div className="flex items-center gap-2 text-red-600">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <span className="text-sm">{error}</span>
-            </div>
+          {error && !streamingText && (
+            <AIErrorFallback
+              error={new Error(error)}
+              reset={() => onRetry?.()}
+              onDismiss={onClose}
+            />
           )}
 
           {streamingText && (

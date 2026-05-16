@@ -6,6 +6,7 @@ import {
 import { AISuggestButton } from "components/AISuggestButton";
 import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
+import { ErrorBoundary } from "components/ErrorBoundary";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { selectSkills, changeSkills } from "lib/redux/resumeSlice";
 import { selectThemeColor } from "lib/redux/settingsSlice";
@@ -45,6 +46,9 @@ export const SkillsForm = () => {
     regenerateCount,
     isCooldown,
     cooldownRemaining,
+    handleRetry,
+    isOffline,
+    cachedSuggestion,
   } = useAIPanel({
     onAccept: (text) => {
       const newSkills = text
@@ -98,18 +102,23 @@ export const SkillsForm = () => {
           </div>
         )}
       </div>
-      <AIPanel
-        isOpen={aiPanelOpen}
-        onClose={closePanel}
-        onAccept={handleAccept}
-        onRegenerate={handleRegenerate}
-        streamingText={streamingText}
-        isLoading={isLoading}
-        error={error}
-        regenerateCount={regenerateCount}
-        isCooldown={isCooldown}
-        cooldownRemaining={cooldownRemaining}
-      />
+      <ErrorBoundary>
+        <AIPanel
+          isOpen={aiPanelOpen}
+          onClose={closePanel}
+          onAccept={handleAccept}
+          onRegenerate={handleRegenerate}
+          onRetry={handleRetry}
+          streamingText={streamingText}
+          isLoading={isLoading}
+          error={error}
+          regenerateCount={regenerateCount}
+          isCooldown={isCooldown}
+          cooldownRemaining={cooldownRemaining}
+          isOffline={isOffline}
+          cachedSuggestion={cachedSuggestion}
+        />
+      </ErrorBoundary>
     </Form>
   );
 };
