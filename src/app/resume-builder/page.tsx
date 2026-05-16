@@ -5,13 +5,12 @@ import { useDispatch } from "react-redux";
 import { ResumeForm } from "components/ResumeForm";
 import { Resume } from "components/Resume";
 import { FloatingDownloadButton } from "components/Resume/FloatingDownloadButton";
-import { SocialProofBar } from "components/SocialProofBar";
 import { CelebrationOverlay } from "components/CelebrationOverlay";
 import { ReferralLandingBadge } from "components/ReferralLandingBadge";
 import { changeSettings, changeShowForm } from "lib/redux/settingsSlice";
 import { setResume } from "lib/redux/resumeSlice";
 import { END_HOME_RESUME } from "home/constants";
-import { captureReferralToken } from "lib/referral";
+import { captureReferralToken, notifyReferralCompleted } from "lib/referral";
 import { captureBuilderSession, captureReferralConversion, captureTemplateSelected, captureFirstRunPreFill, captureQuickStartSelected, captureOnboardingHintDismissed, captureSectionAutoShown } from "lib/analytics";
 import StructuredData from "components/StructuredData";
 import { breadcrumbSchema, howToSchema, SITE_URL } from "lib/structured-data";
@@ -49,6 +48,7 @@ export default function Create() {
     const token = captureReferralToken();
     if (token) {
       captureReferralConversion();
+      notifyReferralCompleted(token);
     }
   }, []);
 
@@ -101,7 +101,6 @@ export default function Create() {
 
   return (
     <main className="relative w-full max-w-full bg-[var(--canvas)] md:max-h-screen md:overflow-hidden">
-      <SocialProofBar />
       <CelebrationOverlay show={showCelebration} />
       <StructuredData
         schemas={[

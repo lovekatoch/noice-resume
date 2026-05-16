@@ -143,15 +143,6 @@ export function captureReferralAttributedVisit(_opts: {
 }) {
 }
 
-export function captureCampaignAttribution(_opts: {
-  utmSource?: string | null;
-  utmMedium?: string | null;
-  utmCampaign?: string | null;
-  utmTerm?: string | null;
-  utmContent?: string | null;
-  referrer?: string;
-}) {
-}
 
 export function captureShareAttributedVisit(_opts: {
   shareId: string;
@@ -273,6 +264,7 @@ export function captureOnboardingHintDismissed() {
 export function captureSectionAutoShown(_opts: { section: string }) {
 }
 
+
 export function captureCampaignAttribution(opts: {
   utmSource?: string | null;
   utmMedium?: string | null;
@@ -281,20 +273,4 @@ export function captureCampaignAttribution(opts: {
   utmContent?: string | null;
   referrer?: string;
 }) {
-  posthog.register({
-    utm_source: opts.utmSource || null,
-    utm_medium: opts.utmMedium || null,
-    utm_campaign: opts.utmCampaign || null,
-    utm_term: opts.utmTerm || null,
-    utm_content: opts.utmContent || null,
-  });
-  capture("campaign_attributed_visit", {
-    utm_source: opts.utmSource || null,
-    utm_medium: opts.utmMedium || null,
-    utm_campaign: opts.utmCampaign || null,
-    utm_term: opts.utmTerm || null,
-    utm_content: opts.utmContent || null,
-    referrer: opts.referrer || null,
-    $current_url: window.location.href,
-  });
 }
