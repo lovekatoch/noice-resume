@@ -2,7 +2,7 @@
 import { usePDF } from "@react-pdf/renderer";
 import { useMemo, useState, useCallback } from "react";
 import dynamic from "next/dynamic";
-import { ArrowDownTrayIcon, XMarkIcon, ShareIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, ShareIcon } from "@heroicons/react/24/outline";
 import { useAppSelector } from "lib/redux/hooks";
 import { selectResume } from "lib/redux/resumeSlice";
 import { selectSettings } from "lib/redux/settingsSlice";
@@ -28,9 +28,9 @@ const SHARE_WORKER_URL = process.env.NEXT_PUBLIC_RESUME_SHARE_WORKER_URL || "";
 function FloatingButton() {
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
-  const [isOpen, setIsOpen] = useState(false);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [shareId, setShareId] = useState<string | null>(null);
 
   const pdfDocument = useMemo(
     () => <ResumePDF resume={resume} settings={settings} isPDF={true} />,
@@ -90,8 +90,8 @@ function FloatingButton() {
         const data = await resp.json();
         const url = `${SHARE_WORKER_URL}/${data.id}`;
         setShareUrl(url);
+        setShareId(data.id);
         captureShareUrlGenerated({ url });
-        captureShareEvent("share_link_created", { share_id: data.id });
         captureShareEvent("share_link_created", { share_id: data.id });
       } else {
         setShareUrl("https://noiceresume.pages.dev");
@@ -101,94 +101,60 @@ function FloatingButton() {
     }
   }, [resume, settings]);
 
-  const handleDownload = () => {
+  const triggerDownload = useCallback(() => {
     if (instance.url) {
       captureDownload({
         template,
         fileName: baseFileName,
         fileType: "pdf",
       });
+      captureShareEvent("share_flow_downloaded", {
+        share_id: shareId,
+        download_after_share: true,
+      });
       const link = document.createElement("a");
       link.href = instance.url;
       link.download = `${baseFileName}.pdf`;
       link.click();
-      setIsOpen(false);
-      void createShareLink().then(() => setShowShareModal(true));
     }
-  };
+  }, [instance.url, template, baseFileName, shareId]);
 
-  const handleShare = () => {
-    if (shareUrl) {
-      setShowShareModal(true);
-    } else {
-      void createShareLink().then(() => setShowShareModal(true));
+  const handleFabClick = useCallback(async () => {
+    if (showShareModal) {
+      setShowShareModal(false);
+      return;
     }
-    setIsOpen(false);
-  };
+    if (!shareUrl) {
+      await createShareLink();
+    }
+    setShowShareModal(true);
+  }, [showShareModal, shareUrl, createShareLink]);
 
   return (
     <>
-      {showShareModal && shareUrl && (
+      {showShareModal && (
         <PostDownloadShare
           onClose={() => setShowShareModal(false)}
-          shareUrl={shareUrl}
+          shareUrl={shareUrl || undefined}
           profileName={resume.profile.name || undefined}
+          onDownload={triggerDownload}
+          downloadLabel={instance.url ? `Download ${baseFileName}.pdf` : "Generating PDF..."}
         />
       )}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
-        {isOpen && (
-          <div
-            className="rounded-lg border p-3 shadow-lg"
-            style={{
-              backgroundColor: "var(--surface)",
-              borderColor: "var(--border)",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-            }}
-          >
-            <p className="mb-2 text-xs font-medium" style={{ color: "var(--muted-subtle)" }}>
-              Resume Actions
-            </p>
-            <button
-              onClick={handleDownload}
-              disabled={!instance.url}
-              className="flex w-full items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
-              style={{ backgroundColor: "var(--accent)" }}
-            >
-              {instance.url ? (
-                <ArrowDownTrayIcon className="h-4 w-4" />
-              ) : (
-                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-              )}
-              {instance.url ? `Download ${baseFileName}.pdf` : "Generating..."}
-            </button>
-            <button
-              onClick={handleShare}
-              className="flex w-full items-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-all hover:opacity-80 mt-2"
-              style={{
-                backgroundColor: "transparent",
-                border: "1px solid var(--border)",
-                color: "var(--fg)",
-              }}
-            >
-              <ShareIcon className="h-4 w-4" />
-              Share resume
-            </button>
-          </div>
-        )}
-
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={handleFabClick}
           className="flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg transition-all hover:scale-105 active:scale-95"
           style={{
             backgroundColor: "var(--accent)",
             boxShadow: "rgba(30,58,95,0.4) 0px 4px 20px",
           }}
-          aria-label={isOpen ? "Close menu" : "Resume actions"}
+          aria-label="Share & download resume"
         >
-          {isOpen ? (
+          {showShareModal ? (
             <XMarkIcon className="h-5 w-5" />
           ) : (
-            <ArrowDownTrayIcon className="h-5 w-5" />
+            <ShareIcon className="h-5 w-5" />
           )}
         </button>
       </div>

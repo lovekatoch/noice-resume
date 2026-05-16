@@ -50,8 +50,11 @@ export const ExportButton = ({
   const [isExporting, setIsExporting] = useState<ExportFormat | null>(null);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [shareId, setShareId] = useState<string | null>(null);
+  const shareIdRef = useRef<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const pendingFormatRef = useRef<ExportFormat | null>(null);
   const { play } = useSound();
 
   const createShareLink = useCallback(async () => {
@@ -86,8 +89,9 @@ export const ExportButton = ({
         const data = await resp.json();
         const url = `${SHARE_WORKER_URL}/${data.id}`;
         setShareUrl(url);
+        setShareId(data.id);
+        shareIdRef.current = data.id;
         captureShareUrlGenerated({ url });
-        captureShareEvent("share_link_created", { share_id: data.id });
         captureShareEvent("share_link_created", { share_id: data.id });
       } else {
         setShareUrl("https://noiceresume.pages.dev");
@@ -131,11 +135,8 @@ export const ExportButton = ({
     }
   }, [isOpen]);
 
-  const handleExport = useCallback(
+  const doDownload = useCallback(
     async (format: ExportFormat) => {
-      setIsExporting(format);
-      setIsOpen(false);
-
       try {
         if (format === "pdf") {
           if (pdfUrl) {
@@ -144,7 +145,6 @@ export const ExportButton = ({
             link.download = `${baseFileName}.pdf`;
             link.click();
           }
-          void createShareLink().then(() => setShowShareModal(true));
         } else {
           let blob: Blob;
           const fileName = `${baseFileName}${EXPORT_OPTIONS.find((o) => o.format === format)!.extension}`;
@@ -171,20 +171,37 @@ export const ExportButton = ({
           URL.revokeObjectURL(url);
         }
 
-        void play("hero.complete");
+        captureDownload({ template, fileName: baseFileName, fileType: format });
+        captureShareEvent("share_flow_downloaded", { share_id: shareIdRef.current, download_after_share: true });
         const refToken = captureReferralToken();
         if (refToken) {
           void notifyReferralCompleted(refToken);
         }
-        captureDownload({ template, fileName: baseFileName, fileType: format });
+        void play("hero.complete");
       } catch (err) {
         console.error(`Export failed for ${format}:`, err);
-      } finally {
-        setIsExporting(null);
       }
     },
-    [pdfUrl, baseFileName, resume, settings, template, play, createShareLink]
+    [pdfUrl, baseFileName, resume, settings, template, play]
   );
+
+  const handleExport = useCallback(
+    async (format: ExportFormat) => {
+      setIsExporting(format);
+      setIsOpen(false);
+      pendingFormatRef.current = format;
+      void createShareLink().then(() => setShowShareModal(true));
+    },
+    [createShareLink]
+  );
+
+  const handleShareDownload = useCallback(() => {
+    setShowShareModal(false);
+    if (pendingFormatRef.current) {
+      void doDownload(pendingFormatRef.current);
+      pendingFormatRef.current = null;
+    }
+  }, [doDownload]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -198,11 +215,13 @@ export const ExportButton = ({
 
   return (
     <div className="contents">
-      {showShareModal && shareUrl && (
+      {showShareModal && (
         <PostDownloadShare
           onClose={() => setShowShareModal(false)}
-          shareUrl={shareUrl}
+          shareUrl={shareUrl || undefined}
           profileName={resume.profile.name || undefined}
+          onDownload={handleShareDownload}
+          downloadLabel="Download resume"
         />
       )}
     <div ref={containerRef} className="relative" onKeyDown={handleKeyDown}>

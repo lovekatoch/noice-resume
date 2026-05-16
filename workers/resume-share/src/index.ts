@@ -2,6 +2,8 @@ interface Env {
   RESUME_KV: KVNamespace;
   MAX_SHARE_SIZE_KB: string;
   PUBLIC_URL: string;
+  POSTHOG_KEY?: string;
+  POSTHOG_HOST?: string;
 }
 
 interface SharePayload {
@@ -50,6 +52,15 @@ export default {
 
     if (request.method === "POST" && url.pathname === "/share") {
       return handleSave(request, env, cors);
+    }
+
+    const trackMatch = url.pathname.match(/^\/track-view\/([a-z0-9]{8})$/);
+    if (request.method === "GET" && trackMatch) {
+      return handleTrackView(trackMatch[1], request, env);
+    }
+
+    if (url.pathname === "/badge" || url.pathname === "/badge.svg") {
+      return handleBadge(request, env);
     }
 
     const shareMatch = url.pathname.match(/^\/share\/([a-z0-9]{8})$/);
@@ -251,6 +262,7 @@ ${id ? `<meta property="og:url" content="${escapeHtml(publicUrl)}/share/${escape
 <meta name="twitter:title" content="${escapeHtml(profile?.name)} — Resume">
 <meta name="twitter:description" content="View ${escapeHtml(profile?.name)}'s professional resume, built with NoiceResume">
 <meta name="twitter:image" content="${escapeHtml(publicUrl)}/og-default.svg">
+${id ? `<img src="${escapeHtml(publicUrl)}/track-view/${escapeHtml(id)}" width="1" height="1" alt="" style="display:none" referrerpolicy="no-referrer-when-downgrade" />` : ""}
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -388,7 +400,7 @@ ${id ? `<meta property="og:url" content="${escapeHtml(publicUrl)}/share/${escape
       <a class="share-btn" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out ${profile?.name || "my"}'s resume built with NoiceResume`)}&url=${encodeURIComponent(`${publicUrl}/share/${id}`)}" target="_blank" rel="noopener">Share on X</a>
       <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${publicUrl}/share/${id}`)}" target="_blank" rel="noopener">Share on LinkedIn</a>
     </div>` : ""}
-    Built with <a href="${escapeHtml(publicUrl)}" target="_blank" rel="noopener">NoiceResume</a>
+    Built with <a href="${escapeHtml(publicUrl)}?ref=share&share_id=${escapeHtml(id || "")}&utm_source=share&utm_medium=resume&utm_campaign=share_loop" target="_blank" rel="noopener">NoiceResume</a>
     — free AI resume builder
   </div>
 </div>
@@ -420,6 +432,127 @@ async function handleView(id: string, env: Env): Promise<Response> {
   const html = renderResumeHtml(record, publicUrl, id);
   return new Response(html, {
     status: 200,
+    headers: { "Content-Type": "text/html;charset=utf-8" },
+  });
+}
+
+async function handleTrackView(
+  id: string,
+  request: Request,
+  env: Env
+): Promise<Response> {
+  const url = new URL(request.url);
+  const referrer = url.searchParams.get("ref") || request.headers.get("Referer") || "direct";
+
+  const raw = await env.RESUME_KV.get(`resume:${id}`);
+  if (raw) {
+    const record: ShareRecord = JSON.parse(raw);
+    record.viewCount += 1;
+    await env.RESUME_KV.put(`resume:${id}`, JSON.stringify(record), {
+      expirationTtl: 7776000,
+    });
+
+    if (env.POSTHOG_KEY) {
+      void fetch(`${env.POSTHOG_HOST || "https://us.i.posthog.com"}/capture/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          api_key: env.POSTHOG_KEY,
+          event: "share_resume_viewed",
+          properties: {
+            share_id: id,
+            referrer: referrer,
+            view_count: record.viewCount,
+            distinct_id: `share-${id}`,
+            $current_url: request.url,
+          },
+          timestamp: new Date().toISOString(),
+        }),
+      }).catch(() => {});
+    }
+  }
+
+  const pixel = new Uint8Array([
+    0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 0x01, 0x00,
+    0x01, 0x00, 0x80, 0x00, 0x00, 0xff, 0xff, 0xff,
+    0x00, 0x00, 0x00, 0x21, 0xf9, 0x04, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x2c, 0x00, 0x00, 0x00, 0x00,
+    0x01, 0x00, 0x01, 0x00, 0x00, 0x02, 0x02, 0x44,
+    0x01, 0x00, 0x3b,
+  ]);
+
+  return new Response(pixel, {
+    status: 200,
+    headers: {
+      "Content-Type": "image/gif",
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+}
+
+function handleBadge(request: Request, env: Env): Response {
+  const publicUrl = env.PUBLIC_URL || "https://noiceresume.com";
+  const url = new URL(request.url);
+  const format = url.searchParams.get("format") || "svg";
+
+  if (format === "svg") {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="40" viewBox="0 0 200 40">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1E3A5F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2D5A8E;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="40" rx="6" fill="url(#g)" />
+  <text x="100" y="15" text-anchor="middle" fill="#fff" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" font-weight="600" letter-spacing="0.5">Built with</text>
+  <text x="100" y="31" text-anchor="middle" fill="#fff" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="12" font-weight="700" letter-spacing="0.3">NoiceResume</text>
+</svg>`;
+    return new Response(svg, {
+      headers: {
+        "Content-Type": "image/svg+xml",
+        "Cache-Control": "public, max-age=86400",
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+  }
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NoiceResume Badge</title>
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f5f5f5;color:#1a1a1a;}
+  .card{text-align:center;padding:2rem;background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.08);max-width:520px;}
+  h2{margin-bottom:0.5rem;}
+  p{color:#666;line-height:1.6;margin-bottom:1rem;}
+  pre{background:#1a1a1a;color:#e0e0e0;padding:1rem;border-radius:8px;overflow-x:auto;font-size:0.8rem;text-align:left;margin:1rem 0;}
+  code{font-family:"SF Mono",Monaco,"Cascadia Code",monospace;}
+  .badge-preview{margin:1rem 0;}
+  a{color:#1E3A5F;}
+</style>
+</head>
+<body>
+<div class="card">
+  <h2>NoiceResume Badge</h2>
+  <p>Show the world you built your resume with NoiceResume.</p>
+  <div class="badge-preview">
+    <img src="${escapeHtml(publicUrl)}/badge.svg" alt="Built with NoiceResume" width="200" height="40" />
+  </div>
+  <p style="font-weight:600;margin-top:1.5rem;">HTML</p>
+  <pre><code>&lt;a href="${escapeHtml(publicUrl)}" target="_blank"&gt;
+  &lt;img src="${escapeHtml(publicUrl)}/badge.svg"
+       alt="Built with NoiceResume"
+       width="200" height="40" /&gt;
+&lt;/a&gt;</code></pre>
+  <p style="font-weight:600;">Markdown</p>
+  <pre><code>[![Built with NoiceResume](${escapeHtml(publicUrl)}/badge.svg)](${escapeHtml(publicUrl)})</code></pre>
+</div>
+</body>
+</html>`;
+  return new Response(html, {
     headers: { "Content-Type": "text/html;charset=utf-8" },
   });
 }

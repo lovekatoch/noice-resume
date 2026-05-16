@@ -51,9 +51,17 @@ interface PostDownloadShareProps {
   onClose: () => void;
   shareUrl?: string;
   profileName?: string;
+  onDownload?: () => void;
+  downloadLabel?: string;
 }
 
-export function PostDownloadShare({ onClose, shareUrl: propShareUrl, profileName }: PostDownloadShareProps) {
+export function PostDownloadShare({
+  onClose,
+  shareUrl: propShareUrl,
+  profileName,
+  onDownload,
+  downloadLabel = "Download PDF",
+}: PostDownloadShareProps) {
   const [copied, setCopied] = useState(false);
   const shareUrl = propShareUrl || "https://noiceresume.pages.dev";
   const namePart = profileName ? ` ${profileName}'s` : " my";
@@ -92,14 +100,30 @@ export function PostDownloadShare({ onClose, shareUrl: propShareUrl, profileName
       >
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-semibold" style={{ color: INK }}>
-            Share NoiceResume
+            Your resume is ready
           </h3>
           <button onClick={onClose} style={{ color: INK_SUBTLE }}>
             <XIcon />
           </button>
         </div>
-        <p className="text-xs mb-5 leading-relaxed" style={{ color: INK_MUTED }}>
-          Love your resume? Help others find NoiceResume too.
+
+        {onDownload && (
+          <button
+            onClick={onDownload}
+            className="flex w-full items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90 mb-3"
+            style={{ backgroundColor: ACCENT }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            {downloadLabel}
+          </button>
+        )}
+
+        <p className="text-xs mb-3 leading-relaxed text-center" style={{ color: INK_MUTED }}>
+          Share with your network — it helps NoiceResume grow
         </p>
 
         <div className="flex flex-col gap-2">

@@ -237,6 +237,32 @@ export function captureReferralConversion() {
 }
 
 // ─────────────────────────────────────────────
+// Share attribution tracking (share → visit → download funnel)
+// ─────────────────────────────────────────────
+
+export function captureShareAttributedVisit(opts: {
+  shareId: string;
+  referrer?: string;
+}) {
+  capture("share_attributed_visit", {
+    share_id: opts.shareId,
+    referrer: opts.referrer || document.referrer || null,
+    $current_url: window.location.href,
+    $referrer: document.referrer,
+  });
+}
+
+export function captureShareFlowDownloaded(opts: {
+  shareId: string | null;
+}) {
+  capture("share_flow_downloaded", {
+    share_id: opts.shareId,
+    download_after_share: true,
+    $current_url: window.location.href,
+  });
+}
+
+// ─────────────────────────────────────────────
 // DeepSeek cost tracking
 // ─────────────────────────────────────────────
 const DEEPSEEK_INPUT_COST_PER_1M = 0.27;
