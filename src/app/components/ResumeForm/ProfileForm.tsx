@@ -6,6 +6,7 @@ import { ErrorBoundary } from "components/ErrorBoundary";
 import { AIRoastCard } from "components/AIRoastCard";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { changeProfile, selectResume, selectProfile } from "lib/redux/resumeSlice";
+import { captureFormFieldEdited } from "lib/analytics";
 import { selectThemeColor } from "lib/redux/settingsSlice";
 import { ResumeProfile } from "lib/redux/types";
 import { useAIPanel } from "lib/hooks/useAIPanel";
@@ -22,6 +23,7 @@ export const ProfileForm = () => {
 
   const handleProfileChange = (field: keyof ResumeProfile, value: string) => {
     dispatch(changeProfile({ field, value }));
+    captureFormFieldEdited({ sectionType: "profile", fieldName: field, action: "edit" });
   };
 
   const {

@@ -17,6 +17,7 @@ import type { ResumeEducation } from "lib/redux/types";
 import {
   selectThemeColor,
 } from "lib/redux/settingsSlice";
+import { captureFormFieldEdited } from "lib/analytics";
 import { useAIPanel } from "lib/hooks/useAIPanel";
 
 export const EducationsForm = () => {
@@ -62,11 +63,8 @@ Institution: ${section.school}\nDegree: ${section.degree}\n${section.gpa ? `GPA:
         const handleEducationChange = (
           ...args: CreateHandleChangeArgsWithDescriptions<ResumeEducation>
         ) => {
-          if (args[0] === "descriptions") {
-            dispatch(changeEducations({ idx, field: args[0], value: args[1] }));
-          } else {
-            dispatch(changeEducations({ idx, field: args[0], value: args[1] }));
-          }
+          dispatch(changeEducations({ idx, field: args[0], value: args[1] }));
+          captureFormFieldEdited({ sectionType: "educations", fieldName: args[0], action: "edit" });
         };
 
         const showMoveUp = idx !== 0;

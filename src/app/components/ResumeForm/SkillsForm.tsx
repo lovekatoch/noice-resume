@@ -10,6 +10,7 @@ import { ErrorBoundary } from "components/ErrorBoundary";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { selectSkills, changeSkills } from "lib/redux/resumeSlice";
 import { selectThemeColor } from "lib/redux/settingsSlice";
+import { captureFormFieldEdited } from "lib/analytics";
 import { useState } from "react";
 import { useAIPanel } from "lib/hooks/useAIPanel";
 
@@ -24,12 +25,12 @@ export const SkillsForm = () => {
   const skillsTextValue = descriptions.join(", ");
 
   const handleSkillsTextChange = (_name: string, value: string) => {
-    // Parse comma-separated text back into array for storage
     const newDescriptions = value
       .split(",")
       .map((s) => s.trim())
       .filter(Boolean);
     dispatch(changeSkills({ field: "descriptions", value: newDescriptions }));
+    captureFormFieldEdited({ sectionType: "skills", fieldName: "descriptions", action: "edit" });
   };
 
   const [aiMode, setAiMode] = useState<"replace" | "append">("replace");

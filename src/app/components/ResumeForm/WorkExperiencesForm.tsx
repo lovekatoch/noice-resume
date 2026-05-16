@@ -14,6 +14,7 @@ import {
   selectWorkExperiences,
 } from "lib/redux/resumeSlice";
 import { selectThemeColor } from "lib/redux/settingsSlice";
+import { captureFormFieldEdited } from "lib/analytics";
 import type { ResumeWorkExperience } from "lib/redux/types";
 import { useAIPanel } from "lib/hooks/useAIPanel";
 
@@ -60,11 +61,8 @@ export const WorkExperiencesForm = () => {
         const handleWorkExperienceChange = (
           ...args: CreateHandleChangeArgsWithDescriptions<ResumeWorkExperience>
         ) => {
-          if (args[0] === "descriptions") {
-            dispatch(changeWorkExperiences({ idx, field: args[0], value: args[1] }));
-          } else {
-            dispatch(changeWorkExperiences({ idx, field: args[0], value: args[1] }));
-          }
+          dispatch(changeWorkExperiences({ idx, field: args[0], value: args[1] }));
+          captureFormFieldEdited({ sectionType: "workExperiences", fieldName: args[0], action: "edit" });
         };
         const showMoveUp = idx !== 0;
         const showMoveDown = idx !== workExperiences.length - 1;

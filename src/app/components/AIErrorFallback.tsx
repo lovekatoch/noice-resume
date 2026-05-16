@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
+import { capture } from "lib/analytics";
+
 interface AIErrorFallbackProps {
   error: Error;
   reset: () => void;
@@ -7,6 +10,12 @@ interface AIErrorFallbackProps {
 }
 
 export function AIErrorFallback({ error, reset, onDismiss }: AIErrorFallbackProps) {
+  useEffect(() => {
+    capture("ai_error_fallback", {
+      error_message: error.message,
+      stack: error.stack,
+    });
+  }, [error]);
   const isNetworkError =
     error.message?.toLowerCase().includes("network") ||
     error.message?.toLowerCase().includes("fetch") ||

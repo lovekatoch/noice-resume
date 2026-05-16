@@ -6,6 +6,7 @@ import { ErrorBoundary } from "components/ErrorBoundary";
 import { PlusSmallIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { changeCustom, selectCustom, selectResume } from "lib/redux/resumeSlice";
+import { captureFormFieldEdited } from "lib/analytics";
 import { selectThemeColor } from "lib/redux/settingsSlice";
 import { changeShowForm } from "lib/redux/settingsSlice";
 import { useAIPanel } from "lib/hooks/useAIPanel";
@@ -40,14 +41,17 @@ export const CustomForm = () => {
 
   const handleCustomChange = (field: "descriptions", value: string[]) => {
     dispatch(changeCustom({ field, value }));
+    captureFormFieldEdited({ sectionType: "custom", fieldName: "descriptions", action: "edit" });
   };
 
   const handleAddSection = () => {
+    captureFormFieldEdited({ sectionType: "custom", fieldName: "item", action: "add" });
     dispatch(changeCustom({ field: "descriptions", value: [""] }));
     dispatch(changeShowForm({ field: "custom", value: true }));
   };
 
   const handleDeleteSection = () => {
+    captureFormFieldEdited({ sectionType: "custom", fieldName: "item", action: "delete" });
     dispatch(changeCustom({ field: "descriptions", value: [] }));
     dispatch(changeShowForm({ field: "custom", value: false }));
   };

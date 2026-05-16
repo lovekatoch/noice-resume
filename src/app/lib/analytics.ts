@@ -134,6 +134,13 @@ export function captureDownload(opts: {
   });
 }
 
+export function captureShareUrlGenerated(opts: { url: string }) {
+  capture("share_url_generated", {
+    url: opts.url,
+    $current_url: window.location.href,
+  });
+}
+
 export function captureShareEvent(event: string, opts?: Record<string, unknown>) {
   capture(event, {
     ...opts,
@@ -313,6 +320,47 @@ export function captureAiEnhanceAccepted(opts: {
   capture("ai_enhance_accepted", {
     section_type: opts.sectionType,
     global_enhance_count: opts.globalEnhanceCount,
+  });
+}
+
+export function captureFormFieldEdited(opts: {
+  sectionType: string;
+  fieldName: string;
+  action: "add" | "edit" | "delete";
+}) {
+  capture("form_field_edited", {
+    section_type: opts.sectionType,
+    field_name: opts.fieldName,
+    action: opts.action,
+    $current_url: window.location.href,
+  });
+}
+
+export function captureTemplateBrowsed(opts: {
+  searchTerm?: string;
+  templateCount: number;
+}) {
+  capture("template_browsed", {
+    search_term: opts.searchTerm ?? null,
+    template_count: opts.templateCount,
+    $current_url: window.location.href,
+  });
+}
+
+export function captureContentPageViewed(opts: {
+  pageType: string;
+  slug?: string;
+}) {
+  capture("content_page_viewed", {
+    page_type: opts.pageType,
+    slug: opts.slug ?? null,
+    $current_url: window.location.href,
+  });
+}
+
+export function capturePwaInstalled() {
+  capture("pwa_installed", {
+    $current_url: typeof window !== "undefined" ? window.location.href : null,
   });
 }
 

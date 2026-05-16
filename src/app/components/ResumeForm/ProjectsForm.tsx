@@ -14,6 +14,7 @@ import {
   deleteSectionInFormByIdx,
 } from "lib/redux/resumeSlice";
 import { selectThemeColor } from "lib/redux/settingsSlice";
+import { captureFormFieldEdited } from "lib/analytics";
 import type { ResumeProject } from "lib/redux/types";
 import { useAIPanel } from "lib/hooks/useAIPanel";
 
@@ -60,11 +61,8 @@ Project: ${section.project}\n${section.date ? `Duration: ${section.date}` : ''}\
         const handleProjectChange = (
           ...args: CreateHandleChangeArgsWithDescriptions<ResumeProject>
         ) => {
-          if (args[0] === "descriptions") {
-            dispatch(changeProjects({ idx, field: args[0], value: args[1] }));
-          } else {
-            dispatch(changeProjects({ idx, field: args[0], value: args[1] }));
-          }
+          dispatch(changeProjects({ idx, field: args[0], value: args[1] }));
+          captureFormFieldEdited({ sectionType: "projects", fieldName: args[0], action: "edit" });
         };
         const showMoveUp = idx !== 0;
         const showMoveDown = idx !== projects.length - 1;

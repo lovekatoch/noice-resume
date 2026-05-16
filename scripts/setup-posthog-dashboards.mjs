@@ -259,7 +259,7 @@ const INSIGHT_DEFS = [
       events: [
         { id: 'resume_downloaded', type: 'events', order: 0 },
         { id: 'share_url_generated', type: 'events', order: 1 },
-        { id: 'share_url_copied', type: 'events', order: 2 },
+        { id: 'share_link_copied', type: 'events', order: 2 },
       ],
       date_from: '-30d',
     },

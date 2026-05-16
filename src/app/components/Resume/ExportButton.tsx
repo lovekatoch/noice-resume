@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useSound } from "lib/sound/provider";
 import { captureReferralToken, notifyReferralCompleted } from "lib/referral";
-import { captureDownload, captureShareEvent } from "lib/analytics";
+import { captureDownload, captureShareUrlGenerated, captureShareEvent } from "lib/analytics";
 import { PostDownloadShare } from "components/PostDownloadShare";
 import type { Resume } from "lib/redux/types";
 import type { Settings } from "lib/redux/settingsSlice";
@@ -86,7 +86,8 @@ export const ExportButton = ({
         const data = await resp.json();
         const url = `${SHARE_WORKER_URL}/${data.id}`;
         setShareUrl(url);
-        captureShareEvent("share_url_generated", { share_id: data.id });
+        captureShareUrlGenerated({ url });
+        captureShareEvent("share_link_created", { share_id: data.id });
         captureShareEvent("share_link_created", { share_id: data.id });
       } else {
         setShareUrl("https://noiceresume.pages.dev");

@@ -35,7 +35,7 @@ import {
   selectCustom,
 } from "lib/redux/resumeSlice";
 import { useSound } from "lib/sound/provider";
-import { captureFirstSectionAdded } from "lib/analytics";
+import { captureFirstSectionAdded, captureFormFieldEdited } from "lib/analytics";
 
 /**
  * BaseForm is the bare bone form, i.e. just the outline with no title and no control buttons.
@@ -177,6 +177,7 @@ export const Form = ({
               if (totalEntries === 3) {
                 captureFirstSectionAdded({ sectionType: form });
               }
+              captureFormFieldEdited({ sectionType: form, fieldName: "item", action: "add" });
               dispatch(addSectionInForm({ form }));
               void play("interaction.tap");
             }}
@@ -219,6 +220,7 @@ export const FormSection = ({
 }) => {
   const dispatch = useAppDispatch();
   const handleDeleteClick = () => {
+    captureFormFieldEdited({ sectionType: form, fieldName: "item", action: "delete" });
     if (onDelete) {
       onDelete();
     } else {

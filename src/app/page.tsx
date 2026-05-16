@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ImportButton } from "components/ImportButton";
+import { captureTemplateBrowsed } from "lib/analytics";
 import StructuredData from "components/StructuredData";
 import {
   organizationSchema,
@@ -408,6 +409,10 @@ function TemplatePreviews() {
     { src: "/sample-resumes/resume-modern-1.png", name: "Modern", description: "Bold headers and sleek spacing for creative roles", id: "sb2nov-modern" },
     { src: "/sample-resumes/resume-stackoverflow-1.png", name: "Compact", description: "Maximizes content density for experienced hires", id: "stackoverflow" },
   ];
+
+  useEffect(() => {
+    captureTemplateBrowsed({ templateCount: TEMPLATES.length });
+  }, []);
 
   const layoutClass =
     layoutVariant === "carousel"
