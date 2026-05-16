@@ -2,6 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import type { ResourceMeta } from "lib/resource-data";
+import StructuredData from "components/StructuredData";
+import {
+  breadcrumbSchema,
+  collectionPageSchema,
+  SITE_URL,
+} from "lib/structured-data";
 
 function ArrowRightIcon() {
   return (
@@ -17,6 +23,18 @@ export function ResourcesPageClient({ resources }: { resources: ResourceMeta[] }
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: "var(--canvas)" }}>
+      <StructuredData
+        schemas={[
+          breadcrumbSchema([
+            { name: "Home", url: SITE_URL },
+            { name: "Resources", url: `${SITE_URL}/resources` },
+          ]),
+          collectionPageSchema(
+            "Resume Resources & Guides — NoiceResume",
+            "Expert guides on resume writing, ATS optimization, and career advice. Learn how to write a resume that gets interviews."
+          ),
+        ]}
+      />
       <section className="px-6 py-20">
         <div className="mx-auto max-w-4xl">
           <div className="mb-16 text-center">

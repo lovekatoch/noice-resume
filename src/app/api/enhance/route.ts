@@ -36,10 +36,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Return the JSON response
+    // Return the response — forward the upstream content type
+    // (text/event-stream for streaming, application/json for legacy)
     return new Response(response.body, {
+      status: response.status,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": response.headers.get("Content-Type") || "application/json",
       },
     });
   } catch (error) {

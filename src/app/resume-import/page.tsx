@@ -3,11 +3,17 @@ import { getHasUsedAppBefore } from "lib/redux/local-storage";
 import { ResumeDropzone } from "components/ResumeDropzone";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { captureImportEvent } from "lib/analytics";
+import StructuredData from "components/StructuredData";
+import { breadcrumbSchema, SITE_URL } from "lib/structured-data";
 
 export default function ImportResume() {
   const [hasUsedAppBefore, setHasUsedAppBefore] = useState(false);
   const [hasAddedResume, setHasAddedResume] = useState(false);
   const onFileUrlChange = (fileUrl: string) => {
+    if (fileUrl) {
+      captureImportEvent("resume_uploaded", {});
+    }
     setHasAddedResume(Boolean(fileUrl));
   };
 
@@ -17,6 +23,14 @@ export default function ImportResume() {
 
   return (
     <main>
+      <StructuredData
+        schemas={[
+          breadcrumbSchema([
+            { name: "Home", url: SITE_URL },
+            { name: "Import Resume", url: `${SITE_URL}/resume-import` },
+          ]),
+        ]}
+      />
       <div className="mx-auto mt-14 max-w-3xl rounded-lg border border-[var(--notion-border)] px-10 py-10 text-center"
         style={{ backgroundColor: "var(--surface)" }}>
         {!hasUsedAppBefore ? (
@@ -78,12 +92,17 @@ const SectionWithHeadingAndCreateButton = ({
   heading: string;
   buttonText: string;
 }) => {
+  const eventName =
+    buttonText === "Create from scratch"
+      ? "start_from_scratch"
+      : "continue_session";
   return (
     <>
       <p className="font-semibold" style={{ color: "var(--fg)" }}>{heading}</p>
       <div className="mt-5">
         <Link
           href="/resume-builder"
+          onClick={() => captureImportEvent(eventName)}
           className="outline-theme-blue rounded-full bg-[var(--notion-blue)] px-6 pb-2 pt-1.5 text-base font-semibold text-white"
         >
           {buttonText}

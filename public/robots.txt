@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /resume-parser
+Disallow: /api/
+Crawl-delay: 10
+
+Sitemap: https://noiceresume.pages.dev/sitemap.xml

@@ -3,6 +3,13 @@
 import { useRouter } from "next/navigation";
 import type { ResourceMeta } from "lib/resource-data";
 import { useEffect } from "react";
+import StructuredData from "components/StructuredData";
+import {
+  breadcrumbSchema,
+  articleSchema,
+  howToSchema,
+  SITE_URL,
+} from "lib/structured-data";
 
 function ArrowRightIcon() {
   return (
@@ -13,28 +20,25 @@ function ArrowRightIcon() {
   );
 }
 
-function HowToSchema({ resource }: { resource: ResourceMeta }) {
-  useEffect(() => {
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      name: resource.title,
-      description: resource.description,
-      step: resource.sections.map((s, i) => ({
-        "@type": "HowToStep",
-        position: i + 1,
-        name: s.heading,
-        text: s.body.slice(0, 200),
-      })),
-    };
-    const script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.textContent = JSON.stringify(schema);
-    document.head.appendChild(script);
-    return () => { script.remove(); };
-  }, [resource]);
-
-  return null;
+function ResourceStructuredData({ resource }: { resource: ResourceMeta }) {
+  return (
+    <StructuredData
+      schemas={[
+        breadcrumbSchema([
+          { name: "Home", url: SITE_URL },
+          { name: "Resources", url: `${SITE_URL}/resources` },
+          { name: resource.title, url: `${SITE_URL}/resources/${resource.slug}` },
+        ]),
+        articleSchema(resource.ogTitle, resource.ogDescription, "2025-01-01"),
+        howToSchema(
+          resource.sections.map((s) => ({
+            name: s.heading,
+            text: s.body.slice(0, 200),
+          }))
+        ),
+      ]}
+    />
+  );
 }
 
 function BreadcrumbNav({ resource }: { resource: ResourceMeta }) {
@@ -206,7 +210,7 @@ export function ResourcePageClient({ resource }: { resource: ResourceMeta | unde
 
   return (
     <main>
-      <HowToSchema resource={resource} />
+      <ResourceStructuredData resource={resource} />
       <BreadcrumbNav resource={resource} />
       <HeroSection resource={resource} />
       <ContentSection resource={resource} />

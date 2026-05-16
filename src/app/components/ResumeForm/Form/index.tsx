@@ -35,6 +35,7 @@ import {
   selectCustom,
 } from "lib/redux/resumeSlice";
 import { useSound } from "lib/sound/provider";
+import { captureFirstSectionAdded } from "lib/analytics";
 
 /**
  * BaseForm is the bare bone form, i.e. just the outline with no title and no control buttons.
@@ -170,6 +171,12 @@ export const Form = ({
           <button
             type="button"
             onClick={() => {
+              const totalEntries =
+                workExperiences.length + educations.length +
+                projects.length + skills.descriptions.length + custom.descriptions.length;
+              if (totalEntries === 3) {
+                captureFirstSectionAdded({ sectionType: form });
+              }
               dispatch(addSectionInForm({ form }));
               void play("interaction.tap");
             }}

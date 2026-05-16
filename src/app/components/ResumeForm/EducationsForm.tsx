@@ -33,9 +33,11 @@ export const EducationsForm = () => {
     closePanel,
     handleAccept,
     handleRegenerate,
+    handleRetry,
     error,
     regenerateCount,
-    globalEnhanceCount,
+    isCooldown,
+    cooldownRemaining,
   } = useAIPanel({
     onAccept: (text) => {
       if (aiTargetIdx !== null) {
@@ -48,7 +50,7 @@ export const EducationsForm = () => {
     const section = educations[idx];
     const prompt = `[education]
 Institution: ${section.school}\nDegree: ${section.degree}\n${section.gpa ? `GPA: ${section.gpa}` : 'GPA: N/A'}\nDuration: ${section.date || 'N/A'}\n${(section.descriptions || []).length > 0 ? `\nNotes:\n${section.descriptions.join('\n')}` : ''}`;
-    openPanel(prompt, idx);
+    openPanel(prompt, idx, undefined, "education", section.descriptions.length);
   };
 
   return (
@@ -146,11 +148,13 @@ Institution: ${section.school}\nDegree: ${section.degree}\n${section.gpa ? `GPA:
         onClose={closePanel}
         onAccept={handleAccept}
         onRegenerate={handleRegenerate}
+        onRetry={handleRetry}
         streamingText={streamingText}
         isLoading={isLoading}
         error={error}
         regenerateCount={regenerateCount}
-        globalEnhanceCount={globalEnhanceCount}
+        isCooldown={isCooldown}
+        cooldownRemaining={cooldownRemaining}
       />
     </Form>
   );

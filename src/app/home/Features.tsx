@@ -45,26 +45,27 @@ export const Features = () => {
   return (
     <>
       {/* Feature cards */}
-      <section className="bg-white px-6 py-20 md:py-28">
+      <section className="bg-surface px-6 py-20 md:py-28">
         <div className="mx-auto max-w-4xl">
-          <h2 className="mb-2 text-center font-display text-3xl font-light tracking-tight text-[#0C1628]">
+          <h2 className="mb-2 text-center font-display text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
             Why NoiceResume
           </h2>
-          <p className="mb-12 text-center text-base text-[#64748d]">
+          <p className="mb-12 text-center text-base" style={{ color: "var(--body)" }}>
             A resume builder that does the hard part for you.
           </p>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {ITEMS.map(({ title, text, icon }) => (
               <div
                 key={title}
-                className="group flex items-start gap-5 rounded-lg border border-[#e5edf5] bg-white p-7 transition-all duration-200 hover:border-[var(--accent)]/20 hover:shadow-[rgba(50,50,93,0.08)_0px_6px_24px]"
+                className="group flex items-start gap-5 rounded-lg border bg-surface p-7 transition-all duration-200 hover:shadow-[rgba(50,50,93,0.08)_0px_6px_24px]"
+                style={{ borderColor: "var(--border)" }}
               >
                 <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--accent-light)] transition-all group-hover:bg-[var(--accent)]/15">
                   {icon}
                 </div>
                 <div>
-                  <h3 className="mb-1.5 font-semibold text-[#0C1628]">{title}</h3>
-                  <p className="text-sm leading-relaxed text-[#64748d]">{text}</p>
+                  <h3 className="mb-1.5 font-semibold" style={{ color: "var(--fg)" }}>{title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--body)" }}>{text}</p>
                 </div>
               </div>
             ))}
@@ -72,8 +73,8 @@ export const Features = () => {
         </div>
       </section>
 
-      {/* Dark CTA band — Stripe-inspired brand section */}
-      <section className="border-t border-[var(--border)] bg-[#0C1628] px-6 py-24 text-center text-white">
+      {/* Dark CTA band */}
+      <section className="border-t px-6 py-24 text-center text-white" style={{ backgroundColor: "#0C1628", borderColor: "var(--border)" }}>
         <div className="mx-auto max-w-[540px]">
           {/* Decorative accent line */}
           <div className="mx-auto mb-8 h-px w-16 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent" />
@@ -87,7 +88,8 @@ export const Features = () => {
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href="/resume-builder"
-              className="inline-flex items-center gap-2 rounded-md bg-[var(--accent)] px-7 py-3 font-medium text-white shadow-[rgba(94,106,210,0.35)_0px_8px_24px_-4px] transition-all hover:bg-[var(--accent-hover)] hover:shadow-[rgba(94,106,210,0.5)_0px_12px_28px_-6px] active:scale-[0.98]"
+              className="inline-flex items-center gap-2 rounded-full px-7 py-3 font-medium text-white shadow-[rgba(30,58,95,0.30)_0px_8px_24px_-4px] transition-all hover:shadow-[rgba(30,58,95,0.5)_0px_12px_28px_-6px] active:scale-[0.98]"
+              style={{ backgroundColor: "var(--accent)" }}
             >
               Start Fresh
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -96,7 +98,7 @@ export const Features = () => {
             </a>
             <a
               href="/resume-import"
-              className="inline-flex items-center gap-2 rounded-md border border-white/15 px-7 py-3 font-medium text-white/80 transition-all hover:border-white/30 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-7 py-3 font-medium text-white/80 transition-all hover:border-white/30 hover:text-white"
             >
               Import PDF
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -27,9 +27,11 @@ export const ProfileForm = () => {
     closePanel,
     handleAccept,
     handleRegenerate,
+    handleRetry,
     error,
     regenerateCount,
-    globalEnhanceCount,
+    isCooldown,
+    cooldownRemaining,
   } = useAIPanel({
     onAccept: (text) => {
       dispatch(changeProfile({ field: "summary", value: text }));
@@ -81,7 +83,7 @@ ${projectText || "(none provided)"}
 ---
 
 Write a compelling professional summary / sales pitch for this candidate based on their full resume.`;
-    openPanel(prompt, undefined, "objective");
+    openPanel(prompt, undefined, "objective", "profile", undefined);
   };
 
   return (
@@ -144,11 +146,13 @@ Write a compelling professional summary / sales pitch for this candidate based o
         onClose={closePanel}
         onAccept={handleAccept}
         onRegenerate={handleRegenerate}
+        onRetry={handleRetry}
         streamingText={streamingText}
         isLoading={isLoading}
         error={error}
         regenerateCount={regenerateCount}
-        globalEnhanceCount={globalEnhanceCount}
+        isCooldown={isCooldown}
+        cooldownRemaining={cooldownRemaining}
       />
     </BaseForm>
   );

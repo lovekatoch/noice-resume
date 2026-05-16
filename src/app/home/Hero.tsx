@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { ImportButton } from "components/ImportButton";
 import { useRouter } from "next/navigation";
+import { captureLandingCtaClick } from "lib/analytics";
 
 export const Hero = () => {
   const router = useRouter();
@@ -21,11 +22,16 @@ export const Hero = () => {
   }, []);
 
   const handleStartFresh = () => {
+    captureLandingCtaClick({ ctaLabel: "Start Fresh", ctaLocation: "hero" });
     localStorage.removeItem("open-resume-state");
     router.push("/resume-builder");
   };
 
   const handleContinue = () => {
+    captureLandingCtaClick({
+      ctaLabel: "Continue",
+      ctaLocation: "hero",
+    });
     router.push("/resume-builder");
   };
 

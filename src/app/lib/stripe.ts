@@ -1,4 +1,13 @@
+"use client";
+
 import { loadStripe, type Stripe } from "@stripe/stripe-js";
+import {
+  captureCheckoutStarted,
+  captureCheckoutCompleted,
+  captureCheckoutCancelled,
+  captureCheckoutError,
+  capturePremiumActivated,
+} from "lib/analytics";
 
 let stripePromise: Promise<Stripe | null>;
 
@@ -24,7 +33,27 @@ export interface CheckoutResult {
   error?: string;
 }
 
-export async function initiateStripeCheckout(priceId: string): Promise<string | null> {
+const DEFAULT_PLAN_NAME = "Premium";
+const DEFAULT_AMOUNT = 0;
+const DEFAULT_CURRENCY = "USD";
+
+export async function initiateStripeCheckout(
+  priceId: string,
+  planName?: string,
+  amount?: number,
+  currency?: string
+): Promise<string | null> {
+  const resolvedPlanName = planName ?? DEFAULT_PLAN_NAME;
+  const resolvedAmount = amount ?? DEFAULT_AMOUNT;
+  const resolvedCurrency = currency ?? DEFAULT_CURRENCY;
+
+  captureCheckoutStarted({
+    priceId,
+    planName: resolvedPlanName,
+    amount: resolvedAmount,
+    currency: resolvedCurrency,
+  });
+
   if (STRIPE_CHECKOUT_URL) {
     try {
       const response = await fetch(STRIPE_CHECKOUT_URL, {
@@ -55,36 +84,104 @@ export async function initiateStripeCheckout(priceId: string): Promise<string | 
         return sessionId;
       }
 
+      captureCheckoutCancelled({
+        priceId,
+        planName: resolvedPlanName,
+        step: "no_session_url",
+      });
       return null;
     } catch (error) {
-      console.error("Stripe checkout error:", error);
+      const message =
+        error instanceof Error ? error.message : "Unknown checkout error";
+      captureCheckoutError({
+        error: message,
+        priceId,
+        planName: resolvedPlanName,
+        step: "initiate_checkout",
+      });
       throw error;
     }
   }
 
-  console.log(
-    `[DEMO MODE] Stripe checkout would be initiated for price: ${priceId}`
-  );
-
   const demoMode = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
   if (demoMode) {
     const confirmation = window.confirm(
-      "🎉 Demo Mode: Simulate a successful premium upgrade?\n\nClick OK to simulate premium activation."
+      "Demo Mode: Simulate a successful premium upgrade?\n\nClick OK to simulate premium activation."
     );
     if (confirmation) {
       if (typeof window !== "undefined") {
         localStorage.setItem("noiceresume_demo_premium", "true");
       }
-      return "demo_session_" + Date.now();
+      const sessionId = "demo_session_" + Date.now();
+      captureCheckoutCompleted({
+        sessionId,
+        amount: resolvedAmount,
+        currency: resolvedCurrency,
+        planName: resolvedPlanName,
+      });
+      capturePremiumActivated({ sessionId });
+      return sessionId;
     }
+    captureCheckoutCancelled({
+      priceId,
+      planName: resolvedPlanName,
+      step: "demo_confirm",
+    });
     throw new Error("Checkout cancelled");
   }
 
-  const demoUrl = `https://buy.stripe.com/demo?price=${priceId}`;
-  window.open(demoUrl, "_blank");
+  captureCheckoutError({
+    error: "Stripe not configured",
+    priceId,
+    planName: resolvedPlanName,
+    step: "no_config",
+  });
   throw new Error(
     "Stripe is not configured. In production, set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY and NEXT_PUBLIC_STRIPE_CHECKOUT_URL."
   );
+}
+
+export async function verifyCheckoutSession(
+  sessionId: string
+): Promise<{ success: boolean; premium: boolean }> {
+  const verifyUrl = process.env.NEXT_PUBLIC_STRIPE_VERIFY_URL;
+
+  if (!verifyUrl) {
+    if (sessionId.startsWith("demo_session_")) {
+      return { success: true, premium: true };
+    }
+    return { success: false, premium: false };
+  }
+
+  try {
+    const response = await fetch(`${verifyUrl}?sessionId=${sessionId}`);
+    if (!response.ok) {
+      throw new Error("Verification failed");
+    }
+    const data = await response.json();
+    if (data.premium) {
+      captureCheckoutCompleted({
+        sessionId,
+        customerId: data.customerId,
+        amount: data.amount ?? 0,
+        currency: data.currency ?? "USD",
+        planName: data.planName ?? DEFAULT_PLAN_NAME,
+      });
+      capturePremiumActivated({
+        sessionId,
+        customerId: data.customerId,
+      });
+    }
+    return { success: true, premium: data.premium };
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Verification error";
+    captureCheckoutError({
+      error: message,
+      step: "verify_session",
+    });
+    return { success: false, premium: false };
+  }
 }
 
 export async function verifyCheckoutSession(

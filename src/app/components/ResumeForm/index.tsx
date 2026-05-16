@@ -12,6 +12,8 @@ import { ProjectsForm } from "components/ResumeForm/ProjectsForm";
 import { SkillsForm } from "components/ResumeForm/SkillsForm";
 import { CustomForm } from "components/ResumeForm/CustomForm";
 import { AutoSaveIndicator } from "components/AutoSaveIndicator";
+import { ErrorBoundary } from "components/ErrorBoundary";
+import { AIErrorFallback } from "components/AIErrorFallback";
 
 const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   workExperiences: WorkExperiencesForm,
@@ -20,6 +22,18 @@ const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   skills: SkillsForm,
   custom: CustomForm,
 };
+
+function AIErrorBoundaryWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <ErrorBoundary
+      fallback={(error: Error, reset: () => void) => (
+        <AIErrorFallback error={error} reset={reset} />
+      )}
+    >
+      {children}
+    </ErrorBoundary>
+  );
+}
 
 export const ResumeForm = () => {
   useSetInitialStore();
@@ -30,10 +44,16 @@ export const ResumeForm = () => {
   return (
     <div className="w-full md:h-[calc(100vh-var(--top-nav-bar-height))] md:overflow-y-scroll scrollbar-thin scrollbar-track-gray-100">
       <section className="flex w-full flex-col gap-3 p-4">
-        <ProfileForm />
+        <AIErrorBoundaryWrapper>
+          <ProfileForm />
+        </AIErrorBoundaryWrapper>
         {formsOrder.map((form) => {
           const Component = formTypeToComponent[form];
-          return <Component key={form} />;
+          return (
+            <AIErrorBoundaryWrapper key={form}>
+              <Component />
+            </AIErrorBoundaryWrapper>
+          );
         })}
       </section>
       <AutoSaveIndicator />

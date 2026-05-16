@@ -30,9 +30,11 @@ export const WorkExperiencesForm = () => {
     closePanel,
     handleAccept,
     handleRegenerate,
+    handleRetry,
     error,
     regenerateCount,
-    globalEnhanceCount,
+    isCooldown,
+    cooldownRemaining,
   } = useAIPanel({
     onAccept: (text) => {
       if (aiTargetIdx !== null) {
@@ -46,7 +48,7 @@ export const WorkExperiencesForm = () => {
   const handleSparkleClick = (idx: number) => {
     const section = workExperiences[idx];
     const prompt = `[description]\n${(section.descriptions || []).join("\n") || "(no existing content)"}`;
-    openPanel(prompt, idx);
+    openPanel(prompt, idx, undefined, "work_experience", section.descriptions.length);
   };
 
   return (
@@ -134,11 +136,13 @@ export const WorkExperiencesForm = () => {
         onClose={closePanel}
         onAccept={handleAccept}
         onRegenerate={handleRegenerate}
+        onRetry={handleRetry}
         streamingText={streamingText}
         isLoading={isLoading}
         error={error}
         regenerateCount={regenerateCount}
-        globalEnhanceCount={globalEnhanceCount}
+        isCooldown={isCooldown}
+        cooldownRemaining={cooldownRemaining}
       />
     </Form>
   );

@@ -51,7 +51,7 @@ export const Resume = () => {
   return (
     <>
       <NonEnglishFontsCSSLazyLoader />
-      <div id="resume-preview" className="relative flex h-full w-full flex-col bg-[var(--bg)]">
+      <div id="resume-preview" className="relative flex h-full w-full flex-col bg-[var(--canvas)]">
         <ResumeControlBarCSR
           document={document}
           baseFileName={getResumeBaseName(resume.profile.name)}

@@ -168,7 +168,7 @@ function escapeHtml(str: unknown): string {
     .replace(/"/g, "&quot;");
 }
 
-function renderResumeHtml(data: ShareRecord, publicUrl: string): string {
+function renderResumeHtml(data: ShareRecord, publicUrl: string, id?: string): string {
   const resume = data.resume as Record<string, unknown>;
   const settings = data.settings as Record<string, unknown> | undefined;
   const profile = resume.profile as Record<string, string> | undefined;
@@ -237,10 +237,19 @@ function renderResumeHtml(data: ShareRecord, publicUrl: string): string {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${escapeHtml(profile?.name)} — Resume</title>
-<meta name="description" content="View ${escapeHtml(profile?.name)}'s resume, built with NoiceResume">
+<meta name="description" content="View ${escapeHtml(profile?.name)}'s resume, built with NoiceResume — free AI resume builder">
 <meta property="og:title" content="${escapeHtml(profile?.name)} — Resume">
-<meta property="og:description" content="View ${escapeHtml(profile?.name)}'s professional resume">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="View ${escapeHtml(profile?.name)}'s professional resume, built with NoiceResume">
+<meta property="og:type" content="profile">
+${id ? `<meta property="og:url" content="${escapeHtml(publicUrl)}/share/${escapeHtml(id)}">` : ""}
+<meta property="og:image" content="${escapeHtml(publicUrl)}/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="NoiceResume">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${escapeHtml(profile?.name)} — Resume">
+<meta name="twitter:description" content="View ${escapeHtml(profile?.name)}'s professional resume, built with NoiceResume">
+<meta name="twitter:image" content="${escapeHtml(publicUrl)}/og-default.png">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -304,6 +313,26 @@ function renderResumeHtml(data: ShareRecord, publicUrl: string): string {
     border-top: 1px solid #eee;
   }
   .footer a { color: ${escapeHtml(themeColor)}; text-decoration: none; font-weight: 500; }
+  .share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    background: #fafafa;
+    color: #555;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .share-btn:hover { background: #f0f0f0; }
   .error { text-align: center; padding: 4rem 2rem; }
   .error h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
   .error p { color: #888; }
@@ -354,8 +383,12 @@ function renderResumeHtml(data: ShareRecord, publicUrl: string): string {
       </section>` : ""}
   </div>
   <div class="footer">
+    ${id ? `<div class="share-buttons">
+      <a class="share-btn" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out ${profile?.name || "my"}'s resume built with NoiceResume`)}&url=${encodeURIComponent(`${publicUrl}/share/${id}`)}" target="_blank" rel="noopener">Share on X</a>
+      <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${publicUrl}/share/${id}`)}" target="_blank" rel="noopener">Share on LinkedIn</a>
+    </div>` : ""}
     Built with <a href="${escapeHtml(publicUrl)}" target="_blank" rel="noopener">NoiceResume</a>
-    — AI-powered resume builder
+    — free AI resume builder
   </div>
 </div>
 </body>
@@ -383,7 +416,7 @@ async function handleView(id: string, env: Env): Promise<Response> {
   });
 
   const publicUrl = env.PUBLIC_URL || "https://noiceresume.com";
-  const html = renderResumeHtml(record, publicUrl);
+  const html = renderResumeHtml(record, publicUrl, id);
   return new Response(html, {
     status: 200,
     headers: { "Content-Type": "text/html;charset=utf-8" },

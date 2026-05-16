@@ -7,6 +7,9 @@ import { Resume } from "components/Resume";
 import { FloatingDownloadButton } from "components/Resume/FloatingDownloadButton";
 import { changeSettings } from "lib/redux/settingsSlice";
 import { captureReferralToken } from "lib/referral";
+import { captureBuilderSession, captureReferralConversion, captureTemplateSelected } from "lib/analytics";
+import StructuredData from "components/StructuredData";
+import { breadcrumbSchema, SITE_URL } from "lib/structured-data";
 
 export default function Create() {
   const [mobileTab, setMobileTab] = useState<"form" | "preview">("form");
@@ -18,6 +21,7 @@ export default function Create() {
     const template = searchParams.get("template");
     if (template) {
       dispatch(changeSettings({ field: "template", value: template }));
+      captureTemplateSelected({ template });
     }
   }, [searchParams, dispatch]);
 
@@ -29,11 +33,47 @@ export default function Create() {
   }, []);
 
   useEffect(() => {
-    captureReferralToken();
+    const token = captureReferralToken();
+    if (token) {
+      captureReferralConversion();
+    }
   }, []);
 
+  useEffect(() => {
+    const fromTemplate = searchParams.get("template");
+    const hasSavedState =
+      typeof window !== "undefined" &&
+      !!localStorage.getItem("open-resume-state");
+    if (hasSavedState) {
+      try {
+        const saved = JSON.parse(
+          localStorage.getItem("open-resume-state") || "{}"
+        );
+        const hasData =
+          saved?.resume?.profile?.name ||
+          saved?.resume?.workExperiences?.length > 0;
+        if (hasData) {
+          captureBuilderSession({ resumed: true });
+          return;
+        }
+      } catch {}
+    }
+    captureBuilderSession({
+      resumed: false,
+      fromTemplate: fromTemplate ?? undefined,
+    });
+  }, [searchParams]);
+
   return (
-    <main className="relative w-full max-w-full bg-[var(--bg)] md:max-h-screen md:overflow-hidden">
+    <main className="relative w-full max-w-full bg-[var(--canvas)] md:max-h-screen md:overflow-hidden">
+      <StructuredData
+        schemas={[
+          breadcrumbSchema([
+            { name: "Home", url: SITE_URL },
+            { name: "Resume Builder", url: `${SITE_URL}/resume-builder` },
+          ]),
+        ]}
+      />
       {/* Mobile tab bar */}
       {isMobile && (
         <div

@@ -43,7 +43,8 @@ export const SkillsForm = () => {
     handleRegenerate,
     error,
     regenerateCount,
-    globalEnhanceCount,
+    isCooldown,
+    cooldownRemaining,
   } = useAIPanel({
     onAccept: (text) => {
       const newSkills = text
@@ -64,11 +65,11 @@ export const SkillsForm = () => {
 
   const handleSuggestSkills = (mode: "replace" | "append") => {
     setAiMode(mode);
-    openPanel(buildPrompt());
+    openPanel(buildPrompt(), undefined, undefined, "skills", descriptions.length);
   };
 
   const handleSparkleClick = () => {
-    openPanel(buildPrompt());
+    openPanel(buildPrompt(), undefined, undefined, "skills", descriptions.length);
   };
 
   return (
@@ -106,7 +107,8 @@ export const SkillsForm = () => {
         isLoading={isLoading}
         error={error}
         regenerateCount={regenerateCount}
-        globalEnhanceCount={globalEnhanceCount}
+        isCooldown={isCooldown}
+        cooldownRemaining={cooldownRemaining}
       />
     </Form>
   );

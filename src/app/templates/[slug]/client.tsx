@@ -1,7 +1,17 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { captureTemplateView } from "lib/analytics";
 import type { TemplateMeta } from "lib/template-data";
+import StructuredData from "components/StructuredData";
+import {
+  breadcrumbSchema,
+  productSchema,
+  SITE_URL,
+} from "lib/structured-data";
+import StructuredData from "components/StructuredData";
+import { breadcrumbSchema, SITE_URL } from "lib/structured-data";
 
 function CheckIcon() {
   return (
@@ -166,6 +176,10 @@ function Footer() {
 }
 
 export function TemplatePageClient({ template }: { template: TemplateMeta | undefined }) {
+  useEffect(() => {
+    captureTemplateView({ templateSlug: template.slug, templateName: template.title });
+  }, [template]);
+
   if (!template) {
     return (
       <main className="flex min-h-screen items-center justify-center px-6" style={{ backgroundColor: "var(--canvas)" }}>
@@ -179,6 +193,20 @@ export function TemplatePageClient({ template }: { template: TemplateMeta | unde
 
   return (
     <main>
+      <StructuredData
+        schemas={[
+          breadcrumbSchema([
+            { name: "Home", url: SITE_URL },
+            { name: "Templates", url: `${SITE_URL}/templates` },
+            { name: template.title, url: `${SITE_URL}/templates/${template.slug}` },
+          ]),
+          productSchema({
+            name: template.title,
+            description: template.description,
+            image: template.sampleResumeImage,
+          }),
+        ]}
+      />
       <HeroSection template={template} />
       <ScreenshotSection template={template} />
       <BenefitsSection template={template} />

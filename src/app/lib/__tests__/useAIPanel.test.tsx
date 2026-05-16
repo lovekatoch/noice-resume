@@ -3,14 +3,23 @@ import { useAIPanel } from "lib/hooks/useAIPanel";
 
 const MOCK_RESPONSE = { content: "Mock AI text" };
 
-const mockFetch = (response: { content: string }, ok = true) =>
+const mockFetch = (body: object, ok = true) =>
   jest.fn().mockResolvedValue({
     ok,
-    json: jest.fn().mockResolvedValue(response),
+    headers: new Map(Object.entries({ "Content-Type": "application/json" })),
+    json: jest.fn().mockResolvedValue(body),
+  });
+
+const mockFetchNoHeaders = (body: object, ok = true) =>
+  jest.fn().mockResolvedValue({
+    ok,
+    headers: new Map(),
+    json: jest.fn().mockResolvedValue(body),
   });
 
 beforeEach(() => {
   jest.restoreAllMocks();
+  sessionStorage.clear();
 });
 
 describe("useAIPanel", () => {
@@ -164,6 +173,7 @@ describe("useAIPanel", () => {
   it("should call /api/enhance with correct payload", async () => {
     const fetchMock = jest.fn().mockResolvedValue({
       ok: true,
+      headers: new Map(Object.entries({ "content-type": "application/json" })),
       json: jest.fn().mockResolvedValue({ content: "result" }),
     });
     global.fetch = fetchMock;
@@ -182,6 +192,7 @@ describe("useAIPanel", () => {
       body: JSON.stringify({
         prompt: "My prompt",
         context: "skills context",
+        stream: true,
       }),
       signal: expect.any(AbortSignal),
     });

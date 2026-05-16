@@ -10,12 +10,11 @@ interface AIPanelProps {
   error?: string;
   regenerateCount?: number;
   maxRegenerate?: number;
-  globalEnhanceCount?: number;
-  globalLimit?: number;
+  isCooldown?: boolean;
+  cooldownRemaining?: number;
 }
 
 const MAX_REGENERATE = 3;
-const GLOBAL_LIMIT = 10;
 
 export const AIPanel = ({
   isOpen,
@@ -27,8 +26,8 @@ export const AIPanel = ({
   error,
   regenerateCount = 0,
   maxRegenerate = MAX_REGENERATE,
-  globalEnhanceCount = 0,
-  globalLimit = GLOBAL_LIMIT,
+  isCooldown = false,
+  cooldownRemaining = 0,
 }: AIPanelProps) => {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -133,14 +132,25 @@ export const AIPanel = ({
           </button>
         </div>
 
-        {/* Usage counter */}
+        {/* Cooldown / usage display */}
         <div className="px-5 pb-3">
-          <p className="text-xs" style={{ color: "var(--muted)" }}>
-            Enhancements: {globalEnhanceCount}/{globalLimit}
-            {regenerateCount > 0 && (
-              <span className="ml-3">Regenerate: {regenerateRemaining}/{maxRegenerate} left</span>
-            )}
-          </p>
+          {isCooldown ? (
+            <p className="text-xs" style={{ color: "var(--muted)" }}>
+              <span className="inline-flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Next enhancement available in {cooldownRemaining}s
+              </span>
+            </p>
+          ) : (
+            <p className="text-xs" style={{ color: "var(--muted)" }}>
+              Ready to enhance
+              {regenerateCount > 0 && (
+                <span className="ml-3">Regenerate: {regenerateRemaining}/{maxRegenerate} left</span>
+              )}
+            </p>
+          )}
         </div>
 
         <div
@@ -170,7 +180,7 @@ export const AIPanel = ({
             <div
               className="rounded-lg border p-3.5"
               style={{
-                backgroundColor: "var(--bg)",
+                backgroundColor: "var(--canvas)",
                 borderColor: "var(--border)",
                 animation: "fadeSlideUp 300ms ease-out",
               }}
@@ -227,14 +237,14 @@ export const AIPanel = ({
         >
           <button onClick={onClose} disabled={isLoading}
             className="rounded-md px-4 py-2 text-sm font-medium transition-colors"
-            style={{ backgroundColor: "var(--bg)", color: "var(--fg)", border: "1px solid var(--border)" }}>
+            style={{ backgroundColor: "var(--canvas)", color: "var(--fg)", border: "1px solid var(--border)" }}>
             Cancel
           </button>
           <button
             onClick={onRegenerate}
             disabled={regenerateDisabled}
             className="rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-40"
-            style={{ backgroundColor: "var(--bg)", color: "var(--fg)", border: "1px solid var(--border)" }}
+            style={{ backgroundColor: "var(--canvas)", color: "var(--fg)", border: "1px solid var(--border)" }}
           >
             {regenerateCount > 0
               ? `Regenerate (${regenerateRemaining} left)`

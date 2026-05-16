@@ -8,6 +8,7 @@ import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 import { ExportButton } from "components/Resume/ExportButton";
 import { useSound } from "lib/sound/provider";
+import { captureTemplateSelected } from "lib/analytics";
 import type { Resume } from "lib/redux/types";
 import type { Settings } from "lib/redux/settingsSlice";
 
@@ -89,6 +90,7 @@ const ResumeControlBar = ({
         <select
           value={template}
           onChange={(e) => {
+            captureTemplateSelected({ template: e.target.value });
             onTemplateChange(e.target.value);
             void play("overlay.open");
           }}

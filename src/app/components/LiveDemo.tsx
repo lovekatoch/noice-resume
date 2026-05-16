@@ -110,7 +110,7 @@ export default function LiveDemo() {
     <section
       id="live-demo"
       className="px-6 py-20 md:py-28 scroll-mt-20"
-      style={{ backgroundColor: "var(--bg)" }}
+      style={{ backgroundColor: "var(--canvas)" }}
     >
       <div className="mx-auto max-w-6xl">
         <h2 className="mb-2 text-center font-display text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
@@ -164,7 +164,7 @@ export default function LiveDemo() {
                   placeholder="Alex Chen"
                   className="w-full rounded-lg border px-4 py-2.5 text-sm outline-none transition-all focus:ring-2"
                   style={{
-                    backgroundColor: "var(--bg)",
+                    backgroundColor: "var(--canvas)",
                     color: "var(--fg)",
                     borderColor: "var(--border)",
                   }}
@@ -181,7 +181,7 @@ export default function LiveDemo() {
                   placeholder="Senior Software Engineer"
                   className="w-full rounded-lg border px-4 py-2.5 text-sm outline-none transition-all focus:ring-2"
                   style={{
-                    backgroundColor: "var(--bg)",
+                    backgroundColor: "var(--canvas)",
                     color: "var(--fg)",
                     borderColor: "var(--border)",
                   }}
@@ -198,7 +198,7 @@ export default function LiveDemo() {
                   placeholder="TechCorp"
                   className="w-full rounded-lg border px-4 py-2.5 text-sm outline-none transition-all focus:ring-2"
                   style={{
-                    backgroundColor: "var(--bg)",
+                    backgroundColor: "var(--canvas)",
                     color: "var(--fg)",
                     borderColor: "var(--border)",
                   }}
@@ -215,7 +215,7 @@ export default function LiveDemo() {
                   rows={3}
                   className="w-full resize-none rounded-lg border px-4 py-2.5 text-sm outline-none transition-all focus:ring-2"
                   style={{
-                    backgroundColor: "var(--bg)",
+                    backgroundColor: "var(--canvas)",
                     color: "var(--fg)",
                     borderColor: "var(--border)",
                   }}

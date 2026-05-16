@@ -4,6 +4,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ImportButton } from "components/ImportButton";
+import StructuredData from "components/StructuredData";
+import {
+  organizationSchema,
+  websiteSchema,
+  breadcrumbSchema,
+  faqPageSchema,
+} from "lib/structured-data";
 
 const LiveDemo = dynamic(() => import("components/LiveDemo"), { ssr: false });
 import { EXPERIMENTS, useExperiment, useExperimentGoal } from "lib/experiments";
@@ -170,7 +177,7 @@ function Hero() {
 
   return (
     <section className="relative flex items-center justify-center overflow-hidden px-6 pb-16 pt-24 md:pb-20 md:pt-28"
-      style={{ backgroundColor: "var(--bg)" }}
+      style={{ backgroundColor: "var(--canvas)" }}
     >
       <div className="relative z-10 mx-auto w-full max-w-2xl text-center">
         {/* Social proof — above hero variant */}
@@ -284,7 +291,7 @@ function ProblemBar() {
 
 function Features() {
   return (
-    <section className="px-6 py-20 md:py-28" style={{ backgroundColor: "var(--bg)" }}>
+    <section className="px-6 py-20 md:py-28" style={{ backgroundColor: "var(--canvas)" }}>
       <div className="mx-auto max-w-4xl">
         <h2 className="mb-2 text-center font-display text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
           Why NoiceResume
@@ -470,6 +477,16 @@ function FAQSection() {
             );
           })}
         </div>
+
+        <div className="mt-12 text-center">
+          <a
+            href="/resources"
+            className="inline-flex items-center gap-2 text-sm font-medium transition-all hover:opacity-70"
+            style={{ color: "var(--accent)" }}
+          >
+            Explore our resume guides and resources <ArrowRight />
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -510,6 +527,13 @@ function FinalCTA() {
 
       {/* Footer */}
       <div className="mt-16 pt-16" style={{ borderTop: "1px solid var(--border)" }}>
+        <div className="mb-4 flex flex-wrap items-center justify-center gap-4 text-xs" style={{ color: "var(--muted-subtle)" }}>
+          <a href="/resources" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Guides</a>
+          <span>&middot;</span>
+          <a href="/templates/ats-friendly" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Templates</a>
+          <span>&middot;</span>
+          <a href="/resume-builder" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Builder</a>
+        </div>
         <p className="text-sm" style={{ color: "var(--muted-subtle)" }}>
           Built with <span style={{ color: "var(--accent)" }}>&#x2764;</span> by Love
         </p>
@@ -523,6 +547,16 @@ function FinalCTA() {
 export default function Home() {
   return (
     <main>
+      <StructuredData
+        schemas={[
+          organizationSchema(),
+          websiteSchema(),
+          breadcrumbSchema([
+            { name: "Home", url: "https://noiceresume.pages.dev" },
+          ]),
+          faqPageSchema(FAQ),
+        ]}
+      />
       <Hero />
       <ProblemBar />
       <Features />

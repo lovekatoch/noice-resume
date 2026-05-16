@@ -190,7 +190,106 @@ export default {
         { role: "user", content: `[${sectionType.toUpperCase()}]\n${cleanPrompt}` }
       ];
 
-      // Non-streaming — simple, reliable, no concatenation issues
+      const shouldStream = body.stream === true;
+
+      if (shouldStream) {
+        // ── Streaming mode ──
+        // Forward DeepSeek SSE events to the client, then append a final
+        // normalized event so the frontend always gets cleaned output.
+        const upstreamResponse = await fetch(
+          `${env.DEEPSEEK_BASE_URL}/chat/completions`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${env.DEEPSEEK_API_KEY}`
+            },
+            body: JSON.stringify({
+              model: env.MODEL,
+              messages,
+              stream: true,
+              max_tokens: maxTokens,
+              temperature: 0.7,
+            })
+          }
+        );
+
+        if (!upstreamResponse.ok) {
+          const errorText = await upstreamResponse.text();
+          return new Response(
+            JSON.stringify({ error: `DeepSeek API error: ${errorText}` }),
+            { status: upstreamResponse.status, headers: { "Content-Type": "application/json" } }
+          );
+        }
+
+        const upstreamReader = upstreamResponse.body.getReader();
+        const textDecoder = new TextDecoder();
+        let fullContent = "";
+        let lineBuffer = "";
+
+        const { readable, writable } = new TransformStream();
+        const writer = writable.getWriter();
+        const encoder = new TextEncoder();
+
+        (async () => {
+          try {
+            while (true) {
+              const { done, value } = await upstreamReader.read();
+              if (done) break;
+
+              const chunk = textDecoder.decode(value, { stream: true });
+              lineBuffer += chunk;
+
+              // Forward raw chunk to client immediately
+              await writer.write(encoder.encode(chunk));
+
+              // Accumulate content from completed SSE lines
+              const lines = lineBuffer.split("\n");
+              lineBuffer = lines.pop() || "";
+              for (const line of lines) {
+                if (line.startsWith("data: ")) {
+                  const payload = line.slice(6).trim();
+                  if (!payload || payload === "[DONE]") continue;
+                  try {
+                    const parsed = JSON.parse(payload);
+                    fullContent += parsed.choices?.[0]?.delta?.content || "";
+                  } catch { /* skip malformed */ }
+                }
+              }
+            }
+
+            // Flush remaining buffer
+            if (lineBuffer.startsWith("data: ")) {
+              const payload = lineBuffer.slice(6).trim();
+              if (payload && payload !== "[DONE]") {
+                try {
+                  const parsed = JSON.parse(payload);
+                  fullContent += parsed.choices?.[0]?.delta?.content || "";
+                } catch { /* skip */ }
+              }
+            }
+
+            // Send final normalized event
+            const normalized = normalizeOutput(fullContent, sectionType);
+            const finalPayload = JSON.stringify({ type: "done", content: normalized });
+            await writer.write(encoder.encode(`data: ${finalPayload}\n\n`));
+            await writer.close();
+          } catch (e) {
+            try { await writer.close(); } catch { /* ignore */ }
+          }
+        })();
+
+        return new Response(readable, {
+          headers: {
+            "Content-Type": "text/event-stream",
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
+      }
+
+      // ── Non-streaming mode (legacy) ──
       const upstreamResponse = await fetch(
         `${env.DEEPSEEK_BASE_URL}/chat/completions`,
         {
@@ -223,6 +322,39 @@ export default {
 
       return new Response(
         JSON.stringify({ content: normalized }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+
+      if (!upstreamResponse.ok) {
+        const errorText = await upstreamResponse.text();
+        return new Response(
+          JSON.stringify({ error: `DeepSeek API error: ${errorText}` }),
+          { status: upstreamResponse.status, headers: { "Content-Type": "application/json" } }
+        );
+      }
+
+      const result = await upstreamResponse.json();
+      const rawText = result.choices?.[0]?.message?.content || "";
+      const normalized = normalizeOutput(rawText, sectionType);
+      const usage = result.usage;
+
+      return new Response(
+        JSON.stringify({
+          content: normalized,
+          section_type: sectionType,
+          usage: usage
+            ? {
+                prompt_tokens: usage.prompt_tokens,
+                completion_tokens: usage.completion_tokens,
+                total_tokens: usage.total_tokens,
+              }
+            : null,
+        }),
         {
           headers: {
             "Content-Type": "application/json",

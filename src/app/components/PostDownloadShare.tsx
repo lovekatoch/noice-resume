@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { captureShareEvent } from "lib/analytics";
 
 const ACCENT = "#1E3A5F";
 const CANVAS = "#FFFFFF";
@@ -48,26 +49,32 @@ function XIcon() {
 
 interface PostDownloadShareProps {
   onClose: () => void;
+  shareUrl?: string;
+  profileName?: string;
 }
 
-export function PostDownloadShare({ onClose }: PostDownloadShareProps) {
+export function PostDownloadShare({ onClose, shareUrl: propShareUrl, profileName }: PostDownloadShareProps) {
   const [copied, setCopied] = useState(false);
-  const shareUrl = "https://noiceresume.pages.dev";
-  const shareText = "Built my resume with NoiceResume — free AI resume builder, no sign-up needed. Check it out:";
+  const shareUrl = propShareUrl || "https://noiceresume.pages.dev";
+  const namePart = profileName ? ` ${profileName}'s` : " my";
+  const shareText = `Check out${namePart} resume built with NoiceResume — free AI resume builder, no sign-up needed:`;
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl).then(() => {
       setCopied(true);
+      captureShareEvent("share_link_copied", { share_url: shareUrl });
       setTimeout(() => setCopied(false), 2000);
     });
   };
 
   const handleTweet = () => {
+    captureShareEvent("share_clicked", { share_medium: "twitter" });
     const tweetText = encodeURIComponent(`${shareText} ${shareUrl}`);
     window.open(`https://twitter.com/intent/tweet?text=${tweetText}`, "_blank", "noopener,noreferrer");
   };
 
   const handleLinkedIn = () => {
+    captureShareEvent("share_clicked", { share_medium: "linkedin" });
     const linkedInText = encodeURIComponent(`${shareText} ${shareUrl}`);
     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}&summary=${linkedInText}`, "_blank", "noopener,noreferrer");
   };

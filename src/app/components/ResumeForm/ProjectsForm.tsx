@@ -32,7 +32,8 @@ export const ProjectsForm = () => {
     handleRegenerate,
     error,
     regenerateCount,
-    globalEnhanceCount,
+    isCooldown,
+    cooldownRemaining,
   } = useAIPanel({
     onAccept: (text) => {
       if (aiTargetIdx !== null) {
@@ -46,7 +47,7 @@ export const ProjectsForm = () => {
     const section = projects[idx];
     const prompt = `[project]
 Project: ${section.project}\n${section.date ? `Duration: ${section.date}` : ''}\n${(section.descriptions || []).length > 0 ? `\nExisting bullets:\n${section.descriptions.join('\n')}` : ''}`;
-    openPanel(prompt, idx);
+    openPanel(prompt, idx, undefined, "project", section.descriptions.length);
   };
 
   return (
@@ -129,7 +130,8 @@ Project: ${section.project}\n${section.date ? `Duration: ${section.date}` : ''}\
         isLoading={isLoading}
         error={error}
         regenerateCount={regenerateCount}
-        globalEnhanceCount={globalEnhanceCount}
+        isCooldown={isCooldown}
+        cooldownRemaining={cooldownRemaining}
       />
     </Form>
   );
