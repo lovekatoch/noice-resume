@@ -28,6 +28,7 @@ const ResumeControlBar = ({
   onTemplateChange,
   resume,
   settings,
+  onMilestone,
 }: {
   document: JSX.Element;
   baseFileName: string;
@@ -38,6 +39,7 @@ const ResumeControlBar = ({
   onTemplateChange: (templateId: string) => void;
   resume: Resume;
   settings: Settings;
+  onMilestone?: () => void;
 }) => {
   const [instance, update] = usePDF({ document: pdfDocument });
   const { play } = useSound();
@@ -114,6 +116,7 @@ const ResumeControlBar = ({
           resume={resume}
           settings={settings}
           template={template}
+          onMilestone={onMilestone}
         />
       </div>
     </div>

@@ -22,7 +22,7 @@ function getResumeBaseName(name: string): string {
   return `${normalized}_Resume_${new Date().getFullYear()}`;
 }
 
-export const Resume = () => {
+export const Resume = ({ onMilestone }: { onMilestone?: () => void }) => {
   const [zoomLevel, setZoomLevel] = useState(100);
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
@@ -62,6 +62,7 @@ export const Resume = () => {
           onTemplateChange={handleTemplateChange}
           resume={resume}
           settings={settings}
+          onMilestone={onMilestone}
         />
         <ThemeForm />
         <section className="flex-1 overflow-y-auto p-2 pb-4 scroll-mt-16 md:p-4 md:pb-4">

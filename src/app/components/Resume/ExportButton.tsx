@@ -27,6 +27,7 @@ interface ExportButtonProps {
   resume: Resume;
   settings: Settings;
   template: string;
+  onMilestone?: () => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,6 +46,7 @@ export const ExportButton = ({
   resume,
   settings,
   template,
+  onMilestone,
 }: ExportButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExporting, setIsExporting] = useState<ExportFormat | null>(null);
@@ -178,11 +180,12 @@ export const ExportButton = ({
           void notifyReferralCompleted(refToken);
         }
         void play("hero.complete");
+        onMilestone?.();
       } catch (err) {
         console.error(`Export failed for ${format}:`, err);
       }
     },
-    [pdfUrl, baseFileName, resume, settings, template, play]
+    [pdfUrl, baseFileName, resume, settings, template, play, onMilestone]
   );
 
   const handleExport = useCallback(
@@ -219,7 +222,9 @@ export const ExportButton = ({
         <PostDownloadShare
           onClose={() => setShowShareModal(false)}
           shareUrl={shareUrl || undefined}
+          shareId={shareIdRef.current || undefined}
           profileName={resume.profile.name || undefined}
+          headline={resume.workExperiences?.[0]?.jobTitle || undefined}
           onDownload={handleShareDownload}
           downloadLabel="Download resume"
         />

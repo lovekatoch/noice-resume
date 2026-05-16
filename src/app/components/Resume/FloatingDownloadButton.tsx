@@ -8,6 +8,7 @@ import { selectResume } from "lib/redux/resumeSlice";
 import { selectSettings } from "lib/redux/settingsSlice";
 import { ResumePDF } from "components/Resume/ResumePDF";
 import { PostDownloadShare } from "components/PostDownloadShare";
+import { captureReferralToken, notifyReferralCompleted } from "lib/referral";
 import {
   capturePdfGenerationStarted,
   captureDownload,
@@ -25,7 +26,7 @@ function getResumeBaseName(name: string): string {
 
 const SHARE_WORKER_URL = process.env.NEXT_PUBLIC_RESUME_SHARE_WORKER_URL || "";
 
-function FloatingButton() {
+function FloatingButton({ onMilestone }: { onMilestone?: () => void }) {
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
@@ -116,8 +117,9 @@ function FloatingButton() {
       link.href = instance.url;
       link.download = `${baseFileName}.pdf`;
       link.click();
+      onMilestone?.();
     }
-  }, [instance.url, template, baseFileName, shareId]);
+  }, [instance.url, template, baseFileName, shareId, onMilestone]);
 
   const handleFabClick = useCallback(async () => {
     if (showShareModal) {
@@ -136,15 +138,17 @@ function FloatingButton() {
         <PostDownloadShare
           onClose={() => setShowShareModal(false)}
           shareUrl={shareUrl || undefined}
+          shareId={shareId || undefined}
           profileName={resume.profile.name || undefined}
+          headline={resume.workExperiences?.[0]?.jobTitle || undefined}
           onDownload={triggerDownload}
           downloadLabel={instance.url ? `Download ${baseFileName}.pdf` : "Generating PDF..."}
         />
       )}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 animate-fab-entrance">
         <button
           onClick={handleFabClick}
-          className="flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg transition-all hover:scale-105 active:scale-95"
+          className="flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg transition-all hover:scale-110 active:scale-95"
           style={{
             backgroundColor: "var(--accent)",
             boxShadow: "rgba(30,58,95,0.4) 0px 4px 20px",
