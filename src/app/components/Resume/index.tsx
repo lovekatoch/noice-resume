@@ -4,6 +4,7 @@ import { ResumeIframeCSR } from "components/Resume/ResumeIFrame";
 import { ResumePDF } from "components/Resume/ResumePDF";
 import { ResumeControlBarCSR } from "components/Resume/ResumeControlBar";
 import { ThemeForm } from "components/ResumeForm/ThemeForm";
+import { SocialProofBar } from "components/SocialProofBar";
 import { useAppSelector, useAppDispatch } from "lib/redux/hooks";
 import { selectResume } from "lib/redux/resumeSlice";
 import { selectSettings, changeSettings } from "lib/redux/settingsSlice";
@@ -65,6 +66,7 @@ export const Resume = ({ onMilestone }: { onMilestone?: () => void }) => {
           onMilestone={onMilestone}
         />
         <ThemeForm />
+        <SocialProofBar />
         <section className="flex-1 overflow-y-auto p-2 pb-4 scroll-mt-16 md:p-4 md:pb-4">
           <div className="flex justify-center">
             <ResumeIframeCSR

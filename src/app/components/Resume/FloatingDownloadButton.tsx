@@ -1,6 +1,6 @@
 "use client";
 import { usePDF } from "@react-pdf/renderer";
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { XMarkIcon, ShareIcon } from "@heroicons/react/24/outline";
 import { useAppSelector } from "lib/redux/hooks";
@@ -8,6 +8,7 @@ import { selectResume } from "lib/redux/resumeSlice";
 import { selectSettings } from "lib/redux/settingsSlice";
 import { ResumePDF } from "components/Resume/ResumePDF";
 import { PostDownloadShare } from "components/PostDownloadShare";
+import { ReferralDashboard } from "components/ReferralDashboard";
 import { captureReferralToken, notifyReferralCompleted } from "lib/referral";
 import {
   capturePdfGenerationStarted,
@@ -31,7 +32,14 @@ function FloatingButton({ onMilestone }: { onMilestone?: () => void }) {
   const settings = useAppSelector(selectSettings);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showReferralDashboard, setShowReferralDashboard] = useState(false);
   const [shareId, setShareId] = useState<string | null>(null);
+  const [showGlow, setShowGlow] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowGlow(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const pdfDocument = useMemo(
     () => <ResumePDF resume={resume} settings={settings} isPDF={true} />,
@@ -143,15 +151,23 @@ function FloatingButton({ onMilestone }: { onMilestone?: () => void }) {
           headline={resume.workExperiences?.[0]?.jobTitle || undefined}
           onDownload={triggerDownload}
           downloadLabel={instance.url ? `Download ${baseFileName}.pdf` : "Generating PDF..."}
+          onReferralDashboard={() => setShowReferralDashboard(true)}
         />
       )}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 animate-fab-entrance">
+      {showReferralDashboard && (
+        <ReferralDashboard
+          onClose={() => setShowReferralDashboard(false)}
+          shareUrl={shareUrl || undefined}
+          profileName={resume.profile.name || undefined}
+        />
+      )}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
         <button
           onClick={handleFabClick}
-          className="flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg transition-all hover:scale-110 active:scale-95"
+          className={`flex h-12 w-12 items-center justify-center rounded-full text-white transition-all hover:scale-110 active:scale-95 ${showGlow ? "animate-fab-glow" : "animate-fab-entrance"}`}
           style={{
             backgroundColor: "var(--accent)",
-            boxShadow: "rgba(30,58,95,0.4) 0px 4px 20px",
+            boxShadow: showGlow ? undefined : "rgba(30,58,95,0.4) 0px 4px 20px",
           }}
           aria-label="Share & download resume"
         >

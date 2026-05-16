@@ -45,6 +45,7 @@ interface PostDownloadShareProps {
   headline?: string;
   onDownload?: () => void;
   downloadLabel?: string;
+  onReferralDashboard?: () => void;
 }
 
 export function PostDownloadShare({
@@ -55,6 +56,7 @@ export function PostDownloadShare({
   headline,
   onDownload,
   downloadLabel = "Download PDF",
+  onReferralDashboard,
 }: PostDownloadShareProps) {
   const [copied, setCopied] = useState(false);
   const [referralCopied, setReferralCopied] = useState(false);
@@ -98,6 +100,11 @@ export function PostDownloadShare({
     setExiting(true);
     setTimeout(onClose, 200);
   }, [onClose]);
+
+  const handleOpenReferral = useCallback(() => {
+    setExiting(true);
+    setTimeout(() => onReferralDashboard?.(), 200);
+  }, [onReferralDashboard]);
 
   const handleBackdropClick = useCallback((e: React.MouseEvent) => {
     if (e.target === e.currentTarget) handleClose();
@@ -285,10 +292,17 @@ export function PostDownloadShare({
 
         <div className="mt-4 pt-3 border-t text-center" style={{ borderColor: "var(--border)" }}>
           <p className="text-[11px]" style={{ color: "var(--muted)" }}>
-            <span style={{ color: "var(--accent)", fontWeight: 600 }}>
-              <AnimatedCounter target={8400} formatFn={(n) => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "k+" : n.toLocaleString()} />
-            </span> resumes created this month
+            <span style={{ color: "var(--accent)", fontWeight: 600 }}>8,400+</span> resumes created this month
           </p>
+          {onReferralDashboard && (
+            <button
+              onClick={handleOpenReferral}
+              className="mt-2 text-[11px] font-medium transition-opacity hover:opacity-70"
+              style={{ color: "var(--accent)" }}
+            >
+              View your referral stats
+            </button>
+          )}
         </div>
       </div>
     </div>
