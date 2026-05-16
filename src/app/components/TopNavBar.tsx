@@ -11,8 +11,6 @@ export const TopNavBar = () => {
   if (pathname === "/") return null;
 
   const isEditor = pathname === "/resume-builder";
-  const isTemplates = pathname === "/templates" || pathname.startsWith("/templates/");
-  const isCommunity = pathname === "/templates/community";
 
   return (
     <header
@@ -26,7 +24,7 @@ export const TopNavBar = () => {
       >
         <Link href="/" className="md:mx-0">
           <img
-            src="/noiceresume-logo.svg"
+            src="/noiceresume-logo-white.svg"
             alt="NoiceResume"
             style={{ width: 180, height: "auto" }}
             className="block"
@@ -34,33 +32,6 @@ export const TopNavBar = () => {
         </Link>
 
         <nav className="flex items-center gap-4">
-          <Link
-            href="/templates"
-            className="text-sm font-medium transition-colors hover:opacity-70"
-            style={{
-              color: isTemplates ? "var(--accent)" : "var(--muted)",
-            }}
-          >
-            Templates
-          </Link>
-          <Link
-            href="/templates/community"
-            className="text-sm font-medium transition-colors hover:opacity-70"
-            style={{
-              color: isCommunity ? "var(--accent)" : "var(--muted)",
-            }}
-          >
-            Community
-          </Link>
-          <Link
-            href="/resume-builder"
-            className="text-sm font-medium transition-colors hover:opacity-70"
-            style={{
-              color: isEditor ? "var(--accent)" : "var(--muted)",
-            }}
-          >
-            Builder
-          </Link>
           {isEditor && (
             <div className="flex-shrink-0">
               <ImportButton compact />

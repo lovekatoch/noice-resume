@@ -7,7 +7,6 @@ import {
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 import { ExportButton } from "components/Resume/ExportButton";
-import { ShareButton } from "components/Resume/ShareButton";
 import { useSound } from "lib/sound/provider";
 import type { Resume } from "lib/redux/types";
 import type { Settings } from "lib/redux/settingsSlice";
@@ -107,10 +106,6 @@ const ResumeControlBar = ({
             </option>
           ))}
         </select>
-        <ShareButton
-          resume={resume}
-          settings={settings}
-        />
         <ExportButton
           pdfUrl={instance.url}
           baseFileName={baseFileName}

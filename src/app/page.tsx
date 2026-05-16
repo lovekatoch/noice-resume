@@ -155,7 +155,7 @@ function Hero() {
   };
 
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pb-20 pt-24 md:pb-24 md:pt-28"
+    <section className="relative flex items-center justify-center overflow-hidden px-6 pb-16 pt-24 md:pb-20 md:pt-28"
       style={{ backgroundColor: "var(--bg)" }}
     >
       <div className="relative z-10 mx-auto w-full max-w-2xl text-center">
