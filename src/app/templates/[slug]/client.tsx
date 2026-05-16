@@ -10,8 +10,6 @@ import {
   productSchema,
   SITE_URL,
 } from "lib/structured-data";
-import StructuredData from "components/StructuredData";
-import { breadcrumbSchema, SITE_URL } from "lib/structured-data";
 
 function CheckIcon() {
   return (

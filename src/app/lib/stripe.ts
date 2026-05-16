@@ -184,31 +184,6 @@ export async function verifyCheckoutSession(
   }
 }
 
-export async function verifyCheckoutSession(
-  sessionId: string
-): Promise<{ success: boolean; premium: boolean }> {
-  const verifyUrl = process.env.NEXT_PUBLIC_STRIPE_VERIFY_URL;
-
-  if (!verifyUrl) {
-    if (sessionId.startsWith("demo_session_")) {
-      return { success: true, premium: true };
-    }
-    return { success: false, premium: false };
-  }
-
-  try {
-    const response = await fetch(`${verifyUrl}?sessionId=${sessionId}`);
-    if (!response.ok) {
-      throw new Error("Verification failed");
-    }
-    const data = await response.json();
-    return { success: true, premium: data.premium };
-  } catch (error) {
-    console.error("Session verification error:", error);
-    return { success: false, premium: false };
-  }
-}
-
 export function isDemoPremium(): boolean {
   if (typeof window === "undefined") return false;
   return localStorage.getItem("noiceresume_demo_premium") === "true";
