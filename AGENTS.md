@@ -45,7 +45,7 @@ npm run dev           # Dev server
 npm run build         # Production build (must pass before deploy)
 npm run deploy        # Preview deploy to v2.noiceresume.pages.dev
 npm run deploy:prod   # Production deploy to noiceresume.pages.dev
-npm test              # Jest tests (67 total, 8 failing)
+npm test              # Jest tests (83 total, all passing)
 ```
 
 ## Tech Stack Details

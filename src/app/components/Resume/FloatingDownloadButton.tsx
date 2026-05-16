@@ -74,7 +74,7 @@ function FloatingButton() {
         className="flex h-12 w-12 items-center justify-center rounded-full text-white shadow-lg transition-all hover:scale-105 active:scale-95"
         style={{
           backgroundColor: "var(--accent)",
-          boxShadow: "rgba(94,106,210,0.4) 0px 4px 20px",
+          boxShadow: "rgba(122,90,68,0.4) 0px 4px 20px",
         }}
         aria-label={isOpen ? "Close download menu" : "Download resume"}
       >

@@ -32,18 +32,18 @@
 }
 
 :root {
-  /* Linear Dark Theme — #010102 canvas, #5e6ad2 lavender accent */
-  --bg: #010102;
-  --surface: #0f1011;
-  --surface-2: #141516;
-  --fg: #f7f8f8;
-  --muted: #d0d6e0;
-  --muted-subtle: #8a8f98;
-  --border: #23252a;
-  --accent: #5e6ad2;
-  --accent-hover: #828fff;
-  --accent-focus: #5e69d1;
-  --accent-light: rgba(94,106,210,0.12);
+  /* Light Luxury Theme — warm off-white canvas, taupe-brown accent */
+  --bg: #f6f1eb;
+  --surface: #fcf9f6;
+  --surface-2: #f3ede6;
+  --fg: #2a241f;
+  --muted: #706358;
+  --muted-subtle: #9e9288;
+  --border: #e3dbd2;
+  --accent: #7a5a44;
+  --accent-hover: #8d6b54;
+  --accent-focus: #7a5a44;
+  --accent-light: rgba(122,90,68,0.12);
 
   /* Semantic Colors */
   --success: #27a644;
@@ -57,9 +57,9 @@
   --notion-blue: var(--accent);
   --notion-warm-dark: var(--fg);
   --notion-warm-gray-500: var(--muted);
-  --notion-warm-gray-300: #62666d;
+  --notion-warm-gray-300: #cdc5bc;
   --notion-border: var(--border);
-  --notion-border-strong: #34343a;
+  --notion-border-strong: #d5ccc2;
   --notion-success: var(--success);
   --notion-green: var(--green);
   --notion-orange: var(--orange);
@@ -117,7 +117,7 @@ h1, h2, h3 {
 .notion-input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(94,106,210,0.3);
+  box-shadow: 0 0 0 2px rgba(122,90,68,0.3);
 }
 
 /* Notion-style button */
@@ -199,7 +199,7 @@ h1, h2, h3 {
 .form-section-card:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  border-color: rgba(94,106,210,0.3);
+  border-color: rgba(122,90,68,0.3);
 }
 .form-section-card:focus-within {
   border-left: 2px solid var(--accent);

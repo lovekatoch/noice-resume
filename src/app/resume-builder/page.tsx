@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { ResumeForm } from "components/ResumeForm";
 import { Resume } from "components/Resume";
+import { FloatingDownloadButton } from "components/Resume/FloatingDownloadButton";
 import { changeSettings } from "lib/redux/settingsSlice";
 import { captureReferralToken } from "lib/referral";
 
@@ -93,6 +94,7 @@ export default function Create() {
           <Resume />
         </div>
       </div>
+      <FloatingDownloadButton />
     </main>
   );
 }
