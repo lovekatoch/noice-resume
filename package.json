@@ -27,6 +27,7 @@
     "docx": "^9.6.1",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
+    "html-to-image": "^1.11.13",
     "next": "13.4.4",
     "pdfjs": "^2.5.0",
     "pdfjs-dist": "^3.7.107",
