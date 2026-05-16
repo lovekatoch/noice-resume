@@ -9,7 +9,7 @@ import { changeSettings } from "lib/redux/settingsSlice";
 import { captureReferralToken } from "lib/referral";
 import { captureBuilderSession, captureReferralConversion, captureTemplateSelected } from "lib/analytics";
 import StructuredData from "components/StructuredData";
-import { breadcrumbSchema, SITE_URL } from "lib/structured-data";
+import { breadcrumbSchema, howToSchema, SITE_URL } from "lib/structured-data";
 
 export default function Create() {
   const [mobileTab, setMobileTab] = useState<"form" | "preview">("form");
@@ -71,6 +71,24 @@ export default function Create() {
           breadcrumbSchema([
             { name: "Home", url: SITE_URL },
             { name: "Resume Builder", url: `${SITE_URL}/resume-builder` },
+          ]),
+          howToSchema([
+            {
+              name: "Fill in your details",
+              text: "Enter your contact information, work experience, education, skills, and other relevant sections. Use the form panel to add, remove, or reorder entries.",
+            },
+            {
+              name: "Choose a template and style",
+              text: "Select from professionally designed templates and customize fonts, colors, and layout to match your industry and personal brand.",
+            },
+            {
+              name: "Polish with AI suggestions",
+              text: "Use the AI enhancement feature to improve your bullet points, fix grammar, and make your experience sound more impactful.",
+            },
+            {
+              name: "Download your resume",
+              text: "Preview your resume in real-time and download a clean PDF that's ATS-friendly and ready to submit to job applications.",
+            },
           ]),
         ]}
       />

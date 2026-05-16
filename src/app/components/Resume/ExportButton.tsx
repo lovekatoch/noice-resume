@@ -9,7 +9,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { useSound } from "lib/sound/provider";
 import { captureReferralToken, notifyReferralCompleted } from "lib/referral";
-import { captureDownload } from "lib/analytics";
+import { captureDownload, captureShareEvent } from "lib/analytics";
+import { PostDownloadShare } from "components/PostDownloadShare";
 import type { Resume } from "lib/redux/types";
 import type { Settings } from "lib/redux/settingsSlice";
 import type { ExportFormat } from "lib/export-formats";
@@ -36,6 +37,8 @@ const FORMAT_ICONS: Record<ExportFormat, React.ComponentType<any>> = {
   json: CodeBracketIcon,
 };
 
+const SHARE_WORKER_URL = process.env.NEXT_PUBLIC_RESUME_SHARE_WORKER_URL || "";
+
 export const ExportButton = ({
   pdfUrl,
   baseFileName,
@@ -45,9 +48,53 @@ export const ExportButton = ({
 }: ExportButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExporting, setIsExporting] = useState<ExportFormat | null>(null);
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [showShareModal, setShowShareModal] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { play } = useSound();
+
+  const createShareLink = useCallback(async () => {
+    if (!SHARE_WORKER_URL) {
+      setShareUrl("https://noiceresume.pages.dev");
+      return;
+    }
+    try {
+      const payload = {
+        resume: {
+          profile: resume.profile,
+          workExperiences: resume.workExperiences,
+          educations: resume.educations,
+          projects: resume.projects,
+          skills: resume.skills,
+          custom: resume.custom,
+        },
+        settings: {
+          themeColor: settings.themeColor,
+          fontFamily: settings.fontFamily,
+          fontSize: settings.fontSize,
+          documentSize: settings.documentSize,
+          template: settings.template,
+        },
+      };
+      const resp = await fetch(`${SHARE_WORKER_URL}/share`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        const url = `${SHARE_WORKER_URL}/${data.id}`;
+        setShareUrl(url);
+        captureShareEvent("share_url_generated", { share_id: data.id });
+        captureShareEvent("share_link_created", { share_id: data.id });
+      } else {
+        setShareUrl("https://noiceresume.pages.dev");
+      }
+    } catch {
+      setShareUrl("https://noiceresume.pages.dev");
+    }
+  }, [resume, settings]);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -96,6 +143,7 @@ export const ExportButton = ({
             link.download = `${baseFileName}.pdf`;
             link.click();
           }
+          void createShareLink().then(() => setShowShareModal(true));
         } else {
           let blob: Blob;
           const fileName = `${baseFileName}${EXPORT_OPTIONS.find((o) => o.format === format)!.extension}`;
@@ -134,7 +182,7 @@ export const ExportButton = ({
         setIsExporting(null);
       }
     },
-    [pdfUrl, baseFileName, resume, settings, template, play]
+    [pdfUrl, baseFileName, resume, settings, template, play, createShareLink]
   );
 
   const handleKeyDown = useCallback(
@@ -148,6 +196,14 @@ export const ExportButton = ({
   );
 
   return (
+    <>
+      {showShareModal && shareUrl && (
+        <PostDownloadShare
+          onClose={() => setShowShareModal(false)}
+          shareUrl={shareUrl}
+          profileName={resume.profile.name || undefined}
+        />
+      )}
     <div ref={containerRef} className="relative" onKeyDown={handleKeyDown}>
       <div className="flex">
         <button
@@ -243,5 +299,6 @@ export const ExportButton = ({
         </div>
       )}
     </div>
+    </>
   );
 };

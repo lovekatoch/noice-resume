@@ -305,3 +305,21 @@ export function captureAiEnhanceAccepted(opts: {
     global_enhance_count: opts.globalEnhanceCount,
   });
 }
+
+export function captureRoastGenerated(opts: {
+  overallScore: number;
+}) {
+  capture("roast_generated", {
+    overall_score: opts.overallScore,
+  });
+}
+
+export function captureRoastShared(opts: {
+  platform: string;
+  overallScore: number;
+}) {
+  capture("roast_shared", {
+    platform: opts.platform,
+    overall_score: opts.overallScore,
+  });
+}

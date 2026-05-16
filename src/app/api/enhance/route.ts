@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${AI_SECRET}`,
       },
-      body: JSON.stringify({ prompt, context }),
+      body: JSON.stringify({ prompt, context, stream: true }),
     });
 
     if (!response.ok) {

@@ -13,14 +13,14 @@ export const metadata: Metadata = {
       "See how NoiceResume stacks up against Rezi, Teal, Novoresume, and more.",
     type: "website",
     url: `${COMPARE_SITE_URL}/compare`,
-    images: [{ url: "/sample-resumes/resume-classic-1.png", width: 1200, height: 900, alt: "Resume Builder Comparisons" }],
+    images: [{ url: "/og-default.svg", width: 1200, height: 630, alt: "Resume Builder Comparisons" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "NoiceResume vs Other Resume Builders — Honest Comparisons",
     description:
       "See how NoiceResume stacks up against Rezi, Teal, Novoresume, and more.",
-    images: ["/sample-resumes/resume-classic-1.png"],
+    images: ["/og-default.svg"],
   },
   alternates: {
     canonical: `${COMPARE_SITE_URL}/compare`,

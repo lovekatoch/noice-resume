@@ -1,203 +1,265 @@
 # Growth Metrics Framework & Analytics Implementation Plan
 
-**Issue:** NOI-6 · **Author:** GrowthPM · **Date:** 2026-05-16
+**Issue:** NOI-6 · **Author:** GrowthPM / **Reviewed:** CEO · **Date:** 2026-05-16
 
 ---
 
-## 1. Current State
-
-PostHog is initialized and wired into the app root. Only **one custom event** is tracked: `resume_downloaded`. Pageviews are captured passively. PostHog's `person_profiles` is set to `identified_only`, meaning anonymous sessions are not persisted as persons — a gap for our no-signup product.
-
-**Files:**
-- `src/app/lib/analytics.ts` — single `captureDownload` function
-- `src/app/components/PostHogProvider.tsx` — init, opt-out in dev
-- `src/app/components/PageViewTracker.tsx` — $pageview on route change
-- `src/app/lib/experiments.ts` — A/B test framework, 3 experiments
-- `src/app/lib/referral.ts` — referral token capture (ref param)
+## Status: IMPLEMENTED (8/10 events wired) — CEO reviewed, 2 child issues remain
 
 ---
 
-## 2. Growth Metrics Framework (AARRR)
+## 1. Implementation Audit
 
-### Acquisition
+The CTO implemented ahead of the GrowthPM spec. The original "Current State" section (single `captureDownload` event) is stale. Below is the real state as of 2026-05-16.
 
-| Metric | Event | Where |
-|--------|-------|-------|
-| Landing page views | `$pageview` → `/` | PageViewTracker (exists) |
-| Landing CTA clicks | `landing_cta_clicked` | Hero.tsx buttons |
-| Template detail views | `template_viewed` | Templates page |
-| Import page visits | `import_page_viewed` | Import page |
-| Import: upload resume | `resume_uploaded` | ResumeDropzone |
-| Import: start from scratch | `start_from_scratch` | Import page CTA |
-| Import: continue session | `continue_session` | Import page CTA |
-| Traffic source | `$referrer` / `utm_*` | PostHog auto (verify) |
+### Source files
 
-### Activation
+| File | Status | What it does |
+|------|--------|-------------|
+| `src/app/lib/analytics.ts` | ✅ Complete (307L) | **23 typed capture functions** across all AARRR stages + DeepSeek cost tracking |
+| `src/app/components/PostHogProvider.tsx` | ✅ Complete | Init with `person_profiles: "always"`, auto-opt-out in dev, calls `initAnalytics()` |
+| `src/app/components/PageViewTracker.tsx` | ✅ Complete | `$pageview` on every route change |
+| `src/app/lib/experiments.ts` | ✅ Complete | 4 A/B experiments (HERO_CTA, SOCIAL_PROOF, TEMPLATE_LAYOUT, HEADLINE), `useExperiment()`, `useExperimentGoal()` |
+| `src/app/lib/referral.ts` | ✅ Complete | `?ref=` token capture, localStorage, webhook integration |
+| `src/app/components/CheckoutAnalyticsTracker.tsx` | ✅ Complete | Watches Redux for `premium_activated` and `checkout_error` |
+| `src/app/lib/stripe.ts` | ✅ Complete | 5 checkout events (started/completed/cancelled/error/premium_activated) |
+| `src/app/lib/hooks/useCheckoutAnalytics.ts` | ✅ Complete | Premium state transitions → analytics events |
+| `src/app/lib/hooks/useAIPanel.ts` | ✅ Complete | Full AI lifecycle: requested → success → accepted + token costs |
+| `scripts/setup-posthog-dashboards.mjs` | ✅ Complete | 4 dashboards, 20+ insights, 6 funnels, 2 retention views |
+| `package.json` | ✅ Complete | `posthog-js` ^1.372.5, `@vercel/analytics` (unused) |
 
-| Metric | Event | Where |
-|--------|-------|-------|
-| Builder started | `builder_session_started` | resume-builder/page.tsx |
-| Section added (first) | `first_section_added` | ResumeForm section add |
-| First field filled | `first_field_filled` | Debounced form field |
-| Template selected | `template_selected` | Builder template switcher |
-| AI enhancement used | `ai_enhancement_used` | AIPanel / AISuggestButton |
-| PDF generation started | `pdf_generation_started` | FloatingDownloadButton |
-| PDF downloaded | `resume_downloaded` | FloatingDownloadButton (exists) |
-| Time to first download | computed | session start → download |
+### Event Implementation Status
 
-### Retention
+#### Acquisition
 
-| Metric | Event | Where |
-|--------|-------|-------|
-| Return visit (7d) | `$pageview` with cookie | PostHog session (gap) |
-| Edit session resumed | `builder_session_resumed` | Builder page check |
-| Session duration | PostHog session analytics | PostHog autocapture |
-| Bounce rate | computed | PostHog funnel |
+| Event | Spec'd | Implemented | Gap |
+|-------|--------|-------------|-----|
+| `landing_cta_clicked` | ✅ | ✅ `captureLandingCtaClick()` | — |
+| `template_viewed` | ✅ | ✅ `captureTemplateView()` | — |
+| `resume_uploaded` | ✅ | ✅ `captureImportEvent()` | — |
+| `start_from_scratch` | ✅ | ❌ | **GAP** — not wired |
+| `continue_session` | ✅ | ✅ via `builder_session_resumed` | — |
+| `$referrer` / `utm_*` | ✅ | ✅ PostHog auto-capture | — |
 
-**Gap:** `person_profiles: "identified_only"` prevents anonymous return-visit tracking. No signup required = no persistent identity. Need device/device_id-based anonymous identity.
+#### Activation
 
-### Revenue
+| Event | Spec'd | Implemented | Gap |
+|-------|--------|-------------|-----|
+| `builder_session_started` | ✅ | ✅ `captureBuilderSession()` | — |
+| `builder_session_resumed` | ✅ | ✅ `captureBuilderSession()` | — |
+| `first_section_added` | ✅ | ✅ `captureFirstSectionAdded()` | — |
+| `first_field_filled` | ✅ | ❌ | **GAP** — not wired |
+| `template_selected` | ✅ | ✅ `captureTemplateSelected()` | — |
+| `ai_enhancement_used` | ✅ | ✅ `captureAiEnhancementUsed()` | — |
+| `pdf_generation_started` | ✅ | ✅ `capturePdfGenerationStarted()` | — |
+| `resume_downloaded` | ✅ | ✅ `captureDownload()` | — |
 
-| Metric | Event | Where |
-|--------|-------|-------|
-| Premium checkout started | `checkout_started` | Stripe checkout button |
-| Premium purchase completed | `checkout_completed` | Stripe success webhook |
-| Checkout error | `checkout_error` | Checkout error state |
-| Revenue (LTV) | computed | Stripe ↔ PostHog groups |
+#### Retention
 
-### Referral
+| Metric | Implemented | Notes |
+|--------|-------------|-------|
+| Anonymous device identity | ✅ | `device_id` in localStorage, `initAnalytics()` registers with PostHog |
+| Return visit (7d) | ✅ | PostHog cohort retention dashboard configured |
+| Edit session resumed | ✅ | `builder_session_resumed` with `session_age_days` |
+| Session duration | ✅ | PostHog autocapture |
 
-| Metric | Event | Where |
-|--------|-------|-------|
-| Share URL generated | `share_url_generated` | PostDownloadShare |
-| Share URL copied | `share_url_copied` | PostDownloadShare |
-| Share clicked (social) | `share_clicked` | PostDownloadShare |
-| Referral landing | `ref_param_captured` | referral.ts (exists) |
-| Referral conversion | `referral_conversion` | builder after ref param |
+#### Revenue
 
----
+| Event | Spec'd | Implemented | Gap |
+|-------|--------|-------------|-----|
+| `checkout_started` | ✅ | ✅ `captureCheckoutStarted()` | — |
+| `checkout_completed` | ✅ | ✅ `captureCheckoutCompleted()` (includes `$revenue`) | — |
+| `checkout_cancelled` | — | ✅ `captureCheckoutCancelled()` | Extra |
+| `checkout_error` | ✅ | ✅ `captureCheckoutError()` | — |
+| `premium_activated` | — | ✅ `capturePremiumActivated()` | Extra |
 
-## 3. Implementation Plan
+#### Referral
 
-### Phase 1: Core Tracking (This Sprint)
+| Event | Spec'd | Implemented | Gap |
+|-------|--------|-------------|-----|
+| `share_url_generated` | ✅ | ❌ | **GAP** — not in analytics.ts (dashboards reference it) |
+| `share_url_copied` | ✅ | ✅ `captureShareEvent()` | — |
+| `share_clicked` | ✅ | ✅ `captureShareEvent()` | — |
+| `ref_param_captured` | ✅ | ⚠️ referral.ts exists but no explicit event fire | **GAP** — needs explicit capture |
+| `referral_conversion` | ✅ | ✅ `captureReferralConversion()` | — |
 
-**P1 — Expand analytics.ts with typed event catalog**
+#### AI DeepSeek (beyond spec)
 
-Replace the single `captureDownload` with a full typed events module:
-- Strongly typed event names and payloads
-- Anonymouse device ID generation (UUID in localStorage)
-- Session metadata (template, section count, time on page)
-
-**P2 — Wire landing page events** (Hero.tsx, Features.tsx)
-- Track all CTA clicks with context (button position/label)
-- Track template interest
-
-**P3 — Wire builder events** (resume-builder/page.tsx, FloatingDownloadButton.tsx)
-- Track builder session start/resume
-- Track download flow (generation → download)
-- Track template switches
-- Track form section additions
-
-**P4 — Wire import page events** (resume-import/page.tsx)
-- Track import visits, uploads, continue, start from scratch
-
-**P5 — Wire share/referral events** (PostDownloadShare.tsx)
-- Track share generation, copy, social clicks
-- Track referral → conversion path
-
-### Phase 2: Identity & Retention (Next Sprint)
-
-**P6 — Anonymous device identity**
-- Generate `device_id` in localStorage on first visit
-- Set `posthog.register()` with device_id and first_visit timestamp
-- Enables return-visit and session-duration tracking without signup
-
-**P7 — Session-aware pageview tracking**
-- Enhance PageViewTracker with session metadata (referrer, device_id, session count)
-- Track `session_start` on first pageview of a session
-
-### Phase 3: Revenue & Experiments (Backlog)
-
-**P8 — Stripe checkout events**
-- Wire `checkout_started`, `checkout_completed`, `checkout_error` from Stripe flows
-- Link to user's device_id for funnel analysis
-
-**P9 — Experiment success metrics**
-- Define goal events for each experiment in experiments.ts
-- Wire experiment variants to conversion events
+| Event | Implemented |
+|-------|-------------|
+| `ai_enhance_requested` | ✅ `captureAiEnhanceRequested()` |
+| `ai_enhance_success` | ✅ `captureAiEnhanceSuccess()` (with responseTimeMs) |
+| `ai_enhance_error` | ✅ `captureAiEnhanceError()` |
+| `ai_enhance_accepted` | ✅ `captureAiEnhanceAccepted()` |
+| `ai_token_usage` | ✅ `captureAiTokenUsage()` (estimated_cost_usd) |
+| `pwa_installed` | ❌ Referenced in dashboards but not wired |
 
 ---
 
-## 4. Event Catalog (Typed)
+## 2. North Star Metric Mapping
 
-```typescript
-// src/app/lib/analytics.ts — full catalog
+| North Star Metric | PostHog Event(s) | PostHog Dashboard | Target (M4) |
+|-------------------|------------------|-------------------|-------------|
+| **Resume completions** | `resume_downloaded` | Growth Overview, Weekly Report | 100/day |
+| **Template quality** | `template_selected`, `template_viewed` | Funnels (by template property) | — |
+| **AI usage** | `ai_enhancement_used`, `ai_enhance_accepted`, `ai_token_usage` | Growth Overview (AI cost) | 20% of builder users |
+| **Sharing rate** | `share_url_generated` → `share_url_copied` → `share_clicked` | Funnels → Download → Share | 10% of downloads |
+| **Brand perception** | Qualitative — NPS survey, social mentions, competitor comparison traffic | — | — |
 
-type EventPayloads = {
-  // Acquisition
-  landing_cta_clicked: { cta_label: string; cta_location: string };
-  template_viewed: { template_slug: string; template_name: string };
-  resume_uploaded: { file_size: number };
-  start_from_scratch: {};
-  continue_session: { session_age_days: number };
-  
-  // Activation
-  builder_session_started: { from_template?: string };
-  builder_session_resumed: { session_age_days: number };
-  first_section_added: { section_type: string };
-  first_field_filled: { section_type: string; field_name: string };
-  template_selected: { template: string };
-  ai_enhancement_used: { section_type: string; field_count: number };
-  pdf_generation_started: { template: string; section_count: number };
-  resume_downloaded: { template: string; fileName: string; fileType: string };
-  
-  // Retention
-  // (inferred from session + pageview analytics)
-  
-  // Revenue
-  checkout_started: { plan: string };
-  checkout_completed: { plan: string; value: number };
-  checkout_error: { error: string };
-  
-  // Referral
-  share_url_generated: { share_medium: string };
-  share_url_copied: {};
-  share_clicked: { share_medium: string };
-  referral_conversion: {};
-};
+### Key Funnels (pre-configured in `scripts/setup-posthog-dashboards.mjs`)
+
+| Funnel | Steps | Purpose |
+|--------|-------|---------|
+| Main Growth | landing_cta_clicked → builder_session_started → first_section_added → pdf_generation_started → resume_downloaded | Core conversion tracking |
+| Landing → Builder | $pageview(/) → landing_cta_clicked → builder_session_started | Top of funnel |
+| Import → Download | resume_uploaded → builder_session_started → resume_downloaded | Import conversion path |
+| AI Enhancement | builder_session_started → ai_enhance_requested → ai_enhance_success → ai_enhance_accepted → resume_downloaded | AI feature impact |
+| Download → Share | resume_downloaded → share_url_generated → share_url_copied | Viral loop tracking |
+| Checkout | checkout_started → checkout_completed | Premium conversion |
+
+---
+
+## 3. Gap Analysis — Remaining Work
+
+### P0 — Fix data integrity (this sprint)
+
+| # | Gap | Impact | Effort |
+|---|-----|--------|--------|
+| 1 | `share_url_generated` event missing | Breaks Download→Share funnel (funnel defined but step 2 never fires) | Low |
+| 2 | `ref_param_captured` event not explicitly fired | No way to measure referral landing effectiveness beyond referrer header | Low |
+
+### P1 — Complete event coverage (next sprint)
+
+| # | Gap | Impact | Effort |
+|---|-----|--------|--------|
+| 3 | `start_from_scratch` event not wired | Missing acquisition path in funnel analysis | Low |
+| 4 | `first_field_filled` event not wired | Missing early-activation signal (before first section) | Medium (needs debounce) |
+| 5 | `pwa_installed` event not wired | Dashboard tile exists but no data | Low |
+
+### P2 — Advanced analytics (backlog)
+
+| # | Gap | Impact | Effort |
+|---|-----|--------|--------|
+| 6 | `session_start` event on first pageview | Better session analytics without relying on PostHog autocapture | Low |
+| 7 | Experiment goal wiring | `useExperimentGoal()` exists but no goals are wired to conversion events | Medium |
+| 8 | `import_page_viewed` event | Distinguish import traffic from general pageviews | Low |
+
+---
+
+## 4. Target Baselines & Growth Goals
+
+| KPI | Baseline (current) | M2 Target (end of week 2) | M4 Target (end of week 6) |
+|-----|---------------------|--------------------------|--------------------------|
+| Resume downloads/day | **instrumented, needs 7d data** | 10 | 100 |
+| Landing → Builder CVR | **needs baseline** | 25% | 30% |
+| Builder → Download CVR | **needs baseline** | 15% | 20% |
+| AI feature usage rate | **needs baseline** | 10% of builder users | 20% |
+| Return visitor rate (7d) | **needs baseline** | 5% | 10% |
+| Share rate (downloads shared) | **needs baseline** | 5% | 10% |
+| AI cost/day | **needs baseline** | Under $5/day | Under $10/day |
+
+> **Note:** All baselines are "instrumented, needs data." PostHog has been collecting events. The first Weekly Report will establish baselines. Targets above are goals, calibrated to M2/M4 milestones and the $200/mo AgentOps budget.
+
+---
+
+## 5. Weekly Metrics Review Cadence
+
+### Process
+
+1. **Automated Report** — PostHog Weekly Report dashboard (`scripts/setup-posthog-dashboards.mjs`)
+2. **Schedule** — Every Monday 10:00 AM Pacific
+3. **Format** — GrowthPM reviews PostHog weekly dashboard → posts a #metrics channel update with:
+   - Top-line numbers (downloads, sessions, shares)
+   - Week-over-week % change
+   - Top funnels with conversion rates
+   - AI cost vs budget
+   - Any alerts triggered
+4. **Escalation** — Downloads drop >20% WoW or AI cost spike >50% → CEO ping
+5. **Board Review** — Monthly all-hands metrics review (first Monday of month)
+
+### PostHog Setup Checklist
+
+- [x] Create PostHog project (`NEXT_PUBLIC_POSTHOG_KEY` in `.env`)
+- [x] Run `npm run setup:posthog` to create dashboards/funnels
+- [ ] Configure PostHog email subscriptions for Weekly Report dashboard → growth@noiceresume
+- [ ] Set up Slack webhook destination in PostHog for weekly digest
+- [ ] Create alerts: "Daily downloads < 5 for 2 days" and "AI cost > $5/day"
+
+---
+
+## 6. Child Issues
+
+### Created
+
+| Issue | Title | Assignee | Depends On |
+|-------|-------|----------|------------|
+| NOI-13 | [P0] Fix missing share_url_generated and ref_param_captured events | CTO | — |
+| NOI-14 | [P1] Wire remaining acquisition/activation events (start_from_scratch, first_field_filled, pwa_installed) | CTO | — |
+
+### Deprecated (already implemented)
+
+| Issue | Title | Status |
+|-------|-------|--------|
+| NOI-7 | Anonymous device identity tracking | ✅ DONE — `initAnalytics()` + `device_id` |
+| NOI-8 | Wire landing page conversion events | ✅ DONE — `captureLandingCtaClick()` |
+| NOI-9 | Wire builder funnels | ✅ DONE — all builder events wired |
+| NOI-10 | Wire import page events | ✅ DONE — `captureImportEvent()` |
+| NOI-11 | Wire share/referral tracking | ✅ DONE — `captureShareEvent()`, `captureReferralConversion()` |
+| NOI-12 | Wire checkout flow analytics | ✅ DONE — `stripe.ts` + `CheckoutAnalyticsTracker.tsx` |
+
+---
+
+## 7. Configuration Reference
+
+### PostHog config (already applied)
+
+```
+person_profiles: "always"       ← was "identified_only" (fixed)
+device_id in localStorage        ← `getDeviceId()` in analytics.ts
+posthog.register({ device_id, first_visit })
+PageViewTracker captures $pageview on every route
 ```
 
----
+### Run the dashboard setup
 
-## 5. Key Metrics & Targets
+```bash
+POSTHOG_API_KEY=phx_xxxx POSTHOG_PROJECT_ID=xxxx npm run setup:posthog
+```
 
-| KPI | Current | Target (M2) | Target (M4) |
-|-----|---------|-------------|-------------|
-| Resume downloads/day | ~0 (v2 fresh) | 10 | 100 |
-| Landing → Builder CVR | — | 25% | 30% |
-| Builder → Download CVR | — | 15% | 20% |
-| AI feature usage rate | — | 10% of builder users | 20% |
-| Return visitor rate (7d) | — | 5% | 10% |
-| Share rate (downloads shared) | — | 5% | 10% |
-
----
-
-## 6. PostHog Configuration Changes
-
-1. Set `person_profiles: "always"` in PostHogProvider.tsx to capture anonymous users
-2. Add device_id generation + registration on init
-3. Configure dashboard with funnels:
-   - Landing → Builder → Section filled → Download → Share
-   - Landing → Import → Builder → Download
-4. Configure weekly cohort retention report
+This creates:
+- **Growth Overview** (CEO/CTO daily) — 10 trend charts
+- **Funnels** — 6 conversion funnels
+- **Retention & Engagement** — cohorts, stickiness, resumes
+- **Weekly Report** (GrowthPM Monday sync) — 8 weekly charts
 
 ---
 
-## 7. Child Issues
+## 8. Appendix: Full Event Catalog (implemented)
 
-- NOI-7: Implement anonymous device identity tracking
-- NOI-8: Wire landing page conversion events
-- NOI-9: Wire builder funnels (sections, AI, download)
-- NOI-10: Wire import page events
-- NOI-11: Wire share/referral tracking
-- NOI-12: Wire checkout flow analytics
+```typescript
+// src/app/lib/analytics.ts — actual exports
+export function initAnalytics()
+export function capture(event, properties?)
+export function captureLandingCtaClick({ ctaLabel, ctaLocation })
+export function captureTemplateView({ templateSlug, templateName })
+export function captureImportEvent(event, opts?)
+export function captureBuilderSession({ resumed, fromTemplate?, sessionAgeDays? })
+export function captureFirstSectionAdded({ sectionType })
+export function captureTemplateSelected({ template })
+export function captureAiEnhancementUsed({ sectionType, fieldCount })
+export function capturePdfGenerationStarted({ template, sectionCount })
+export function captureDownload({ template, fileName, fileType })
+export function captureShareEvent(event, opts?)
+export function captureCheckoutStarted({ priceId, planName, amount, currency })
+export function captureCheckoutCompleted({ sessionId, customerId?, amount, currency, planName })
+export function captureCheckoutCancelled({ priceId?, planName?, step })
+export function captureCheckoutError({ error, priceId?, planName?, step })
+export function capturePremiumActivated({ sessionId?, customerId? })
+export function captureCheckoutEvent(event, opts?)
+export function captureReferralConversion()
+export function captureAiTokenUsage({ sectionType, promptTokens, completionTokens, totalTokens, model })
+export function captureAiEnhanceRequested({ sectionType, isRegenerate, globalEnhanceCount })
+export function captureAiEnhanceSuccess({ sectionType, isRegenerate, responseTimeMs, globalEnhanceCount })
+export function captureAiEnhanceError({ sectionType, isRegenerate, errorMessage, globalEnhanceCount })
+export function captureAiEnhanceAccepted({ sectionType, globalEnhanceCount })
+```

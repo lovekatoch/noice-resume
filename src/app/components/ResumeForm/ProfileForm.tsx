@@ -2,11 +2,13 @@ import { BaseForm } from "components/ResumeForm/Form";
 import { Input, Textarea } from "components/ResumeForm/Form/InputGroup";
 import { SparkleIconButton } from "components/SparkleIconButton";
 import { AIPanel } from "components/AIPanel";
+import { AIRoastCard } from "components/AIRoastCard";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { changeProfile, selectResume, selectProfile } from "lib/redux/resumeSlice";
 import { selectThemeColor } from "lib/redux/settingsSlice";
 import { ResumeProfile } from "lib/redux/types";
 import { useAIPanel } from "lib/hooks/useAIPanel";
+import { useState } from "react";
 
 export const ProfileForm = () => {
   const profile = useAppSelector(selectProfile);
@@ -14,6 +16,8 @@ export const ProfileForm = () => {
   const dispatch = useAppDispatch();
   const { name, email, phone, url, summary, location } = profile;
   const themeColor = useAppSelector(selectThemeColor) || "#1E3A5F";
+  const [showRoastPrompt, setShowRoastPrompt] = useState(false);
+  const [showRoastCard, setShowRoastCard] = useState(false);
 
   const handleProfileChange = (field: keyof ResumeProfile, value: string) => {
     dispatch(changeProfile({ field, value }));
@@ -34,6 +38,9 @@ export const ProfileForm = () => {
   } = useAIPanel({
     onAccept: (text) => {
       dispatch(changeProfile({ field: "summary", value: text }));
+    },
+    onClose: () => {
+      setShowRoastPrompt(true);
     },
   });
 
@@ -152,6 +159,54 @@ Write a compelling professional summary / sales pitch for this candidate based o
         isCooldown={isCooldown}
         cooldownRemaining={cooldownRemaining}
       />
+
+      {showRoastPrompt && !showRoastCard && (
+        <div
+          className="rounded-lg p-3 flex items-center justify-between gap-2"
+          style={{
+            backgroundColor: "rgba(30,58,95,0.06)",
+            border: "1px solid rgba(30,58,95,0.12)",
+          }}
+        >
+          <div className="flex items-center gap-2">
+            <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="#1E3A5F" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <p className="text-xs" style={{ color: "#4A4A52" }}>
+              Want to see your resume score?
+            </p>
+          </div>
+          <div className="flex gap-1.5">
+            <button
+              onClick={() => {
+                setShowRoastPrompt(false);
+                setShowRoastCard(true);
+              }}
+              className="rounded-md px-3 py-1.5 text-xs font-medium transition-opacity hover:opacity-80"
+              style={{ backgroundColor: "#1E3A5F", color: "white" }}
+            >
+              Roast my resume
+            </button>
+            <button
+              onClick={() => setShowRoastPrompt(false)}
+              className="rounded-md px-2 py-1.5 text-xs font-medium transition-opacity hover:opacity-80"
+              style={{ color: "#86868B" }}
+            >
+              No thanks
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showRoastCard && (
+        <AIRoastCard
+          onClose={() => {
+            setShowRoastCard(false);
+            setShowRoastPrompt(false);
+          }}
+          resumeName={name}
+        />
+      )}
     </BaseForm>
   );
 };

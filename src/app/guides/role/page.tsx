@@ -13,14 +13,14 @@ export const metadata: Metadata = {
       "Expert resume guides tailored to your profession. Software engineer, product manager, data scientist, and more.",
     type: "website",
     url: `${ROLE_GUIDE_SITE_URL}/guides/role`,
-    images: [{ url: "/sample-resumes/resume-classic-1.png", width: 1200, height: 900, alt: "Role-Specific Resume Guides" }],
+    images: [{ url: "/og-resources.svg", width: 1200, height: 630, alt: "Role-Specific Resume Guides" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Role-Specific Resume Guides — NoiceResume",
     description:
       "Expert resume guides tailored to your profession.",
-    images: ["/sample-resumes/resume-classic-1.png"],
+    images: ["/og-resources.svg"],
   },
   alternates: {
     canonical: `${ROLE_GUIDE_SITE_URL}/guides/role`,

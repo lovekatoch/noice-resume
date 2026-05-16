@@ -24,13 +24,13 @@ export function generateMetadata({ params }: PageProps): Metadata {
       description: comparison.ogDescription,
       url: `${COMPARE_SITE_URL}/compare/${comparison.slug}`,
       type: "article",
-      images: [{ url: "/sample-resumes/resume-classic-1.png", width: 1200, height: 900, alt: comparison.ogTitle }],
+      images: [{ url: "/og-default.svg", width: 1200, height: 630, alt: comparison.ogTitle }],
     },
     twitter: {
       card: "summary_large_image",
       title: comparison.ogTitle,
       description: comparison.ogDescription,
-      images: ["/sample-resumes/resume-classic-1.png"],
+      images: ["/og-default.svg"],
     },
     alternates: {
       canonical: `${COMPARE_SITE_URL}/compare/${comparison.slug}`,

@@ -250,6 +250,98 @@ export const COMPARISONS: ComparisonMeta[] = [
     ],
   },
   {
+    slug: "noiceresume-vs-kickresume",
+    title: "NoiceResume vs Kickresume",
+    competitor: "Kickresume",
+    headline: "NoiceResume vs Kickresume: 8M Users vs Truly Free",
+    subheadline: "Kickresume is popular — 8 million users and a GPT-4.1-powered AI writer. But can it match a resume builder that costs nothing and requires zero commitment?",
+    description: "NoiceResume vs Kickresume comparison. Kickresume has 8M users, GPT-4.1 AI, and an autopilot with 20K pre-written phrases — but requires sign-up and pushes paid plans. NoiceResume is free with no sign-up needed. See which resume builder wins.",
+    keywords: [
+      "NoiceResume vs Kickresume",
+      "Kickresume alternative",
+      "free resume builder vs Kickresume",
+      "Kickresume vs NoiceResume",
+      "Kickresume pricing",
+      "best free resume builder 2025",
+    ],
+    ogTitle: "NoiceResume vs Kickresume (2025): 8M Users vs Truly Free",
+    ogDescription: "NoiceResume vs Kickresume: Kickresume has 8M users and GPT-4.1 AI, but requires sign-up and pushes paid plans. NoiceResume is free with no sign-up. Full comparison.",
+    winner: "noiceresume",
+    winnerReason: "Kickresume has a solid AI writer and huge feature set, but it requires sign-up and heavy features are behind paywalls. NoiceResume is truly free, no sign-up, no limits.",
+    sections: [
+      {
+        heading: "Pricing: Free vs freemium",
+        body: "Kickresume offers a free basic tier but hides advanced features like the AI Writer, Autopilot (20K pre-written phrases), and ATS Check behind paid plans. NoiceResume is completely free with no paid tiers — every feature including AI enhancement, all templates, and unlimited PDF exports are available from the start. There is no upgrade path because there's nothing to upgrade to.",
+      },
+      {
+        heading: "AI features: Both use advanced AI",
+        body: "Kickresume uses GPT-4.1 for its AI Writer and Autopilot features, including 20K pre-written phrases. This is genuinely powerful. NoiceResume uses DeepSeek-powered AI for contextual bullet rewrites and content suggestions. Both produce high-quality suggestions, but NoiceResume's AI is free with no limits — Kickresume's AI Writer requires a paid subscription after the free tier allowance.",
+      },
+      {
+        heading: "Privacy and sign-up requirement",
+        body: "Kickresume requires account creation to use the builder — your data is stored on their servers. NoiceResume requires zero sign-up and processes everything in your browser. Your resume data lives in localStorage and never touches a server. For privacy-conscious users, NoiceResume is the clear winner.",
+      },
+      {
+        heading: "Template quality and ATS compatibility",
+        body: "Kickresume offers an extensive library of templates with modern designs. NoiceResume has fewer templates (3 core layouts) but each is meticulously designed and ATS-tested. Kickresume's templates are generally ATS-friendly but some creative layouts can cause parsing issues. NoiceResume templates are all single-column, standard-heading layouts that parsers handle perfectly.",
+      },
+      {
+        heading: "Ease of use and speed",
+        body: "NoiceResume gets you started in seconds — open the page and start typing. No account, no onboarding, no paywall popups. Kickresume requires signing up and navigating a more feature-rich interface. For a quick resume, NoiceResume is noticeably faster. For users who want extensive pre-written content and templates, Kickresume offers more depth but at the cost of simplicity.",
+      },
+      {
+        heading: "The bottom line",
+        body: "Kickresume is a capable resume builder with powerful AI features, but its best tools are behind paywalls and it requires sign-up. NoiceResume delivers comparable quality for free with better privacy and zero commitment. For most job seekers who just need a great resume, NoiceResume's combination of free, private, and capable makes it the better choice.",
+      },
+    ],
+  },
+  {
+    slug: "noiceresume-vs-enhancv",
+    title: "NoiceResume vs Enhancv",
+    competitor: "Enhancv",
+    headline: "NoiceResume vs Enhancv: Personality vs Truly Free",
+    subheadline: "Enhancv is known for personality-driven resumes with 15M+ created. But its free trial means you eventually have to pay.",
+    description: "NoiceResume vs Enhancv comparison. Enhancv offers personality-driven resumes, AI content generation, and ATS checking — but has no permanent free tier. NoiceResume is completely free with no trial limits. See which resume builder gives you more value.",
+    keywords: [
+      "NoiceResume vs Enhancv",
+      "Enhancv alternative",
+      "free Enhancv alternative",
+      "Enhancv vs NoiceResume",
+      "Enhancv free trial",
+      "best resume builder no subscription",
+    ],
+    ogTitle: "NoiceResume vs Enhancv (2025): Free vs Trial-Based Resume Builder",
+    ogDescription: "NoiceResume vs Enhancv: Enhancv offers a 7-day free trial then requires payment. NoiceResume is free forever with no trial. See the full comparison.",
+    winner: "noiceresume",
+    winnerReason: "Enhancv has personality-driven designs and strong AI features, but has no permanent free tier — it's a 7-day trial then you pay. NoiceResume is completely free with no trials or limits.",
+    sections: [
+      {
+        heading: "Pricing: NoiceResume is free, Enhancv is trial-only",
+        body: "Enhancv offers a 7-day free trial with full access, but after the trial you must subscribe to continue using the service. There is no permanent free tier. NoiceResume is completely free with no trials, no credit cards, no subscriptions. You get every feature from the moment you open the page and keep it forever.",
+      },
+      {
+        heading: "AI features: Both offer intelligent writing help",
+        body: "Enhancv provides AI content generation, one-click tailoring, and AI translation in 30+ languages. These are polished features. NoiceResume offers AI-powered bullet rewrites and content suggestions powered by DeepSeek. Both provide contextual suggestions, but NoiceResume's AI is free with no usage limits — Enhancv's AI is only available during the trial or with a paid subscription.",
+      },
+      {
+        heading: "Design and personality",
+        body: "Enhancv's brand is built around personality-driven resumes that help candidates stand out. Their templates are distinctive. NoiceResume focuses on clean, premium design that balances personality with ATS compatibility. Both produce attractive resumes, but NoiceResume ensures every template passes ATS parsing — some of Enhancv's more creative designs can struggle with automated filters.",
+      },
+      {
+        heading: "ATS checking and resume analysis",
+        body: "Enhancv includes ATS checking, resume scoring, and a job tracker in their platform. NoiceResume templates are built to pass ATS by design — clean single-column layouts with standard headings. While NoiceResume doesn't have a separate ATS checker, every template is purpose-built for ATS compatibility, making a checker largely unnecessary.",
+      },
+      {
+        heading: "Privacy and data control",
+        body: "Enhancv requires account creation and stores your resume data on their servers. NoiceResume processes everything in your browser with no server upload required. If data privacy is a concern, NoiceResume's local-first approach is a significant advantage.",
+      },
+      {
+        heading: "The bottom line",
+        body: "Enhancv is a polished resume builder with personality-driven designs and strong AI, but the 7-day trial model means you're paying $X/month to keep your resume. NoiceResume gives you a professional, ATS-friendly resume for free with no time limits, no trial, and no subscription. For virtually all job seekers, NoiceResume provides better value.",
+      },
+    ],
+  },
+  {
     slug: "noiceresume-vs-canva",
     title: "NoiceResume vs Canva",
     competitor: "Canva",

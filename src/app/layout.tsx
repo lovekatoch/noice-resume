@@ -39,9 +39,9 @@ export const metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/sample-resumes/resume-classic-1.png",
+        url: "/og-default.svg",
         width: 1200,
-        height: 900,
+        height: 630,
         alt: "NoiceResume - Free AI Resume Builder",
       },
     ],
@@ -51,7 +51,7 @@ export const metadata = {
     title: "NoiceResume - Free AI Resume Builder",
     description:
       "Create a professional resume in minutes. Free, no sign-up, ATS-optimized templates with AI-powered suggestions.",
-    images: ["/sample-resumes/resume-classic-1.png"],
+    images: ["/og-default.svg"],
   },
   robots: {
     index: true,
@@ -69,8 +69,8 @@ export const metadata = {
   },
   other: {
     "og:image:width": "1200",
-    "og:image:height": "900",
-    "og:image:type": "image/png",
+    "og:image:height": "630",
+    "og:image:type": "image/svg+xml",
   },
 };
 

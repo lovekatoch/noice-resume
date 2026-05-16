@@ -54,6 +54,7 @@ function classifyError(err: unknown): AIError {
 
 interface UseAIPanelOptions {
   onAccept: (text: string) => void;
+  onClose?: () => void;
 }
 
 interface UseAIPanelReturn {
@@ -78,6 +79,7 @@ interface UseAIPanelReturn {
 
 export const useAIPanel = ({
   onAccept,
+  onClose,
 }: UseAIPanelOptions): UseAIPanelReturn => {
   const [aiPanelOpen, setAiPanelOpen] = useState(false);
   const [streamingText, setStreamingText] = useState("");
@@ -324,7 +326,8 @@ export const useAIPanel = ({
     contextRef.current = "";
     promptRef.current = "";
     sectionTypeRef.current = "unknown";
-  }, []);
+    onClose?.();
+  }, [onClose]);
 
   const handleAccept = useCallback(
     (text: string) => {

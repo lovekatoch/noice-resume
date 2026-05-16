@@ -24,13 +24,13 @@ export function generateMetadata({ params }: PageProps): Metadata {
       description: guide.ogDescription,
       url: `${ROLE_GUIDE_SITE_URL}/guides/role/${guide.slug}`,
       type: "article",
-      images: [{ url: "/sample-resumes/resume-classic-1.png", width: 1200, height: 900, alt: guide.ogTitle }],
+      images: [{ url: "/og-resources.svg", width: 1200, height: 630, alt: guide.ogTitle }],
     },
     twitter: {
       card: "summary_large_image",
       title: guide.ogTitle,
       description: guide.ogDescription,
-      images: ["/sample-resumes/resume-classic-1.png"],
+      images: ["/og-resources.svg"],
     },
     alternates: {
       canonical: `${ROLE_GUIDE_SITE_URL}/guides/role/${guide.slug}`,

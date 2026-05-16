@@ -242,14 +242,15 @@ function renderResumeHtml(data: ShareRecord, publicUrl: string, id?: string): st
 <meta property="og:description" content="View ${escapeHtml(profile?.name)}'s professional resume, built with NoiceResume">
 <meta property="og:type" content="profile">
 ${id ? `<meta property="og:url" content="${escapeHtml(publicUrl)}/share/${escapeHtml(id)}">` : ""}
-<meta property="og:image" content="${escapeHtml(publicUrl)}/og-default.png">
+<meta property="og:image" content="${escapeHtml(publicUrl)}/og-default.svg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
 <meta property="og:site_name" content="NoiceResume">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${escapeHtml(profile?.name)} — Resume">
 <meta name="twitter:description" content="View ${escapeHtml(profile?.name)}'s professional resume, built with NoiceResume">
-<meta name="twitter:image" content="${escapeHtml(publicUrl)}/og-default.png">
+<meta name="twitter:image" content="${escapeHtml(publicUrl)}/og-default.svg">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {

@@ -329,39 +329,6 @@ export default {
           },
         }
       );
-
-      if (!upstreamResponse.ok) {
-        const errorText = await upstreamResponse.text();
-        return new Response(
-          JSON.stringify({ error: `DeepSeek API error: ${errorText}` }),
-          { status: upstreamResponse.status, headers: { "Content-Type": "application/json" } }
-        );
-      }
-
-      const result = await upstreamResponse.json();
-      const rawText = result.choices?.[0]?.message?.content || "";
-      const normalized = normalizeOutput(rawText, sectionType);
-      const usage = result.usage;
-
-      return new Response(
-        JSON.stringify({
-          content: normalized,
-          section_type: sectionType,
-          usage: usage
-            ? {
-                prompt_tokens: usage.prompt_tokens,
-                completion_tokens: usage.completion_tokens,
-                total_tokens: usage.total_tokens,
-              }
-            : null,
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      );
     } catch (error) {
       return new Response(
         JSON.stringify({ error: `Internal error: ${error instanceof Error ? error.message : "Unknown error"}` }),
