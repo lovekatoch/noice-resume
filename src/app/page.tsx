@@ -2,7 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import { ImportButton } from "components/ImportButton";
+
+const LiveDemo = dynamic(() => import("components/LiveDemo"), { ssr: false });
+import { EXPERIMENTS, useExperiment, useExperimentGoal } from "lib/experiments";
 
 // ─── ICONS ─────────────────────────────────────────────────────────
 
@@ -145,8 +149,13 @@ function Hero() {
     } catch {}
   }, []);
 
+  const ctaVariant = useExperiment(EXPERIMENTS.HERO_CTA);
+  const socialProofVariant = useExperiment(EXPERIMENTS.SOCIAL_PROOF);
+  const trackGoal = useExperimentGoal();
+
   const handleStartFresh = () => {
     localStorage.removeItem("open-resume-state");
+    trackGoal("cta_clicked", { variant: ctaVariant, label: "build_my_resume" });
     router.push("/resume-builder");
   };
 
@@ -154,11 +163,23 @@ function Hero() {
     router.push("/resume-builder");
   };
 
+  const ctaLabel =
+    ctaVariant === "action-verb" ? "Create Your Resume" :
+    ctaVariant === "outcome" ? "Get Hired Faster" :
+    "Build My Resume";
+
   return (
     <section className="relative flex items-center justify-center overflow-hidden px-6 pb-16 pt-24 md:pb-20 md:pt-28"
       style={{ backgroundColor: "var(--bg)" }}
     >
       <div className="relative z-10 mx-auto w-full max-w-2xl text-center">
+        {/* Social proof — above hero variant */}
+        {socialProofVariant === "above-hero" && (
+          <p className="mb-8 text-sm" style={{ color: "var(--muted-subtle)" }}>
+            Join <span style={{ color: "var(--accent)", fontWeight: 600 }}>8,400+</span> job seekers this month
+          </p>
+        )}
+
         {/* Badge */}
         <div className="mb-8 inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-sm font-medium"
           style={{
@@ -200,15 +221,21 @@ function Hero() {
               }}
             >
               <Plus />
-              Build My Resume
+              {socialProofVariant === "inline-cta" ? (
+                <>Join 8,400+ &rarr;</>
+              ) : (
+                ctaLabel
+              )}
             </button>
             <ImportButton />
           </div>
 
-          {/* Social proof — near CTA for trust */}
-          <p className="text-sm" style={{ color: "var(--muted-subtle)" }}>
-            Used by <span style={{ color: "var(--accent)", fontWeight: 600 }}>8,400+</span> job seekers this month
-          </p>
+          {/* Social proof — default position below CTA (hidden when inline-cta or above-hero) */}
+          {socialProofVariant === "control" && (
+            <p className="text-sm" style={{ color: "var(--muted-subtle)" }}>
+              Used by <span style={{ color: "var(--accent)", fontWeight: 600 }}>8,400+</span> job seekers this month
+            </p>
+          )}
 
           {/* Continue for returning users */}
           {savedName && (
@@ -337,11 +364,24 @@ function Steps() {
 
 function TemplatePreviews() {
   const router = useRouter();
+  const layoutVariant = useExperiment(EXPERIMENTS.TEMPLATE_LAYOUT);
   const TEMPLATES = [
     { src: "/sample-resumes/resume-classic-1.png", name: "Classic", description: "Clean, professional layout trusted by thousands", id: "executive-simple" },
     { src: "/sample-resumes/resume-modern-1.png", name: "Modern", description: "Bold headers and sleek spacing for creative roles", id: "sb2nov-modern" },
     { src: "/sample-resumes/resume-stackoverflow-1.png", name: "Compact", description: "Maximizes content density for experienced hires", id: "stackoverflow" },
   ];
+
+  const layoutClass =
+    layoutVariant === "carousel"
+      ? "flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none"
+      : layoutVariant === "list"
+        ? "flex flex-col gap-6 max-w-md mx-auto"
+        : "grid grid-cols-1 gap-8 md:grid-cols-3";
+
+  const itemClass =
+    layoutVariant === "carousel"
+      ? "snap-start shrink-0 w-[260px] md:w-[280px]"
+      : "";
 
   return (
     <section className="px-6 py-20 md:py-28" style={{ backgroundColor: "var(--surface)" }}>
@@ -353,12 +393,12 @@ function TemplatePreviews() {
           Three professionally designed layouts — switch anytime with one click.
         </p>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+        <div className={layoutClass}>
           {TEMPLATES.map((t) => (
             <div
               key={t.name}
               onClick={() => router.push(`/resume-builder?template=${t.id}`)}
-              className="group cursor-pointer overflow-hidden transition-all duration-200 hover:-translate-y-1"
+              className={`group cursor-pointer overflow-hidden transition-all duration-200 hover:-translate-y-1 ${itemClass}`}
               style={{
                 backgroundColor: "var(--surface)",
                 border: "1px solid var(--border)",
@@ -487,6 +527,7 @@ export default function Home() {
       <ProblemBar />
       <Features />
       <Steps />
+      <LiveDemo />
       <TemplatePreviews />
       <FAQSection />
       <FinalCTA />
