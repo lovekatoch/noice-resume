@@ -1,16 +1,16 @@
 "use client";
 import { useEffect, useRef } from "react";
 import {
-  ArrowDownTrayIcon,
   MagnifyingGlassPlusIcon,
   MinusIcon,
 } from "@heroicons/react/24/outline";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
-import { Tooltip } from "components/Tooltip";
+import { ExportButton } from "components/Resume/ExportButton";
+import { ShareButton } from "components/Resume/ShareButton";
 import { useSound } from "lib/sound/provider";
-import { captureReferralToken, notifyReferralCompleted } from "lib/referral";
-import { captureDownload } from "lib/analytics";
+import type { Resume } from "lib/redux/types";
+import type { Settings } from "lib/redux/settingsSlice";
 
 const TEMPLATES = [
   { id: "executive-simple", name: "Classic" },
@@ -20,20 +20,24 @@ const TEMPLATES = [
 
 const ResumeControlBar = ({
   document: pdfDocument,
-  fileName,
+  baseFileName,
   scale,
   zoomLevel,
   onZoomChange,
   template,
   onTemplateChange,
+  resume,
+  settings,
 }: {
   document: JSX.Element;
-  fileName: string;
+  baseFileName: string;
   scale: number;
   zoomLevel: number;
   onZoomChange: (percentage: number) => void;
   template: string;
   onTemplateChange: (templateId: string) => void;
+  resume: Resume;
+  settings: Settings;
 }) => {
   const [instance, update] = usePDF({ document: pdfDocument });
   const { play } = useSound();
@@ -43,24 +47,9 @@ const ResumeControlBar = ({
     update();
   }, [update, pdfDocument]);
 
-  const handleDownloadClick = () => {
-    if (instance.url) {
-      const link = globalThis.document.createElement("a");
-      link.href = instance.url;
-      link.download = fileName;
-      link.click();
-      void play("hero.complete");
-      const refToken = captureReferralToken();
-      if (refToken) {
-        void notifyReferralCompleted(refToken);
-      }
-    }
-  };
-
   const handleZoomSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     onZoomChange(value);
-    // Play subtle sound on every 10% change to avoid spam
     if (Math.abs(value - lastZoomRef.current) >= 10) {
       lastZoomRef.current = value;
       void play("interaction.subtle");
@@ -96,7 +85,7 @@ const ResumeControlBar = ({
         </span>
       </div>
 
-      {/* Template Dropdown + Download Button — same row on mobile */}
+      {/* Template Dropdown + Export Button — same row on mobile */}
       <div className="flex items-center gap-2 flex-1 sm:flex-none justify-end">
         <select
           value={template}
@@ -118,17 +107,17 @@ const ResumeControlBar = ({
             </option>
           ))}
         </select>
-        <Tooltip text="Download Resume">
-          <button
-            aria-label="Download Resume"
-            onClick={handleDownloadClick}
-            className="flex items-center justify-center gap-1.5 rounded-md px-4 py-1.5 text-sm font-medium text-white transition-colors hover:opacity-90 whitespace-nowrap"
-            style={{ backgroundColor: "var(--accent)" }}
-          >
-            <ArrowDownTrayIcon className="h-4 w-4" />
-            Download
-          </button>
-        </Tooltip>
+        <ShareButton
+          resume={resume}
+          settings={settings}
+        />
+        <ExportButton
+          pdfUrl={instance.url}
+          baseFileName={baseFileName}
+          resume={resume}
+          settings={settings}
+          template={template}
+        />
       </div>
     </div>
   );

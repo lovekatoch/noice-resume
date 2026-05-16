@@ -14,12 +14,12 @@ import {
 } from "components/fonts/hooks";
 import { NonEnglishFontsCSSLazyLoader } from "components/fonts/NonEnglishFontsCSSLoader";
 
-function formatResumeFileName(name: string): string {
+function getResumeBaseName(name: string): string {
   if (!name || name.trim() === "") {
-    return `Resume_${new Date().getFullYear()}.pdf`;
+    return `Resume_${new Date().getFullYear()}`;
   }
   const normalized = name.trim().replace(/\s+/g, "_");
-  return `${normalized}_Resume_${new Date().getFullYear()}.pdf`;
+  return `${normalized}_Resume_${new Date().getFullYear()}`;
 }
 
 export const Resume = () => {
@@ -54,12 +54,14 @@ export const Resume = () => {
       <div id="resume-preview" className="relative flex h-full w-full flex-col bg-[var(--bg)]">
         <ResumeControlBarCSR
           document={document}
-          fileName={formatResumeFileName(resume.profile.name)}
+          baseFileName={getResumeBaseName(resume.profile.name)}
           scale={effectiveScale}
           zoomLevel={zoomLevel}
           onZoomChange={handleZoomChange}
           template={settings.template}
           onTemplateChange={handleTemplateChange}
+          resume={resume}
+          settings={settings}
         />
         <ThemeForm />
         <section className="flex-1 overflow-y-auto p-2 pb-4 scroll-mt-16 md:p-4 md:pb-4">

@@ -1,0 +1,12 @@
+name = "resume-share"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "RESUME_KV"
+id = "91607da2babe4276bb42451cf9e0123b"
+preview_id = "49430ca7575943aab97833595a755885"
+
+[vars]
+MAX_SHARE_SIZE_KB = "100"
+PUBLIC_URL = "https://noiceresume.com"
