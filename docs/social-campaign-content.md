@@ -381,11 +381,11 @@ Free AI resume builder (no sign-up): noiceresume.pages.dev
 
 | Metric | Target | Measurement |
 |--------|--------|-------------|
-| Reddit clicks to builder | 500/wk | PostHog UTM `?utm_source=reddit` |
-| Twitter/X clicks to builder | 200/wk | PostHog UTM `?utm_source=twitter` |
-| Resume completions from social | 50/wk | PostHog event tracking |
+| Reddit clicks to builder | 500/wk | UTM `?utm_source=reddit` |
+| Twitter/X clicks to builder | 200/wk | UTM `?utm_source=twitter` |
+| Resume completions from social | 50/wk | Analytics event tracking |
 | Social shares of campaign posts | 50/wk | Platform analytics |
-| AI roast usage from social | 30/wk | PostHog event `roast_started` |
+| AI roast usage from social | 30/wk | Analytics event `roast_started` |
 
 ### UTM Parameters
 
@@ -398,13 +398,58 @@ All campaign links use:
 
 - [x] PostDownloadShare modal wired in download flow
 - [x] Resume share worker deployed and functional
-- [ ] Generate campaign share card images (5 variants)
-- [ ] Set up PostHog UTM tracking for campaign
-- [ ] Create Reddit accounts with posting history
-- [ ] Schedule Week 1 posts
-- [ ] Prepare comment replies for high-engagement posts
-- [ ] Monitor analytics 48h post-launch
-- [ ] Iterate on best-performing hooks
+- [x] Generate campaign share card images (5 variants) — `public/campaign/card-{1..5}.html`
+- [x] UTM campaign tracking instrumented — `analytics.ts` (`captureCampaignAttribution`)
+- [ ] **HUMAN:** Create Reddit accounts with posting history (need 7+ days age minimum for most subreddits)
+- [ ] **HUMAN:** Schedule Week 1 posts — content is pre-written above; see posting handoff below
+- [ ] **HUMAN:** Monitor comments on Reddit posts (reply within 2h for best engagement)
+- [ ] **HUMAN:** Monitor analytics 48h post-launch (events: `campaign_attributed_visit`, filtered by `utm_campaign = noi-39-launch`)
+- [ ] **HUMAN:** Iterate on best-performing hooks after week 1 data
+
+---
+
+## Posting Handoff for Human
+
+### Twitter/X Account (@noiceresume)
+
+All 7 posts are pre-written in the Twitter/X Campaign section above. Recommended cadence:
+- **Week 1, Monday:** Post 1 (Resume tip card) + attach `card-1-hook.html` screenshot
+- **Week 1, Tuesday:** Post 2 (Before/After) + attach `card-2-before-after.html` screenshot
+- **Week 1, Wednesday:** Post 3 (Thread — 5 posts, post as a thread)
+- **Week 1, Thursday:** Post 4 (Roast result) + attach `card-5-roast-tease.html` screenshot
+- **Week 1, Friday:** Post 5 (Weekly tip)
+- **Week 1, Saturday:** Post 7 (Weekend engagement question)
+- **Week 1, Sunday:** Post 6 (Comparison)
+
+**UTM to append to all links:** `?utm_source=twitter&utm_medium=social&utm_campaign=noi-39-launch`
+
+### Reddit (r/resumes, r/jobs, r/careerguidance)
+
+All 4 posts are pre-written in the Reddit Campaign section. Post order:
+1. **r/resumes** — "I analyzed 500+ resumes..." (Mon/Wed 10am ET)
+2. **r/jobs** — "Every resume builder wants you to pay..." (Tue/Thu 12pm ET)
+3. **r/careerguidance** — "The 5-minute resume audit..." (Mon 9am ET)
+4. **r/SideProject** — "I'm a PM who can't code..." (Sat 10am ET — optional, week 2)
+
+**Rules:**
+- Reply to every comment within 2 hours
+- Offer specific, actionable feedback — never just "try this tool"
+- Let the value speak; tool mention should feel natural
+- Acknowledge competitors' strengths when appropriate
+
+**UTM to append:** `?utm_source=reddit&utm_medium=social&utm_campaign=noi-39-launch`
+
+### Setting Up Share Card Screenshots
+
+Open each HTML file in a browser at exactly 1200×630px viewport:
+```
+public/campaign/card-1-hook.html
+public/campaign/card-2-before-after.html
+public/campaign/card-3-quote.html
+public/campaign/card-4-stat.html
+public/campaign/card-5-roast-tease.html
+```
+Take a full-viewport screenshot, name accordingly, and attach to tweets/posts.
 
 ---
 
