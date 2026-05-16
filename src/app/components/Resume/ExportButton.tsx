@@ -11,6 +11,7 @@ import { useSound } from "lib/sound/provider";
 import { captureReferralToken, notifyReferralCompleted } from "lib/referral";
 import { captureDownload, captureShareUrlGenerated, captureShareEvent } from "lib/analytics";
 import { PostDownloadShare } from "components/PostDownloadShare";
+import { ReferralDashboard } from "components/ReferralDashboard";
 import type { Resume } from "lib/redux/types";
 import type { Settings } from "lib/redux/settingsSlice";
 import type { ExportFormat } from "lib/export-formats";
@@ -52,6 +53,7 @@ export const ExportButton = ({
   const [isExporting, setIsExporting] = useState<ExportFormat | null>(null);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showReferralDashboard, setShowReferralDashboard] = useState(false);
   const [shareId, setShareId] = useState<string | null>(null);
   const shareIdRef = useRef<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -227,6 +229,14 @@ export const ExportButton = ({
           headline={resume.workExperiences?.[0]?.jobTitle || undefined}
           onDownload={handleShareDownload}
           downloadLabel="Download resume"
+          onReferralDashboard={() => setShowReferralDashboard(true)}
+        />
+      )}
+      {showReferralDashboard && (
+        <ReferralDashboard
+          onClose={() => setShowReferralDashboard(false)}
+          shareUrl={shareUrl || undefined}
+          profileName={resume.profile.name || undefined}
         />
       )}
     <div ref={containerRef} className="relative" onKeyDown={handleKeyDown}>
