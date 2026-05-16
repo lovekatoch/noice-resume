@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { ResourceMeta } from "lib/resource-data";
+import { captureContentPageViewed } from "lib/analytics";
 import StructuredData from "components/StructuredData";
 import {
   breadcrumbSchema,
@@ -20,6 +22,10 @@ function ArrowRightIcon() {
 
 export function ResourcesPageClient({ resources }: { resources: ResourceMeta[] }) {
   const router = useRouter();
+
+  useEffect(() => {
+    captureContentPageViewed({ pageType: "resource" });
+  }, []);
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: "var(--canvas)" }}>

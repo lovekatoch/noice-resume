@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { ComparisonMeta } from "lib/compare-data";
+import { captureContentPageViewed } from "lib/analytics";
 import StructuredData from "components/StructuredData";
 import {
   breadcrumbSchema,
@@ -33,6 +35,10 @@ function TrophyIcon() {
 
 export function ComparePageClient({ comparisons }: { comparisons: ComparisonMeta[] }) {
   const router = useRouter();
+
+  useEffect(() => {
+    captureContentPageViewed({ pageType: "comparison" });
+  }, []);
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: "var(--canvas)" }}>

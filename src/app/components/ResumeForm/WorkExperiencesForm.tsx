@@ -61,7 +61,11 @@ export const WorkExperiencesForm = () => {
         const handleWorkExperienceChange = (
           ...args: CreateHandleChangeArgsWithDescriptions<ResumeWorkExperience>
         ) => {
-          dispatch(changeWorkExperiences({ idx, field: args[0], value: args[1] }));
+          if (args[0] === "descriptions") {
+            dispatch(changeWorkExperiences({ idx, field: args[0], value: args[1] }));
+          } else {
+            dispatch(changeWorkExperiences({ idx, field: args[0], value: args[1] }));
+          }
           captureFormFieldEdited({ sectionType: "workExperiences", fieldName: args[0], action: "edit" });
         };
         const showMoveUp = idx !== 0;

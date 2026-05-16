@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { RoleGuideMeta } from "lib/role-guide-data";
+import { captureContentPageViewed } from "lib/analytics";
 import StructuredData from "components/StructuredData";
 import {
   breadcrumbSchema,
@@ -30,6 +32,10 @@ const ROLE_ICONS: Record<string, string> = {
 
 export function RoleGuidesPageClient({ guides }: { guides: RoleGuideMeta[] }) {
   const router = useRouter();
+
+  useEffect(() => {
+    captureContentPageViewed({ pageType: "guide" });
+  }, []);
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: "var(--canvas)" }}>

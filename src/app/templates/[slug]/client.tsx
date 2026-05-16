@@ -2,8 +2,9 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { captureTemplateView } from "lib/analytics";
+import { captureTemplateView, captureTemplateBrowsed } from "lib/analytics";
 import type { TemplateMeta } from "lib/template-data";
+import { ALL_TEMPLATES } from "lib/template-data";
 import StructuredData from "components/StructuredData";
 import {
   breadcrumbSchema,
@@ -177,6 +178,7 @@ export function TemplatePageClient({ template }: { template: TemplateMeta | unde
   useEffect(() => {
     if (!template) return;
     captureTemplateView({ templateSlug: template.slug, templateName: template.title });
+    captureTemplateBrowsed({ templateCount: ALL_TEMPLATES.length });
   }, [template]);
 
   if (!template) {

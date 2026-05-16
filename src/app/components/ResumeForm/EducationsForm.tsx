@@ -63,7 +63,11 @@ Institution: ${section.school}\nDegree: ${section.degree}\n${section.gpa ? `GPA:
         const handleEducationChange = (
           ...args: CreateHandleChangeArgsWithDescriptions<ResumeEducation>
         ) => {
-          dispatch(changeEducations({ idx, field: args[0], value: args[1] }));
+          if (args[0] === "descriptions") {
+            dispatch(changeEducations({ idx, field: args[0], value: args[1] }));
+          } else {
+            dispatch(changeEducations({ idx, field: args[0], value: args[1] }));
+          }
           captureFormFieldEdited({ sectionType: "educations", fieldName: args[0], action: "edit" });
         };
 

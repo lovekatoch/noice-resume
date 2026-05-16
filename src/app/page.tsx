@@ -15,6 +15,10 @@ import {
 
 const LiveDemo = dynamic(() => import("components/LiveDemo"), { ssr: false });
 import { EXPERIMENTS, useExperiment, useExperimentGoal } from "lib/experiments";
+import { AnimatedCounter } from "components/AnimatedCounter";
+import { TestimonialsSection } from "components/TestimonialsSection";
+import { TrustBadges } from "components/TrustBadges";
+import { ExampleGallery } from "components/ExampleGallery";
 
 // ─── ICONS ─────────────────────────────────────────────────────────
 
@@ -299,15 +303,21 @@ function ProblemBar() {
       <div className="mx-auto max-w-4xl">
         <div className="grid grid-cols-1 gap-6 text-center sm:grid-cols-3">
           <div>
-            <p className="text-2xl font-semibold" style={{ color: "var(--accent)" }}>6 seconds</p>
+            <p className="text-2xl font-semibold" style={{ color: "var(--accent)" }}>
+              <AnimatedCounter target={6} /> <span className="text-base font-normal" style={{ color: "var(--muted)" }}>seconds</span>
+            </p>
             <p className="text-sm mt-1" style={{ color: "var(--muted-subtle)" }}>Average time recruiters spend per resume</p>
           </div>
           <div>
-            <p className="text-2xl font-semibold" style={{ color: "var(--accent)" }}>75%</p>
+            <p className="text-2xl font-semibold" style={{ color: "var(--accent)" }}>
+              <AnimatedCounter target={75} formatFn={(n) => `${n}%`} />
+            </p>
             <p className="text-sm mt-1" style={{ color: "var(--muted-subtle)" }}>Of resumes rejected by ATS before a person sees them</p>
           </div>
           <div>
-            <p className="text-2xl font-semibold" style={{ color: "var(--accent)" }}>8,400+</p>
+            <p className="text-2xl font-semibold" style={{ color: "var(--accent)" }}>
+              <AnimatedCounter target={8400} />
+            </p>
             <p className="text-sm mt-1" style={{ color: "var(--muted-subtle)" }}>Resumes created this month — and counting</p>
           </div>
         </div>
@@ -621,11 +631,14 @@ export default function Home() {
         ]}
       />
       <Hero />
+      <TrustBadges />
       <ProblemBar />
       <Features />
       <Steps />
+      <TestimonialsSection />
       <LiveDemo />
       <TemplatePreviews />
+      <ExampleGallery />
       <FAQSection />
       <FinalCTA />
     </main>

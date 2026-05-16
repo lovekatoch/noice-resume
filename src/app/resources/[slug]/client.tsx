@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import type { ResourceMeta } from "lib/resource-data";
 import { useEffect } from "react";
+import { captureContentPageViewed } from "lib/analytics";
 import StructuredData from "components/StructuredData";
 import {
   breadcrumbSchema,
@@ -197,6 +198,11 @@ function Footer() {
 }
 
 export function ResourcePageClient({ resource }: { resource: ResourceMeta | undefined }) {
+  useEffect(() => {
+    if (!resource) return;
+    captureContentPageViewed({ pageType: "resource", slug: resource.slug });
+  }, [resource]);
+
   if (!resource) {
     return (
       <main className="flex min-h-screen items-center justify-center px-6" style={{ backgroundColor: "var(--canvas)" }}>

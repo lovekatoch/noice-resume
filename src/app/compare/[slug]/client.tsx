@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { ComparisonMeta } from "lib/compare-data";
+import { captureContentPageViewed } from "lib/analytics";
 import StructuredData from "components/StructuredData";
 import { COMPARISONS } from "lib/compare-data";
 import {
@@ -225,6 +227,11 @@ function Footer() {
 }
 
 export function ComparisonPageClient({ comparison }: { comparison: ComparisonMeta | undefined }) {
+  useEffect(() => {
+    if (!comparison) return;
+    captureContentPageViewed({ pageType: "comparison", slug: comparison.slug });
+  }, [comparison]);
+
   if (!comparison) {
     return (
       <main className="flex min-h-screen items-center justify-center px-6" style={{ backgroundColor: "var(--canvas)" }}>

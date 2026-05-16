@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { RoleGuideMeta } from "lib/role-guide-data";
+import { captureContentPageViewed } from "lib/analytics";
 import StructuredData from "components/StructuredData";
 import {
   breadcrumbSchema,
@@ -235,6 +237,11 @@ function Footer() {
 }
 
 export function RoleGuidePageClient({ guide }: { guide: RoleGuideMeta | undefined }) {
+  useEffect(() => {
+    if (!guide) return;
+    captureContentPageViewed({ pageType: "guide", slug: guide.slug });
+  }, [guide]);
+
   if (!guide) {
     return (
       <main className="flex min-h-screen items-center justify-center px-6" style={{ backgroundColor: "var(--canvas)" }}>

@@ -394,3 +394,11 @@ export function captureRoastShared(opts: {
     overall_score: opts.overallScore,
   });
 }
+
+export function captureRoastCardDownloaded(opts: {
+  overallScore: number;
+}) {
+  capture("roast_card_downloaded", {
+    overall_score: opts.overallScore,
+  });
+}
