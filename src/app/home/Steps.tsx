@@ -18,12 +18,12 @@ const STEPS = [
 
 export const Steps = () => {
   return (
-    <section className="bg-[#f8f9fb] px-6 py-20 md:py-28">
+    <section className="bg-canvas-soft px-6 py-20 md:py-28">
       <div className="mx-auto max-w-4xl text-center">
-        <h2 className="mb-2 font-display text-3xl font-light tracking-tight text-[#0C1628]">
+        <h2 className="mb-2 font-display text-3xl font-light tracking-tight" style={{ color: "var(--fg)" }}>
           Three steps to a better resume
         </h2>
-        <p className="mb-14 text-base text-[#64748d]">
+        <p className="mb-14 text-base" style={{ color: "var(--body)" }}>
           From upload to interview call in minutes.
         </p>
         <div className="relative grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -33,14 +33,15 @@ export const Steps = () => {
           {STEPS.map(({ number, title, text }, idx) => (
             <div
               key={idx}
-              className="group relative rounded-lg border border-[#e5edf5] bg-white p-8 text-center transition-all duration-200 hover:border-[var(--accent)]/20 hover:shadow-[rgba(50,50,93,0.08)_0px_6px_24px]"
+              className="group relative rounded-lg border bg-surface p-8 text-center transition-all duration-200 hover:shadow-[rgba(50,50,93,0.08)_0px_6px_24px]"
+              style={{ borderColor: "var(--border)" }}
             >
               {/* Step number */}
-              <div className="relative mx-auto mb-5 flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm font-medium text-[var(--accent)] shadow-[rgba(50,50,93,0.08)_0px_2px_8px] transition-all duration-200 group-hover:shadow-[rgba(94,106,210,0.2)_0px_4px_16px]">
+              <div className="relative mx-auto mb-5 flex h-10 w-10 items-center justify-center rounded-full bg-surface text-sm font-medium shadow-[rgba(50,50,93,0.08)_0px_2px_8px] transition-all duration-200 group-hover:shadow-[rgba(30,58,95,0.2)_0px_4px_16px]" style={{ color: "var(--accent)" }}>
                 <span className="relative z-10">{number}</span>
               </div>
-              <h3 className="mb-2 font-semibold text-[#0C1628]">{title}</h3>
-              <p className="text-sm leading-relaxed text-[#64748d]">{text}</p>
+              <h3 className="mb-2 font-semibold" style={{ color: "var(--fg)" }}>{title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--body)" }}>{text}</p>
             </div>
           ))}
         </div>
