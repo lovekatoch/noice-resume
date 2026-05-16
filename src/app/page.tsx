@@ -91,7 +91,12 @@ function ChevronDown() {
 
 // ─── FEATURE ITEMS ─────────────────────────────────────────────────
 
-const FEATURES = [
+const FEATURES: {
+  title: string;
+  text: string;
+  icon: JSX.Element;
+  link?: string;
+}[] = [
   {
     title: "Free for everyone",
     text: "No paid plans, no trials, no credit card. Just a resume builder that actually works.",
@@ -116,6 +121,7 @@ const FEATURES = [
     title: "Share with one click",
     text: "Turn your resume into a shareable link. Recruiters see it instantly — no PDF attachment needed.",
     icon: <ShareNetwork />,
+    link: "/compare",
   },
 ];
 
@@ -321,27 +327,32 @@ function Features() {
         </p>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          {FEATURES.map(({ title, text, icon }) => (
-            <div
-              key={title}
-              className="flex items-start gap-5 p-6 transition-all duration-200 hover:opacity-90"
-              style={{
-                backgroundColor: "var(--surface)",
-                border: "1px solid var(--border)",
-                borderRadius: 16,
-              }}
-            >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px]"
-                style={{ backgroundColor: "var(--accent-light)", color: "var(--accent)" }}
+          {FEATURES.map(({ title, text, icon, link }) => {
+            const Wrapper = link ? "a" : "div";
+            return (
+              <Wrapper
+                key={title}
+                {...(link ? { href: link, target: "_self", rel: undefined } : {})}
+                className={`flex items-start gap-5 p-6 transition-all duration-200 ${link ? "cursor-pointer hover:opacity-80" : ""}`}
+                style={{
+                  backgroundColor: "var(--surface)",
+                  border: "1px solid var(--border)",
+                  borderRadius: 16,
+                  textDecoration: "none",
+                }}
               >
-                {icon}
-              </div>
-              <div>
-                <h3 className="mb-1.5 font-semibold" style={{ color: "var(--fg)" }}>{title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "var(--muted)" }}>{text}</p>
-              </div>
-            </div>
-          ))}
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px]"
+                  style={{ backgroundColor: "var(--accent-light)", color: "var(--accent)" }}
+                >
+                  {icon}
+                </div>
+                <div>
+                  <h3 className="mb-1.5 font-semibold" style={{ color: "var(--fg)" }}>{title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--muted)" }}>{text}</p>
+                </div>
+              </Wrapper>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -503,22 +514,22 @@ function FAQSection() {
         </div>
 
         <div className="mt-12 text-center">
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <a href="/resources" className="inline-flex items-center gap-2 text-sm font-medium transition-all hover:opacity-70"
-              style={{ color: "var(--accent)" }}
-            >
-              Resume Guides <ArrowRight />
-            </a>
-            <a href="/compare" className="inline-flex items-center gap-2 text-sm font-medium transition-all hover:opacity-70"
-              style={{ color: "var(--accent)" }}
-            >
-              Comparisons <ArrowRight />
-            </a>
-            <a href="/guides/role" className="inline-flex items-center gap-2 text-sm font-medium transition-all hover:opacity-70"
-              style={{ color: "var(--accent)" }}
-            >
-              Role-Specific Guides <ArrowRight />
-            </a>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs" style={{ color: "var(--muted-subtle)" }}>
+            <a href="/resources" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Guides</a>
+            <span>&middot;</span>
+            <a href="/compare" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Compare</a>
+            <span>&middot;</span>
+            <a href="/guides/role" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Role Guides</a>
+            <span>&middot;</span>
+            <a href="/templates/ats-friendly" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Templates</a>
+            <span>&middot;</span>
+            <a href="/resume-builder" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>Builder</a>
+            <span>&middot;</span>
+            <a href="/compare/noiceresume-vs-rezi" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>vs Rezi</a>
+            <span>&middot;</span>
+            <a href="/guides/role/software-engineer" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>SWE Guide</a>
+            <span>&middot;</span>
+            <a href="/guides/role/product-manager" className="transition-all hover:opacity-70" style={{ color: "var(--accent)" }}>PM Guide</a>
           </div>
         </div>
       </div>
