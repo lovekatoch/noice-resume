@@ -26,7 +26,10 @@ const ROLE_ICONS: Record<string, string> = {
   "data-scientist": "DS",
   "marketing": "Mk",
   "ux-designer": "UX",
-  "project-manager": "PM",
+  "project-manager": "Pj",
+  "nurse": "RN",
+  "sales": "Sa",
+  "teacher": "Ed",
   "consultant": "Co",
 };
 

@@ -47,10 +47,14 @@ const ROLE_GUIDE_SLUGS = [
   "marketing",
   "ux-designer",
   "project-manager",
+  "nurse",
+  "sales",
+  "teacher",
   "consultant",
 ];
 
 const RESOURCE_SLUGS = [
+  "best-free-resume-builder",
   "how-to-write-resume",
   "resume-tips-2025",
   "ats-friendly-resume",

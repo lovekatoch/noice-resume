@@ -282,6 +282,138 @@ export const ROLE_GUIDES: RoleGuideMeta[] = [
     ],
   },
   {
+    slug: "nurse",
+    title: "Nurse Resume Guide",
+    role: "Nurse",
+    headline: "How to Write a Nursing Resume That Gets You Hired",
+    subheadline: "Healthcare hiring is competitive and credential-driven. Your resume needs to show clinical skills, patient outcomes, and license certifications up front.",
+    description: "Complete guide to writing a nursing resume for RNs, LPNs, and NPs. Covering clinical skills, patient care metrics, certifications, and ATS optimization for healthcare roles.",
+    keywords: [
+      "nursing resume",
+      "RN resume guide",
+      "how to write a nursing resume",
+      "registered nurse resume tips",
+      "healthcare resume examples",
+      "nurse practitioner resume",
+    ],
+    ogTitle: "Nurse Resume Guide — NoiceResume",
+    ogDescription: "Complete guide to writing a nursing resume. Show clinical expertise, patient outcomes, and certifications that healthcare recruiters look for.",
+    sections: [
+      {
+        heading: "Lead with your license and certifications",
+        body: "Healthcare employers scan for credentials first. Place your license (RN, LPN, NP) and certifications (BLS, ACLS, PALS, CCRN, CEN) at the top of your resume. Include your license number and state. If you have specialty certifications like oncology, critical care, or pediatrics, list them prominently — they're often required and differentiate you immediately.",
+      },
+      {
+        heading: "Quantify patient care and outcomes",
+        body: "Nursing is outcome-driven. Every role should include the scope of your clinical work. Instead of 'Provided patient care,' write 'Managed a 6-bed ICU unit, achieving a 15% reduction in central line infections through standardized protocols.' Include patient ratios, unit size, caseload, quality metrics, and specific improvements you drove. Numbers prove your impact beyond your job description.",
+      },
+      {
+        heading: "Showcase your clinical skills and specialties",
+        body: "Create a dedicated clinical skills section listing your technical competencies: IV therapy, wound care, ventilator management, telemetry, EMR systems (Epic, Cerner, Meditech), and unit-specific skills. Group them by category — critical care, pediatrics, emergency, med-surg, oncology — to make your resume scannable for both ATS and nurse recruiters.",
+      },
+      {
+        heading: "Document your clinical experience by unit type",
+        body: "Nurse managers want to know exactly where you've worked. For each role, specify: unit type (ICU, ER, Med-Surg, OR, PACU, L&D), bed count, patient population, shift type, and whether you precepted students or served as charge nurse. Include float pool or travel experience — adaptability across units signals a versatile clinician.",
+      },
+      {
+        heading: "Include continuing education and professional involvement",
+        body: "Nursing values lifelong learning. List recent CEUs, specialty courses, conferences attended, and committee participation. Involvement in shared governance, quality improvement initiatives, or magnet designation efforts signals leadership potential. If you've presented at conferences or published in nursing journals, create a dedicated section.",
+      },
+      {
+        heading: "Structure for healthcare ATS systems",
+        body: "Hospital ATS systems scan for specific credentials, unit types, and EMR experience. Use standard section headings: License & Certifications, Clinical Experience, Education, Clinical Skills. Include exact job titles from target postings. Save as PDF. NoiceResume's templates are built for this — they keep your credentials front and center.",
+      },
+    ],
+  },
+  {
+    slug: "sales",
+    title: "Sales Resume Guide",
+    role: "Sales Professional",
+    headline: "How to Write a Sales Resume That Proves You Close",
+    subheadline: "Sales hiring is about numbers. If your resume doesn't show quota attainment, deal size, and pipeline metrics, you're invisible to recruiters.",
+    description: "Complete guide to writing a sales resume for SDR, AE, and sales leadership roles. Quota achievement, deal metrics, pipeline management, and revenue impact that sales recruiters demand.",
+    keywords: [
+      "sales resume",
+      "sales resume guide",
+      "how to write a sales resume",
+      "account executive resume",
+      "SDR resume tips",
+      "sales manager resume",
+    ],
+    ogTitle: "Sales Resume Guide — NoiceResume",
+    ogDescription: "Complete guide to writing a sales resume. Show quota attainment, revenue closed, and pipeline metrics with data-driven bullets sales recruiters demand.",
+    sections: [
+      {
+        heading: "Lead with quota attainment",
+        body: "Sales is the most numbers-driven profession. Your resume must lead with quota achievement in every role. Instead of 'Responsible for enterprise sales,' write 'Closed $2.4M in new ARR against a $2M quota (120% attainment), ranking #2 of 24 reps.' Include: quota vs. attainment, ACV/deal size, win rate, sales cycle length, and pipeline generated. If you've won President's Club or rep of the quarter, put it at the top.",
+      },
+      {
+        heading: "Show your sales methodology",
+        body: "Hiring managers want to know how you sell. Mention your methodology: MEDDIC/MEDDPICC, Challenger, Sandler, SPIN, Value Selling, Command of the Message. Describe how you build pipeline (outbound, inbound, partner-sourced, SDR-supported), run discovery, manage multi-stakeholder deals, and close. Specific examples like 'Ran MEDDIC qualification on 60+ opportunities, improving forecast accuracy by 35%' show real skill.",
+      },
+      {
+        heading: "Detail your deal scope and customer profile",
+        body: "Specify what you sold: product type (SaaS, hardware, services), deal size (SMB $10K ACV, mid-market $50K, enterprise $200K+), customer persona (CTO, CHRO, CMO), industry vertical (fintech, healthcare, manufacturing), and sales motion (transactional, consultative, land-and-expand). This helps recruiters instantly match your experience to their opening.",
+      },
+      {
+        heading: "Feature CRM and sales stack proficiency",
+        body: "Modern sales runs on tools. List your stack: CRM (Salesforce, HubSpot), prospecting (Outreach, SalesLoft, LinkedIn Sales Navigator), data (Zoominfo, Lusha, 6sense), and enablement platforms (Gong, Clari, Highspot). Group by category and note your proficiency. Specific workflows — 'Built Outreach sequences that generated $1.2M in pipeline' — show you're a power user.",
+      },
+      {
+        heading: "Highlight cross-functional collaboration",
+        body: "Top reps work across functions. Include examples of partnering with SEs on technical evaluations, working with marketing on campaigns, collaborating with product on roadmap feedback, and managing handoffs with customer success. Bullets like 'Partnered with 3 SEs to close a $600K deal involving a bespoke POC and executive alignment' show enterprise selling maturity.",
+      },
+      {
+        heading: "Tailor to the sales role level",
+        body: "SDR/BDR roles should emphasize outreach volume, meeting conversion, and pipeline generation. AE roles need quota attainment, deal complexity, and closing metrics. Sales leadership roles require team quota, hiring and ramp metrics, and go-to-market strategy. Tailor your bullets to the level you're targeting — and don't oversell junior numbers for senior roles.",
+      },
+    ],
+  },
+  {
+    slug: "teacher",
+    title: "Teacher Resume Guide",
+    role: "Teacher",
+    headline: "How to Write a Teaching Resume That Stands Out",
+    subheadline: "School hiring is mission-driven and credential-heavy. Your resume needs to show your teaching philosophy, student outcomes, and classroom impact.",
+    description: "Complete guide to writing a teacher resume for K-12 and higher education roles. Covering teaching philosophy, student achievement data, classroom management, certifications, and curriculum development.",
+    keywords: [
+      "teacher resume",
+      "teaching resume guide",
+      "how to write a teacher resume",
+      "education resume tips",
+      "K-12 teacher resume",
+      "elementary teacher resume",
+    ],
+    ogTitle: "Teacher Resume Guide — NoiceResume",
+    ogDescription: "Complete guide to writing a teacher resume. Show student outcomes, teaching philosophy, and classroom impact that school districts look for.",
+    sections: [
+      {
+        heading: "Lead with your teaching philosophy and credentials",
+        body: "Schools hire for mission fit as much as skill. Start with a 2-3 line summary stating your teaching philosophy, grade-level expertise, and subject areas. Follow immediately with your credentials: state teaching license, endorsements, certifications (ESL, Special Ed, Reading Specialist, National Board Certification). School ATS systems scan for specific endorsements, so list them clearly.",
+      },
+      {
+        heading: "Show student achievement data",
+        body: "Teaching is about student outcomes. Instead of 'Taught 5th grade math,' write 'Improved 5th grade math proficiency scores from 62% to 84% on state assessments over two academic years, exceeding the district average by 12%.' Include: test score growth, reading level advancement, graduation rates, and specific interventions that moved the needle. Even qualitative wins — student projects, competitions — belong on your resume.",
+      },
+      {
+        heading: "Showcase curriculum and instructional strategies",
+        body: "Describe your instructional approach: project-based learning, differentiated instruction, blended learning, UDL, SEL integration. Include examples of curriculum you've developed, units you've designed, and technology you've integrated (Google Classroom, Nearpod, Kahoot, Seesaw). Mention specific programs: Lucy Calkins, Eureka Math, NGSS, IB, AP — these are search keywords for principals.",
+      },
+      {
+        heading: "Include classroom management and culture",
+        body: "Classroom management is non-negotiable. Describe your approach and results. 'Implemented a PBIS classroom management system that reduced disciplinary referrals by 40%' or 'Built strong parent partnerships through weekly newsletters and biannual conferences with 95% attendance' show you can create a productive learning environment.",
+      },
+      {
+        heading: "Highlight leadership and extracurricular contributions",
+        body: "Schools value teachers who contribute beyond the classroom. List: committee leadership (curriculum review, hiring, accreditation), extracurricular roles (coaching, club advising, drama, robotics), professional development you've led, and mentorship of new teachers. These signal you're a contributor to school culture, not just a classroom teacher.",
+      },
+      {
+        heading: "Structure for education hiring systems",
+        body: "School districts use specialized ATS systems that scan for: certifications, endorsements, grade-level experience, and subject areas. Use standard section headings: Teaching Philosophy, Certifications, Professional Experience, Education, Professional Development. Include student teaching and practicum experience if you're early career. Save as PDF — NoiceResume's templates present all this cleanly.",
+      },
+    ],
+  },
+  {
     slug: "consultant",
     title: "Consulting Resume Guide",
     role: "Consultant",
