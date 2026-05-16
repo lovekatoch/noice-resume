@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoiceResume — Campaign Card 5</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.card{width:1200px;height:630px;background:#FAFAF8;position:relative;overflow:hidden;display:flex;align-items:center;font-family:'Inter',sans-serif}
+.card::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(30,58,95,0.04) 0%,transparent 70%)}
+.accent-line{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1E3A5F,#2A5080,#1E3A5F)}
+.left{flex:0 0 auto;padding:60px 0 60px 80px;display:flex;flex-direction:column;align-items:center}
+.right{flex:1;padding:60px 80px 60px 60px}
+.score-circle{width:180px;height:180px;border-radius:50%;background:conic-gradient(#DC2626 30%,rgba(0,0,0,0.06) 30%);display:flex;align-items:center;justify-content:center;position:relative}
+.score-inner{width:145px;height:145px;border-radius:50%;background:#FAFAF8;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-number{font-size:60px;font-weight:800;color:#DC2626;line-height:1;font-family:'Inter',sans-serif}
+.score-label{font-size:18px;color:#4A4A52;font-weight:500;margin-top:2px}
+.roast-quote{font-family:'EB Garamond',serif;font-size:36px;line-height:1.3;color:#1D1D1F;font-weight:500;font-style:italic;margin-bottom:16px}
+.roast-text{font-size:18px;line-height:1.5;color:#6E6E73}
+.roast-text strong{color:#1E3A5F;font-weight:600}
+.cta-box{display:inline-flex;align-items:center;gap:8px;margin-top:28px;padding:10px 24px;background:#1E3A5F;color:white;border-radius:100px;font-size:14px;font-weight:600}
+.footer{position:absolute;bottom:24px;left:60px;right:60px;display:flex;justify-content:space-between;align-items:center}
+.logo-text{font-family:'EB Garamond',serif;font-size:15px;color:#1E3A5F;font-weight:600}
+.url{font-size:13px;color:#86868B}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="accent-line"></div>
+<div class="left">
+<div class="score-circle">
+<div class="score-inner">
+<div class="score-number">3</div>
+<div class="score-label">/ 10</div>
+</div>
+</div>
+</div>
+<div class="right">
+<div class="roast-quote">&ldquo;Your resume reads like a grocery list of job duties.&rdquo;</div>
+<div class="roast-text">AI says your resume needs <strong>more impact</strong>, fewer buzzwords, and numbers that prove what you did.</div>
+<div class="cta-box">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.5 3.5L17 8l-3.5 1.5L12 13l-1.5-3.5L7 8l3.5-1.5z"/></svg>
+Roast my resume — it's free
+</div>
+</div>
+<div class="footer"><span class="logo-text">NoiceResume</span><span class="url">noiceresume.pages.dev</span></div>
+</div>
+</body>
+</html>

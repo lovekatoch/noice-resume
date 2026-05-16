@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoiceResume — Campaign Card 2</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.card{width:1200px;height:630px;background:#FAFAF8;position:relative;overflow:hidden;display:flex;font-family:'Inter',sans-serif}
+.accent-line{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1E3A5F,#2A5080,#1E3A5F)}
+.split{flex:1;display:flex;flex-direction:column;justify-content:center;padding:48px}
+.split-left{background:#F5F2ED;position:relative}
+.split-right{background:#FAFAF8;position:relative}
+.label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px}
+.label-before{color:#DC2626}
+.label-after{color:#27A644}
+.bullet{font-size:17px;line-height:1.6;padding:12px 16px;border-radius:8px;margin-bottom:10px;max-width:440px}
+.bullet-before{background:rgba(220,38,38,0.06);color:#6B2727;border-left:3px solid rgba(220,38,38,0.3)}
+.bullet-after{background:rgba(39,166,68,0.06);color:#1E6B33;border-left:3px solid rgba(39,166,68,0.3)}
+.arrow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;width:48px;height:48px;background:#1E3A5F;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;font-weight:600;box-shadow:0 4px 12px rgba(30,58,95,0.2)}
+.footer{position:absolute;bottom:24px;left:60px;right:60px;display:flex;justify-content:space-between;align-items:center;z-index:3}
+.logo-text{font-family:'EB Garamond',serif;font-size:14px;color:#86868B;font-weight:600}
+.cta{font-size:13px;color:#1E3A5F;font-weight:500}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="accent-line"></div>
+<div class="arrow">→</div>
+<div class="split split-left">
+<div class="label label-before">Before</div>
+<div class="bullet bullet-before">"Responsible for managing a team of engineers and delivering projects on time."</div>
+<div class="bullet bullet-before" style="border-left-color:rgba(220,38,38,0.15);opacity:0.7">"Worked on improving customer satisfaction metrics."</div>
+<div class="bullet bullet-before" style="border-left-color:rgba(220,38,38,0.1);opacity:0.5">"Helped with various team initiatives."</div>
+</div>
+<div class="split split-right">
+<div class="label label-after">After</div>
+<div class="bullet bullet-after">"Led a team of 8 engineers to ship 12 features in Q3, increasing retention by 18%."</div>
+<div class="bullet bullet-after" style="border-left-color:rgba(39,166,68,0.2)">"Improved NPS from 42 to 68 across 2,000+ enterprise accounts."</div>
+<div class="bullet bullet-after" style="border-left-color:rgba(39,166,68,0.15);opacity:0.85">"Reduced onboarding time 40% by redesigning the activation flow."</div>
+</div>
+<div class="footer">
+<span class="logo-text">NoiceResume — AI Resume Builder</span>
+<span class="cta">noiceresume.pages.dev ✦ Free Forever</span>
+</div>
+</div>
+</body>
+</html>
