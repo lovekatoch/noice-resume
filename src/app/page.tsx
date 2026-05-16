@@ -411,6 +411,14 @@ function Steps() {
   );
 }
 
+const QUICK_STARTS = [
+  { label: "Software Engineer", template: "software-engineer", role: "software-engineer" },
+  { label: "Product Manager", template: "product-manager", role: "product-manager" },
+  { label: "Data Scientist", template: "data-scientist", role: "data-scientist" },
+  { label: "Marketing", template: "marketing", role: "marketing" },
+  { label: "UX Designer", template: "ux-designer", role: "ux-designer" },
+];
+
 function TemplatePreviews() {
   const router = useRouter();
   const layoutVariant = useExperiment(EXPERIMENTS.TEMPLATE_LAYOUT);
@@ -421,7 +429,7 @@ function TemplatePreviews() {
   ];
 
   useEffect(() => {
-    captureTemplateBrowsed({ templateCount: TEMPLATES.length });
+    captureTemplateBrowsed({ templateCount: TEMPLATES.length + QUICK_STARTS.length });
   }, []);
 
   const layoutClass =
@@ -445,6 +453,29 @@ function TemplatePreviews() {
         <p className="mb-14 text-center text-base" style={{ color: "var(--muted)" }}>
           Three professionally designed layouts — switch anytime with one click.
         </p>
+
+        {/* Quick Start: role-based presets */}
+        <div className="mb-12 text-center">
+          <p className="mb-4 text-xs font-medium uppercase tracking-widest" style={{ color: "var(--muted-subtle)" }}>
+            Quick Start — pick your role
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {QUICK_STARTS.map((qs) => (
+              <button
+                key={qs.role}
+                onClick={() => router.push(`/resume-builder?template=${qs.template}&quickStart=${qs.role}`)}
+                className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-all hover:opacity-80 active:scale-[0.97]"
+                style={{
+                  backgroundColor: "var(--surface)",
+                  color: "var(--accent)",
+                  border: "1px solid var(--border)",
+                }}
+              >
+                {qs.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div className={layoutClass}>
           {TEMPLATES.map((t) => (

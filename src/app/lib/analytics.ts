@@ -1,7 +1,5 @@
 "use client";
 
-import posthog from "posthog-js";
-
 const DEVICE_ID_KEY = "noiceresume_device_id";
 let _sessionStarted = false;
 
@@ -19,252 +17,153 @@ function getDeviceId(): string {
 
 export function initAnalytics() {
   if (typeof window === "undefined") return;
-  const deviceId = getDeviceId();
-  posthog.register({
-    device_id: deviceId,
-    first_visit: localStorage.getItem("noiceresume_first_visit") || Date.now(),
-  });
+  getDeviceId();
   if (!localStorage.getItem("noiceresume_first_visit")) {
     localStorage.setItem("noiceresume_first_visit", String(Date.now()));
   }
   if (!_sessionStarted) {
     _sessionStarted = true;
-    capture("session_start", {
-      device_id: deviceId,
-      referrer: document.referrer || null,
-      url: window.location.href,
-      user_agent: navigator.userAgent,
-    });
   }
 }
 
-export function capture(event: string, properties?: Record<string, unknown>) {
-  posthog.capture(event, properties);
+export function capture(_event: string, _properties?: Record<string, unknown>) {
 }
 
-export function captureLandingCtaClick(opts: {
+export function captureLandingCtaClick(_opts: {
   ctaLabel: string;
   ctaLocation: string;
 }) {
-  capture("landing_cta_clicked", {
-    cta_label: opts.ctaLabel,
-    cta_location: opts.ctaLocation,
-    $current_url: window.location.href,
-  });
 }
 
-export function captureTemplateView(opts: {
+export function captureTemplateView(_opts: {
   templateSlug: string;
   templateName: string;
 }) {
-  capture("template_viewed", {
-    template_slug: opts.templateSlug,
-    template_name: opts.templateName,
-    $current_url: window.location.href,
-  });
 }
 
-export function captureImportEvent(event: string, opts?: Record<string, unknown>) {
-  capture(event, {
-    ...opts,
-    $current_url: window.location.href,
-  });
+export function captureImportEvent(_event: string, _opts?: Record<string, unknown>) {
 }
 
-export function captureBuilderSession(opts: {
+export function captureBuilderSession(_opts: {
   resumed: boolean;
   fromTemplate?: string;
   sessionAgeDays?: number;
 }) {
-  if (opts.resumed) {
-    capture("builder_session_resumed", {
-      session_age_days: opts.sessionAgeDays ?? 0,
-      $current_url: window.location.href,
-    });
-  } else {
-    capture("builder_session_started", {
-      from_template: opts.fromTemplate ?? null,
-      $current_url: window.location.href,
-    });
-  }
 }
 
-export function captureFirstSectionAdded(opts: { sectionType: string }) {
-  capture("first_section_added", {
-    section_type: opts.sectionType,
-  });
+export function captureFirstSectionAdded(_opts: { sectionType: string }) {
 }
 
-export function captureTemplateSelected(opts: { template: string }) {
-  capture("template_selected", {
-    template: opts.template,
-  });
+export function captureTemplateSelected(_opts: { template: string }) {
 }
 
-export function captureAiEnhancementUsed(opts: {
+export function captureAiEnhancementUsed(_opts: {
   sectionType: string;
   fieldCount: number;
 }) {
-  capture("ai_enhancement_used", {
-    section_type: opts.sectionType,
-    field_count: opts.fieldCount,
-  });
 }
 
-export function capturePdfGenerationStarted(opts: {
+export function capturePdfGenerationStarted(_opts: {
   template: string;
   sectionCount: number;
 }) {
-  capture("pdf_generation_started", {
-    template: opts.template,
-    section_count: opts.sectionCount,
-  });
 }
 
-export function captureDownload(opts: {
+export function captureDownload(_opts: {
   template: string;
   fileName: string;
   fileType: string;
 }) {
-  capture("resume_downloaded", {
-    template: opts.template,
-    fileName: opts.fileName,
-    fileType: opts.fileType,
-    $current_url: window.location.href,
-  });
 }
 
-export function captureShareUrlGenerated(opts: { url: string }) {
-  capture("share_url_generated", {
-    url: opts.url,
-    $current_url: window.location.href,
-  });
+export function captureShareUrlGenerated(_opts: { url: string }) {
 }
 
-export function captureShareEvent(event: string, opts?: Record<string, unknown>) {
-  capture(event, {
-    ...opts,
-    $current_url: window.location.href,
-  });
+export function captureShareEvent(_event: string, _opts?: Record<string, unknown>) {
 }
 
-export function captureCheckoutStarted(opts: {
+export function captureCheckoutStarted(_opts: {
   priceId: string;
   planName: string;
   amount: number;
   currency: string;
 }) {
-  capture("checkout_started", {
-    price_id: opts.priceId,
-    plan_name: opts.planName,
-    amount: opts.amount,
-    currency: opts.currency,
-    $current_url: window.location.href,
-  });
 }
 
-export function captureCheckoutCompleted(opts: {
+export function captureCheckoutCompleted(_opts: {
   sessionId: string;
   customerId?: string;
   amount: number;
   currency: string;
   planName: string;
 }) {
-  capture("checkout_completed", {
-    session_id: opts.sessionId,
-    customer_id: opts.customerId,
-    amount: opts.amount,
-    currency: opts.currency,
-    plan_name: opts.planName,
-    $revenue: opts.amount,
-    $currency: opts.currency,
-    $current_url: window.location.href,
-  });
 }
 
-export function captureCheckoutCancelled(opts: {
+export function captureCheckoutCancelled(_opts: {
   priceId?: string;
   planName?: string;
   step: string;
 }) {
-  capture("checkout_cancelled", {
-    price_id: opts.priceId,
-    plan_name: opts.planName,
-    step: opts.step,
-    $current_url: window.location.href,
-  });
 }
 
-export function captureCheckoutError(opts: {
+export function captureCheckoutError(_opts: {
   error: string;
   priceId?: string;
   planName?: string;
   step: string;
 }) {
-  capture("checkout_error", {
-    error: opts.error,
-    price_id: opts.priceId,
-    plan_name: opts.planName,
-    step: opts.step,
-    $current_url: window.location.href,
-  });
 }
 
-export function capturePremiumActivated(opts: {
+export function capturePremiumActivated(_opts: {
   sessionId?: string;
   customerId?: string;
 }) {
-  capture("premium_activated", {
-    session_id: opts.sessionId,
-    customer_id: opts.customerId,
-  });
 }
 
 export function captureCheckoutEvent(
-  event: string,
-  opts?: Record<string, unknown>
+  _event: string,
+  _opts?: Record<string, unknown>
 ) {
-  capture(event, {
-    ...opts,
-    $current_url: window.location.href,
-  });
 }
 
 export function captureReferralConversion() {
-  capture("referral_conversion", {
-    $current_url: window.location.href,
-  });
 }
 
-// ─────────────────────────────────────────────
-// Share attribution tracking (share → visit → download funnel)
-// ─────────────────────────────────────────────
+export function captureReferralLinkGenerated(_opts: { referralLink: string }) {
+}
 
-export function captureShareAttributedVisit(opts: {
+export function captureReferralShare(_opts: {
+  medium: string;
+  referralLink: string;
+}) {
+}
+
+export function captureReferralAttributedVisit(_opts: {
+  referrerToken: string;
+}) {
+}
+
+export function captureCampaignAttribution(_opts: {
+  utmSource?: string | null;
+  utmMedium?: string | null;
+  utmCampaign?: string | null;
+  utmTerm?: string | null;
+  utmContent?: string | null;
+  referrer?: string;
+}) {
+}
+
+export function captureShareAttributedVisit(_opts: {
   shareId: string;
   referrer?: string;
 }) {
-  capture("share_attributed_visit", {
-    share_id: opts.shareId,
-    referrer: opts.referrer || document.referrer || null,
-    $current_url: window.location.href,
-    $referrer: document.referrer,
-  });
 }
 
-export function captureShareFlowDownloaded(opts: {
+export function captureShareFlowDownloaded(_opts: {
   shareId: string | null;
 }) {
-  capture("share_flow_downloaded", {
-    share_id: opts.shareId,
-    download_after_share: true,
-    $current_url: window.location.href,
-  });
 }
 
-// ─────────────────────────────────────────────
-// DeepSeek cost tracking
-// ─────────────────────────────────────────────
 const DEEPSEEK_INPUT_COST_PER_1M = 0.27;
 const DEEPSEEK_OUTPUT_COST_PER_1M = 1.10;
 
@@ -279,152 +178,97 @@ function calculateCost(
   return Math.round((inputCost + outputCost) * 1_000_000) / 1_000_000;
 }
 
-export function captureAiTokenUsage(opts: {
+export function captureAiTokenUsage(_opts: {
   sectionType: string;
   promptTokens: number;
   completionTokens: number;
   totalTokens: number;
   model: string;
 }) {
-  capture("ai_token_usage", {
-    section_type: opts.sectionType,
-    prompt_tokens: opts.promptTokens,
-    completion_tokens: opts.completionTokens,
-    total_tokens: opts.totalTokens,
-    model: opts.model,
-    estimated_cost_usd: calculateCost(
-      opts.promptTokens,
-      opts.completionTokens
-    ),
-  });
 }
 
-export function captureAiEnhanceRequested(opts: {
+export function captureAiEnhanceRequested(_opts: {
   sectionType: string;
   isRegenerate: boolean;
   globalEnhanceCount: number;
 }) {
-  capture("ai_enhance_requested", {
-    section_type: opts.sectionType,
-    is_regenerate: opts.isRegenerate,
-    global_enhance_count: opts.globalEnhanceCount,
-  });
 }
 
-export function captureAiEnhanceSuccess(opts: {
+export function captureAiEnhanceSuccess(_opts: {
   sectionType: string;
   isRegenerate: boolean;
   responseTimeMs: number;
   globalEnhanceCount: number;
 }) {
-  capture("ai_enhance_success", {
-    section_type: opts.sectionType,
-    is_regenerate: opts.isRegenerate,
-    response_time_ms: opts.responseTimeMs,
-    global_enhance_count: opts.globalEnhanceCount,
-  });
 }
 
-export function captureAiEnhanceError(opts: {
+export function captureAiEnhanceError(_opts: {
   sectionType: string;
   isRegenerate: boolean;
   errorMessage: string;
   globalEnhanceCount: number;
 }) {
-  capture("ai_enhance_error", {
-    section_type: opts.sectionType,
-    is_regenerate: opts.isRegenerate,
-    error_message: opts.errorMessage,
-    global_enhance_count: opts.globalEnhanceCount,
-  });
 }
 
-export function captureAiEnhanceAccepted(opts: {
+export function captureAiEnhanceAccepted(_opts: {
   sectionType: string;
   globalEnhanceCount: number;
 }) {
-  capture("ai_enhance_accepted", {
-    section_type: opts.sectionType,
-    global_enhance_count: opts.globalEnhanceCount,
-  });
 }
 
-export function captureFormFieldEdited(opts: {
+export function captureFormFieldEdited(_opts: {
   sectionType: string;
   fieldName: string;
   action: "add" | "edit" | "delete";
 }) {
-  capture("form_field_edited", {
-    section_type: opts.sectionType,
-    field_name: opts.fieldName,
-    action: opts.action,
-    $current_url: window.location.href,
-  });
 }
 
-export function captureTemplateBrowsed(opts: {
+export function captureTemplateBrowsed(_opts: {
   searchTerm?: string;
   templateCount: number;
 }) {
-  capture("template_browsed", {
-    search_term: opts.searchTerm ?? null,
-    template_count: opts.templateCount,
-    $current_url: window.location.href,
-  });
 }
 
-export function captureContentPageViewed(opts: {
+export function captureContentPageViewed(_opts: {
   pageType: string;
   slug?: string;
 }) {
-  capture("content_page_viewed", {
-    page_type: opts.pageType,
-    slug: opts.slug ?? null,
-    $current_url: window.location.href,
-  });
 }
 
 export function capturePwaInstalled() {
-  capture("pwa_installed", {
-    $current_url: typeof window !== "undefined" ? window.location.href : null,
-  });
 }
 
-export function captureError(opts: {
+export function captureError(_opts: {
   errorMessage: string;
   componentStack?: string;
   errorType?: string;
 }) {
-  capture("error_caught", {
-    error_message: opts.errorMessage,
-    component_stack: opts.componentStack ?? null,
-    error_type: opts.errorType ?? null,
-    $current_url: typeof window !== "undefined" ? window.location.href : null,
-  });
 }
 
-export function captureRoastGenerated(opts: {
+export function captureRoastGenerated(_opts: {
   overallScore: number;
 }) {
-  capture("roast_generated", {
-    overall_score: opts.overallScore,
-  });
 }
 
-export function captureRoastShared(opts: {
+export function captureRoastShared(_opts: {
   platform: string;
   overallScore: number;
 }) {
-  capture("roast_shared", {
-    platform: opts.platform,
-    overall_score: opts.overallScore,
-  });
 }
 
-export function captureRoastCardDownloaded(opts: {
+export function captureRoastCardDownloaded(_opts: {
   overallScore: number;
 }) {
-  capture("roast_card_downloaded", {
-    overall_score: opts.overallScore,
-  });
+}
+
+export function captureFirstRunPreFill() {
+}
+
+export function captureQuickStartSelected(_opts: { role: string }) {
+}
+
+export function captureOnboardingHintDismissed() {
+}
+
+export function captureSectionAutoShown(_opts: { section: string }) {
 }
