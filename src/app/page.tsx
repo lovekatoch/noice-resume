@@ -15,6 +15,7 @@ import {
 
 const LiveDemo = dynamic(() => import("components/LiveDemo"), { ssr: false });
 import { EXPERIMENTS, useExperiment, useExperimentGoal } from "lib/experiments";
+import { fetchDownloadStats, type DownloadStats } from "lib/analytics";
 import { AnimatedCounter } from "components/AnimatedCounter";
 import { TestimonialsSection } from "components/TestimonialsSection";
 import { TrustBadges } from "components/TrustBadges";
@@ -143,29 +144,29 @@ const STEPS = [
 const FAQ = [
   {
     q: "Is NoiceResume really free? No hidden plans?",
-    a: "Completely free. No trials, no credit card, no 'start free then pay' bait-and-switch. You get the full resume builder, all features, forever.",
+    a: "Completely free. No trials, no credit card, no 'start free then pay' bait-and-switch. You get the full resume builder, all features, forever. See how we compare against other resume builders in our <a href='/resources/best-free-resume-builder' style='color: var(--accent); text-decoration: underline;'>best free resume builder guide</a>.",
   },
   {
     q: "Do I need to sign up or create an account?",
-    a: "No. Your resume never leaves your browser — it is stored in local storage, not on our servers. That is why there is no sign-up needed.",
+    a: "No. Your resume never leaves your browser — it is stored in local storage, not on our servers. That is why there is no sign-up needed. Learn more in our <a href='/resources/ats-friendly-resume' style='color: var(--accent); text-decoration: underline;'>ATS-friendly resume guide</a> and <a href='/resources/professional-resume-format' style='color: var(--accent); text-decoration: underline;'>resume format guide</a>.",
   },
   {
     q: "Will my resume pass ATS filters?",
-    a: "Yes. NoiceResume uses a single-column layout, standard section headers, and clean formatting that ATS systems parse reliably. Two-column layouts and graphics confuse ATS — we skip those on purpose.",
+    a: "Yes. NoiceResume uses a single-column layout, standard section headers, and clean formatting that ATS systems parse reliably. Two-column layouts and graphics confuse ATS — we skip those on purpose. For more tips, read our guide on <a href='/resources/ats-friendly-resume' style='color: var(--accent); text-decoration: underline;'>how to build an ATS-friendly resume</a> and <a href='/resources/beat-ai-screening' style='color: var(--accent); text-decoration: underline;'>how to beat AI screening</a>.",
   },
   {
     q: "Can I import my existing resume?",
-    a: "Yes. Upload your current PDF and the AI will parse it into the builder. You can then tweak, reformat, and improve it.",
+    a: "Yes. Upload your current PDF and the AI will parse it into the builder. You can then tweak, reformat, and improve it. Check our <a href='/resources/professional-resume-format' style='color: var(--accent); text-decoration: underline;'>resume format guide</a> for tips on what to include.",
   },
   {
     q: "What makes this better than a Google Doc template?",
-    a: "Templates require manual formatting — copying, pasting, fixing alignment, chasing fonts. NoiceResume handles all of that automatically. Change your theme with one click. Plus, the AI helps you write better bullet points.",
+    a: "Templates require manual formatting — copying, pasting, fixing alignment, chasing fonts. NoiceResume handles all of that automatically. Change your theme with one click. Plus, the AI helps you write better bullet points. See how NoiceResume compares to other builders in our <a href='/resources/best-free-resume-builder' style='color: var(--accent); text-decoration: underline;'>best free resume builder comparison</a>.",
   },
 ];
 
 // ─── SECTION COMPONENTS ────────────────────────────────────────────
 
-function Hero() {
+function Hero({ monthCount }: { monthCount: number }) {
   const router = useRouter();
   const [savedName, setSavedName] = useState<string | null>(null);
 
@@ -208,7 +209,7 @@ function Hero() {
         {/* Social proof — above hero variant */}
         {socialProofVariant === "above-hero" && (
           <p className="mb-8 text-sm" style={{ color: "var(--muted-subtle)" }}>
-            Join <span style={{ color: "var(--accent)", fontWeight: 600 }}>8,400+</span> job seekers this month
+            Join <span style={{ color: "var(--accent)", fontWeight: 600 }}><AnimatedCounter target={monthCount} suffix="+" /></span> job seekers this month
           </p>
         )}
 
@@ -260,7 +261,7 @@ function Hero() {
             >
               <Plus />
               {socialProofVariant === "inline-cta" ? (
-                <>Join 8,400+ &rarr;</>
+                <>Join <AnimatedCounter target={monthCount} suffix="+" /> &rarr;</>
               ) : (
                 ctaLabel
               )}
@@ -271,7 +272,7 @@ function Hero() {
           {/* Social proof — default position below CTA (hidden when inline-cta or above-hero) */}
           {socialProofVariant === "control" && (
             <p className="text-sm" style={{ color: "var(--muted-subtle)" }}>
-              Used by <span style={{ color: "var(--accent)", fontWeight: 600 }}>8,400+</span> job seekers this month
+              Used by <span style={{ color: "var(--accent)", fontWeight: 600 }}><AnimatedCounter target={monthCount} suffix="+" /></span> job seekers this month
             </p>
           )}
 
@@ -297,7 +298,7 @@ function Hero() {
   );
 }
 
-function ProblemBar() {
+function ProblemBar({ monthCount }: { monthCount: number }) {
   return (
     <section className="px-6 py-10" style={{ backgroundColor: "var(--surface)" }}>
       <div className="mx-auto max-w-4xl">
@@ -316,7 +317,7 @@ function ProblemBar() {
           </div>
           <div>
             <p className="text-2xl font-semibold" style={{ color: "var(--accent)" }}>
-              <AnimatedCounter target={8400} />
+              <AnimatedCounter target={monthCount} />
             </p>
             <p className="text-sm mt-1" style={{ color: "var(--muted-subtle)" }}>Resumes created this month — and counting</p>
           </div>
@@ -419,7 +420,7 @@ const QUICK_STARTS = [
   { label: "UX Designer", template: "ux-designer", role: "ux-designer" },
 ];
 
-function TemplatePreviews() {
+function TemplatePreviews({ monthCount }: { monthCount: number }) {
   const router = useRouter();
   const layoutVariant = useExperiment(EXPERIMENTS.TEMPLATE_LAYOUT);
   const TEMPLATES = [
@@ -506,7 +507,7 @@ function TemplatePreviews() {
         </div>
 
         <p className="mt-12 text-center text-sm" style={{ color: "var(--muted-subtle)" }}>
-          Join <span style={{ color: "var(--accent)", fontWeight: 600 }}>8,400+</span> job seekers who built their resume this month
+          Join <span style={{ color: "var(--accent)", fontWeight: 600 }}><AnimatedCounter target={monthCount} suffix="+" /></span> job seekers who built their resume this month
         </p>
       </div>
     </section>
@@ -551,7 +552,7 @@ function FAQSection() {
                 </button>
                 {isOpen && (
                   <div className="px-6 pb-4 text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
-                    {item.a}
+                    <span dangerouslySetInnerHTML={{ __html: item.a }} />
                   </div>
                 )}
               </div>
@@ -649,6 +650,14 @@ function FinalCTA() {
 // ─── MAIN PAGE ──────────────────────────────────────────────────────
 
 export default function Home() {
+  const [monthCount, setMonthCount] = useState(8400);
+
+  useEffect(() => {
+    void fetchDownloadStats().then((stats) => {
+      if (stats) setMonthCount(stats.thisMonth);
+    });
+  }, []);
+
   return (
     <main>
       <StructuredData
@@ -661,14 +670,14 @@ export default function Home() {
           faqPageSchema(FAQ),
         ]}
       />
-      <Hero />
+      <Hero monthCount={monthCount} />
       <TrustBadges />
-      <ProblemBar />
+      <ProblemBar monthCount={monthCount} />
       <Features />
       <Steps />
       <TestimonialsSection />
       <LiveDemo />
-      <TemplatePreviews />
+      <TemplatePreviews monthCount={monthCount} />
       <ExampleGallery />
       <FAQSection />
       <FinalCTA />

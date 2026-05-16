@@ -633,6 +633,62 @@ export const RESOURCES: ResourceMeta[] = [
     ],
   },
   {
+    slug: "best-free-resume-builder",
+    title: "Best Free Resume Builder in 2025 — Honest Review & Comparison",
+    headline: "The 5 Best Free Resume Builders Compared — Honest Review for 2025",
+    subheadline:
+      "Looking for the best free resume builder? We tested the top options head-to-head. NoiceResume, Rezi, Kickresume, and more — compared on features, pricing, privacy, and design quality.",
+    description:
+      "Comprehensive comparison of the best free resume builders in 2025. We tested NoiceResume, Rezi, Kickresume, and others — comparing features, pricing, design quality, ATS compatibility, and privacy. Find the best free resume builder for your needs.",
+    keywords: [
+      "best free resume builder",
+      "free resume builder comparison",
+      "best free resume builder 2025",
+      "free resume builder no sign up",
+      "top free resume builders",
+      "resume builder free forever",
+      "best resume builder free",
+      "free resume builder review",
+    ],
+    ogTitle: "Best Free Resume Builder in 2025 — Honest Comparison & Review | NoiceResume",
+    ogDescription:
+      "We tested the top free resume builders head-to-head. See how NoiceResume, Rezi, Kickresume, and others compare on features, pricing, privacy, and design.",
+    sections: [
+      {
+        heading: "What makes a resume builder truly free — and why most aren't",
+        body: "When you search for a 'free resume builder,' almost every option claims to be free. But there's a catch with most: they limit you to 1-3 downloads unless you subscribe, hide essential features behind a paywall (AI writing, ATS checking, premium templates), force you to create an account and sign up before you can even try the builder, watermark your PDF with their branding, or require a credit card for a 'free trial' that auto-converts to a paid plan. A truly free resume builder should give you the full experience without asking for anything in return. In this guide, we compare the top free resume builders on what matters most: actual free features, design quality, and privacy.",
+      },
+      {
+        heading: "NoiceResume — the best free resume builder overall",
+        body: "NoiceResume is our top pick for the best free resume builder in 2025 — and it's not close. It's the only major resume builder that is truly, permanently free: no sign-up required, no credit card, no usage limits, no hidden paywalls. You get everything: AI-powered writing suggestions that help you refine your bullet points, 13 professionally designed templates spanning classic, modern, compact, and role-specific layouts, ATS-optimized formatting that passes screening systems reliably, a live PDF preview as you type, import from existing PDF resumes, and shareable resume links for recruiters. Nothing ever leaves your browser — your data stays on your device. It's built with the design polish of Apple or Linear, without a single dollar asked in return.",
+      },
+      {
+        heading: "Rezi — good for keyword optimization, limited free tier",
+        body: "Rezi positions itself as 'the #1 AI Resume Builder' and has a strong focus on ATS keyword optimization with its Rezi Score. The free version is functional but restrictive: you get only 3 PDF downloads before needing a paid plan, access to basic templates (premium ones are locked), and the AI features are limited compared to the Pro plan. The design quality is utilitarian rather than premium. If you're willing to pay $29/month or $149 for lifetime access, Rezi offers solid keyword analysis tools. But as a free resume builder, it falls short of being truly free.",
+      },
+      {
+        heading: "Kickresume — feature-rich but heavily paywalled",
+        body: "Kickresume serves 8M+ users with GPT-4.1 powered AI writing, an Autopilot feature with 20k pre-written phrases, and an ATS checker. The free tier lets you build a resume but restricts access to the best templates, limits AI usage, and requires sign-up before you can do anything. The UI is cluttered with upgrade prompts and feature ads, creating a frustrating free experience. Paid plans unlock the full potential, but for someone seeking the best free resume builder, Kickresume's constant upsells make it feel like a trial rather than a free tool.",
+      },
+      {
+        heading: "Enhancv — premium design, no permanent free tier",
+        body: "Enhancv has built a strong reputation for modern, personality-forward resume design. Their AI content generation, one-click tailoring, and multi-language support (30+ languages) are genuinely impressive. But the catch is significant: there is no permanent free tier. You get a 7-day free trial that requires a credit card, and after that you're on a paid plan. For someone explicitly looking for a free resume builder, Enhancv doesn't qualify. If you're willing to pay, it's a solid choice — but it's not free, and the design-heavy approach can cause ATS parsing issues.",
+      },
+      {
+        heading: "Comparison summary — features, pricing, and privacy",
+        body: "Here's how the major free resume builders stack up. NoiceResume: truly free forever, no sign-up, client-side privacy, 13 templates, AI enhancement, ATS-optimized, unlimited downloads. Rezi: limited free (3 downloads), requires sign-up, cloud-based, ATS scoring, basic AI, $29/mo Pro. Kickresume: limited free, requires sign-up, cloud-based, GPT-4.1 AI, 20k phrases, paid plans. Enhancv: 7-day free trial only, requires credit card, cloud-based, premium design, $ from $9/mo Resume.io: limited free, needs sign-up, cloud-based, good templates, $ from $11/mo. For privacy, NoiceResume is the only one that stores your data locally in your browser rather than on cloud servers. For design quality, NoiceResume and Enhancv lead the pack. For truly free usage, only NoiceResume delivers.",
+      },
+      {
+        heading: "What to look for in a free resume builder",
+        body: "Before choosing a free resume builder, consider these factors. First, verify what's actually free — read the fine print on download limits, template access, and AI feature availability. Second, check for ATS compatibility — a beautiful resume that fails automated screening is counterproductive. Third, evaluate design quality — your resume is often your first impression, and generic templates signal a lack of effort. Fourth, consider privacy — cloud-based builders store your personal data on their servers, which matters if you're applying confidentially or handling sensitive information. Fifth, test the export quality — some free builders generate blurry PDFs or add watermarks. The best free resume builder balances all five factors without compromise.",
+      },
+      {
+        heading: "Why NoiceResume is our #1 pick — and how to get started",
+        body: "NoiceResume wins our 'best free resume builder' recommendation because it's the only option that delivers premium quality with zero compromise on free access. You get professional templates designed with the same care as premium builders, AI writing assistance that provides real, contextual suggestions, ATS-optimized formatting that keeps your resume scannable, unlimited downloads without hidden caps, and complete privacy — your data never leaves your device. Getting started takes 30 seconds. No sign-up, no credit card, no account creation. Just open the builder, pick a template, and start writing. It's the resume builder that's always free — no catch.",
+      },
+    ],
+  },
+  {
     slug: "career-change-resume",
     title: "Career Change Resume Guide — How to Switch Industries Successfully",
     headline: "How to Write a Career Change Resume That Gets Interviews",

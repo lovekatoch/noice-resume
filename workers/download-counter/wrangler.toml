@@ -1,0 +1,11 @@
+name = "download-counter"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "DOWNLOAD_COUNTER_KV"
+id = "7913788cd1964277b6d10da7506984f1"
+preview_id = "5ff3d935e1b74c82bba322fcc222658a"
+
+[vars]
+PUBLIC_URL = "https://noiceresume.com"

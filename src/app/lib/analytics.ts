@@ -29,130 +29,183 @@ export function initAnalytics() {
 export function capture(_event: string, _properties?: Record<string, unknown>) {
 }
 
-export function captureLandingCtaClick(_opts: {
+export function captureLandingCtaClick(opts: {
   ctaLabel: string;
   ctaLocation: string;
 }) {
+  capture("landing_cta_clicked", opts);
 }
 
-export function captureTemplateView(_opts: {
+export function captureTemplateView(opts: {
   templateSlug: string;
   templateName: string;
 }) {
+  capture("template_viewed", opts);
 }
 
-export function captureImportEvent(_event: string, _opts?: Record<string, unknown>) {
+export function captureImportEvent(event: string, opts?: Record<string, unknown>) {
+  capture("import_event", { event, ...opts });
 }
 
-export function captureBuilderSession(_opts: {
+export function captureBuilderSession(opts: {
   resumed: boolean;
   fromTemplate?: string;
   sessionAgeDays?: number;
 }) {
+  capture("builder_session_started", opts);
 }
 
-export function captureFirstSectionAdded(_opts: { sectionType: string }) {
+export function captureFirstSectionAdded(opts: { sectionType: string }) {
+  capture("first_section_added", opts);
 }
 
-export function captureTemplateSelected(_opts: { template: string }) {
+export function captureTemplateSelected(opts: { template: string }) {
+  capture("template_selected", opts);
 }
 
-export function captureAiEnhancementUsed(_opts: {
+export function captureAiEnhancementUsed(opts: {
   sectionType: string;
   fieldCount: number;
 }) {
+  capture("ai_enhancement_used", opts);
 }
 
-export function capturePdfGenerationStarted(_opts: {
+export function capturePdfGenerationStarted(opts: {
   template: string;
   sectionCount: number;
 }) {
+  capture("pdf_generation_started", opts);
 }
 
-export function captureDownload(_opts: {
+export function captureDownload(opts: {
   template: string;
   fileName: string;
   fileType: string;
 }) {
+  capture("resume_downloaded", opts);
+  const url = process.env.NEXT_PUBLIC_DOWNLOAD_COUNTER_WORKER_URL;
+  if (!url) return;
+  void fetch(`${url}/increment`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      template: opts.template,
+      fileType: opts.fileType,
+    }),
+  }).catch(() => {});
 }
 
-export function captureShareUrlGenerated(_opts: { url: string }) {
+export interface DownloadStats {
+  total: number;
+  today: number;
+  thisWeek: number;
+  thisMonth: number;
+  templates: Record<string, number>;
 }
 
-export function captureShareEvent(_event: string, _opts?: Record<string, unknown>) {
+export async function fetchDownloadStats(): Promise<DownloadStats | null> {
+  const url = process.env.NEXT_PUBLIC_DOWNLOAD_COUNTER_WORKER_URL;
+  if (!url) return null;
+  try {
+    const resp = await fetch(`${url}/stats`);
+    if (!resp.ok) return null;
+    return (await resp.json()) as DownloadStats;
+  } catch {
+    return null;
+  }
 }
 
-export function captureCheckoutStarted(_opts: {
+export function captureShareUrlGenerated(opts: { url: string }) {
+  capture("share_url_generated", opts);
+}
+
+export function captureShareEvent(event: string, opts?: Record<string, unknown>) {
+  capture(event, opts);
+}
+
+export function captureCheckoutStarted(opts: {
   priceId: string;
   planName: string;
   amount: number;
   currency: string;
 }) {
+  capture("checkout_started", opts);
 }
 
-export function captureCheckoutCompleted(_opts: {
+export function captureCheckoutCompleted(opts: {
   sessionId: string;
   customerId?: string;
   amount: number;
   currency: string;
   planName: string;
 }) {
+  capture("checkout_completed", opts);
 }
 
-export function captureCheckoutCancelled(_opts: {
+export function captureCheckoutCancelled(opts: {
   priceId?: string;
   planName?: string;
   step: string;
 }) {
+  capture("checkout_cancelled", opts);
 }
 
-export function captureCheckoutError(_opts: {
+export function captureCheckoutError(opts: {
   error: string;
   priceId?: string;
   planName?: string;
   step: string;
 }) {
+  capture("checkout_error", opts);
 }
 
-export function capturePremiumActivated(_opts: {
+export function capturePremiumActivated(opts: {
   sessionId?: string;
   customerId?: string;
 }) {
+  capture("premium_activated", opts);
 }
 
 export function captureCheckoutEvent(
-  _event: string,
-  _opts?: Record<string, unknown>
+  event: string,
+  opts?: Record<string, unknown>
 ) {
+  capture(event, opts);
 }
 
 export function captureReferralConversion() {
+  capture("referral_conversion");
 }
 
-export function captureReferralLinkGenerated(_opts: { referralLink: string }) {
+export function captureReferralLinkGenerated(opts: { referralLink: string }) {
+  capture("referral_link_generated", opts);
 }
 
-export function captureReferralShare(_opts: {
+export function captureReferralShare(opts: {
   medium: string;
   referralLink: string;
 }) {
+  capture("referral_share", opts);
 }
 
-export function captureReferralAttributedVisit(_opts: {
+export function captureReferralAttributedVisit(opts: {
   referrerToken: string;
 }) {
+  capture("referral_attributed_visit", opts);
 }
 
 
-export function captureShareAttributedVisit(_opts: {
+export function captureShareAttributedVisit(opts: {
   shareId: string;
   referrer?: string;
 }) {
+  capture("share_attributed_visit", opts);
 }
 
-export function captureShareFlowDownloaded(_opts: {
+export function captureShareFlowDownloaded(opts: {
   shareId: string | null;
 }) {
+  capture("share_flow_downloaded", opts);
 }
 
 const DEEPSEEK_INPUT_COST_PER_1M = 0.27;
@@ -169,99 +222,116 @@ function calculateCost(
   return Math.round((inputCost + outputCost) * 1_000_000) / 1_000_000;
 }
 
-export function captureAiTokenUsage(_opts: {
+export function captureAiTokenUsage(opts: {
   sectionType: string;
   promptTokens: number;
   completionTokens: number;
   totalTokens: number;
   model: string;
 }) {
+  capture("ai_token_usage", { ...opts, cost: calculateCost(opts.promptTokens, opts.completionTokens) });
 }
 
-export function captureAiEnhanceRequested(_opts: {
+export function captureAiEnhanceRequested(opts: {
   sectionType: string;
   isRegenerate: boolean;
   globalEnhanceCount: number;
 }) {
+  capture("ai_enhance_requested", opts);
 }
 
-export function captureAiEnhanceSuccess(_opts: {
+export function captureAiEnhanceSuccess(opts: {
   sectionType: string;
   isRegenerate: boolean;
   responseTimeMs: number;
   globalEnhanceCount: number;
 }) {
+  capture("ai_enhance_success", opts);
 }
 
-export function captureAiEnhanceError(_opts: {
+export function captureAiEnhanceError(opts: {
   sectionType: string;
   isRegenerate: boolean;
   errorMessage: string;
   globalEnhanceCount: number;
 }) {
+  capture("ai_enhance_error", opts);
 }
 
-export function captureAiEnhanceAccepted(_opts: {
+export function captureAiEnhanceAccepted(opts: {
   sectionType: string;
   globalEnhanceCount: number;
 }) {
+  capture("ai_enhance_accepted", opts);
 }
 
-export function captureFormFieldEdited(_opts: {
+export function captureFormFieldEdited(opts: {
   sectionType: string;
   fieldName: string;
   action: "add" | "edit" | "delete";
 }) {
+  capture("form_field_edited", opts);
 }
 
-export function captureTemplateBrowsed(_opts: {
+export function captureTemplateBrowsed(opts: {
   searchTerm?: string;
   templateCount: number;
 }) {
+  capture("template_browsed", opts);
 }
 
-export function captureContentPageViewed(_opts: {
+export function captureContentPageViewed(opts: {
   pageType: string;
   slug?: string;
 }) {
+  capture("content_page_viewed", opts);
 }
 
 export function capturePwaInstalled() {
+  capture("pwa_installed");
 }
 
-export function captureError(_opts: {
+export function captureError(opts: {
   errorMessage: string;
   componentStack?: string;
   errorType?: string;
 }) {
+  capture("error", opts);
 }
 
-export function captureRoastGenerated(_opts: {
+export function captureRoastGenerated(opts: {
   overallScore: number;
 }) {
+  capture("roast_generated", opts);
 }
 
-export function captureRoastShared(_opts: {
+export function captureRoastShared(opts: {
   platform: string;
   overallScore: number;
 }) {
+  capture("roast_shared", opts);
 }
 
-export function captureRoastCardDownloaded(_opts: {
+export function captureRoastCardDownloaded(opts: {
   overallScore: number;
 }) {
+  capture("roast_card_downloaded", opts);
 }
 
 export function captureFirstRunPreFill() {
+  capture("first_run_prefill");
 }
 
-export function captureQuickStartSelected(_opts: { role: string }) {
+export function captureQuickStartSelected(opts: { role: string }) {
+  capture("quick_start_selected", opts);
 }
 
 export function captureOnboardingHintDismissed() {
+  capture("onboarding_hint_dismissed");
 }
 
-export function captureSectionAutoShown(_opts: { section: string }) {
+export function captureSectionAutoShown(opts: { section: string }) {
+  capture("section_auto_shown", opts);
 }
 
 
@@ -273,4 +343,12 @@ export function captureCampaignAttribution(opts: {
   utmContent?: string | null;
   referrer?: string;
 }) {
+  capture("campaign_attribution", {
+    utm_source: opts.utmSource,
+    utm_medium: opts.utmMedium,
+    utm_campaign: opts.utmCampaign,
+    utm_term: opts.utmTerm,
+    utm_content: opts.utmContent,
+    referrer: opts.referrer,
+  });
 }

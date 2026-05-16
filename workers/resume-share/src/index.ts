@@ -2,8 +2,6 @@ interface Env {
   RESUME_KV: KVNamespace;
   MAX_SHARE_SIZE_KB: string;
   PUBLIC_URL: string;
-  POSTHOG_KEY?: string;
-  POSTHOG_HOST?: string;
 }
 
 interface SharePayload {
@@ -56,7 +54,7 @@ export default {
 
     const trackMatch = url.pathname.match(/^\/track-view\/([a-z0-9]{8})$/);
     if (request.method === "GET" && trackMatch) {
-      return handleTrackView(trackMatch[1], request, env);
+      return handleTrackView(trackMatch[1], env);
     }
 
     if (url.pathname === "/badge" || url.pathname === "/badge.svg") {
@@ -438,12 +436,8 @@ async function handleView(id: string, env: Env): Promise<Response> {
 
 async function handleTrackView(
   id: string,
-  request: Request,
   env: Env
 ): Promise<Response> {
-  const url = new URL(request.url);
-  const referrer = url.searchParams.get("ref") || request.headers.get("Referer") || "direct";
-
   const raw = await env.RESUME_KV.get(`resume:${id}`);
   if (raw) {
     const record: ShareRecord = JSON.parse(raw);
@@ -451,25 +445,6 @@ async function handleTrackView(
     await env.RESUME_KV.put(`resume:${id}`, JSON.stringify(record), {
       expirationTtl: 7776000,
     });
-
-    if (env.POSTHOG_KEY) {
-      void fetch(`${env.POSTHOG_HOST || "https://us.i.posthog.com"}/capture/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          api_key: env.POSTHOG_KEY,
-          event: "share_resume_viewed",
-          properties: {
-            share_id: id,
-            referrer: referrer,
-            view_count: record.viewCount,
-            distinct_id: `share-${id}`,
-            $current_url: request.url,
-          },
-          timestamp: new Date().toISOString(),
-        }),
-      }).catch(() => {});
-    }
   }
 
   const pixel = new Uint8Array([

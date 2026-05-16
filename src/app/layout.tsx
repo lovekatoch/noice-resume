@@ -1,7 +1,6 @@
 import "globals.css";
 import { Inter, EB_Garamond } from "next/font/google";
 import { TopNavBar } from "components/TopNavBar";
-import { PostHogProvider } from "components/PostHogProvider";
 import { PageViewTracker } from "components/PageViewTracker";
 import { CheckoutAnalyticsTracker } from "components/CheckoutAnalyticsTracker";
 import { ReduxProvider } from "components/ReduxProvider";
@@ -85,14 +84,12 @@ export default function RootLayout({
         <JsonLd data={organizationSchema()} />
         <JsonLd data={websiteSchema()} />
         <ReduxProvider>
-          <PostHogProvider>
-            <SoundProvider>
-              <TopNavBar />
-              {children}
-              <PageViewTracker />
-              <CheckoutAnalyticsTracker />
-            </SoundProvider>
-          </PostHogProvider>
+          <SoundProvider>
+            <TopNavBar />
+            {children}
+            <PageViewTracker />
+            <CheckoutAnalyticsTracker />
+          </SoundProvider>
         </ReduxProvider>
       </body>
     </html>
