@@ -19,7 +19,7 @@ import { useAIPanel } from "lib/hooks/useAIPanel";
 export const WorkExperiencesForm = () => {
   const workExperiences = useAppSelector(selectWorkExperiences);
   const dispatch = useAppDispatch();
-  const themeColor = useAppSelector(selectThemeColor) || "#C75B39";
+  const themeColor = useAppSelector(selectThemeColor) || "#4338CA";
 
   const {
     aiPanelOpen,

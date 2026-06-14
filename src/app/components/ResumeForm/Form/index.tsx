@@ -99,7 +99,7 @@ export const Form = ({
 
   const isFirstForm = useAppSelector(selectIsFirstForm(form));
   const isLastForm = useAppSelector(selectIsLastForm(form));
-  const themeColor = useAppSelector(selectThemeColor) || "#C75B39";
+  const themeColor = useAppSelector(selectThemeColor) || "#4338CA";
 
   const workExperiences = useAppSelector(selectWorkExperiences);
   const educations = useAppSelector(selectEducations);

@@ -37,7 +37,7 @@ export type GeneralSetting = Exclude<
   "formToShow" | "formToHeading" | "formsOrder" | "showBulletPoints"
 >;
 
-export const DEFAULT_THEME_COLOR = "#C75B39"; // Terracotta
+export const DEFAULT_THEME_COLOR = "#4338CA"; // Indigo
 export const DEFAULT_FONT_FAMILY = "Inter";
 export const DEFAULT_FONT_SIZE = "11"; // text-base https://tailwindcss.com/docs/font-size
 export const DEFAULT_FONT_COLOR = "#171717"; // text-neutral-800

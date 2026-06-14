@@ -4,18 +4,18 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ImportButton } from "components/ImportButton";
 
-const TERRA = "#C75B39";
-const SAGE = "#8FA88A";
-const CREAM = "#FAF5EF";
+const INDIGO = "#4338CA";
+const CYAN = "#0891B2";
+const SLATE = "#F1F5F9";
 
 function SectionHeading({ children, subtitle }: { children: React.ReactNode; subtitle?: string }) {
   return (
     <div className="text-center mb-8 md:mb-12">
-      <h2 className="text-2xl md:text-4xl font-bold tracking-tight" style={{ color: "#2D2D2D" }}>
+      <h2 className="text-2xl md:text-4xl font-bold tracking-tight" style={{ color: "var(--fg)" }}>
         {children}
       </h2>
       {subtitle && (
-        <p className="mt-2 md:mt-3 text-sm md:text-lg" style={{ color: "#6B6B6B" }}>
+        <p className="mt-2 md:mt-3 text-sm md:text-lg" style={{ color: "var(--muted)" }}>
           {subtitle}
         </p>
       )}
@@ -50,17 +50,17 @@ function Hero() {
   return (
     <section
       className="relative overflow-hidden px-6 py-12 md:py-24 lg:py-32"
-      style={{ backgroundColor: CREAM }}
+      style={{ backgroundColor: SLATE }}
     >
       {/* Decorative circles */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden -z-10">
         <div
           className="absolute -top-20 -right-20 w-80 h-80 rounded-full opacity-10"
-          style={{ backgroundColor: TERRA }}
+          style={{ backgroundColor: INDIGO }}
         />
         <div
           className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full opacity-10"
-          style={{ backgroundColor: SAGE }}
+          style={{ backgroundColor: CYAN }}
         />
       </div>
 
@@ -76,7 +76,7 @@ function Hero() {
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
             Continue{" "}
-            <span style={{ color: TERRA, fontWeight: 600 }}>"{savedName}"</span>
+            <span style={{ color: INDIGO, fontWeight: 600 }}>"{savedName}"</span>
           </button>
         </div>
       )}
@@ -88,16 +88,16 @@ function Hero() {
             <div className="relative w-48 md:w-full max-w-[400px] aspect-square">
               {/* Decorative geometric shapes */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-40 h-40 md:w-72 md:h-72 rounded-full border-2 border-dashed" style={{ borderColor: `${TERRA}30` }} />
+                <div className="w-40 h-40 md:w-72 md:h-72 rounded-full border-2 border-dashed" style={{ borderColor: `${INDIGO}30` }} />
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-28 h-28 md:w-52 md:h-52 rounded-full" style={{ backgroundColor: `${TERRA}08` }} />
+                <div className="w-28 h-28 md:w-52 md:h-52 rounded-full" style={{ backgroundColor: `${INDIGO}08` }} />
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 md:w-32 md:h-32 rounded-2xl rotate-12" style={{ backgroundColor: `${SAGE}20` }} />
+                <div className="w-16 h-16 md:w-32 md:h-32 rounded-2xl rotate-12" style={{ backgroundColor: `${CYAN}20` }} />
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-xl -rotate-6" style={{ backgroundColor: TERRA, color: "white" }}>
+                <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-xl -rotate-6" style={{ backgroundColor: INDIGO, color: "white" }}>
                   <svg className="w-6 h-6 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
@@ -110,7 +110,7 @@ function Hero() {
           <div className="w-full md:flex-1 order-2 md:order-1 text-center md:text-left">
             <div
               className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 md:px-4 md:py-1.5 text-xs md:text-sm font-medium mb-4 md:mb-6"
-              style={{ backgroundColor: "#E8D5C8", color: TERRA }}
+              style={{ backgroundColor: "var(--accent-light)", color: INDIGO }}
             >
               <svg className="w-3 h-3 md:w-3.5 md:h-3.5" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M9 12l2 2 4-4" />
@@ -119,12 +119,12 @@ function Hero() {
               Free Resume Builder
             </div>
 
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight mb-4 md:mb-6" style={{ color: "#2D2D2D" }}>
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight mb-4 md:mb-6" style={{ color: "var(--fg)" }}>
               Build a Resume{" "}
-              <span className="inline-block" style={{ color: TERRA }}>That Gets You Hired</span>
+              <span className="inline-block" style={{ color: INDIGO }}>That Gets You Hired</span>
             </h1>
 
-            <p className="text-base md:text-xl leading-relaxed mb-6 md:mb-8" style={{ color: "#6B6B6B" }}>
+            <p className="text-base md:text-xl leading-relaxed mb-6 md:mb-8" style={{ color: "var(--muted)" }}>
               Free, modern, and beautiful resume builder. No sign-up required. Just pick a template and go.
             </p>
 
@@ -133,7 +133,7 @@ function Hero() {
                 <button
                   onClick={handleStartFresh}
                   className="inline-flex items-center gap-2 rounded-lg px-6 py-2.5 md:px-6 md:py-3 text-sm md:text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-110 active:scale-[0.97] active:brightness-95"
-                  style={{ backgroundColor: TERRA }}
+                  style={{ backgroundColor: INDIGO }}
                 >
                   Create Your Resume
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -172,7 +172,7 @@ function HowItWorks() {
   ];
 
   return (
-    <section className="relative px-6 py-14 md:py-28" style={{ backgroundColor: "#FFFCF7" }}>
+    <section className="relative px-6 py-14 md:py-28" style={{ backgroundColor: "var(--bg)" }}>
       <div className="mx-auto max-w-6xl">
         <SectionHeading subtitle="From start to done in minutes.">
           How It Works
@@ -183,23 +183,23 @@ function HowItWorks() {
             <div key={idx} className="flex md:flex-col items-center gap-4 md:gap-6 text-left md:text-center">
               {/* Icon — inline SVG matching each step */}
               <div className="flex-shrink-0 w-14 h-14 md:w-32 md:h-32 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: `${TERRA}15` }}
+                style={{ backgroundColor: `${INDIGO}15` }}
               >
                 {idx === 0 && (
-                  <svg className="w-6 h-6 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-6 h-6 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" stroke={INDIGO} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                     <line x1="3" y1="9" x2="21" y2="9" />
                     <line x1="9" y1="21" x2="9" y2="9" />
                   </svg>
                 )}
                 {idx === 1 && (
-                  <svg className="w-6 h-6 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-6 h-6 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" stroke={INDIGO} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                   </svg>
                 )}
                 {idx === 2 && (
-                  <svg className="w-6 h-6 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-6 h-6 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" stroke={INDIGO} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                     <polyline points="7 10 12 15 17 10" />
                     <line x1="12" y1="15" x2="12" y2="3" />
@@ -211,14 +211,14 @@ function HowItWorks() {
               <div className="min-w-0 md:text-center">
                 <div
                   className="inline-flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-full text-xs md:text-sm font-bold mb-1 md:mb-4"
-                  style={{ backgroundColor: TERRA, color: "white" }}
+                  style={{ backgroundColor: INDIGO, color: "white" }}
                 >
                   {step.number}
                 </div>
-                <h3 className="text-base md:text-xl font-bold" style={{ color: "#2D2D2D" }}>
+                <h3 className="text-base md:text-xl font-bold" style={{ color: "var(--fg)" }}>
                   {step.title}
                 </h3>
-                <p className="text-xs md:text-sm leading-relaxed mt-1" style={{ color: "#6B6B6B" }}>
+                <p className="text-xs md:text-sm leading-relaxed mt-1" style={{ color: "var(--muted)" }}>
                   {step.text}
                 </p>
               </div>
@@ -255,7 +255,7 @@ const TEMPLATES = [
 
 function Templates() {
   return (
-    <section id="templates" className="px-6 py-14 md:py-28" style={{ backgroundColor: CREAM }}>
+    <section id="templates" className="px-6 py-14 md:py-28" style={{ backgroundColor: SLATE }}>
       <div className="mx-auto max-w-6xl">
         <SectionHeading subtitle="Professionally designed, ATS-friendly templates.">
           Choose Your Template
@@ -278,7 +278,7 @@ function Templates() {
                 />
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
-                  style={{ backgroundColor: `${TERRA}CC` }}
+                  style={{ backgroundColor: `${INDIGO}CC` }}
                 >
                   <span className="text-white font-semibold text-sm">Preview</span>
                 </div>
@@ -286,16 +286,16 @@ function Templates() {
 
               {/* Info */}
               <div className="p-4 md:p-5">
-                <h3 className="text-base md:text-lg font-bold mb-0.5 md:mb-1" style={{ color: "#2D2D2D" }}>
+                <h3 className="text-base md:text-lg font-bold mb-0.5 md:mb-1" style={{ color: "var(--fg)" }}>
                   {tpl.name}
                 </h3>
-                <p className="text-xs md:text-sm mb-3 md:mb-4" style={{ color: "#6B6B6B" }}>
+                <p className="text-xs md:text-sm mb-3 md:mb-4" style={{ color: "var(--muted)" }}>
                   {tpl.description}
                 </p>
                 <a
                   href={`/resume-builder?template=${tpl.id.toUpperCase()}`}
                   className="inline-flex items-center gap-1.5 text-sm font-semibold transition-colors hover:gap-2"
-                  style={{ color: TERRA }}
+                  style={{ color: INDIGO }}
                 >
                   Use This Template
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -348,21 +348,21 @@ const FEATURES = [
 
 function Features() {
   return (
-    <section className="relative px-6 py-14 md:py-28" style={{ backgroundColor: "#FFFCF7" }}>
+    <section className="relative px-6 py-14 md:py-28" style={{ backgroundColor: "var(--surface)" }}>
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Illustration — geometric abstract */}
           <div className="hidden md:flex justify-center order-2">
             <div className="relative w-full max-w-[380px] aspect-square">
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-64 h-64 rounded-full" style={{ backgroundColor: `${TERRA}06` }} />
+                <div className="w-64 h-64 rounded-full" style={{ backgroundColor: `${INDIGO}06` }} />
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-44 h-44 rounded-3xl rotate-12 border-2" style={{ borderColor: `${SAGE}30` }} />
+                <div className="w-44 h-44 rounded-3xl rotate-12 border-2" style={{ borderColor: `${CYAN}30` }} />
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-32 h-32 rounded-2xl -rotate-6 flex items-center justify-center" style={{ backgroundColor: `${TERRA}12` }}>
-                  <svg className="w-14 h-14" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <div className="w-32 h-32 rounded-2xl -rotate-6 flex items-center justify-center" style={{ backgroundColor: `${INDIGO}12` }}>
+                  <svg className="w-14 h-14" viewBox="0 0 24 24" fill="none" stroke={INDIGO} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                     <polyline points="14 2 14 8 20 8" />
                     <line x1="16" y1="13" x2="8" y2="13" />
@@ -371,8 +371,8 @@ function Features() {
                   </svg>
                 </div>
               </div>
-              <div className="absolute top-4 right-8 w-6 h-6 rounded-full" style={{ backgroundColor: `${SAGE}25` }} />
-              <div className="absolute bottom-8 left-6 w-4 h-4 rounded-full" style={{ backgroundColor: `${TERRA}20` }} />
+              <div className="absolute top-4 right-8 w-6 h-6 rounded-full" style={{ backgroundColor: `${CYAN}25` }} />
+              <div className="absolute bottom-8 left-6 w-4 h-4 rounded-full" style={{ backgroundColor: `${INDIGO}20` }} />
             </div>
           </div>
 
@@ -387,15 +387,15 @@ function Features() {
                 <div key={feat.title} className="flex gap-3 md:gap-4 items-start">
                   <div
                     className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center"
-                    style={{ backgroundColor: `${TERRA}15`, color: TERRA }}
+                    style={{ backgroundColor: `${INDIGO}15`, color: INDIGO }}
                   >
                     {feat.icon}
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm md:text-base" style={{ color: "#2D2D2D" }}>
+                    <h3 className="font-bold text-sm md:text-base" style={{ color: "var(--fg)" }}>
                       {feat.title}
                     </h3>
-                    <p className="text-xs md:text-sm mt-0.5 md:mt-1" style={{ color: "#6B6B6B" }}>
+                    <p className="text-xs md:text-sm mt-0.5 md:mt-1" style={{ color: "var(--muted)" }}>
                       {feat.text}
                     </p>
                   </div>
@@ -413,7 +413,7 @@ function Features() {
 
 function CtaBanner() {
   return (
-    <section className="px-6 py-16 md:py-24 text-center" style={{ backgroundColor: TERRA }}>
+    <section className="px-6 py-16 md:py-24 text-center" style={{ backgroundColor: INDIGO }}>
       <div className="mx-auto max-w-[540px]">
         <h2 className="text-2xl md:text-4xl font-bold text-white mb-3 md:mb-4">
           Ready to Build Your Resume?
@@ -424,7 +424,7 @@ function CtaBanner() {
         <a
           href="/resume-builder"
           className="inline-flex items-center gap-2 rounded-lg bg-white px-7 py-3 md:px-8 md:py-3.5 font-bold text-sm md:text-base shadow-lg transition-all hover:shadow-xl active:scale-[0.97]"
-          style={{ color: TERRA }}
+          style={{ color: INDIGO }}
         >
           Get Started Free
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

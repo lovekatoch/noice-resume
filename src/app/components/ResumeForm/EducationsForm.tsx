@@ -22,7 +22,7 @@ export const EducationsForm = () => {
   const educations = useAppSelector(selectEducations);
   const dispatch = useAppDispatch();
   const form = "educations";
-  const themeColor = useAppSelector(selectThemeColor) || "#C75B39";
+  const themeColor = useAppSelector(selectThemeColor) || "#4338CA";
 
   const {
     aiPanelOpen,

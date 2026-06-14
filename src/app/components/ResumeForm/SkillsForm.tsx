@@ -17,7 +17,7 @@ export const SkillsForm = () => {
   const dispatch = useAppDispatch();
   const { descriptions } = skills;
   const form = "skills";
-  const themeColor = useAppSelector(selectThemeColor) || "#C75B39";
+  const themeColor = useAppSelector(selectThemeColor) || "#4338CA";
 
   // Skills stored as comma-separated string for plain textarea display
   const skillsTextValue = descriptions.join(", ");

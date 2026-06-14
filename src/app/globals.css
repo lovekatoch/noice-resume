@@ -6,13 +6,16 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-[#C75B39] text-white inline-block rounded-lg px-6 py-2 font-semibold;
+    @apply inline-block rounded-lg px-6 py-2 font-semibold;
+    background-color: var(--accent);
+    color: white;
   }
   .text-primary {
-    @apply text-[#C75B39] !important;
+    color: var(--accent) !important;
   }
   .bg-primary {
-    @apply bg-[#C75B39] text-white;
+    background-color: var(--accent);
+    color: white;
   }
   .sr-only {
     position: absolute;
@@ -29,20 +32,20 @@
 }
 
 :root {
-  /* Warm Terracotta Palette */
-  --bg: #FAF5EF;
+  /* Indigo/Slate — Professional, Modern, Techy */
+  --bg: #F8FAFC;
   --surface: #FFFFFF;
-  --fg: #2D2D2D;
-  --muted: #8A8680;
-  --border: rgba(0,0,0,0.07);
-  --accent: #C75B39;
-  --accent-hover: #b54e2e;
-  --accent-light: rgba(199,91,57,0.1);
+  --fg: #0F172A;
+  --muted: #64748B;
+  --border: rgba(0,0,0,0.06);
+  --accent: #4338CA;
+  --accent-hover: #3730A3;
+  --accent-light: rgba(67,56,202,0.08);
 
   /* Semantic Colors */
-  --success: #2a9d99;
-  --green: #1aae39;
-  --orange: #dd5b00;
+  --success: #059669;
+  --green: #16a34a;
+  --orange: #ea580c;
 
   /* Spacing */
   --top-nav-bar-height: 3.5rem;
@@ -54,10 +57,10 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
-  --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
-  --shadow-xl: 0 12px 32px rgba(0,0,0,0.12);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+  --shadow-xl: 0 12px 32px rgba(0,0,0,0.1);
 }
 
 /* ─── Base ─── */
