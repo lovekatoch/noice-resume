@@ -1,3 +1,10 @@
+/**
+ * NOTE: This route is unused in production.
+ * The project uses Next.js static export (output: 'export'), so API routes
+ * are NOT deployed. AI enhancement is handled by useAIPanel.ts calling the
+ * Cloudflare Worker directly. This file is kept as reference only.
+ */
+
 import { NextRequest } from "next/server";
 
 const WORKER_URL = "https://ai-enhance.lovekashyapkatoch.workers.dev";

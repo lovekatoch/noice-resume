@@ -404,9 +404,9 @@ function Footer() {
         <div className="flex items-center gap-4 text-xs" style={{ color: "#888" }}>
           <a href="/resume-builder" className="hover:text-white transition-colors">Templates</a>
           <span className="w-px h-3" style={{ backgroundColor: "#555" }} />
-          <span>Privacy</span>
+          <a href="/privacy" className="hover:text-white transition-colors" style={{ color: "#888" }}>Privacy</a>
           <span className="w-px h-3" style={{ backgroundColor: "#555" }} />
-          <span>Terms</span>
+          <a href="/terms" className="hover:text-white transition-colors" style={{ color: "#888" }}>Terms</a>
         </div>
         <p className="text-xs" style={{ color: "#666" }}>
           &copy; {new Date().getFullYear()} NoiceResume. Built with care.

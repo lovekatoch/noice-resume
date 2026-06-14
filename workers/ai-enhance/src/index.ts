@@ -1,8 +1,9 @@
 /**
  * Cloudflare Worker: ai-enhance
- * Non-streaming → consistent, clean output. No concatenation issues.
- * Quality enforced via normalizeOutput() post-processing.
- * CORS-enabled for cross-origin browser requests.
+ * Non-streaming -> consistent, clean output.
+ * Security: uses Origin/Referer validation + IP rate limiting instead of a shared
+ * Bearer token (the old Bearer token was leaked in the client-side bundle).
+ * The Bearer token path is kept as an optional admin bypass (send X-Admin: true header).
  */
 
 interface Env {
@@ -12,8 +13,61 @@ interface Env {
   MODEL: string;
 }
 
+// ───── Rate limiting state ─────
+interface RateLimitStore {
+  [ip: string]: { count: number; resetAt: number };
+}
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+// Allow up to 30 requests per IP per 60-second window
+const RATE_LIMIT_MAX = 30;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+
+// Allowed origins (no trailing slash)
+const ALLOWED_ORIGINS = [
+  "https://noiceresume.pages.dev",
+  "http://localhost:3000",
+];
+
+function isOriginAllowed(request: Request, env: Env): boolean {
+  const origin = request.headers.get("Origin") || "";
+  const referer = request.headers.get("Referer") || "";
+
+  // Allow if origin matches
+  if (origin && ALLOWED_ORIGINS.some((a) => origin.startsWith(a))) return true;
+  if (referer && ALLOWED_ORIGINS.some((a) => referer.startsWith(a))) return true;
+
+  // Allow if the request includes the old Bearer token + admin bypass (for CLI/testing)
+  const auth = request.headers.get("Authorization");
+  const isAdmin = request.headers.get("X-Admin") === "true";
+  if (auth === `Bearer ${env.AI_SECRET}` && isAdmin) return true;
+
+  return false;
+}
+
+function checkRateLimit(request: Request): { allowed: boolean; retryAfter?: number } {
+  const ip = request.headers.get("CF-Connecting-IP") ||
+             request.headers.get("X-Forwarded-For") ||
+             "unknown";
+  const now = Date.now();
+
+  let record = rateLimitMap.get(ip);
+  if (!record || now > record.resetAt) {
+    record = { count: 0, resetAt: now + RATE_LIMIT_WINDOW_MS };
+    rateLimitMap.set(ip, record);
+  }
+
+  record.count++;
+  if (record.count > RATE_LIMIT_MAX) {
+    const retryAfter = Math.ceil((record.resetAt - now) / 1000);
+    return { allowed: false, retryAfter };
+  }
+
+  return { allowed: true };
+}
+
 // ─────────────────────────────────────────────
-// System prompt — tight directive with templates
+// System prompt
 // ─────────────────────────────────────────────
 const SYSTEM_PROMPT = `You rewrite resume sections. Follow the EXACT format below for each section.
 
@@ -55,9 +109,6 @@ const MAX_TOKENS: Record<string, number> = {
   skills: 150,
 };
 
-// ─────────────────────────────────────────────
-// Detect section from context string
-// ─────────────────────────────────────────────
 function detectSectionType(context: string): string {
   const c = (context || "").toLowerCase();
   if (c.includes("skill")) return "skills";
@@ -68,15 +119,11 @@ function detectSectionType(context: string): string {
   return "description";
 }
 
-// ─────────────────────────────────────────────
-// Normalizer — quality gate, enforces output structure
-// ─────────────────────────────────────────────
 function normalizeOutput(text: string, sectionType: string): string {
   if (!text || !text.trim()) return "";
 
   let lines = text.split("\n").map(l => l.trim()).filter(Boolean);
 
-  // Skills → comma-separated, 6-10 items
   if (sectionType === "skills") {
     const skillsText = lines.join(" ")
       .replace(/[•\-\*\d\.]+/g, " ")
@@ -89,41 +136,33 @@ function normalizeOutput(text: string, sectionType: string): string {
     return skills.slice(0, 10).join(", ");
   }
 
-  // Objective → flowing professional summary paragraph, not fragments
   if (sectionType === "objective") {
     let text = lines.join(" ")
       .replace(/RESUME DATA|\[OBJECTIVE\]|PROFILE|WORK EXPERIENCE|EDUCATION|SKILLS|PROJECTS|Write a compelling professional summary|sales pitch|based on their full resume/gi, " ")
       .replace(/[•\-*]\s*/g, " ")
       .replace(/\s+/g, " ")
       .trim();
-    // Remove leading orphaned lowercase letter from truncation
     text = text.replace(/^[a-z]\s+/, "");
-    // Ensure ends with period
     if (text.length > 0 && !/[.!?]$/.test(text)) {
       text += ".";
     }
-    // Cap at ~3-4 sentences or ~500 chars
     const sentences = text.split(/(?<=[.!])\s+/).filter(s => s.trim().length > 15);
     if (sentences.length === 0) return text.slice(0, 500);
     return sentences.slice(0, 4).join(" ").trim();
   }
 
-  // Summary → single paragraph, max 3 sentences
   if (sectionType === "summary") {
     let text = lines.join(" ")
       .replace(/[•\-\*]\s*/g, " ")
       .replace(/Summary|Bullets|Skills|EXPERIENCE|EDUCATION|PROJECT|DESCRIPTION|SUMMARY|DESCRIPTION|EDUCATION|PROJECT|SKILL/gi, " ")
       .replace(/\s+/g, " ")
       .trim();
-    // Remove leading orphaned lowercase letter from truncation (e.g. "d software" → "software")
     text = text.replace(/^[a-z]\s+/, "");
-    // Split on sentence-like patterns and take first 3
     const sentences = text.split(/(?<=[.!])\s+/).filter(s => s.trim().length > 10);
     if (sentences.length === 0) return text.slice(0, 200);
     return sentences.slice(0, 3).join(". ").trim();
   }
 
-  // Bullet sections
   const maxLines: Record<string, number> = {
     description: 6,
     education: 5,
@@ -148,16 +187,19 @@ function normalizeOutput(text: string, sectionType: string): string {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const method = request.method;
+    const origin = request.headers.get("Origin") || "";
 
-    // CORS preflight
+    // ─── CORS preflight ───
     if (method === "OPTIONS") {
+      const responseOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : "https://noiceresume.pages.dev";
       return new Response(null, {
         status: 204,
         headers: {
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": responseOrigin,
           "Access-Control-Allow-Methods": "POST, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+          "Access-Control-Allow-Headers": "Content-Type",
           "Access-Control-Max-Age": "86400",
+          "Vary": "Origin",
         },
       });
     }
@@ -166,9 +208,24 @@ export default {
       return new Response("Method not allowed", { status: 405 });
     }
 
-    const authHeader = request.headers.get("Authorization");
-    if (authHeader !== `Bearer ${env.AI_SECRET}`) {
-      return new Response("Unauthorized", { status: 401 });
+    // ─── Origin validation (replaces leaked Bearer token) ───
+    if (!isOriginAllowed(request, env)) {
+      return new Response("Forbidden: origin not allowed", { status: 403 });
+    }
+
+    // ─── Rate limiting ───
+    const rateCheck = checkRateLimit(request);
+    if (!rateCheck.allowed) {
+      return new Response(
+        JSON.stringify({ error: `Rate limit exceeded. Try again in ${rateCheck.retryAfter}s.` }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "Retry-After": String(rateCheck.retryAfter),
+          },
+        }
+      );
     }
 
     try {
@@ -181,8 +238,6 @@ export default {
 
       const sectionType = detectSectionType(context || prompt);
       const maxTokens = MAX_TOKENS[sectionType] ?? 200;
-
-      // Strip any [section] bracket prefixes the frontend may have already sent
       const cleanPrompt = prompt.replace(/^\[\w+\]\s*/i, "").trim();
 
       const messages = [
@@ -190,7 +245,6 @@ export default {
         { role: "user", content: `[${sectionType.toUpperCase()}]\n${cleanPrompt}` }
       ];
 
-      // Non-streaming — simple, reliable, no concatenation issues
       const upstreamResponse = await fetch(
         `${env.DEEPSEEK_BASE_URL}/chat/completions`,
         {
@@ -221,19 +275,29 @@ export default {
       const rawText = result.choices?.[0]?.message?.content || "";
       const normalized = normalizeOutput(rawText, sectionType);
 
+      const responseOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : "https://noiceresume.pages.dev";
       return new Response(
         JSON.stringify({ content: normalized }),
         {
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Origin": responseOrigin,
+            "Vary": "Origin",
           },
         }
       );
     } catch (error) {
+      const responseOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : "https://noiceresume.pages.dev";
       return new Response(
         JSON.stringify({ error: `Internal error: ${error instanceof Error ? error.message : "Unknown error"}` }),
-        { status: 500, headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" } }
+        {
+          status: 500,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": responseOrigin,
+            "Vary": "Origin",
+          },
+        }
       );
     }
   }

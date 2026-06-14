@@ -6,8 +6,9 @@ const GLOBAL_LIMIT = 10;
 const REGENERATE_LIMIT = 3;
 
 // Worker direct URL (bypasses Next.js static export)
+// Note: Network tab will reveal this URL but the Worker validates the Origin
+// header and applies rate limiting, so the old shared-secret auth is no longer needed.
 const WORKER_URL = "https://ai-enhance.lovekashyapkatoch.workers.dev";
-const AI_SECRET = "ai-enhance-secret-ec82c1a672e1f226";
 
 interface UseAIPanelOptions {
   onAccept: (text: string) => void;
@@ -69,11 +70,11 @@ export const useAIPanel = ({
 
       try {
         // Call Worker directly — bypasses Next.js static export limitation
+        // No Authorization header needed — Worker validates Origin instead
         const response = await fetch(WORKER_URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${AI_SECRET}`,
           },
           body: JSON.stringify({
             prompt: promptRef.current,
