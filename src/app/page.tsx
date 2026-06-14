@@ -83,13 +83,27 @@ function Hero() {
 
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col md:flex-row items-center gap-6 md:gap-16">
-          {/* Illustration - smaller on mobile, shown first */}
+          {/* Illustration — abstract geometric pattern instead of stock SVG */}
           <div className="w-full md:flex-1 order-1 md:order-2 flex justify-center">
-            <img
-              src="/undraw-illustrations/online-resume.svg"
-              alt="Online resume illustration"
-              className="w-48 md:w-full max-w-[400px] h-auto"
-            />
+            <div className="relative w-48 md:w-full max-w-[400px] aspect-square">
+              {/* Decorative geometric shapes */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-40 h-40 md:w-72 md:h-72 rounded-full border-2 border-dashed" style={{ borderColor: `${TERRA}30` }} />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-28 h-28 md:w-52 md:h-52 rounded-full" style={{ backgroundColor: `${TERRA}08` }} />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 md:w-32 md:h-32 rounded-2xl rotate-12" style={{ backgroundColor: `${SAGE}20` }} />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-xl -rotate-6" style={{ backgroundColor: TERRA, color: "white" }}>
+                  <svg className="w-6 h-6 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Text side */}
@@ -106,8 +120,8 @@ function Hero() {
             </div>
 
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight mb-4 md:mb-6" style={{ color: "#2D2D2D" }}>
-              Build a Resume That{" "}
-              <span style={{ color: TERRA }}>Gets You Hired</span>
+              Build a Resume{" "}
+              <span className="inline-block" style={{ color: TERRA }}>That Gets You Hired</span>
             </h1>
 
             <p className="text-base md:text-xl leading-relaxed mb-6 md:mb-8" style={{ color: "#6B6B6B" }}>
@@ -118,7 +132,7 @@ function Hero() {
               <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4">
                 <button
                   onClick={handleStartFresh}
-                  className="inline-flex items-center gap-2 rounded-lg px-6 py-2.5 md:px-6 md:py-3 text-sm md:text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl active:scale-[0.97]"
+                  className="inline-flex items-center gap-2 rounded-lg px-6 py-2.5 md:px-6 md:py-3 text-sm md:text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-110 active:scale-[0.97] active:brightness-95"
                   style={{ backgroundColor: TERRA }}
                 >
                   Create Your Resume
@@ -167,16 +181,30 @@ function HowItWorks() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {steps.map((step, idx) => (
             <div key={idx} className="flex md:flex-col items-center gap-4 md:gap-6 text-left md:text-center">
-              {/* Illustration - small inline on mobile */}
-              <div
-                className="flex-shrink-0 w-14 h-14 md:w-32 md:h-32 rounded-full flex items-center justify-center"
+              {/* Icon — inline SVG matching each step */}
+              <div className="flex-shrink-0 w-14 h-14 md:w-32 md:h-32 rounded-full flex items-center justify-center"
                 style={{ backgroundColor: `${TERRA}15` }}
               >
-                <img
-                  src="/undraw-illustrations/file-searching.svg"
-                  alt={step.title}
-                  className="w-8 h-8 md:w-20 md:h-20"
-                />
+                {idx === 0 && (
+                  <svg className="w-6 h-6 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <line x1="3" y1="9" x2="21" y2="9" />
+                    <line x1="9" y1="21" x2="9" y2="9" />
+                  </svg>
+                )}
+                {idx === 1 && (
+                  <svg className="w-6 h-6 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg>
+                )}
+                {idx === 2 && (
+                  <svg className="w-6 h-6 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                )}
               </div>
 
               {/* Content */}
@@ -237,15 +265,16 @@ function Templates() {
           {TEMPLATES.map((tpl) => (
             <div
               key={tpl.id}
-              className="group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              style={{ backgroundColor: "white" }}
+              className="group rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+              style={{ backgroundColor: "white", border: "1px solid rgba(0,0,0,0.05)" }}
             >
-              {/* Screenshot - shorter on mobile */}
-              <div className="relative aspect-[4/3] md:aspect-[210/297] bg-gray-100 overflow-hidden">
+              {/* Screenshot */}
+              <div className="relative aspect-[4/3] md:aspect-[210/297] bg-gradient-to-b from-gray-50 to-gray-100 overflow-hidden">
                 <img
                   src={tpl.screenshots[0]}
                   alt={`${tpl.name} template`}
-                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-[1.02]"
+                  loading="lazy"
                 />
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
@@ -322,13 +351,29 @@ function Features() {
     <section className="relative px-6 py-14 md:py-28" style={{ backgroundColor: "#FFFCF7" }}>
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-          {/* Illustration - hidden on mobile, shown on desktop */}
+          {/* Illustration — geometric abstract */}
           <div className="hidden md:flex justify-center order-2">
-            <img
-              src="/undraw-illustrations/my-resume.svg"
-              alt="Resume illustration"
-              className="w-full max-w-[380px] h-auto"
-            />
+            <div className="relative w-full max-w-[380px] aspect-square">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-64 h-64 rounded-full" style={{ backgroundColor: `${TERRA}06` }} />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-44 h-44 rounded-3xl rotate-12 border-2" style={{ borderColor: `${SAGE}30` }} />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-32 h-32 rounded-2xl -rotate-6 flex items-center justify-center" style={{ backgroundColor: `${TERRA}12` }}>
+                  <svg className="w-14 h-14" viewBox="0 0 24 24" fill="none" stroke={TERRA} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                  </svg>
+                </div>
+              </div>
+              <div className="absolute top-4 right-8 w-6 h-6 rounded-full" style={{ backgroundColor: `${SAGE}25` }} />
+              <div className="absolute bottom-8 left-6 w-4 h-4 rounded-full" style={{ backgroundColor: `${TERRA}20` }} />
+            </div>
           </div>
 
           {/* Features side */}

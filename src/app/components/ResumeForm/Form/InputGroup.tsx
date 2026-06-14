@@ -38,7 +38,7 @@ export const InputGroupWrapper = ({
 );
 
 export const INPUT_CLASS_NAME =
-  "mt-1 px-3 py-2 rounded-md border text-gray-900 outline-none font-normal text-base w-full bg-white";
+  "mt-1 px-3 py-2.5 rounded-lg border text-[var(--fg)] outline-none font-normal text-base w-full bg-[var(--surface)] transition-all duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-light)]";
 
 export const Input = <K extends string>({
   name,

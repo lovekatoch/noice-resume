@@ -166,7 +166,7 @@ export const ResumeDropzone = ({
             </div>
             <button
               type="button"
-              className="outline-theme-blue rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+              className="rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
               aria-label="Remove file"
               onClick={onRemove}
             >
@@ -178,10 +178,7 @@ export const ResumeDropzone = ({
           {!hasFile ? (
             <>
               <label
-                className={cx(
-                  "within-outline-theme-purple cursor-pointer rounded-full px-6 pb-2.5 pt-2 font-semibold",
-                  playgroundView ? "border" : "bg-primary"
-                )}
+                className="cursor-pointer rounded-full px-6 pb-2.5 pt-2 font-semibold bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] transition-colors"
               >
                 Browse file
                 <input

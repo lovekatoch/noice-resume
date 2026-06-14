@@ -26,7 +26,7 @@ export const SparkleIconButton = ({
         type="button"
         onClick={onClick}
         disabled={disabled}
-        className={`rounded-md p-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent ${baseColorClass} ${className}`}
+        className={`rounded-md p-2 min-w-[36px] min-h-[36px] flex items-center justify-center transition-colors hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent ${baseColorClass} ${className}`}
         style={color ? { color } : undefined}
         aria-label={tooltipText}
       >
