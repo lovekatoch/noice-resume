@@ -56,6 +56,16 @@ const SECTION_TITLE_SECONDARY_KEYWORDS = [
   "award",
   "honor",
   "project",
+  "history",
+  "employment",
+  "certification",
+  "language",
+  "publication",
+  "leadership",
+  "volunteer",
+  "interest",
+  "achievement",
+  "activity",
 ];
 const SECTION_TITLE_KEYWORDS = [
   ...SECTION_TITLE_PRIMARY_KEYWORDS,

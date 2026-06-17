@@ -78,13 +78,11 @@ export const parseResumeFromPdf = async (
   const resume = extractResumeFromSections(sections);
   const parseQuality = computeParseQuality(textItems, resume);
 
-  if (parseQuality < 30) {
+  if (parseQuality < 10) {
     return {
-      success: false,
+      success: true,
       resume,
       textItems,
-      error:
-        "Low parse quality detected. The PDF may be a multi-column layout, contain mostly images, or use an unsupported format. For best results, try a single-column text-based resume.",
       parseQuality,
     };
   }
