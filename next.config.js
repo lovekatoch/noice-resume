@@ -9,11 +9,14 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  swcMinify: true,
   webpack: (config) => {
     // Setting resolve.alias to false tells webpack to ignore a module
     // https://webpack.js.org/configuration/resolve/#resolvealias
     config.resolve.alias.canvas = false;
     config.resolve.alias.encoding = false;
+    // Reduce memory usage during build
+    config.parallelism = 2;
     return config;
   },
 };
