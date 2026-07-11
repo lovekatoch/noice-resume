@@ -1,8 +1,6 @@
 "use client";
 import {
   useAppSelector,
-  useSaveStateToLocalStorageOnChange,
-  useSetInitialStore,
 } from "lib/redux/hooks";
 import { ShowForm, selectFormsOrder } from "lib/redux/settingsSlice";
 import { ProfileForm } from "components/ResumeForm/ProfileForm";
@@ -22,9 +20,6 @@ const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
 };
 
 export const ResumeForm = () => {
-  useSetInitialStore();
-  useSaveStateToLocalStorageOnChange();
-
   const formsOrder = useAppSelector(selectFormsOrder);
 
   return (

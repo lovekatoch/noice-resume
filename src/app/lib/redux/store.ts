@@ -1,15 +1,34 @@
-import { configureStore } from "@reduxjs/toolkit";
-import resumeReducer from "lib/redux/resumeSlice";
-import settingsReducer from "lib/redux/settingsSlice";
-import userReducer from "lib/redux/userSlice";
+import type { Resume } from "lib/redux/types";
+import type { Settings } from "lib/redux/settingsSlice";
+import type { UserState } from "lib/redux/userSlice";
+import {
+  initialResumeState,
+  resumeReducer,
+  type ResumeAction,
+} from "lib/redux/resumeSlice";
+import {
+  initialSettings,
+  settingsReducer,
+  type SettingsAction,
+} from "lib/redux/settingsSlice";
+import {
+  initialUserState,
+  userReducer,
+  type UserAction,
+} from "lib/redux/userSlice";
 
-export const store = configureStore({
-  reducer: {
-    resume: resumeReducer,
-    settings: settingsReducer,
-    user: userReducer,
-  },
-});
+export interface RootState {
+  resume: Resume;
+  settings: Settings;
+  user: UserState;
+}
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type Action = ResumeAction | SettingsAction | UserAction;
+
+export function rootReducer(state: RootState, action: Action): RootState {
+  return {
+    resume: resumeReducer(state.resume, action as ResumeAction),
+    settings: settingsReducer(state.settings, action as SettingsAction),
+    user: userReducer(state.user, action as UserAction),
+  };
+}

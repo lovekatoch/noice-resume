@@ -9,7 +9,7 @@ import {
 import { type ShowForm, initialSettings, setSettings } from "lib/redux/settingsSlice";
 import { setResume } from "lib/redux/resumeSlice";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "lib/redux/hooks";
 import addPdfSrc from "public/assets/add-pdf.svg";
 import Image from "next/image";
 import { cx } from "lib/cx";
@@ -34,7 +34,7 @@ export const ResumeDropzone = ({
   const [isHoveredOnDropzone, setIsHoveredOnDropzone] = useState(false);
   const [hasNonPdfFile, setHasNonPdfFile] = useState(false);
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const hasFile = Boolean(file.name);
 

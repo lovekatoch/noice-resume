@@ -1,4 +1,3 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "lib/redux/store";
 
 export interface UserState {
@@ -15,42 +14,45 @@ export const initialUserState: UserState = {
   checkoutError: null,
 };
 
-export const userSlice = createSlice({
-  name: "user",
-  initialState: initialUserState,
-  reducers: {
-    setPremium: (draft, action: PayloadAction<boolean>) => {
-      draft.isPremium = action.payload;
-    },
-    setCheckoutSessionId: (draft, action: PayloadAction<string | null>) => {
-      draft.checkoutSessionId = action.payload;
-    },
-    setCustomerId: (draft, action: PayloadAction<string | null>) => {
-      draft.customerId = action.payload;
-    },
-    setCheckoutError: (draft, action: PayloadAction<string | null>) => {
-      draft.checkoutError = action.payload;
-    },
-    resetCheckoutState: (draft) => {
-      draft.checkoutSessionId = null;
-      draft.checkoutError = null;
-    },
-  },
-});
+// ─── Action types ───
 
-export const {
-  setPremium,
-  setCheckoutSessionId,
-  setCustomerId,
-  setCheckoutError,
-  resetCheckoutState,
-} = userSlice.actions;
+export type UserAction =
+  | { type: "user/setPremium"; payload: boolean }
+  | { type: "user/setCheckoutSessionId"; payload: string | null }
+  | { type: "user/setCustomerId"; payload: string | null }
+  | { type: "user/setCheckoutError"; payload: string | null }
+  | { type: "user/resetCheckoutState" };
+
+// ─── Action creators ───
+
+export const setPremium = (payload: boolean): UserAction => ({ type: "user/setPremium", payload });
+export const setCheckoutSessionId = (payload: string | null): UserAction => ({ type: "user/setCheckoutSessionId", payload });
+export const setCustomerId = (payload: string | null): UserAction => ({ type: "user/setCustomerId", payload });
+export const setCheckoutError = (payload: string | null): UserAction => ({ type: "user/setCheckoutError", payload });
+export const resetCheckoutState = (): UserAction => ({ type: "user/resetCheckoutState" });
+
+// ─── Reducer ───
+
+export function userReducer(state: UserState = initialUserState, action: UserAction): UserState {
+  switch (action.type) {
+    case "user/setPremium":
+      return { ...state, isPremium: action.payload };
+    case "user/setCheckoutSessionId":
+      return { ...state, checkoutSessionId: action.payload };
+    case "user/setCustomerId":
+      return { ...state, customerId: action.payload };
+    case "user/setCheckoutError":
+      return { ...state, checkoutError: action.payload };
+    case "user/resetCheckoutState":
+      return { ...state, checkoutSessionId: null, checkoutError: null };
+    default:
+      return state;
+  }
+}
+
+// ─── Selectors ───
 
 export const selectIsPremium = (state: RootState) => state.user.isPremium;
-export const selectCheckoutSessionId = (state: RootState) =>
-  state.user.checkoutSessionId;
+export const selectCheckoutSessionId = (state: RootState) => state.user.checkoutSessionId;
 export const selectCustomerId = (state: RootState) => state.user.customerId;
-export const selectCheckoutError = (state: RootState) =>
-  state.user.checkoutError;
-
-export default userSlice.reducer;
+export const selectCheckoutError = (state: RootState) => state.user.checkoutError;

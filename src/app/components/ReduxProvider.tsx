@@ -1,7 +1,6 @@
 "use client";
-import { Provider } from "react-redux";
-import { store } from "lib/redux/store";
+import { StateProvider } from "lib/redux/state-context";
 
 export const ReduxProvider = ({ children }: { children: React.ReactNode }) => {
-  return <Provider store={store}>{children}</Provider>;
+  return <StateProvider>{children}</StateProvider>;
 };
