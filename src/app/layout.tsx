@@ -1,12 +1,13 @@
 import "globals.css";
-import { Inter } from "next/font/google";
+import { IBM_Plex_Sans } from "next/font/google";
 import { TopNavBar } from "components/TopNavBar";
 import { ReduxProvider } from "components/ReduxProvider";
 
-const inter = Inter({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-ibm-plex",
 });
 
 export const metadata = {
@@ -24,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${ibmPlexSans.variable} dark`}>
       <body>
         <ReduxProvider>
           <TopNavBar />

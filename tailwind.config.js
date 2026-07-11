@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: ["./src/app/**/*.{ts,tsx,mdx}"],
   theme: {
     extend: {
@@ -13,8 +14,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        display: ['Inter', 'system-ui', 'sans-serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['IBM Plex Sans', 'system-ui', 'sans-serif'],
+        body: ['IBM Plex Sans', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         sm: '4px',
