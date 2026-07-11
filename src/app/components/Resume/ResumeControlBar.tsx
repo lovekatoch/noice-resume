@@ -8,8 +8,6 @@ import {
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 import { Tooltip } from "components/Tooltip";
-import { useSound } from "lib/sound/provider";
-
 const TEMPLATES = [
   { id: "executive-simple", name: "Classic" },
   { id: "sb2nov-modern", name: "Modern" },
@@ -34,7 +32,6 @@ const ResumeControlBar = ({
   onTemplateChange: (templateId: string) => void;
 }) => {
   const [instance, update] = usePDF({ document: pdfDocument });
-  const { play } = useSound();
   const lastZoomRef = useRef(zoomLevel);
 
   useEffect(() => {
@@ -47,7 +44,6 @@ const ResumeControlBar = ({
       link.href = instance.url;
       link.download = fileName;
       link.click();
-      void play("hero.complete");
     }
   };
 
@@ -57,7 +53,6 @@ const ResumeControlBar = ({
     // Play subtle sound on every 10% change to avoid spam
     if (Math.abs(value - lastZoomRef.current) >= 10) {
       lastZoomRef.current = value;
-      void play("interaction.subtle");
     }
   };
 
@@ -96,7 +91,6 @@ const ResumeControlBar = ({
           value={template}
           onChange={(e) => {
             onTemplateChange(e.target.value);
-            void play("overlay.open");
           }}
           className="rounded-md border px-3 py-1.5 text-sm font-medium outline-none transition-colors hover:border-[var(--accent)] cursor-pointer"
           style={{

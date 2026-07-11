@@ -1,10 +1,7 @@
 import "globals.css";
 import { Inter } from "next/font/google";
 import { TopNavBar } from "components/TopNavBar";
-import { PostHogProvider } from "components/PostHogProvider";
-import { PageViewTracker } from "components/PageViewTracker";
 import { ReduxProvider } from "components/ReduxProvider";
-import { SoundProvider } from "lib/sound/provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,13 +27,8 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body>
         <ReduxProvider>
-          <PostHogProvider>
-            <SoundProvider>
-              <TopNavBar />
-              {children}
-              <PageViewTracker />
-            </SoundProvider>
-          </PostHogProvider>
+          <TopNavBar />
+          {children}
         </ReduxProvider>
       </body>
     </html>

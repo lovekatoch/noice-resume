@@ -36,7 +36,6 @@ import {
   selectCustom,
 } from "lib/redux/resumeSlice";
 import { useState } from "react";
-import { useSound } from "lib/sound/provider";
 
 /**
  * BaseForm is the bare bone form, i.e. just the outline with no title and no control buttons.
@@ -86,12 +85,10 @@ export const Form = ({
 }) => {
   const showForm = useAppSelector(selectShowByForm(form));
   const heading = useAppSelector(selectHeadingByForm(form));
-  const { play } = useSound();
 
   const dispatch = useAppDispatch();
   const setShowForm = (showForm: boolean) => {
     dispatch(changeShowForm({ field: form, value: showForm }));
-    void play(showForm ? "overlay.expand" : "overlay.collapse");
   };
   const setHeading = (heading: string) => {
     dispatch(changeFormHeading({ field: form, value: heading }));
@@ -199,7 +196,6 @@ export const Form = ({
             type="button"
             onClick={() => {
               dispatch(addSectionInForm({ form }));
-              void play("interaction.tap");
             }}
             className="w-full py-2 text-sm font-medium rounded-md transition-colors"
             style={{

@@ -17,7 +17,6 @@ import {
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import type { FontFamily } from "components/fonts/constants";
 import { Cog6ToothIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
-import { useSound } from "lib/sound/provider";
 
 export const ThemeForm = () => {
   const settings = useAppSelector(selectSettings);
@@ -25,7 +24,6 @@ export const ThemeForm = () => {
   const themeColor = settings.themeColor || DEFAULT_THEME_COLOR;
   const dispatch = useAppDispatch();
   const [collapsed, setCollapsed] = useState(true);
-  const { play } = useSound();
 
   const handleSettingsChange = (field: GeneralSetting, value: string) => {
     dispatch(changeSettings({ field, value }));
@@ -39,7 +37,6 @@ export const ThemeForm = () => {
           type="button"
           onClick={() => {
             setCollapsed(!collapsed);
-            void play(collapsed ? "overlay.expand" : "overlay.collapse");
           }}
           className="flex w-full items-center justify-between rounded-md px-3 py-2 transition-colors hover:bg-[var(--border)]"
           aria-expanded={!collapsed}

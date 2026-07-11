@@ -30,7 +30,6 @@
     "pdfjs-dist": "^3.7.107",
     "playwright": "^1.59.1",
     "postcss": "8.4.24",
-    "posthog-js": "^1.372.5",
     "react": "18.2.0",
     "react-contenteditable": "^3.3.7",
     "react-dom": "18.2.0",
