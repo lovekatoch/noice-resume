@@ -77,9 +77,14 @@ export const ImportButton = ({ compact }: Props) => {
         type="button"
         onClick={handleClick}
         disabled={isLoading}
-        className={`inline-flex items-center gap-2 rounded-md border border-[var(--accent)]/25 bg-white font-medium text-[var(--accent)] transition-all hover:border-[var(--accent)]/40 hover:bg-[var(--accent)]/5 ${
+        className={`inline-flex items-center gap-2 rounded-lg font-medium transition-all hover:scale-[1.02] active:scale-[0.98] ${
           compact ? "px-3 py-1.5 text-xs" : "px-7 py-3 text-sm"
         }`}
+        style={{
+          background: "linear-gradient(135deg, rgba(139,92,246,0.15), rgba(6,182,212,0.15))",
+          border: "1px solid rgba(139,92,246,0.3)",
+          color: "#C4B5FD",
+        }}
         aria-label={isLoading ? "Importing PDF" : "Import PDF"}
       >
         {isLoading ? (
@@ -114,7 +119,7 @@ export const ImportButton = ({ compact }: Props) => {
         )}
       </button>
       {error && (
-        <p className="text-xs text-red-500">{error}</p>
+        <p className="text-xs" style={{ color: "#F87171" }}>{error}</p>
       )}
     </>
   );

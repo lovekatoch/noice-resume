@@ -117,11 +117,12 @@ export const ResumeDropzone = ({
   return (
     <div
       className={cx(
-        "flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 ",
-        isHoveredOnDropzone && "border-sky-400",
+        "flex justify-center rounded-xl border-2 border-dashed px-6 transition-colors",
+        isHoveredOnDropzone ? "border-[rgba(139,92,246,0.5)]" : "border-[rgba(255,255,255,0.15)]",
         playgroundView ? "pb-6 pt-4" : "py-12",
         className
       )}
+      style={{ backgroundColor: "rgba(255,255,255,0.03)" }}
       onDragOver={(event) => {
         event.preventDefault();
         setIsHoveredOnDropzone(true);
@@ -138,7 +139,7 @@ export const ResumeDropzone = ({
         {!playgroundView && (
           <Image
             src={addPdfSrc}
-            className="mx-auto h-14 w-14"
+            className="mx-auto h-14 w-14 opacity-60"
             alt="Add pdf"
             aria-hidden="true"
             priority
@@ -148,25 +149,27 @@ export const ResumeDropzone = ({
           <>
             <p
               className={cx(
-                "pt-3 text-gray-700",
+                "pt-3",
                 !playgroundView && "text-lg font-semibold"
               )}
+              style={{ color: "var(--fg)" }}
             >
               Browse a pdf file or drop it here
             </p>
-            <p className="flex text-sm text-gray-500">
-              <LockClosedIcon className="mr-1 mt-1 h-3 w-3 text-gray-400" />
+            <p className="flex justify-center text-sm" style={{ color: "var(--muted)" }}>
+              <LockClosedIcon className="mr-1 mt-1 h-3 w-3" />
               File data is used locally and never leaves your browser
             </p>
           </>
         ) : (
           <div className="flex items-center justify-center gap-3 pt-3">
-            <div className="pl-7 font-semibold text-gray-900">
+            <div className="pl-7 font-semibold" style={{ color: "var(--fg)" }}>
               {file.name} - {getFileSizeString(file.size)}
             </div>
             <button
               type="button"
-              className="rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
+              className="rounded-md p-1 transition-colors"
+              style={{ color: "var(--muted)" }}
               aria-label="Remove file"
               onClick={onRemove}
             >
@@ -178,7 +181,8 @@ export const ResumeDropzone = ({
           {!hasFile ? (
             <>
               <label
-                className="cursor-pointer rounded-full px-6 pb-2.5 pt-2 font-semibold bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] transition-colors"
+                className="inline-block cursor-pointer rounded-xl px-6 py-2.5 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98]"
+                style={{ background: "linear-gradient(135deg, #8B5CF6, #06B6D4)" }}
               >
                 Browse file
                 <input
@@ -189,7 +193,7 @@ export const ResumeDropzone = ({
                 />
               </label>
               {hasNonPdfFile && (
-                <p className="mt-6 text-red-400">Only pdf file is supported</p>
+                <p className="mt-6 text-sm" style={{ color: "#F87171" }}>Only pdf file is supported</p>
               )}
             </>
           ) : (
@@ -197,14 +201,15 @@ export const ResumeDropzone = ({
               {!playgroundView && (
                 <button
                   type="button"
-                  className="btn-primary"
+                  className="inline-flex items-center gap-2 rounded-xl px-6 py-2.5 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  style={{ background: "linear-gradient(135deg, #8B5CF6, #06B6D4)" }}
                   onClick={onImportClick}
                   aria-label="Import and continue"
                 >
                   Import and Continue <span aria-hidden="true">→</span>
                 </button>
               )}
-              <p className={cx(" text-gray-500", !playgroundView && "mt-6")}>
+              <p className={cx("mt-6 text-sm")} style={{ color: "var(--muted)" }}>
                 Note: {!playgroundView ? "Import" : "Parser"} works best on
                 single column resume
               </p>

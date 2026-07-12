@@ -108,20 +108,20 @@ export const AIPanel = ({
         <div className="flex justify-center pt-3 pb-2">
           <div
             className="rounded-full"
-            style={{ width: 36, height: 4, backgroundColor: "rgba(0,0,0,0.15)" }}
+            style={{ width: 36, height: 4, backgroundColor: "rgba(255,255,255,0.15)" }}
           />
         </div>
 
         <div className="flex items-center justify-between px-5 pb-3">
           <h2 className="text-base font-semibold inline-flex items-center gap-1.5" style={{ color: "var(--fg)" }}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 sparkle-animate" style={{ color: "var(--accent)" }}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 sparkle-animate" style={{ color: "#8B5CF6" }}>
               <path fillRule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clipRule="evenodd" />
             </svg>
             Smart Suggestions
           </h2>
           <button
             onClick={onClose}
-            className="rounded-md p-1 hover:bg-gray-100"
+            className="rounded-md p-1 hover:bg-[rgba(255,255,255,0.1)]"
             style={{ color: "var(--muted)" }}
             aria-label="Close"
           >
@@ -231,8 +231,12 @@ export const AIPanel = ({
           <button
             onClick={onRegenerate}
             disabled={regenerateDisabled}
-            className="rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-40"
-            style={{ backgroundColor: "var(--bg)", color: "var(--fg)", border: "1px solid var(--border)" }}
+            className="rounded-md px-4 py-2 text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-40"
+            style={{
+              background: "linear-gradient(135deg, rgba(139,92,246,0.15), rgba(6,182,212,0.15))",
+              color: "#C4B5FD",
+              border: "1px solid rgba(139,92,246,0.3)",
+            }}
           >
             {regenerateCount > 0
               ? `Regenerate (${regenerateRemaining} left)`
@@ -241,8 +245,8 @@ export const AIPanel = ({
           <button
             onClick={() => onAccept(streamingText)}
             disabled={isLoading || !streamingText}
-            className="rounded-md px-4 py-2 text-sm font-medium text-white transition-colors disabled:opacity-50"
-            style={{ backgroundColor: "var(--accent)" }}>
+            className="rounded-md px-4 py-2 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+            style={{ background: "linear-gradient(135deg, #8B5CF6, #06B6D4)" }}>
             Accept
           </button>
         </div>

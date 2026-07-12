@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ImportButton } from "components/ImportButton";
 
 // ─── Color palette ───
 const colors = {
@@ -158,20 +159,23 @@ function HeroSection() {
           ))}
         </div>
 
-        {/* CTA */}
-        <button
-          onClick={() => {
-            localStorage.removeItem("open-resume-state");
-            router.push("/resume-builder");
-          }}
-          className="inline-flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]"
-          style={{ background: accentGradient, color: "#fff", boxShadow: `0 4px 24px ${colors.glow}` }}
-        >
-          Build Your Resume
-          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
+        {/* CTAs */}
+        <div className="flex items-center justify-center gap-3 flex-wrap">
+          <button
+            onClick={() => {
+              localStorage.removeItem("open-resume-state");
+              router.push("/resume-builder");
+            }}
+            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]"
+            style={{ background: accentGradient, color: "#fff", boxShadow: `0 4px 24px ${colors.glow}` }}
+          >
+            Start from Scratch
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <ImportButton />
+        </div>
 
         <p className="mt-4 text-xs" style={{ color: colors.muted }}>
           Free. No sign-up. Takes 5 minutes.
