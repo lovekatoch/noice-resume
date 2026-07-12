@@ -23,8 +23,8 @@ export const ResumeForm = () => {
   const formsOrder = useAppSelector(selectFormsOrder);
 
   return (
-    <div className="w-full md:h-[calc(100vh-var(--top-nav-bar-height))] md:overflow-y-scroll scrollbar-thin scrollbar-track-gray-100">
-      <section className="flex w-full flex-col gap-3 p-4">
+    <div className="w-full md:h-[calc(100vh-var(--top-nav-bar-height))] md:overflow-y-scroll scrollbar-thin scrollbar-track-transparent">
+      <section className="flex w-full flex-col gap-3 p-4" style={{ maxWidth: 640, margin: "0 auto" }}>
         <ProfileForm />
         {formsOrder.map((form) => {
           const Component = formTypeToComponent[form];

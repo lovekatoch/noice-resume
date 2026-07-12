@@ -49,11 +49,11 @@ export const BaseForm = ({
   className?: string;
 }) => (
   <section
-    className={`flex w-full flex-col gap-3 bg-white border ${className}`}
+    className={`flex w-full flex-col gap-3 ${className}`}
     style={{
-      borderColor: "var(--border)",
-      borderRadius: "var(--radius-lg)",
-      boxShadow: "var(--shadow-card)",
+      backgroundColor: "var(--surface)",
+      border: "1px solid var(--border)",
+      borderRadius: "12px",
       padding: "16px",
       marginBottom: "12px",
     }}

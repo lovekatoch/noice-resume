@@ -27,9 +27,9 @@ export const AutoSaveIndicator = () => {
     <div
       className="fixed bottom-6 right-6 z-40 rounded-lg px-3 py-1.5 text-sm font-medium shadow-lg"
       style={{
-        backgroundColor: "var(--surface)",
+        backgroundColor: "#1A1A26",
         color: "#22c55e",
-        border: "1px solid var(--border)",
+        border: "1px solid rgba(255,255,255,0.1)",
         opacity: show ? 1 : 0,
         transition: "opacity 200ms ease",
         pointerEvents: "none",
